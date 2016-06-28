@@ -419,7 +419,7 @@ class HomeController < ApplicationController
     redirect_to users_path
   end
 
-  #quick book show response
+  #quick book show responseh
   def qb_show
   end
 

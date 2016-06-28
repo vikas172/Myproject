@@ -419,8 +419,9 @@ class HomeController < ApplicationController
     redirect_to users_path
   end
 
-  #quick book show responseh
+  #quick book show response
   def qb_show
+    #@team = current_user
   end
 
   #intute bluedot

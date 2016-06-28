@@ -17,7 +17,7 @@
                   <label for="account_name">Company Name</label>
                   <%= text_field_tag "company[company_name]",current_user.company_name, autofocus: true ,:class=>"large wide",:readOnly=>true%>
                 </p>
-                
+                <%#jjgjgjdgjdogjd%>
                 <p>
                   <label for="work_configuration_phone">Phone</label>
                   <%= text_field_tag "company[company_phone]",nil,:value=>@company.blank? ? @general_info.try(:company_phone) : @company.try(:company_phone), autofocus: true ,:class=>"large medium"%>

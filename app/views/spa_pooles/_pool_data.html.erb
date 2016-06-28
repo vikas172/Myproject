@@ -1,0 +1,178 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Pool Data</h4>
+    </div>
+    <div class="modal-body">
+      <%=form_for @pool_data, :url => {:action => "pool_data_create"} do |f|%>
+
+      <div class="row">
+        <div class="span3 no-margin">
+          <h6>Type:</h6>
+          <%= f.radio_button "pool_type" ,"inground"%> In Ground
+          <%= f.radio_button "pool_type","aboveground"%> Above Ground
+        </div>
+        <div class="span6 no-margin">
+          <h6>Shape:</h6>
+          <%= f.radio_button "pool_shape","rectangular",:id=>"shape_rect"%>   Rectangular
+          <%= f.radio_button "pool_shape" ,"round",:id=>"shape_round"%>    Round
+          <%= f.radio_button "pool_shape" ,"oval",:id=>"shape_oval"%>    Oval
+          <%= f.radio_button "pool_shape" ,"kidney",:id=>"shape_kidney"%>    Kidney
+        </div>
+      </div>
+
+      <div class="row calcuate-volume" style="display:none;">
+        <h6>Size </h6>
+    
+        <div class="depth">
+          <label>Depth1</label>
+          <%= f.text_field :depth%>
+        </div>
+
+        <div class="depth2">
+          <label>Depth2</label>
+          <%= f.text_field :depth2%>
+        </div>
+
+        <div class="length">
+          <label>Length</label>
+          <%= f.text_field :length%>
+        </div>
+
+        <div class="width">
+          <label>Width</label>
+          <%= f.text_field :width%>
+        </div>
+
+        <div class="width2" style="display:none;">
+          <label>Width2</label>
+          <%= f.text_field :width2%>
+        </div>
+
+        <div class="diameter" style="display:none;">
+          <label>Diameter</label>
+          <%= f.text_field :diameter%>
+        </div>
+      
+      <!--   <label>Gallonage:</label> -->
+        <%#= f.text_field :pool_gallonage%>
+      </div>
+
+      <div class="row">
+        <h6>Equipment </h6><h6>pump/pumps</h6> <label>Brand:</label>
+        <%= f.text_field :equip_pump_brand%>
+        <label>Model:</label>
+        <%= f.text_field :equip_model%>
+      </div>
+
+      <div class="row">
+        <label>Horsepower:</label>
+        <%= f.text_field :equip_horsepower%>
+        <label>Service Factor:</label>
+        <%= f.text_field :equip_service_factor%>
+        <label>Voltage/Amperage</label>
+        <%= f.text_field :equip_voltage%>
+      </div>
+
+      <div class="row">
+        <h6>Filter</h6>
+        <label>Brand:</label>
+        <%= f.text_field :filter_brand%>
+        <label>Model:</label>
+        <%= f.text_field :filter_model%>
+        <label>Type:</label>
+          <%= f.radio_button :filter_type ,"cartridge"%>  Cartridge
+          <%= f.radio_button :filter_type ,"sand"%>       Sand
+          <%= f.radio_button :filter_type ,"de"%>         DE
+      </div>
+
+      <div class="row">
+        <h6>Filter Cartridge:</h6>
+        <%= f.text_field :filter_cartridge%>
+        <label>Date replaced:</label>
+        <%= f.text_field :filter_date_replaced%>
+      </div>
+
+      <div class="row">
+       <h6>Filter DE:</h6> <label>Replacement Grid part #:</label>
+        <%= f.text_field :filter_de%>
+      </div>
+
+      <div class="row">
+        <h6>Heater:</h6>
+        <label>Brand:</label>
+        <%= f.text_field :heater_brand%>
+        <label>Model:</label>
+        <%= f.text_field :heater_model%>
+      </div>
+
+      <div class="row">
+        <label>Size:</label>
+        <%= f.text_field :heater_size%>
+        <label>Heater Type:</label>
+        <%= f.radio_button :heater_type ,"electrical"%>  Electrical
+        <%= f.radio_button :heater_type ,"natural_gas"%> Natural Gas
+        <%= f.radio_button :heater_type ,"oil"%>         Oil
+        <%= f.radio_button :heater_type ,"solar"%>       Solar
+      </div>
+
+      <div class="row">
+        <h6>Time Clock:</h6>
+        <label>Brand:</label>
+        <%= f.text_field :time_clock_brand%>
+        <label>Model:</label>
+        <%= f.text_field :time_clock_model%>
+        <label>Voltage:</label>
+        <%= f.text_field :time_clock_voltage%>
+      </div>
+      <%= f.hidden_field :property_id ,:value=>params[:property_id]%>
+      <%= f.submit "submit",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+      <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>
+      <%end%>
+    </div>
+    <!-- <div class="modal-footer">
+     
+    </div> -->
+  </div>
+</div>
+<script type="text/javascript">
+$("body").on("change","#shape_rect ,#shape_oval",function(){
+    $(".calcuate-volume").css("display","block");
+    $(".length").css("display","block");
+    $(".width").css("display","block");
+    $(".diameter").css("display","none");
+    $(".width2").css("display","none");
+ })
+
+  $("body").on("change","#shape_round",function(){
+    $(".calcuate-volume").css("display","block");
+    $(".diameter").css("display","block");
+    $(".length").css("display","none");
+    $(".width").css("display","none");
+    $(".width2").css("display","none");
+  })
+  $("body").on("change","#shape_kidney",function(){
+    $(".calcuate-volume").css("display","block");
+    $(".width2").css("display","block");
+    $(".diameter").css("display","none");
+  })
+
+
+  $("body").on("submit","#new_pool_data",function(){
+    var depth   = $("#pool_data_depth").val();
+    var depth2  = $("#pool_data_depth2").val();
+    var length  = $("#pool_data_length").val();
+    var width   = $("#pool_data_width").val();
+    var width2  = $("#pool_data_width2").val();
+    var diameter= $("#pool_data_diameter").val();
+    var pool_shape   = $("input[name='pool_data[pool_shape]']:checked").val();
+    var property_id = $("#pool_data_property_id").val();
+    var param = 'depth=' + depth + '&depth2=' + depth2+ '&length=' + length+ '&width=' + width+ '&width2=' + width2+ '&diameter=' + diameter +'&property_id=' + property_id + '&pool_shape=' + pool_shape;
+    $.ajax({
+        type: "POST",
+        url: "/spa_pooles/calculate_gallonage",
+        data: param
+      })
+  })
+</script>

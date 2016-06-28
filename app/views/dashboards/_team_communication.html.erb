@@ -1,0 +1,532 @@
+<div class="msg_box col-6 box" id="msg_box">
+  <div class="">
+    <div class="row">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><i class="icon-envelope-alt"></i> Messages(<%= current_user.mailbox.inbox({:read => false}).count%>)</a></li>
+        <li role="presentation"><a href="#email" aria-controls="email" role="tab" data-toggle="tab" class="email_notify"><i class="fa fa-share"></i> Email(<%= @notifications.count%>)</a></li>
+       <!--  <li role="presentation"><a href="#sms" aria-controls="sms" role="tab" data-toggle="tab" class="sms_notify"><i class="icon-envelope"></i> SMS(<%#= @message_notifications.count%>)</a></li>
+        <li role="presentation"><a href="#call" aria-controls="call" role="tab" data-toggle="tab"><i class="fa fa-phone"></i> Call</a></li> -->
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+
+      <!-- MESSAGE MAIN TAB CONTENT INBOX SENT AND MESSAGE SEND START -->
+        <div role="tabpanel" class="tab-pane active" id="messages">
+          <div class="box">
+            <div class="box-content pull_content" style="margin-top:10px;min-height: 245px;">
+              <div id="stats-chart2" class="">      
+                <div>
+                  <div class="new-tab1">
+                    <div class="tabbable-panel">
+                      <div class="tabbable-line">
+                        <ul class="nav nav-tabs new-tabs">
+                          <li class="active">
+                            <a href="#send_message" data-toggle="tab">
+                            Send Messages</a>
+                          </li>
+                          <li>
+                            <a href="#inbox_message" data-toggle="tab">
+                           Inbox </a>
+                          </li>
+                          <li>
+                            <a href="#sent_message" data-toggle="tab">
+                            Sent </a>
+                          </li>
+                        </ul>
+                        <div class="tab-content">
+                  <!-- SEND MESSAGE CONTENT START -->
+                          <div class="tab-pane active" id="send_message">
+                            <p>
+                              <%= simple_form_for :conversation, url: :conversations do |f| %>
+                                <div class="row" id="selector">
+                                  
+                                  <label class="string required" for="conversation_subject"><abbr title="required">*</abbr> Recipients</label>
+                                 <%#= f.select :recipients,options_for_select(@user_list.collect{|p| [p.email,p.id]})%>
+                                  <select id="ddlCars2" multiple="multiple" data-size="5" name="conversation[recipients][]" style="width:100%">
+                                    <%@user_list.each do |user|%>
+                                      <option value="<%=user.id%>">
+                                        <%=user.email%>
+                                      </option>
+                                    <%end%>
+                                  </select>
+
+                                </div>
+
+                                <div class="row"> 
+                                  <%= f.input :subject ,:required=>true%>
+                                </div>
+                                <%= hidden_field_tag "sender_id",nil,:value=>current_user.id%>
+                                <%= hidden_field_tag "status-message",nil,:value=>"false"%>
+                                <div class="row">
+                                  <%= f.input :body, as: :text ,:required=>true%>
+                                </div>
+                                <div class="">
+                                   <%= f.button :submit,:value=>"Send", class: 'button_new_create conversation-message save-new-btn1',:style=>"float: right;"%>
+                                </div>
+                              <% end %>
+                            </p>
+                          </div>
+                  <!-- SEND MESSAGE CONTENT END -->
+
+                  <!-- INBOX CONTENT START -->
+                          <div class="tab-pane" id="inbox_message">
+                            <div class="cell_wrapper">
+                              <% if !@message_views.blank?%>
+                                <table class="table">
+                                  <tr>
+                                    <th>From</th>
+                                    <th>Subject</th>
+                                    <th>Received Date</th>
+                                  </tr>
+                                  <%@message_views.each do |message|%>
+                                    <tr style="cursor:pointer;color:#1f518b;" onclick='messageShowView("<%= message.id%>","inbox")' data-toggle="model" data-target="#message_receive_dialog">
+                                      <td><%= get_sender_inbox(message) %></td>
+                                      <td><%=message.subject%></td>
+                                      <td><%= message.created_at.to_date %></td>
+                                    </tr>
+                                  <%end%>
+                                </table> 
+                                </br>
+                              <%else%>  
+                                <p>
+                                  Currently you don't have any unread message.
+                                </p>
+                              <%end%>
+                            </div>  
+                          </div>
+                  <!-- INBOX CONTENT END -->
+
+                  <!-- SENT CONTENT START -->                   
+                          <div class="tab-pane" id="sent_message">
+                            <%if !@message_sents.blank?%>
+                              <table class="table">
+                                <tr>
+                                  <th>To</th>
+                                  <th>Subject</th>
+                                  <th>Body</th>
+                                  <th>Created At</th>
+                                </tr>
+                                <%@message_sents.each do |sent|%>
+                                  <tr style="cursor:pointer;color:#1f518b;" onclick='messageShowView("<%= sent.id%>","sent")' data-toggle="model" data-target="#message_receive_dialog">
+                                    <td><%= get_receiver_name(sent)%></td>
+                                    <td><%= sent.subject%>
+                                    </td>
+                                    <td><%= truncate(get_conversation_body(sent),:length => 14)%></td>
+                                    <td><%=sent.created_at.to_date%></td>
+                                  </tr>
+                                <%end%>
+                              </table> 
+                            <%else%>
+                              <p>Currently you don't have any sent message </p>
+                            <%end%>
+                          </div>
+                  <!-- SENT CONTENT END -->   
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </br> 
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- MESSAGE MAIN TAB CONTENT INBOX SENT AND MESSAGE SEND END -->  
+
+      <!-- EMAIL MAIN TAB CONTENT START -->  
+        <div role="tabpanel" class="tab-pane" id="email">
+          <div class="box">
+            <div class="box-content pull_content" style="min-height: 245px;">
+              <div id="stats-chart2" class="">  
+                <div class="cell_wrapper">
+                  <div >
+                    <div class="new-tab1">
+                      <div class="tabbable-panel">
+                        <div class="tabbable-line">
+                          <ul class="nav nav-tabs ">
+                            <li class="active">
+                              <a href="#send_email" data-toggle="tab">
+                              Send Email </a>
+                            </li>
+                            <li>
+                              <a href="#inbox_email" data-toggle="tab">
+                              Inbox </a>
+                            </li>
+                            <li>
+                              <a href="#sent_email" data-toggle="tab">
+                              Sent </a>
+                            </li>
+                          </ul>
+                          <div class="tab-content">
+                            <div class="tab-pane active" id="send_email">
+                              <p>
+                                <%= form_for(@notification) do |f| %>
+                                <!--   <div class="row">
+                                    <%#= f.select "to", options_from_collection_for_select( @team , "email", "full_name") %>
+                                  </div> -->
+
+                                  <div class="row email-drop" id="selector">
+                                    <select id="email_Cars2" multiple="multiple" data-size="5" name="email_notification[to][]">
+                                      <%@team.each do |team|%>
+                                        <option value="<%=team.email%>">
+                                          <%=team.full_name%>
+                                        </option>
+                                      <%end%>
+                                    </select>
+                                    <label>
+                                    cc  
+                                    </label>
+                                    <%= text_field_tag "email_notification[to][]" ,nil%>
+                                  </div>
+                                  <%= f.hidden_field "from",:value=>current_user.email %>
+                                  <%= f.hidden_field "email_type",:value=>"sent" %>
+                                  <%= f.hidden_field "user_id",:value=>current_user.id %>
+                                  <div class="row">  
+                                    <%= f.text_area "body" ,:required=>true %>
+                                  </div>
+                                  <div class="">
+                                    <%= f.submit "Email Send",:class=>"button_new_create save-new-btn1"%>
+                                  </div>
+                                <%end%>
+                              </p>
+                            </div>
+                        <!--EMAIL INBOX CONTENT START  -->
+
+                            <div class="tab-pane" id="inbox_email">
+                              <%if !@email_inbox.blank?%>
+                                <table class="table">
+                                  <tr>
+                                    <th>From</th>
+                                    <th>Body</th>
+                                    <th>Created At</th>
+                                  </tr>
+                                  <%@email_inbox.each do |inbox|%>
+                                    <tr style="cursor:pointer;color:#1f518b;" onclick='emailShowView("<%= inbox.id%>")' data-toggle="model" data-target="#message_receive_dialog" class="message_display">
+                                      <td><%= inbox.from%></td>
+                                      <td><%= truncate(inbox.body,:length => 14)%></td>
+                                      <td><%=inbox.created_at.to_date%></td>
+                                    </tr>
+                                  <%end%>
+                                </table> 
+                              <%else%>
+                                <p>Currently you don't have any inbox Email </p>
+                              <%end%>
+                            </div>
+                        <!--EMAIL INBOX CONTENT END  -->
+
+                        <!-- SENT EMAIL CONTENT START -->
+                            <div class="tab-pane" id="sent_email">
+                              <%if !@email_sent.blank?%>
+                                <table class="table">
+                                  <tr>
+                                    <th>To</th>
+                                    <th>Body</th>
+                                    <th>Created At</th>
+                                  </tr>
+                                  <%@email_sent.each do |sent|%>
+                                    <tr style="cursor:pointer; color:#1f518b;" onclick='emailShowView("<%= sent.id%>")' data-toggle="model" data-target="#message_receive_dialog" class="message_display">
+                                      <td><%= sent.to%></td>
+                                      <td><%=truncate(sent.body,:length => 14)%></td>
+                                      <td><%=sent.created_at.to_date%></td>
+                                    </tr>
+                                  <%end%>
+                                </table> 
+                              <%else%>
+                                <p>Currently you don't have any sent Email </p>
+                              <%end%>
+                            </div>
+                        <!-- SENT EMAIL CONTENT END -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- EMAIL MAIN TAB CONTENT END --> 
+
+      <!-- SMS MAIN TAB CONTENT START --> 
+        <div role="tabpanel" class="tab-pane" id="sms">
+          <div class="box">
+            <div class="box-content pull_content" style="min-height: 245px;">
+              <div id="stats-chart2" class="">  
+                <div class="cell_wrapper">     
+                  <div >
+                    <div class="new-tab1">
+                      <div class="tabbable-panel">
+                        <div class="tabbable-line">
+                          <ul class="nav nav-tabs ">
+                            <li class="active">
+                              <a href="#send_sms" data-toggle="tab">
+                              Send SMS</a>
+                            </li>
+                            <li>
+                              <a href="#inbox_sms" data-toggle="tab">
+                              Inbox </a>
+                            </li>
+                            <li>
+                              <a href="#sent_sms" data-toggle="tab">
+                              Sent </a>
+                            </li>
+                          </ul>
+
+                          <div class="tab-content">
+
+                          <!-- SEND SMS CONTENT START -->
+                            <div class="tab-pane active" id="send_sms">
+                              <%= form_tag message_create_path do |f| %>
+                                <div class="row">
+                              <!--     <select id="select_users_clients">
+                                    <option value="users">Users</option>
+                                  </select>
+ -->
+                                  <%= select_tag "number" , options_from_collection_for_select(@team, "mobile_number" ,"full_name"),:class=>"users_select" rescue ""%>
+                                  <%#= select_tag "number" , options_from_collection_for_select(@clients_list, "mobile_number" ,"first_name"),:class=>"clients_select",:style=>"display:none;" rescue ""%>    
+                                </div>
+
+                                <div class="row">
+                                  <%= text_area_tag :body,nil, as: :text ,:required=>true%>
+                                </div>
+
+                                <div class="">
+                                  <%= submit_tag :submit, class: 'button_new_create' %>
+                                </div>
+                              <% end %>
+                            </div>
+                          <!-- SEND SMS CONTENT END -->
+
+                          <!-- INBOX SMS CONTENT START -->
+                            <div class="tab-pane" id="inbox_sms">
+                              <% if !@receive_messages.blank? %>
+                                <table class="table" style="width: 100%;">
+                                  <tr class="receive_message">
+                                    <th>Body</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Date</th>
+                                  </tr>
+                                  <% @receive_messages.each do |sms| %>
+                                    <%if !current_user.message_notify.blank?%>
+                                      <%if ((sms.date_created > current_user.message_notify) && (sms.date_created.to_date > current_user.message_notify.to_date))%>
+                                        <tr style="cursor:pointer; background-color:#9B9BA0; color:white;" onclick='viewDisplayMessage("<%=sms.sid%>")' data-toggle="model" data-target="#message_receive_dialog" class="message_display">
+                                      <%else%>
+                                        <tr style="cursor:pointer; color:#1f518b;" onclick='viewDisplayMessage("<%=sms.sid%>")' data-toggle="model" data-target="#message_receive_dialog" class="message_display">
+                                      <%end%>
+                                    <%else%>
+                                     <tr style="cursor:pointer; background-color:#9B9BA0; color:#1f518b;" onclick='viewDisplayMessage("<%=sms.sid%>")' data-toggle="model" data-target="#message_receive_dialog" class="message_display">
+                                    <%end%> 
+                                      <td><%= truncate(sms.body, :length=>10 )%></td>  
+                                      <td><%= sms.from%></td>  
+                                      <td><%= sms.to%></td>  
+                                      <td><%= sms.date_created.to_date%></td>   
+                                    </tr>
+                                  <% end %>
+                                </table>  
+                                <div class="loader_display" style="display:none;">
+                                  <img src="/assets/loader.gif" class="ajax" style="height: auto;margin-top: -27px!important;text-align: center;margin-left: 231px;">
+                                </div>
+                              <% else %>
+                                <i>No Receive Message</i> 
+                              <% end %> 
+                            </div>
+                          <!-- INBOX SMS CONTENT END -->
+
+                          <!-- SENT SMS CONTENT START -->
+                            <div class="tab-pane" id="sent_sms">
+                              <%if !@sent_message.blank?%>
+                                <table class="table" style="width: 100%;">
+                                  <tr class="sent_message">
+                                    <th>Body</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Date</th>
+                                  </tr>
+                                  <%@sent_message.each do |sent|%>
+                                    <tr style="cursor:pointer; color:#1f518b;" onclick='viewDisplayMessage("<%=sent.sid%>")' data-toggle="model" data-target="#message_receive_dialog" class="message_display">
+                                      <td><%= truncate(sent.body, :length=>10 )%></td><td><%= sent.from%></td>  
+                                      <td><%= sent.to%></td>  
+                                      <td><%= sent.date_created.to_date%></td>
+                                    </tr>
+                                  <%end%>
+                                </table>  
+                              <%else%>
+                              <i>No Sent Message</i>
+                              <%end%>
+                            </div>
+                          <!-- SENT SMS CONTENT END -->  
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- SMS MAIN TAB CONTENT END -->
+
+        <div role="tabpanel" class="tab-pane" id="call">
+          <div class="box">
+            <div class="box-content pull_content" style="min-height: 245px;">
+              <div id="stats-chart2" class="">      
+                <div class="cell_wrapper"> 
+                  <div >
+                    <div class="new-tab1">
+                      <div class="tabbable-panel">
+                        <div class="tabbable-line">
+                          <ul class="nav nav-tabs ">
+                            <li class="active">
+                              <a href="#call_dial" data-toggle="tab">
+                              Dial Call</a>
+                            </li>
+                            <li>
+                              <a href="#select_call" data-toggle="tab">
+                              Select Call </a>
+                            </li>
+                            <li>
+                              <a href="#out_call" data-toggle="tab">
+                              Out Call </a>
+                            </li>
+                          </ul>
+                          <div class="tab-content">
+                            <!-- CALL DIAL CONTENT START -->
+                            <div class="tab-pane active" id="call_dial">
+                              <%if !current_user.general_info.blank?%>
+                                <%if !current_user.general_info.service_number.blank?%>
+                                  <%= render "home/dail_pad"%>
+                                <%else%>
+                                  <b>First Buy a Service Number</b></br></br>
+                                  <%=link_to "Buy Service Number","/buy_a_number",:class=>"button"%>
+                                <%end%>
+                              <%else%>
+                                <b>First Buy a Service Number</b></br></br>
+                                <%=link_to "Buy Service Number","/buy_a_number",:class=>"button"%>
+                              <%end%>  
+                            </div>
+                            <!-- CALL DIAL CONTENT END -->
+                            <!-- CALL SELECT CONTENT START -->
+                            <div class="tab-pane" id="select_call">
+                              <p> Call to <b>users and Customers</b> whose schedule today.... </p>
+                              <br/>
+                              <%if !current_user.general_info.blank?%>
+                                <%if !current_user.general_info.service_number.blank?%>
+                                  <body>
+                                    <select id="select_users_clients_call">
+                                      <option value="users">Users</option>
+                                      <option value="clients">Customers</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <%= select_tag "number" , options_from_collection_for_select(@team, "mobile_number" ,"full_name"),:include_blank=>"none",:class=>"users_select_call"%>
+                                    <%= select_tag "number" , options_from_collection_for_select(@clients_list, "mobile_number" ,"first_name"),:include_blank=>"none",:class=>"clients_select_call",:style=>"display:none;"%>
+                                    </br>  
+                                    <button class="call_twilio" onclick="call();">
+                                      <i class="icon-phone"></i> Call
+                                    </button>
+                                
+                                    <button class="twilio_hangup" onclick="hangup();">
+                                      <img src="/assets/hangup.png" >Hangup
+                                    </button>
+                                    <div id="twilio_log">Loading pigeons...</div>
+                                  </body>
+                                <%else%>
+                                  <b>First Buy a Service Number</b></br></br>
+                                  <%=link_to "Buy Service Number","/buy_a_number",:class=>"button"%>
+                                <%end%>  
+                              <%else%>
+                                  <b>First Buy a Service Number</b></br></br>
+                                  <%=link_to "Buy Service Number" ,"/buy_a_number",:class=>"button"%>
+                              <%end%>  
+                            </div>
+                            <!-- CALL SELECT CONTENT END -->
+                            <!-- CALL OUT CONTENT START -->
+                            <div class="tab-pane" id="out_call">
+                              Out Call
+                            </div>
+                            <!-- CALL OUT CONTENT END -->
+                          </div>    
+                        </div>
+                      </div>  
+                    </div>  
+                  </div>        
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+
+#msg_box{
+   width: 100%;
+}
+/*.simple_form label {
+  float: left;
+  padding-left: 18px;
+}
+.simple_form select{
+  margin-left: 20px;
+}
+.simple_form input {
+  margin-left: 40px;
+}
+.simple_form textarea {
+  margin-left: 56px;
+}*/
+/*#selector .btn-group{
+  width: 60%;
+}*/
+
+/*#selector .multiselect {
+    margin-bottom: 10px;
+    margin-left: 20px;
+    text-align: right;
+    width: 100% !important;
+}*/
+#selector .conversation_subject input[type="text"], textarea{
+  width: 58% !important;
+}
+#selector .dropdown-menu{
+  left: 0;
+  min-width: 237px;
+}
+#selector .multiselect-selected-text{
+  float: left;
+}
+.ui-tabs .ui-tabs-panel{
+    padding: 1em 0.4em;
+}
+.checkbox input[type="checkbox"]{
+  opacity: 1;
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus{
+  background-color:#1f518b;
+}
+</style>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $('#ddlCars2').multiselect({ 
+      includeSelectAllOption: true,
+      enableFiltering:true                
+    });
+
+ $('#email_Cars2').multiselect({ 
+      includeSelectAllOption: true,
+      enableFiltering:true                
+    });
+    
+       $(".filter").css("display","none");
+});
+</script>

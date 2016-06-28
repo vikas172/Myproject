@@ -1,0 +1,35 @@
+<div class="main_container">
+	<div id="" style="height: auto;">
+		<div id="head">
+				<%= render "clients/error_message_and_flash" %>
+		  <div class="hide_for_print" id="controls">  <%= link_to '+ New Expense', new_expense_path, remote: true, 'data-toggle' =>  "modal", 'data-target' => '#new_expenses', class: "button_new_create save-new-btn1",:style=>"float:right;" %>
+			</div>
+		  <h1 class="title1-font">Expenses</h1>
+		</div>
+		<div class="toolbar clearfix no_hover">
+			<%= form_tag('/expenses', :class => "index_thicklist_form ", id: "filter_expense", onchange: "$(this).submit();", method: "get", remote: true) do %>
+			  <div class="type_filter" id="content">
+			  	<ul class="quotes_filters">
+			  		<li>
+			    		View
+			  			<%= select_tag "filters[type]", options_for_select([["All","all"], ["Pending Reimbursement", "pending_payment"]], selected: params[:type]), id: "filters_type" %>
+				  	</li>
+					  <li>
+							Entered By
+					    <%= select_tag "filters[entered_by]", options_for_select([["",""], [current_user.full_name, current_user.id]], selected: params[:entered_by]), id: "filters_entered_by" %>
+					  </li>
+					  <li style="float:right;">
+					  	$<%= @cost rescue "00.0"%>
+					  </li>
+					</ul>  
+			  </div>
+			<% end %>
+		</div>
+		<div class="thicklist index_thicklist border_contain" id="expenses_index" style="padding:0px;">
+			<%= render partial: "expense" %>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="new_expenses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static" data-keyboard="false"></div>

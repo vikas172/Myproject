@@ -1,0 +1,61 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <div class="show_view_button ">
+      <%if current_user.user_type=="admin"%>
+      <button class="button_new_index save-new-btn1" data-toggle="modal" data-target="#myModal1" style="float:right;">New Work Order</button>
+      <%else%>
+      <% if set_view_permission_readwritedelete(@team_member.permission.permission_jobs)!="read"%>
+        <button class="button_new_index save-new-btn1" data-toggle="modal" data-target="#myModal1" style="float:right;">New Work Order</button>
+      <%end%>
+      <%end%>
+    </div>
+
+    <div id="content" style="height: auto;">
+      <ul class="quotes_filters">
+        <li class="search_quotes">
+          <%= text_field_tag :search, nil, :class=>"form-control search_all",:placeholder=>"Search Work Order...",:require=>true,:id=>"search_element",:onkeyup => "searchJobIndex($(this).val())"%>
+        </li>
+        <li class="type_filter">
+          Status <%= select_tag("jobs_per_page", options_for_select([["All","all"],["Requires Invoicing","require_invoice"],["All Active","all_active"],["Active - Action Required","action_required"],['Active - Late Visits','late'],["Active-Today",'today'],["Active - Upcoming Visits",'upcoming'],["Archived","archived"]],:selected=>params[:type_filter]),:class=>"form-control input-sm sort_select_jobs filter_job_number",:id=>"sort_select_jobs_number",:onchange=>"upComingLate($(this).val())") %> 
+        </li>
+
+        <li class="time_period_filter">
+          Sort by <%= select_tag("jobs_per_page", options_for_select([['Status','Status'],["Job Number",'Job Number'],["First Name",'first_name'],["Last Name",'last_name']]),:class=>"form-control input-sm sort_select_jobs filter_job_number",:id=>"sort_select_jobs_number",:onchange=>"sortByJobFirstLast($(this).val())") %>
+        </li>
+
+        <li class="order_by">
+          Type <%= select_tag("jobs_type", options_for_select([['All','All'],["One Off Jobs",'One Off Jobs'],["Recurring",'Recurring']]),:class=>"form-control input-sm job_type_filter",:id=>"sort_select_job_type",:onchange=>"sortJobType($(this).val())") %>                
+        </li>
+        <li style="float:right;"><b><%= @jobs.count%>Work Order</b></li>
+      </ul>
+      <div  class="index_thicklist" id="job_display_inline">
+        <%= render "job_search"%>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render "client_job_select"%>
+<script type="text/javascript">
+$(document).ready(function(){
+  if (window.location.href.indexOf('reload')==-1) {
+     window.location.replace(window.location.href+'?reload');
+  }
+  var value="<%=request.referrer.include?'work' if !request.referrer.nil?%>"
+  if (value=='true'){ 
+  upComingLate("<%= params[:type_filter]%>")}
+})
+</script>
+<style>
+  select:disabled {
+  color: #666666;
+  text-decoration: line-through;
+}
+
+.show_view_button {
+  margin-top: 35px;
+}
+
+
+
+</style>

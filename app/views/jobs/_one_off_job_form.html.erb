@@ -1,0 +1,191 @@
+<%= form_for(@job) do |f| %>
+  <div class="row">
+    <% if @job.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@job.errors.count, "error") %>
+          prohibited this job from being saved:</h2>
+        <ul>
+          <% @job.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+  <%= f.hidden_field :job_type, :value=>"one_off"%>
+  <%= f.hidden_field :quote_id, :value=>params[:quote_id]%>
+  <div class="row">
+    <div class="span2 left_align">
+      <span><b>Job</b></span>
+    </div>
+    <div class="span7 left_align">
+      <span>#</span>
+      <%if params[:action]=="new"%>
+        <span class="work_order_number"><%=@jobs.blank? ? 1 : ((@jobs.count)+1 )%></span>
+      <%else%>
+       <span class="work_order_number"><%=@job.job_order%></span>
+      <%end%>
+      -
+      <a class="expander" href="#" onclick="$(this).next().show(); $(this).hide(); $('.work_order_number').hide(); return false;">Change</a>
+      <span style="display:none;">
+        <%if params[:action]=="new"%>
+          <%= f.text_field :job_order,:style=>"width:5%;",:value=>@jobs.blank? ? ((@job.job_order) +1)  : ((@jobs.count)+1 ),:id=>"job_order" %>
+        <%else%>
+          <%= f.text_field :job_order,:style=>"width:5%;",:value=>@job.job_order,:id=>"job_order" %>
+
+        <%end%>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <%if @property_id!= nil%>
+      <%= hidden_field_tag "property_id",@property_id%>
+    <%else%>
+      <%= hidden_field_tag "property_id",params[:property_id]%>
+    <%end%>
+
+    <div class="span2 left_align">
+      <span><b>Description</b></span>
+    </div>
+    <div class="span7 left_align">
+      <span><%= f.text_field :description,:placeholder=>"Optional"%></span>
+      <span class="description"> - a few words summarizing this job</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span2 left_align">
+      <span><b>Scheduled</b>&nbsp;&nbsp;</span>
+    </div>
+    <div class="span7 left_align">
+      <span>
+        <%= f.check_box :scheduled,:class=>"scheduled", onclick: "job_scheduled_date()" %>
+      </span>
+      <span class="description"> - If unchecked, tasks can simply be performed as needed</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span2 left_align">
+      <span><b>Dates</b></span>
+    </div>
+    <div class="span7 left_align">
+      <%if params[:date].nil?%>
+        <span><%= f.text_field :start_date, :id => "datepicker", :value => @job.start_date.blank? ? date_time_format : @job.start_date, :class => "job_start_date" %></span>
+        <span><%= f.text_field :end_date , :id => "datepicker1", value: @job.end_date.blank? ? " " : @job.end_date, onchange: "when_multiday_select()", :class => "job_end_date", placeholder: 'Optional'  %></span>
+      <%else%>
+        <span><%= f.text_field :start_date, :id => "datepicker", :value => params[:date], :class => "job_start_date" %></span>
+        <span><%= f.text_field :end_date , :id => "datepicker1", value: '', onchange: "when_multiday_select()", :class => "job_end_date", placeholder: 'Optional'  %></span>
+
+      <%end%>  
+    </div>
+  </div>
+  <div class="row">
+    <div class="span2 left_align">
+      <span><b>Visits</b></span>
+    </div>
+    <div class="span7 left_align">
+      <span id="visit_check">
+        <b>This Work Order will show up in schedules on the start date</b>
+      </span>
+    </div>
+  </div>
+
+  <div class="row" id="optional_fields">
+    <div class="field vis span5 left_align">
+      <div id="one_off_check_time">
+        <ul>
+          <li>
+            <div id="job_time_show">
+              <span><b>Times</b></span>
+              <a id="clickMeShow" class="clickMeShow">Click to Set</a>&nbsp;&nbsp;
+            </div>
+            <div id="times" style="display:none;">
+              <p>
+                <span><b>Start Time</b></span>
+                <span class="input-append toggle-append bootstrap-timepicker" style="margin-left:80px;">
+                  <%= f.text_field :start_time ,:id=>"timepicker",:style=>"width: 65px;"%> 
+                </span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span>
+                  <a id="clickMeHide" onclick="$('#time').hide();" >clear times</a>&nbsp;&nbsp;
+                </span>
+              </p>
+              <p>
+                <span><b>End Time</b></span>
+                <span class="input-append toggle-append bootstrap-timepicker" style="margin-left:85px;">
+                  <%= f.text_field :end_time ,:id=>"timepicker1",:style=>"width: 65px;"%> 
+                </span>
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="unscheduled_visit_calender_job">
+        <ul>
+         <!--   <p style="" class="align_horizontal" id="team_notifications">
+            <b style="float: left" for="work_order_notify_team">Notify Team</b>
+            <input type="checkbox" value="1" name="notify_team" id="work_order_notify_team" style="margin: 0 10px;">
+          </p> -->
+          <li class="user_selector"><span><b>Crew</b></span>
+            <!-- select job emplyee -->
+            <span class="popover-markup">
+              <a class="popoverThis trigger clickMeShow" data-toggle="popover" onclick="check_assigned()">
+                Click to Assign
+              </a>
+              <div class="job_employee_show">
+                <%if @user_employee.present?%>
+                  <% @user_employee.each do |user_employee|%>
+                    <span>-<%=user_employee%></span><br>
+                  <%end%>
+                <%end%>
+              </div>
+              <div  id="job_assign_user"></div>
+              <%= render "select_job_employees", :locals => {:ff => f} %>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="span4">
+      <p>
+        Save time by setting the time and crews for this Work Order now.
+        These fields can easily be set or changed from the calendar, scheduler, or final Work Order.
+      </p>
+    </div>
+  </div>
+  <div class="quote_custom_field">
+    <%= render "clients/custom_field_display" if params[:action] == "new" %>
+    <%= render "clients/edit_custom_field_display" if params[:action] == "edit" %>
+  </div>
+  <div class="actions">
+    
+    <% if !params[:property_id].nil? && !params[:client_id].nil? && params[:value]!="client_show" %>
+      <%= link_to 'Cancel', :back,:class=>"model_cancel_button" %>
+    <% elsif params[:value]=="client_show" %>
+      <%= link_to 'Cancel', client_path(:id=>params[:client_id],:value=>params[:value]),:class=>"model_cancel_button"%>
+    <% else %>
+      <%= link_to 'Cancel', jobs_path,:class=>"model_cancel_button" %>
+    <% end %>
+  
+    <%if params[:action]== "new"%>
+      <%= f.submit 'Create Job',:class=>"button_new_create save-new-btn1" ,:style=>"float:right;"%>
+   
+    <%else%>
+      <%= f.submit 'Update Job',:class=>"button_new_create save-new-btn1" ,:style=>"float:right;"%>
+    <%end%>
+  
+  </div>
+<% end %>
+<script>
+  var assign_user_id =  "<%=@selected_employee.to_json%>";
+  var user_assign = JSON.parse(assign_user_id.replace(/&quot;/g, ''));
+  var user_name = '<%=raw @user_employee.to_json%>';
+  var user_employee = JSON.parse(user_name.replace(/&quot;/g, ''));
+  $(".clickMeShow").click(function(){
+    $(".job_employee_show").hide();
+    $(user_assign,user_employee).each(function(i,value){
+      if($('#job_assign_user').text().indexOf(user_employee[i]) == -1){
+        $('#job_assign_user').append('<div id="crew_'+value+'"><span id='+i+'>- '+user_employee[i]+'</span><input id="member_selected_'+value+'" name="job[crew][]" type="hidden" value='+value+'><br/></div>')
+      }
+    })   
+  })
+</script>

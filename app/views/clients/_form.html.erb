@@ -1,0 +1,156 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<div class="span12 new-form-design">
+  <%= form_for(@client) do |f| %>
+    <% if @client.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@client.errors.count, "error") %> prohibited this Customer from being saved:</h2>
+
+        <ul>
+        <% @client.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="span2">
+        <label>Contact Name</label>
+      </div>
+      <div class="span7">
+        <%= f.select :initial ,options_for_select([["Mr.", "Mr."], ["Ms.", "Ms."],["Mrs.", "Mrs."], ["Miss.", "Miss."], ["Dr.", "Dr."]],:selected=>f.object.try(:initial))%>
+        <%= f.text_field :first_name,:placeholder=> "First Name"%>
+        <%= f.text_field :last_name ,:placeholder=> "Last Name"%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :company_name %>
+      </div>
+      <div class="span7">
+        <%= f.text_field :company_name,:placeholder=> "Company Name..."%>
+      </div>
+    </div>
+  
+    <div class="row" style="margin-bottom: 15px;">
+      <div class="span2">
+        <label>Billing Address</label>
+      </div>
+      <div class="span7">
+        <div style="display: block; width: 400px;" id="billing_address">
+          <%= f.text_field :street1,:placeholder=> "Street1"%><br/>
+          <%= f.text_field :street2 ,:placeholder=> "Street2"%><br/>
+          <%= f.text_field :city ,:placeholder=> "City"%><br/>
+          <%= f.text_field :state ,:placeholder=> "State", :id=>"pool_data"%>
+          <%= f.text_field :zip_code,:placeholder=> "Zip code"%><br/>
+          <%= f.country_select :country, {priority: %w(US CA), prompt: @client.try(:country)},:class=>"billing_country" %>
+          <br/> 
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :mobile_number %>
+      </div>
+      <div class="span7">
+        <%if params[:action]!="edit"%>
+        <%= select_tag "initial_phone" ,options_for_select(country_phone_code),:style=>"vertical-align: middle;"%>
+        <%end%>
+        <%= f.text_field :mobile_number,:placeholder=> "Mobile Number...",:class=>"mobile_number_team_member",:maxLength=>12%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :personal_email %>
+      </div>
+      <div class="span7">
+        <%= f.email_field :personal_email,:placeholder=> "Personal Email..."%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :phone_number %>
+      </div>
+      <div class="span7">
+        <%= f.text_field :phone_number,:placeholder=> "Phone number..."%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :email %>
+      </div>
+      <div class="span7">
+        <%= f.email_field :email,:placeholder=> "Email"%>
+      </div>
+    </div>
+
+    <div class="row margin">
+      <div class="span2">
+        <label>Preference</label>
+      </div>
+      <div class="span7">
+        <%= render  partial: "notification_client",:locals=>{:f=>f}%>
+      </div>
+    </div>
+
+    <div class="client_custom_field">
+      <%=render "custom_field_display"%>
+    </div>
+
+    
+
+    <% if @property_count <= 1 %>
+      <% if params[:id]!= "client" && params[:id]!="property" %>
+        <%= f.fields_for :properties do |property| -%>
+          <%= render "property" ,:f => property%>
+        <%end%>
+      <%end%>
+    <% else %>
+      <div style="font-size:14px; color:#666; display:inline-block; line-height: 1.5; margin: 20px 20px 20px 0; background-color: #eef; padding: 20px;">
+        <b>Properties</b>
+        <p>
+          Now that this Customer has multiple properties, you have to edit the properties individually. <br>
+          Select the property from this Customers list of properties to edit.
+        </p>
+      </div>
+    <% end %>
+
+    <% if params[:id]!= "job" %>
+      <%if params[:id]=="quote"%>
+        <%= hidden_field_tag "property_quote",params[:id]%>
+      <%elsif params[:id]=="invoice"%>
+        <%= hidden_field_tag "invoice",params[:id]%>
+      <%else%>
+        <%= hidden_field_tag "property",params[:id]%>
+      <%end%>
+    <%else%>
+      <%= hidden_field_tag "job",params[:id]%>
+    <%end%>
+    <% if params[:work]=="work" %>
+       <%= hidden_field_tag "work","work"%>
+    <%end%>
+    <br>
+  <% end %>
+</div>
+<div class="new-save-btn">
+<div>
+  <%if params[:action]!="edit"%>
+    <%= submit_tag "Create Customer", :class=>"button_new_create client_create",:id=>"create_client"%>
+  <%else%>
+    <%= submit_tag "Update Customer", :class=>"button_new_create client_edit" %>
+  <%end%>
+</div>
+</div>
+
+<script>
+$(document).ready(function(){
+AddMore()
+})
+</script>
+
+

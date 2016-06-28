@@ -1,0 +1,28 @@
+<div id="summary" class="content_align">
+  <%= form_tag({:action => "visits_report_summary"}, :id=>"filters", :class=>"compressed_form", remote: true) do %>
+    <p>
+      <label for="report_completed_Completed">Completed</label>
+      <select name="report[completed]" id="report_completed">
+        <option value=""></option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </p>
+
+    <p>
+      <label for="report_assigned_to_Assigned To">Assigned to</label>
+      <%= select("report", "assigned_to", [[current_user.full_name, current_user.id],current_user.team_members.map{ |member| [member.full_name, member.member_id]}], {prompt: ''})%>
+    </p>
+
+    <p>
+      <label for="report_contains_line_item_Contains Line Item">Contains line item</label>
+      <select name="report[contains_line_item]" id="report_contains_line_item">
+        <option value=""></option>
+      </select>
+    </p>
+
+    <p>
+      <input type="submit" value="Update" name="commit" class="button">
+    </p>
+  <% end%>
+</div>

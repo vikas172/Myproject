@@ -1,0 +1,31 @@
+<div class="content multiple_client_list">
+  <table cellspacing="0" cellpadding="0" class="properties sortable wide">
+    <thead class="thead">
+      <tr>
+        <td>Street</td>
+        <td>City</td>
+        <td>State</td>
+        <td>Country</td>
+      </tr>
+    </thead> 
+    <% @client.properties.each do |property| %>
+      <tbody>
+        <tr data-link="/properties/<%=property.id  %>?show=client_property&client_id=<%=@client.id%>"  class="propert1" onclick="propertyShowView()">
+          <td>
+            <%=property.street rescue "" %><br/>
+            <%=property.street2 rescue "" %>
+          </td>
+          <td><%=property.city rescue "" %></td>
+          <td><%= property.state rescue "" %></td>
+          <td> <%if !property.country.blank?%>
+            <%= get_carmen_country_code(property.country).name rescue "" %>
+            <%else%>
+            <%=property.country rescue "" %>
+            <%end%>
+          </td>
+        </tr>
+      </tbody>
+    <%end%>  
+  </table>
+</div>
+

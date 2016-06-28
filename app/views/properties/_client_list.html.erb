@@ -1,0 +1,32 @@
+<div style="text-align: right;">
+  <%=@clients.count%> clients
+</div>
+<%if !@clients.blank?%>
+  <% @clients.each do |client| %> 
+    <li>
+      <div class="popover_user">
+        <i class="fa fa-user fa-2"></i>
+      </div>
+      <div class="user_contain_search">
+        <a href="/properties/new?client_id=<%=client.id %>" class="row  spin_on_click">
+          <h3 class="client_name individual">
+            <%= client.initial %>
+            <%= client.first_name.titleize %>
+            <%= client.last_name.titleize %>&nbsp;(<%=client.company_name.titleize%>)
+          </h3>
+          <div class="client_labels"><%client.tags.each do |tag|%>
+            <%= tag.name%>
+            <%end%>
+          </div>
+          <span style="display:inline-block; width:120px;"><%= client.properties.count%> Pool</span>
+          <span><%= client.phone_number %></span>
+          <span class="last_active" style="float: right;">
+          Activity &nbsp;<%= time_ago_in_words(client.created_at, include_seconds: true)%>&nbsp; ago
+          </span>
+        </a>
+      </div>
+    </li>
+  <% end %>
+<%else%>
+  <b>No matching items</b>
+<%end%>

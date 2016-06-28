@@ -1,0 +1,79 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "home/work_item_side_bar" %>
+    <div id="settings_area">
+      <div id="chemical_settings">
+        <div class="config_description">
+          Track your chemical and pesticide applications and generate reports to meet regulatory requirements.
+          You may not need to track all of the information that Jobber allows you to —&nbsp;be sure to check your local laws!
+        </div>
+        <%= form_for @chemical_treatment_setting, :url => url_for(:controller => 'chamicals', :action => 'create_setting'), method: "post", :class => "compressed_form" do |f| %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <h4>Company Licensing Information</h4>
+            <p class="chemical_treat">
+              <label for="chemical_treatment_settings_company_license_no">License Number</label>
+              <%= f.text_field :company_license_no, :class => "large wide", value: @chemical_treatment_setting.company_license_no %>
+            </p>
+            <h4>Employee/Applicator License Numbers</h4>
+            <p class="chemical_treat">
+              <%= hidden_field_tag "chemical_treatment_settings[users_attributes][0][id]", nil, class: "large wide"%>
+              <label for=""><%= current_user.full_name %></label>
+              <%= text_field_tag "chemical_treatment_settings[users_attributes][0][ct_license_no]", nil, value: "", class: "large wide"%>
+            </p>
+            <% current_user.team_members.each_with_index do |team_member,i| %>
+              <p class="chemical_treat">
+                <%= hidden_field_tag "chemical_treatment_settings[users_attributes][#{i+1}][id]", nil, class: "large wide"%>
+                <label for=""><%= team_member.full_name%></label>
+                <%= text_field_tag "chemical_treatment_settings[users_attributes][#{i+1}][ct_license_no]", nil, class: "large wide"%>
+              </p>
+            <%end%>
+
+            <h4>Chemicals List</h4>
+            <div>
+              <ul id="chemicals" class="add_muliptle_chemical">
+                <li>
+                  <label>Chemical Name</label>
+                  <label>Registration #</label>
+                  <label>Targeted Pest</label>
+                </li>
+                <li>
+                  <%= text_field_tag "chemical_treatment_settings[chemicals][0][name]", nil, class: "large wide"%>
+                  <%= text_field_tag "chemical_treatment_settings[chemicals][0][reg_no]", nil, class: "large wide"%>
+                  <%= text_field_tag "chemical_treatment_settings[chemicals][0][default_pest]", nil, class: "large wide"%>
+                  <a class="cancel" href="#" onclick="$(this).parent().trigger('change').remove();; return false;">Remove</a>
+                </li>
+
+                <li>
+                  <%= text_field_tag "chemical_treatment_settings[chemicals][1][name]", nil, class: "large wide"%>
+                  <%= text_field_tag "chemical_treatment_settings[chemicals][1][reg_no]", nil, class: "large wide"%>
+                  <%= text_field_tag "chemical_treatment_settings[chemicals][1][default_pest]", nil, class: "large wide"%>
+                  <a class="cancel" href="#" onclick="$(this).parent().trigger('change').remove();; return false;">Remove</a>
+                </li>
+              </ul>
+            </div>
+            <div class="clear">
+              <a href="#" id="add_chemical" onclick="add_chemicals(); return false;" class="add_button_setting"> + Add a Chemical</a>
+            </div>
+            <br>
+            <h4>Tank Mixtures</h4>
+            <ul id="mixtures" class="striped">
+              <% @chemical_treatment_mixtures.each do |mixture| %>
+                <li>
+                  <%= link_to edit_chemical_treatment_mixture_path(mixture) do %>
+                    <strong><%= mixture.name %></strong>
+                    (  )
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+            <p class="clear"><%= link_to "New Mixture", chemical_treatment_mixture_path, id: "add_mixture",:class=>"add_button_setting"%>
+            </p>
+
+            <p class="submit_holder" style="text-align:right;">
+              <%= f.submit "Update Settings", class: "add_button_setting",:style=>"float:right;"%>
+            </p>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>

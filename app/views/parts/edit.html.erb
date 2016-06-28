@@ -1,0 +1,149 @@
+<div class="client_index">
+  <div class="main_container">
+    <h1 class="title1-font">Editing Part</h1>
+    <%= form_for(@part) do |f| %>
+      <% if @part.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@part.errors.count, "error") %> prohibited this part from being saved:</h2>
+
+          <ul>
+            <% @part.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="span12 new-form-design">
+        <div class="row">
+          <div class="span3">
+            <%if @part.l_item.blank?%>
+              <%= f.label :item_code,:style=>"display:inline;" ,:class=>"l-item"%><i class="icon-edit" id="edit-item" style="margin-left:5px; cursor:pointer;" onclick="itemFunction()"></i>
+              <%= f.text_field :l_item,:id=>"l-item",:value=> @part.l_item.blank? ? "Item Code" : @part.l_item ,:style=>"display:none;"%>
+            <%else%>
+              <label class="l-item" for="item_name" style="display:inline;"><%= @part.l_item%></label><i class="icon-edit" id="edit-name" style="margin-left:5px; cursor:pointer;" onclick="nameFunction()"></i>
+              <%= f.text_field :l_item,:id=>"l-item",:value=> @part.l_item.blank? ? "Name" : @part.l_item ,:style=>"display:none;"%>
+            <%end%>	
+          </div>
+          <div class="span7">
+            <%= f.text_field :item_code %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span3">
+            <%if @part.l_description.blank?%>
+              <%= f.label :description ,:style=>"display:inline;" ,:class=>"l-description"%><i class="icon-edit" id="edit-description" style="margin-left:5px; cursor:pointer;" onclick="descriptionFunction()"></i> 
+              <%= f.text_field :l_description,:id=>"l-description",:value=> @part.l_description.blank? ? "Description" : @part.l_description ,:style=>"display:none;"%>
+            <%else%>
+              <label class="l-description" for="item_description" style="display:inline;"><%= @part.l_description%></label><i class="icon-edit" id="edit-description" style="margin-left:5px; cursor:pointer;" onclick="descriptionFunction()"></i>
+              <%= f.text_field :l_description,:id=>"l-description",:value=> @part.l_description.blank? ? "Description" : @part.l_description ,:style=>"display:none;"%>
+            <%end%>	
+          </div>
+          <div class="span7">
+            <%= f.text_area :description %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span3">
+            <%if @part.l_p_price.blank?%>
+              <%= f.label :purchase_price ,:style=>"display:inline;" ,:class=>"l-purchase_price"%><i class="icon-edit" id="edit-purchase_price" style="margin-left:5px; cursor:pointer;" onclick="purchasePrice()"></i> 
+              <%= f.text_field :l_p_price,:id=>"l_p_price",:value=> @part.l_p_price.blank? ? "Purchase Price" : @part.l_p_price ,:style=>"display:none;"%>
+            <%else%>
+              <label class="l-purchase_price" for="part_purchase_price" style="display:inline;"><%= @part.l_p_price%></label><i class="icon-edit" id="edit-purchase_price" style="margin-left:5px; cursor:pointer;" onclick="purchasePrice()"></i>
+              <%= f.text_field :l_p_price,:id=>"l_p_price",:value=> @part.l_p_price.blank? ? "Purchase Price" : @part.l_p_price ,:style=>"display:none;"%>
+            <%end%>	
+          </div>
+          <div class="span7">
+            <%= f.text_field :purchase_price %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span3">
+            <%if @part.l_p_code.blank?%>
+              <%= f.label :purchase_code ,:style=>"display:inline;" ,:class=>"l-purchase_code"%><i class="icon-edit" id="edit-purchase_code" style="margin-left:5px; cursor:pointer;" onclick="purchaseCode()"></i> 
+              <%= f.text_field :l_p_code,:id=>"l_p_code",:value=> @part.l_p_code.blank? ? "Purchase Code" : @part.l_p_code,:style=>"display:none;"%>
+            <%else%>
+              <label class="l-purchase_code" for="part_purchase_code" style="display:inline;"><%= @part.l_p_code%></label><i class="icon-edit" id="edit-purchase_code" style="margin-left:5px; cursor:pointer;" onclick="purchaseCode()"></i>
+              <%= f.text_field :l_p_code,:id=>"l_p_code",:value=> @part.l_p_code.blank? ? "Purchase Code" : @part.l_p_code,:style=>"display:none;"%>
+            <%end%>	
+          </div>
+          <div class="span7">
+            <%= f.text_field :purchase_code %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span3">
+            <%if @part.l_s_price.blank?%>
+              <%= f.label :sales_price ,:style=>"display:inline;" ,:class=>"l-sale_price"%><i class="icon-edit" id="edit-sale_price" style="margin-left:5px; cursor:pointer;" onclick="salePrice()"></i> 
+              <%= f.text_field :l_s_price,:id=>"l_s_price",:value=> @part.l_s_price.blank? ? "Sales Price" : @part.l_p_code ,:style=>"display:none;"%>
+            <%else%>
+              <label class="l-sale_price" for="part_sale_price" style="display:inline;"><%= @part.l_s_price%></label><i class="icon-edit" id="edit-sale_price" style="margin-left:5px; cursor:pointer;" onclick="salePrice()"></i>
+              <%= f.text_field :l_s_price,:id=>"l_s_price",:value=> @part.l_s_price.blank? ? "Sales Price" : @part.l_s_price ,:style=>"display:none;"%>
+            <%end%>	
+          </div>
+          <div class="span7">
+            <%= f.text_field :sales_price %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span3">
+            <%if @part.l_s_code.blank?%>
+              <%= f.label :sales_code ,:style=>"display:inline;" ,:class=>"l-sale_code"%><i class="icon-edit" id="edit-sale_code" style="margin-left:5px; cursor:pointer;" onclick="saleCode()"></i> 
+              <%= f.text_field :l_s_code,:id=>"l_s_code",:value=> @part.l_s_code.blank? ? "Sales Code" : @part.l_s_code ,:style=>"display:none;"%>
+            <%else%>
+              <label class="l-sale_code" for="part_sale_code" style="display:inline;"><%= @part.l_s_code%></label><i class="icon-edit" id="edit-sale_code" style="margin-left:5px; cursor:pointer;" onclick="saleCode()"></i>
+              <%= f.text_field :l_s_code,:id=>"l_s_code",:value=> @part.l_s_code.blank? ? "Sales Code" : @part.l_s_code ,:style=>"display:none;"%>
+            <%end%>	
+          </div>
+          <div class="span7">
+            <%= f.text_field :sales_code %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span3">
+            <%if @part.l_profit.blank?%>
+              <%= f.label :profit ,:style=>"display:inline;" ,:class=>"l-profit"%><i class="icon-edit" id="edit-l_profit" style="margin-left:5px; cursor:pointer;" onclick="profitFunction()"></i> 
+              <%= f.text_field :l_profit,:id=>"l_profit",:value=> @part.l_profit.blank? ? "Profit" : @part.l_profit ,:style=>"display:none;"%>
+            <%else%>
+              <label class="l-profit" for="part_profit" style="display:inline;"><%= @part.l_profit%></label><i class="icon-edit" id="edit-l_profit" style="margin-left:5px; cursor:pointer;" onclick="profitFunction()"></i>
+              <%= f.text_field :l_profit,:id=>"l_profit",:value=> @part.l_profit.blank? ? "Profit" : @part.l_profit ,:style=>"display:none;"%>
+            <%end%>	
+          </div>
+          <div class="span7">
+            <%= f.text_field :profit %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span3">
+            <%if @part.l_margin.blank?%>
+              <%= f.label :margin ,:style=>"display:inline;" ,:class=>"l-margin"%><i class="icon-edit" id="edit-l_margin" style="margin-left:5px; cursor:pointer;" onclick="marginFunction()"></i> 
+              <%= f.text_field :l_margin,:id=>"l_margin",:value=> @part.l_margin.blank? ? "Margin" : @part.l_margin ,:style=>"display:none;"%>
+            <%else%>
+              <label class="l-margin" for="part_profit" style="display:inline;"><%= @part.l_margin%></label><i class="icon-edit" id="edit-l_margin" style="margin-left:5px; cursor:pointer;" onclick="marginFunction()"></i>
+              <%= f.text_field :l_margin,:id=>"l_margin",:value=> @part.l_margin.blank? ? "Margin" : @part.l_margin ,:style=>"display:none;"%>
+            <%end%>	
+          </div>
+          <div class="span7">
+            <%= f.text_field :margin %>
+          </div>
+        </div>
+
+        <div>
+          <%=render "parts/custom_edit"%>
+        </div>
+        <div class="clearfix"></div>
+        <div class="actions">
+          <%= link_to 'Back', parts_path ,:class=>"model_cancel_button"%>
+          <%= f.submit "Update Part",:class=>"button_new_create save-new-btn1 pull-right"%>
+        </div>
+      </div>  
+    <% end %>
+  </div>
+</div>
+

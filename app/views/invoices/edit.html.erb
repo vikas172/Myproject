@@ -1,0 +1,218 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <h4 class="title1-font">Invoice for 
+      <%= @client.first_name%>
+      <%= @client.last_name%>
+    </h4>
+    <%= form_for(@invoice) do |f| %>
+      <% if @invoice.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+          <ul>
+          <% @invoice.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="top" style="border-top: 1px solid #c3c8c7;">
+        <div class="span7 content_align">
+          <table class=" quotes_left left" style="width:100%;">
+            <tbody>
+              <tr class="subject_holder">
+                <td>
+                  <label for="invoice_subject" class="strong">Subject</label>
+                </td>
+                <td>
+                  <%= f.text_field :subject%>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="label multi_line" style="float:left">Billing Address</td>
+                <td class="billing_address">
+                  <p>
+                    <%=client_property(@invoice)%>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="label multi_line" style="float:left">
+                  Service Address </td>
+                <td class="billing_address">
+                  <p>
+                    <span class="description">(same as billing address)</span>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>  
+        <div class="span5">
+          <table class="right">
+            <tbody>
+              <tr>
+                <td>
+                   <label for="invoice_invoice_net">Payment</label>
+                </td>
+                <td>
+                  <%= f.select 'payment', options_for_select([['Upon Reciept','Upon Reciept'],["Net 15",'Net 15'],["Net 30",'Net 30'],["Net 45",'Net 45'],["Custom",'Custom']],:selected=>@invoice.try(:payment)), :class=>"form-control" %>
+                </td>
+              </tr>
+             <%if @invoice.try(:payment)== "Custom"%>
+              <tr id="invoice_due_date">
+                <td><label>Due Date</label></td>
+                <td><%= f.text_field :due_date, :style=>"width:85%; margin-top: 1%;" ,:class=>"invoice_due_date1",:value=>@invoice.try(:due_date)%> </td>
+              </tr>
+              <%end%>
+              <tr>
+                <td>
+                  <label style="width: 90px;">Issued Date</label>
+                </td>
+                <td>
+                  <span >
+                    <%= f.text_field :issued_date ,:id=>"issueddate-datepicker-invoice",:style=>"width:85%;",:value=>@invoice.try(:issued_date) %>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                   <label >Tax</label>
+                </td>
+                <td>
+                  <a class="expander" href="#" onclick="$(this).next().show(); $(this).hide();; return false;"><%= @invoice.tax.blank? ? 0 : @invoice.tax%>%</a>
+                  <span style="display:none;">
+                   <%= f.text_field :tax,:style=>"width:23%;",:id=>"quote_stripped_tax",:onchange=>"AddTotal()" %> %
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label >Discount</label>
+                </td>
+                <td>
+                  <span style="vertical-align: middle;"> 
+                    <%= f.text_field :discount_amount,:placeholder=>"0.00" ,:id=>"quote_discount_rate",:value=>@invoice.try(:discount_amount) ,:style=>"width: 23%;",:onchange=>"AddTotal()"%>
+                    <%= f.select "discount_type",options_for_select([["$","$"],["%","%"]]),:id=>"invoice_discount_type",:style=>"margin-top: -2%!important;" %>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                   <label>Deposit</label>
+                </td>
+                <td>    
+                  <span >
+                    $ <%= f.text_field :deposite_amount ,:value=>@invoice.try(:deposite_amount),:style=>"width: 23%;" %>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>  
+      </div>
+      <div class="quote_custom_field">
+        <%= render "clients/edit_custom_field_display"%>
+      </div>
+      <div id="line_items">
+      <div id="line_items_head" class="display_work_quote">
+        <span class="name title2-font">Work Item</span>
+        <span class="short"></span>
+
+        <div style="float: right;">
+          <span class="centered hours_column title2-font" style="margin-right: 34px;">Qty.</span>
+            <span class="centered cost_column title2-font" style="margin-right: 34px;">Unit Cost</span>
+            <span class="centered cost_column title2-font" style="margin-right: 34px;">Total</span>
+        </div>
+      </div>
+    </div>
+
+
+      <br/>
+      <span id="work_result" style="color: red; margin-left: 4%;" ></span>
+      <div id="add_more_work">
+      	<%@total_value=0%>
+        <% if !@invoice.invoice_works.blank?%>
+        <% unless @invoice.invoice_works.first.name.blank? %>
+      	  <% @invoice.invoice_works.first.name.each_with_index do |value,index|%>
+            <p>
+            <span style="width: 1%; font-size: 30px ! important; margin-top: -2.3%;" class="remScnt btn btn">-</span>
+              <span class="name">
+                <%=text_field_tag "name[]",nil,:value=>@invoice.invoice_works.first.name[index],:style=>"margin-left: 0%; width: 14%;" ,:id=>"p_name_#{index+1}" ,:class=>"work_name"%>
+              </span>
+              <span class="description short">
+                <%=text_area_tag("description[]",@invoice.invoice_works.first.description[index],:value=>@invoice.invoice_works.first.description[index],:style=>"height: 47px; margin-left: 35px; width: 46%;",:id=>"p_description_#{index+1}")%>
+              </span>
+              <span class="hours_column ">
+               <%=text_field_tag "quantity[]",nil,:value=>@invoice.invoice_works.first.quantity[index],:style=>"width: 4%; margin-left: 7.5%;" ,:id=>"p_quantity_#{index+1}",:onchange=>"AddQuantity(this.id)"%>$
+              </span>
+              <span class="cost_column ">
+                <%=text_field_tag "unit_cost[]",nil,:value=>@invoice.invoice_works.first.unit_cost[index] ,:style=>"width: 4%; margin-left: 14px;",:id=>"p_unit_cost_#{index+1}",:onchange=>"AddUnitCost(this.id)"%>$
+              </span>
+              <span class="cost_column ">
+                <%=text_field_tag "total[]",nil,:value=>@invoice.invoice_works.first.total[index],:style=>"margin-left: 12px; width: 6%; ",:id=>"p_total_#{index+1}",:class=>"p_total",:readonly => true%>
+              </span>
+            
+              <%@total_value= @invoice.invoice_works.first.total[index].to_i+ @total_value%>
+            
+            </p>
+          <%end%>
+        <% end %>
+        <% end %>
+      </div>
+      <br/>
+      <p id="addScnt" style="float:left;"><a herf="">+add line item</a></p>
+      <div id="bottom">
+        <div class="clearfix" id="totals">
+          <div>
+            <span>Subtotal: </span>
+            $<span id="quote_subtotal" class="cost_column important"><%=@total_value%></span>
+          </div>
+          <div>
+            <span>
+              Discount:
+            </span>
+            <% if !@invoice.discount_amount.nil? %>
+             -$<span id="quote_discount" class="cost_column"><%=@invoice.discount_amount%></span>
+             <%else%>
+             -$<span id="quote_discount" class="cost_column">0.00</span>
+
+             <%end%>
+          </div>
+          <div id="total_tax1">
+            <span> Tax: </span>
+            <%@tax=show_tax_invoice(@invoice,@total_value)%>
+           
+            $<span id="total_tax" class="cost_column"><%=@tax%></span>
+          </div>
+
+          <div>
+            <span>Total Invoice: </span>
+            $<span id="total_quote" class="cost_column very_important"><%=@tax_calculate+@tax%></span>
+          </div>
+        </div>
+      </div>
+      <div class="field" style="width:100%;margin-top:10%">
+        <%= hidden_field_tag "client_id",params[:client_id]%>
+        <%= f.label :client_message %>
+        <%= f.text_area :client_message,:style=>"width: 100%; height: 70px;" %>
+        <%#= f.submit :class=>"btn btn-success", :style=>"text-align:center;margin-right:100px;"%>
+    <% end %>
+    <br><br>
+    <p class="button_new_create" id="invoice_edit" style="float:right; cursor:pointer;"> update Invoice</p>
+    <%= link_to 'Cancel', invoices_path,:class=>"model_cancel_button",:style=>"margin-right: 6px !important; float: right !important;" %>
+  </div>
+</div>
+<script>
+  AddTotal()
+  AddInvoiceJs()
+  AddMoreWork()
+  EditFormSubmit()
+  var states = <%= raw @services_all.collect(&:name) rescue "" %> 
+  $("#p_name_1").autocomplete({
+    source: states
+  });
+
+</script>

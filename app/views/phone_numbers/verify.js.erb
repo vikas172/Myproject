@@ -1,0 +1,18 @@
+<% if @phone_number.verified %>
+  $('#verify-pin').hide()
+  $('#status-box').removeClass()
+  $('#status-box').addClass('alert alert-success')
+  $('#status-message').text('Success!!')
+  <%if  Rails.env.production?%>
+  	// window.location = "http://45.55.157.4/dashboard";
+    window.location = "<%= root_path%>";
+  <%else%>
+    window.location = "<%= root_path%>";
+    // window.location = "http://localhost:3000/dashboard";
+  <% end %>
+<% else %>
+  $('#status-box').removeClass()
+  $('#status-box').addClass('alert alert-warning')
+  $('#status-message').text("Sorry, that wasn't the right pin.")
+<% end %>
+$('#status-box').fadeToggle()

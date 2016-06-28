@@ -1,0 +1,18 @@
+<div class="content">
+  <section>
+    <div class="col-12">
+      <%if current_user.user_type=="admin" || set_view_permission_for_work_client_property(@team_member.permission.permission_quotes) %>
+        <%= render "home/work_quote_show"%>
+      <%end%>
+
+      <%if current_user.user_type=="admin" || set_view_permission_for_work_client_property(@team_member.permission.permission_jobs) %>
+        <%= render "home/work_job_show"%>
+      <%end%>
+
+      <%if current_user.user_type=="admin" || set_view_permission_for_work_client_property(@team_member.permission.permission_invoices) %>
+        <%= render "home/work_invoice_show"%>
+      <%end%>
+    </div><!-- end of column right -->
+  </section>
+</div>
+

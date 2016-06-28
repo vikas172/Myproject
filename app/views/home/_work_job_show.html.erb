@@ -1,0 +1,70 @@
+<div class="col-4 box">
+  <div class="">
+      <div class="title work-summary">
+        <i class="fa fa-legal"></i>
+        Work Orders
+      </div>
+
+    </div>
+  <div class="work-boxnew">
+   
+  <div class="module pad_top border_top">
+    <div class="column_thirds">
+      <a href="/jobs?type_filter=all_active">
+        <div class="summary">
+          <div class="numbers">
+            <div class="button set_width active summary-work">
+              <span class="active">  Active  <span ><%if @job_actives.blank?%>0<%else%><%= @job_actives.count%><%end%></span> </span>             
+            <p>
+              progress 
+                <%@total_all=0.00%>
+                <% unless @job_actives.blank?%>
+                  <%@job_actives.each do |job_active|%> 
+                    <%if job_requires_amount_show(job_active).nil?%>
+                      <!-- 0.00 -->
+                    <%else%>
+                      <% @total_all= @total_all+job_requires_amount_show(job_active)%>
+                    <%end%>
+                  <%end%>
+                <% end %>
+                $<%= @total_all.round(2) rescue 0.00%>
+            </p>
+            </div>     
+          </div><!-- end of column left <-->
+        </div><!-- end of summary -->
+      </a> 
+    </div>
+
+    <div class="column_thirds">
+      <a href="/jobs?type_filter=require_invoice">
+        <div class="summary">
+          <div class="numbers">
+            <div class="button set_width requires_invoicing_job summary-work">
+              <span class="requires_invoicing "> Invoice <span><%if !@jobs_requires.blank?%><%= @jobs_requires.count%><%else%>0<%end%></span></span>
+              <p>
+                Billable
+                <span>$0</span>
+              </p>
+            </div>
+          </div><!-- end of column left <-->
+        </div><!-- end of summary -->
+      </a>
+    </div>
+
+    <div class="column_thirds">
+      <a href="/jobs?type_filter=archived">
+        <div class="summary">
+          <div class="numbers">
+            <div class="button set_width inactive summary-work">
+               <span class="inactive"> Archived <span ><%if !@jobs_archived.blank? %><%= @jobs_archived.count %><%else%>0<%end%></span></span>
+              <p>
+                Completed  <span style=" line-height: 150%; " class=" ">$ <%if job_archived_amount(@jobs_archived).nil?%>0<%else%><%=job_archived_amount(@jobs_archived)%><%end%></span>
+              </p>
+            </div>
+          </div><!-- end of column left <-->
+        </div><!-- end of summary -->
+      </a> 
+    </div>
+  </div>
+</div><!-- end of row work-box -->
+</div>

@@ -1,0 +1,123 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+ *= require fullcalendar
+ *= require bootstrap-timepicker
+ *= require bootstrap-datepicker
+ *= require bootstrap_and_overrides
+ *= require charges
+ *= require chemicals
+ *= require clients
+ *= require custom
+ *= require header
+ *= require home
+ *= require font-awesome
+ *= require invoice
+ *= require jobs
+ *= require jquery.dataTables.min
+ *= require jquery.dataTables_themeroller
+ *= require properties
+ *= require quotes
+ *= require repeats
+ *= require timesheets
+ *= require add_on
+ *= require new_style
+ *= require jquery-ui
+ *= require events
+ *= require jquery.Jcrop.min
+ *= require bootstrap-datetimepicker.min
+ *= require twili_styles
+ *= require twilio_client
+ *= require bootstrap-multiselect
+ *= require bootstrap-colorpicker
+ *= require weather-icons
+ *= require style
+ *= require responsive
+ *= require chat
+
+ */
+
+
+body {
+  background-color: #dfdfd5;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+ #primary_nav .span10{
+  margin-left: 0;
+ } 
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+border-color: #ccc !important;
+outline: 0;
+box-shadow: none !important;
+}
+ h1, h2, h3, h4, h5, h6{
+  font-family:'Helvetica-Normal' !important;
+  font-weight: normal !important;
+ }
+
+ .tab-content {
+  overflow: initial;
+}
+#poll_show{
+  display: none;
+}
+.title1-font{
+  font-size: 20px !important;
+  font-weight: normal !important;
+}
+.title2-font{
+  font-size: 16px !important;
+  font-weight: normal !important;
+}
+.title3-font{
+  font-size: 14px !important;
+  font-weight: normal !important;
+}
+.admin-drop a{
+  font-weight: normal !important;
+  line-height: 20px !important;
+}
+.admin-drop h5{
+  font-weight: normal !important;
+  line-height: 20px !important;
+}
+.admin-text a{
+  text-shadow:none !important;
+}
+
+.logo-image:hover{
+  background: transparent !important;
+}
+
+.dropdown-menu > a:hover {
+  color: #fff !important;
+}
+
+@font-face {
+  font-family:'Helvetica-Normal';
+  src: url('Helvetica-Normal_gdi.eot');
+  src: url('Helvetica-Normal_gdi.eot?#iefix') format('embedded-opentype'),
+    url('Helvetica-Normal_gdi.woff') format('woff'),
+    url('Helvetica-Normal_gdi.ttf') format('truetype'),
+    url('Helvetica-Normal_gdi.svg#Helvetica-Normal') format('svg');
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  unicode-range: U+0020-2666;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+margin-top: 0!important;
+}

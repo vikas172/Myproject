@@ -1,0 +1,182 @@
+<div class="show_view_button">
+  <%= render "action_dropdown",:locale=>{:params=>params,:@client=>@client}%>
+  <%if set_view_permission_client_property_view(@team_member)%>
+    <%= link_to 'Edit', edit_client_path(@client),:class=>"button_new_index icon-pencil",:style=>"margin: 0px 7px 0px 0px;" %>
+  <%end%>
+<h3 class="main_heading"><%= @client.initial rescue "" %>&nbsp;<%= @client.first_name.titleize rescue "" %>&nbsp;<%= @client.last_name.titleize rescue "" %> </h3>
+</div>
+<div class="col-8">
+  <div class="fieldset">  
+    <h2 class="title1-font">
+    Properties
+    <%if params[:invoice_id].blank?%>
+      <%= link_to "New",new_property_path(:client_id=>@client.id),:class=>"button_new_index",:style=>"width: 64px;"%>
+    <%else%>
+      <%=  link_to "New",new_property_path(:client_id=>@client.id,:invoice_id=>params[:invoice_id]),:class=>"button_new_index",:style=>"width: 64px;"%>
+    <%end%>
+    </h2>
+    <div class="content">
+      <div data-thicklist-remote="true" data-thicklist="true" class="thicklist" scrolling="true">
+        <div style="max-height: 500px; overflow: auto;" class="row_holder">
+          <div class="emptyList">This Customer doesn't have any properties listed yet.</div>
+        </div> 
+      </div>
+    </div> 
+  </div>      
+  <br>
+  <div id="to_dos" class="fieldset">
+    <h2 class="title1-font">Visits / Basic Tasks / Reminders  
+      <div class="dropdown" style="float: right;">
+        <a data-toggle="dropdown" href="#" class="dropdown_button" style="height: 20px;">New <b class="caret" id="caret"></b></a>
+        <ul class="dropdown-menu edit_drop_menu" role="menu">
+          <span class="arrow_tab"></span>
+          <li> <i class="fa fa-check-square-o"></i><a href="#">New Basic Task</a></li>
+          <li> <i class="fa fa-calendar"></i><%= link_to "New Calendar Event", ".bs-example-modal-lg","data-toggle" => "modal" %></li>
+        </ul>
+      </div>
+    </h2>
+
+    <div class="content">
+      <div data-thicklist-remote="true" data-thicklist="true" class="thicklist" scrolling="true">
+        <div style="max-height: 500px; overflow: auto;" class="row_holder">
+          <div class="emptyList">No Tasks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <%= render "work_tab" %>  
+</div>
+  <div class="col-4 empty_client_display">
+    <div class="border_contain">
+      Company Name    <b><%= @client.company_name %></b><br>
+      Mobile Number   <b><%= @client.mobile_number%></b><br>
+      Personal Number <b><%= @client.personal_email%></b>
+      <br>
+      <table class="single_client_custom">
+        <%= render "custom_field_show"%>
+      </table>
+      <br>
+      <%if !@client.street1.blank? || !@client.street2.blank? || !@client.city.blank? || !@client.state.blank? || !@client.zip_code.blank? %>
+        Billing Address<br>
+        <%= @client.street1 %><br>
+        <%= @client.street2 %><br> 
+        <%if !@client.city.blank? %>
+          <%= @client.city %>, &nbsp;<%end%>
+        <%= @client.state %><br> 
+        <%if !@client.zip_code.blank? %>
+          <%= @client.zip_code %>,&nbsp;<%end%>
+        <%if !@client.country.blank?%>
+          <%= get_carmen_country_code(@client.country).name rescue " " %>
+        <%else%>
+          <%= @client.country %>
+        <%end%>
+        <%= @client.mobile_number%>
+        <%= @client.personal_email%>
+        <br>
+      <%else%>
+        No Billing Contact Info...
+      <%end%>    
+    </div>    
+    <br/>
+    <div class="border_contain">
+      <br>
+      <i class="fa fa-tag fa-6"></i>
+      <div class="show_tags">
+        <div id="tag_list">
+          <%@client.tags.each do |tag|%>               
+            <span class="removable_tag" tag_label="<%= tag.name%>">
+              <%= tag.name%>
+               <a value="<%=tag.name%>" class= "tags_pointer remove_tag" onclick='deleteTag("<%=tag.name%>","<%=@client.id%>");'>x</a>
+            </span>
+          <%end%>
+        </div>
+      </div>
+
+      <%= form_tag client_tag_path,:method=>"post" ,:remote=>true do %>
+        <div class="form-group" style="float: right; width: 330px;">
+          <div class="icon-addon ">
+            <%= text_field_tag :client_tag, nil, :class=>"form-control",:placeholder=>"New Tag",:require=>true, style: "width: 52%;" %>
+            <%= hidden_field_tag "client_id",@client.id%>
+            <%= submit_tag "Save Tag" ,:class=>"button_new_index" %>
+            <label for="email" class="glyphicon glyphicon-search" rel="tooltip" title="email"></label>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </br>
+      <%if current_user.user_type=="admin"%>
+        <%=render "client_note_attachment" %>
+      <%else%>
+      <%if set_permission_for_attachment(@team_member)%>
+        <%=render "client_note_attachment" %>
+      <%end%>
+    <%end%>
+    
+  </div> 
+</div> 
+
+<!-- Modal of event form -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">UPCOMING EVENT</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for(@event) do |f| %>
+          <% if @event.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+              <ul>
+              <% @event.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="field">
+            <%= f.text_field :title ,:placeholder=>"New Event..." %>
+          </div>
+          <div id="to_do_scheduler" style=" ">
+            All Day
+            <%= f.check_box :scheduled,:checked => false %>
+            <br>
+            <div id="one_off_check_time">
+                Start date
+                <%= f.text_field :start_date,'class' => 'datepicker' %>
+              <li class="input-append toggle-append bootstrap-timepicker">Times &nbsp;&nbsp;&nbsp;&nbsp;
+                <%= f.text_field :start_time ,:id=>"timepicker"%> 
+              </li>
+                  <br>
+                  End date
+                <%= f.text_field :end_date,'class' => 'datepicker' %>
+              <li class="input-append toggle-append bootstrap-timepicker">
+                <%= f.text_field :end_time ,:id=>"timepicker1"%> 
+              </li>
+            </div>
+            Repeats
+          <select id="to_do_rrule" class="recurring_select" name="to_do[rrule]">
+            <option value="null" selected="selected">Never</option>
+            <option value="{"validations":{},"rule_type":"IceCube::DailyRule","interval":1}">Daily</option>
+            <option value="{"validations":{},"rule_type":"IceCube::WeeklyRule","interval":1,"week_start":0}">Weekly</option>
+            <option value="{"validations":{},"rule_type":"IceCube::MonthlyRule","interval":1}">Monthly</option>
+            <option value="or" disabled="disabled">or</option>
+            <option value="custom">Custom schedule...</option>
+          </select>            
+          </div>
+          <br> <br>
+          <div class="field">
+            <%= f.text_area :description,:placeholder=>"Details"  %>
+          </div>
+          <div class="actions" align="center">
+            <%= f.submit %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

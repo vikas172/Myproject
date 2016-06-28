@@ -1,0 +1,43 @@
+<%unless flash[:notice].blank?%>
+  <%if flash[:notice]=="Amount is not sufficient for payment! "%>
+    <div class="error_messages_team_member payment"> 
+    <h2 style="color:red;">Amount is not sufficient for payment!</h2>
+       <i class="fa fa-check"></i>
+    </div>
+  <%else%>
+    <div class="flash_team_member">
+      <div id="flash_notice_team_member" class="flash_team_member flash_notice_team_member clearfix hide_for_print"><%= flash[:notice]%><i class="fa fa-check" style="float:right;"></i>
+      </div>
+    </div>
+  <%end%>
+<%end%>
+<div class="error_messages_team_member payment payment-errors" style="color: red; display: none;"></div>
+<%if !session[:client_error].blank?%> 
+  <div class="error_messages_team_member payment"> 
+    <h2>Invalid Fields. Correct the following errors and try again.</h2>
+    <ul>
+      <%- session[:client_error].each do |name, msg| -%>
+        <li>
+          <%= content_tag :div, name + " " +msg.first, :id => "flash_#{name}", :style => "color: red;" %> 
+        </li>
+      <%- end -%> 
+    </ul>
+    <%session[:client_error]=nil%> 
+  </div>    
+<%- end -%> 
+
+<%if (alert =="You are not authorized to access this page.")%>
+  <div class="flash_team_member">
+    <div id="flash_notice_team_member" class="flash_team_member flash_notice_team_member clearfix hide_for_print"><%=alert%><i class="fa fa-check" style="float:right;"></i></div>
+   
+  </div>
+<%end%>  
+
+
+  <%if !session[:today_message_send].blank?%>
+    <div class="error_messages_team_member payment">
+      <h2 style="color:red; width:95%; float:left;"><%= session[:today_message_send]%> </h2>
+      <i class="fa fa-check" style="color:red;"></i>
+    </div> 
+    <%= session[:today_message_send]=nil%>
+  <%end%>

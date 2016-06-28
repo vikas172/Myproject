@@ -1,0 +1,82 @@
+
+  <h4 class="title2-font">Invoices</h4>
+  <p>
+    <label for="work_configuration_invoice_default_email_subject">Subject Line</label>
+    <%= text_area_tag "work_configuration[invoice_default_email_subject]" ,File.read(Rails.root.join("public/default_emails/invoices_subject_#{current_user.id}.txt")),:style=>"width:700px;",:class=>"email_text_box"%>
+  </p>
+
+  <p>
+    <label for="work_configuration_invoice_default_email_message">Message</label>
+    <%= text_area_tag "work_configuration[invoice_default_email_message]" ,File.read(Rails.root.join("public/default_emails/invoices_message_#{current_user.id}.txt")),:style=>"width:700px;",:rows=>10,:class=>"email_text_box"%>
+  </p>
+  <div style="margin-left:180px; margin-top:7px" class="description">
+    <!-- <a href="#">Reset to default e-mail subject and message</a> -->
+  </div>
+  <p></p>
+
+ <hr style="border-color:#ccc;">
+  <h4 class="title2-font">Estimate</h4>
+  <p>
+    <label for="work_configuration_quote_default_email_subject">Subject Line</label>
+    <%= text_area_tag "work_configuration[quote_default_email_subject]" ,File.read(Rails.root.join("public/default_emails/quotes_subject_#{current_user.id}.txt")),:style=>"width:700px;",:class=>"email_text_box"%>
+
+  </p>
+  <p>
+  <label for="work_configuration_quote_default_email_message">Message</label>
+    <%= text_area_tag "work_configuration[quote_default_email_message]" ,File.read(Rails.root.join("public/default_emails/quotes_message_#{current_user.id}.txt")),:style=>"width:700px;",:rows=>10,:class=>"email_text_box"%>
+
+  </p>
+  <div style="margin-left:180px; margin-top:7px" class="description">
+   <!--  <a href="#">Reset to default e-mail subject and message</a> -->
+  </div>
+  <p></p>
+
+ <hr style="border-color:#ccc;">
+  <h4 class="title2-font">Payment and Deposit Receipts</h4>
+  <p>
+  <label for="work_configuration_balance_adjustment_default_email_subject">Subject Line</label>
+    <%= text_area_tag "work_configuration[balance_adjustment_default_email_subject]" ,File.read(Rails.root.join("public/default_emails/payment_subject_#{current_user.id}.txt")),:style=>"width:700px;",:class=>"email_text_box"%>
+  </p>
+
+  <p>
+  <label for="work_configuration_balance_adjustment_default_email_message">Message</label>
+    <%= text_area_tag "work_configuration[balance_adjustment_default_email_message]" ,File.read(Rails.root.join("public/default_emails/payment_message_#{current_user.id}.txt")),:style=>"width:700px;",:rows=>10,:class=>"email_text_box"%>
+  </p>
+  <div style="margin-left:180px; margin-top:7px" class="description">
+    <!-- <a href="#">Reset to default e-mail subject and message</a> -->
+  </div>
+  <p></p>
+ <hr style="border-color:#ccc;">
+  <h4 class="title2-font">Statements</h4>
+  <p>
+    <label for="work_configuration_statement_default_email_subject">Subject Line</label>
+    <%= text_area_tag "work_configuration[statement_default_email_subject]" ,File.read(Rails.root.join("public/default_emails/statement_subject_#{current_user.id}.txt")),:style=>"width:700px;",:class=>"email_text_box"%>
+  </p>
+  <p>
+  <label for="work_configuration_statement_default_email_message">Message</label>
+    <%= text_area_tag "work_configuration[statement_default_email_message]" ,File.read(Rails.root.join("public/default_emails/statement_message_#{current_user.id}.txt")),:style=>"width:700px;",:rows=>10,:class=>"email_text_box"%>
+
+  </p>
+  <div style="margin-left:180px; margin-top:7px" class="description">
+   <!--  <a href="#">Reset to default e-mail subject and message</a> -->
+  </div>
+  <p></p>
+<hr style="border-color:#ccc;">
+  <h4 class="title2-font">Signed Documents</h4>
+  <p>
+    <label for="work_configuration_note_default_email_subject">Subject Line</label>
+    <%= text_area_tag "work_configuration[note_default_email_subject]" ,File.read(Rails.root.join("public/default_emails/signed_subject_#{current_user.id}.txt")),:style=>"width:700px;",:class=>"email_text_box"%>
+  </p>
+  <p>
+    <label for="work_configuration_note_default_email_message">Message</label>
+    <%= text_area_tag "work_configuration[note_default_email_message]" ,File.read(Rails.root.join("public/default_emails/signed_message_#{current_user.id}.txt")),:style=>"width:700px;",:rows=>10,:class=>"email_text_box"%>
+  </p>
+  <div style="margin-left:180px; margin-top:7px" class="description">
+   <!--  <a href="#">Reset to default e-mail subject and message</a> -->
+  </div>
+  <p></p>
+  <br>
+</div>
+
+
+ 

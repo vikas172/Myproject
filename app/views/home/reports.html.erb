@@ -1,0 +1,111 @@
+<div class="container manage_report">
+	<div class="client_index">
+		<div class="main_container">
+			<div class="padding">
+				<div id="head">
+					<h1 class="title1-font">Reports</h1>
+				</div>
+				<div id="report_holder">
+					<div class="section">
+						<h3 class="title2-font">Money Reports</h3>
+						<ul>
+							<li>
+								<%= link_to "Transaction List", reports_transactions_path%>
+								<p>All Transactions, including Invoices, Payments &amp; Deposits</p>
+							</li>
+							<li>
+								<%= link_to "Invoice", reports_invoice_path %>
+								<p>All Invoices tracked in CopperService, including Draft, Outstanding, Paid and Bad Debts</p>
+							</li>
+							<li>
+								<a href="#">Taxation</a>
+								<p>Tax totals, total awaiting collection, and total by tax rate</p>
+							</li>
+							<li>
+								<%= link_to "Aged Receivables", reports_aged_receivables_path%>
+								<p>Late Invoices by 30, 60, and 90 day increments</p>
+							</li>
+							<li>
+								<%= link_to "Projected Income", reports_projected_income_path %>
+								<p>Future project income based on outstanding Invoices</p>
+							</li>
+							<li>
+								<%= link_to "Bad Debt", reports_invoice_path+"/bad_debt"%>
+								<p>All Invoices marked as Bad Debt</p>
+							</li>
+							<li>
+								<%= link_to "Customer Balance Summary", reports_client_balance_path%>
+								<p>Full list of customer account balances</p>
+							</li>
+						</ul>
+					</div>
+
+					<div class="section">
+						<h3 class="title2-font">Services &amp; Work Reports</h3>
+						<ul>
+							<li>
+								<%= link_to "Estimate Created", reports_quotes_path%>
+								<p>All Estimate Drafted, Sent &amp; Won</p>
+							</li>
+							<li>
+								<%= link_to "Estimate Won", reports_quotes_path+"/won"%>
+								<p>Focus on the Estimate that have been 'won', or in other words, turned into Work Orders</p>
+							</li>
+							<li>
+								<%= link_to "Visits", reports_visits_path%>
+								<p>Detailed view of who's doing what when</p>
+							</li>
+							<li>
+								<%= link_to 'One-off Jobs', reports_one_off_jobs_path%>
+								<p>Full list of all one-off jobs, with associated details</p>
+							</li>
+
+							<li>
+								<%= link_to "Recurring Contracts", reports_contracts_path%>
+								<p>Full list of all recurring contracts, with associated details</p>
+							</li>
+
+							<li>
+								<%= link_to "Products and Services", reports_products_and_services_path%>
+								<p>Full usage reports on products and services for a period of time.</p>
+							</li>
+						</ul>
+					</div>
+
+					<% if !@active_addon.blank? && !@active_addon.find_by_add_on("expenses").blank? %>
+						<% if @active_addon.find_by_add_on("expenses").status%>
+							<div class="section">
+								<h3 class="title2-font">Add &amp; Ons</h3>
+								<ul>
+									<li>
+										<%= link_to "Expenses", reports_expenses_path %>
+										<p>All expenses tracked through the Expenses Add &amp; On</p>
+									</li>
+								</ul>
+							</div>
+						<% end %>
+					<% end %>
+
+					<div class="section last">
+						<h3 class="title2-font">Customer Reports</h3>
+						<ul>
+							<li>
+								<a href="/reports/client_list">Customers Contact Info</a>
+								<p>All Customers and their contact info stored in CopperService</p>
+							</li>
+							<li>
+								<a href="/reports/client_list?display_method=properties">Property List</a>
+								<p>All Properties stored in CopperService</p>
+							</li>
+							<li>
+								<%= link_to 'E-mail Communications', reports_email_communications_path %>
+								<p>All e-mails sent automatically through CopperService, such as Estimate and Invoices</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<br style="clear:both">
+			</div> 
+		</div>
+	</div>
+</div>

@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vehicle name:</strong>
+  <%= @service_reminder.vehicle_name %>
+</p>
+
+<p>
+  <strong>Service task:</strong>
+  <%= @service_reminder.service_task %>
+</p>
+
+<p>
+  <strong>Meter interval:</strong>
+  <%= @service_reminder.meter_interval %>
+</p>
+
+<p>
+  <strong>Time interval:</strong>
+  <%= @service_reminder.time_interval %>
+</p>
+
+<p>
+  <strong>Time duration:</strong>
+  <%= @service_reminder.time_duration %>
+</p>
+
+<p>
+  <strong>Meter threshold:</strong>
+  <%= @service_reminder.meter_threshold %>
+</p>
+
+<p>
+  <strong>Time threshold:</strong>
+  <%= @service_reminder.time_threshold %>
+</p>
+
+<p>
+  <strong>Threshold duration:</strong>
+  <%= @service_reminder.threshold_duration %>
+</p>
+
+<p>
+  <strong>Email notification:</strong>
+  <%= @service_reminder.email_notification %>
+</p>
+
+<p>
+  <strong>Subscribed user:</strong>
+  <%= @service_reminder.subscribed_user %>
+</p>
+
+<%= link_to 'Edit', edit_service_reminder_path(@service_reminder) %> |
+<%= link_to 'Back', service_reminders_path %>

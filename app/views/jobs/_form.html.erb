@@ -1,0 +1,41 @@
+<div class="row form-group" id="type_picker">
+  <%if params[:action]!="edit"%>
+    <%= form_tag job_form_change_path, remote: true do %>
+      <%if @property_id!= nil%>
+        <%= hidden_field_tag "property_id",@property_id%>
+      <%else%>
+        <%= hidden_field_tag "property_id",params[:property_id]%>
+      <%end%>
+
+      <ul>
+        <li>
+          <b> This Work Order is a &nbsp;&nbsp;&nbsp;&nbsp;</b>
+        </li>
+        <li >
+          <%= radio_button_tag :job_type, 'one_off', true %>
+          <b>One Off</b>
+        </li>
+        <li >
+          <%= radio_button_tag :job_type, 'recurring_contract' %>
+          <b>Recurring Contract</b>
+        </li>
+      </ul>
+      <% end %>
+  <%else%>
+    <%= "One Off" if @job.job_type=="one_off"%>
+    <%= "Recurring Contract" if @job.job_type=="recurring_contract"%>
+  <%end%>  
+</div>
+<div class="row class-new-job" id="job_form">
+  <%= render partial: @form_partial %>
+</div>
+<%= render partial: "repeats"%>
+
+<script>
+  checkBoxCheked();
+  popover_show();
+  when_multiday_select();
+  $("input[name='job_type']").on('click', function(){
+    $(this).submit();
+  })
+</script>

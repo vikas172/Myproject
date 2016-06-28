@@ -1,0 +1,8 @@
+<%= simple_form_for :message, url: reply_conversation_path(conversation) do |f| %>
+  <%= f.input :subject %>
+  <%= f.input :body %>
+  <div class="form-actions">
+    <%= f.button :submit, class: 'button_new_create' %>
+    <%#= link_to 'Cancel', conversations_path, class: 'model_cancel_button' ,:style=>"float: left; margin-left: 10px;"%>
+  </div>
+<% end %>

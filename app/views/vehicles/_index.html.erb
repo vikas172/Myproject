@@ -1,0 +1,100 @@
+<div class="invoice-index vehicle-table">
+  <div class="col-md-10 col-md-offset-1">
+<p id="notice"><%= notice %></p>
+  <div id="head">
+    <div class="hide_for_print" id="controls">  <%= link_to '+ New Vehicle', new_vehicle_path, remote: true, 'data-toggle' =>  "modal", 'data-target' => '#new_vehicle', class: "button_new_create save-new-btn1",:style=>"float:right;" %>
+    </div>
+    <h1 class="title1-font">Vehicles</h1>
+  </div>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Type</th>
+      <th>Group</th>
+      <th>Driver/Operator</th>
+      <th>Current Meter</th>
+      <th>Actions</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vehicles.each do |vehicle| %>
+      <tr>
+        <td><%= vehicle.vehicle_name %></td>
+        <td><%= vehicle.status %></td>
+        <td><%= vehicle.vehicle_type %></td>
+        <td><%= vehicle.group %></td>
+        <td><%= vehicle.driver %></td>
+        <td><%= vehicle.msrp %></td>
+        <td>
+          <ul class="list-inline action-icon">
+          <!-- <li>
+            <a href="/vehicles/<%#= vehicle.id %>">
+              <i class="fa fa-eye"></i></a>
+            </li> -->
+            <li>
+              <!-- <a href="/vehicles/<%#= vehicle.id %>/edit"> -->
+              <%= link_to "",edit_vehicle_path(vehicle),:id=>"vehicle_#{vehicle.id}" ,:class=>"fa fa-pencil" ,data: {toggle: "modal", target: "#new_vehicle"},:remote=>true%>
+              <!-- <i class="fa icon-pencil"></i></a> -->
+            </li>
+            <!-- <li> -->
+             <!--  <a href="/vehicles/<%#= vehicle.id %>" data-method="delete" data-confirm="Are you sure?">
+              <i class="fa fa-minus-circle"></i></a> -->
+              <%#= link_to '', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <!-- </li> -->
+          </ul>
+         <!--  <div class="dropdown_menu icon_drop">
+           <li class="dropdown" style="list-style: none; float:left; margin-top: 0%;">
+           <a href="#" class="dropdown-toggle dropdown_button" data-toggle="dropdown"><i class="fa fa-gear"></i> <span class="caret"></span></a>
+           <ul class="dropdown-menu edit_drop_menu" role="menu">
+            <span class="arrow_action"></span>
+           <li>
+            <li>
+              <i class="fa fa-map-marker"></i>
+                <%#= link_to 'Show', vehicle %>
+            </li>
+            <li>
+              <i class="fa icon-pencil"></i>
+              <%#= link_to 'Edit', edit_vehicle_path(vehicle) %>
+            </li>
+            <li>
+              <i class="fa fa-minus-circle"></i>
+              <%#= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </li>
+          </li> -->
+        </td>
+          <!-- <td><%#= link_to 'Show', vehicle %></td>
+          <td><%#= link_to 'Edit', edit_vehicle_path(vehicle) %></td>
+          <td><%#= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </td>
+        <td><%#= vehicle.year %></td>
+        <td><%#= vehicle.make %></td>
+        <td><%#= vehicle.model %></td>
+        <td><%#= vehicle.trim %></td>
+        <td><%#= vehicle.license_plate %></td>
+        <td><%#= vehicle.registation %></td>
+        <td><%#= vehicle.vin_no %></td>
+        <td><%#= vehicle.ownership %></td>
+        <td><%#= vehicle.color %></td>
+        <td><%#= vehicle.body_type %></td>
+        <td><%#= vehicle.body_subtype %></td> -->
+
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to 'Add Vehicle', new_vehicle_path, :class=>"button_new_create client_create pull-right"%>
+
+
+</div>
+</div>
+
+ <!-- Modal -->
+<div class="modal fade" id="new_vehicle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static" data-keyboard="false"></div>

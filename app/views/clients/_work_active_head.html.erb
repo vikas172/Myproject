@@ -1,0 +1,228 @@
+<div style="background-color: #dddddd " id="line_items_head" class="display_work_quote border_contain">
+  <h2 class="title1-font">Work</h2>
+  <div class="dropdown" style="float: right; position: absolute; right: 0px; margin-right:5px;">
+    <%if current_user.user_type=="user"%>
+      <%if set_view_permission_readwritedelete(@team_member.permission.permission_quotes)!="read"%>
+        <a data-toggle="dropdown" href="#" class="dropdown_button save-new-btn1">New <b class="caret" id="caret"></b></a>
+        <ul class="dropdown-menu edit_drop_menu" role="menu"><span class="arrow_action"></span>
+          <%if @client.properties.blank?%>
+            <% if params[:value]=="client_show" %>
+              <li>
+                <i class="fa fa-quote-left"></i>
+                <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                  <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                  <%= hidden_field_tag "quote_create",nil,:value=>"quote"%>
+                  <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+                  <%= link_to "New Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+                <%end%>
+              </li>
+             <% else %>
+                <li>
+                  <i class="fa fa-quote-left"></i>
+                  <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                    <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                    <%= hidden_field_tag "quote_create",nil,:value=>"quote"%>
+                    <%= link_to "New Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+                  <%end%>
+                </li>
+             <% end %>
+          <%else%>
+            <% if params[:value]=="client_show" %>
+              <li>
+                <i class="fa fa-quote-left"></i>
+                <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                  <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                  <%= hidden_field_tag "work_tab",nil,:value=>"work"%>
+                  <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+                  <%= link_to "New Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+                <%end%>
+              </li>
+            <% else %>
+              <li>
+                <i class="fa fa-quote-left"></i>
+                <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                  <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                  <%= link_to "New Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+                <%end%>
+              </li>
+            <% end %>
+          <%end%>
+          <%if @client.properties.blank?%>
+            <% if params[:value]=="client_show" %>
+              <li>
+                <i class="fa fa-legal"></i>
+                <%= form_tag(new_job_path, :method => "post",:class=>"job_url_link",:style=>" display: inline;") do %>
+                  <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                  <%= hidden_field_tag "job_create",nil,:value=>"client_show"%>
+                  <%= hidden_field_tag "value",nil,:value=>"job"%>
+                  <%= link_to "New job","#",:id=>"new_job",:class=>"has_icon",:onclick=>"$('.job_url_link').submit();"%>
+                <%end%> 
+              </li>
+            <% else %>
+              <li>
+                <i class="fa fa-legal"></i>
+                <%= form_tag(new_job_path, :method => "post",:class=>"job_url_link",:style=>" display: inline;") do %>
+                  <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                  <%= hidden_field_tag "job_create",nil,:value=>"job"%>
+                  <%= link_to "New job","#",:id=>"new_job",:class=>"has_icon",:onclick=>"$('.job_url_link').submit();"%>
+                <%end%> 
+              </li>
+            <% end %>
+          <%else%>
+            <li>
+              <i class="fa fa-legal"></i>
+              <%= form_tag(new_job_path, :method => "post",:class=>"job_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+                <%= link_to "New job","#",:id=>"new_job",:class=>"has_icon",:onclick=>"$('.job_url_link').submit();"%>
+              <%end%> 
+            </li>
+          <%end%>
+          <% if params[:value]=="client_show" %>
+            <li>
+              <i class="fa fa-pencil-square-o"></i>
+              <%= form_tag(new_invoice_path, :method => "post",:class=>"invoice_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+                <%= link_to "New Invoice","#",:id=>"new_invoice",:class=>"has_icon",:onclick=>"$('.invoice_url_link').submit();"%>
+              <%end%> 
+            </li>
+          <% else %>
+            <li> 
+              <i class="fa fa-pencil-square-o"></i>
+              <%= form_tag(new_invoice_path, :method => "post",:class=>"invoice_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                <%= link_to "New Invoice","#",:id=>"new_invoice",:class=>"has_icon",:onclick=>"$('.invoice_url_link').submit();"%>
+              <%end%> 
+            </li>
+          <% end %>
+        </ul>
+      <%end%>
+    <%else%>
+      <a data-toggle="dropdown" href="#" class="dropdown_button save-new-btn1">New <b class="caret" id="caret"></b></a>
+      <ul class="dropdown-menu edit_drop_menu" role="menu"><span class="arrow_tab"></span>
+        <%if @client.properties.blank?%>
+          <% if params[:value]=="client_show" %>
+            <li>
+              <i class="fa fa-quote-left"></i>
+              <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                <%= hidden_field_tag "quote_create",nil,:value=>"quote"%>
+                <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+                <%= link_to "New Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+              <%end%>
+            </li>
+           <% else %>
+              <li>
+                <i class="fa fa-quote-left"></i>
+                <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                  <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                  <%= hidden_field_tag "quote_create",nil,:value=>"quote"%>
+                  
+                  <%= link_to "New Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+                <%end%>
+              </li>
+           <% end %>
+        <%else%>
+          <% if params[:value]=="client_show" %>
+            <li>
+              <i class="fa fa-quote-left"></i>
+              <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                <%= hidden_field_tag "work_tab",nil,:value=>"work"%>  
+                <%= hidden_field_tag "value",nil,:value=>"client_show"%>  
+                <%= link_to "New Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+              <%end%>
+
+            </li>
+          <% else %>
+            <li>
+              <i class="fa fa-quote-left"></i>
+              <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                <%= link_to "New Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+              <%end%>
+            </li>
+          <% end %>
+        <%end%>
+        <%if @client.properties.blank?%>
+          <% if params[:value]=="client_show" %>
+            <li>
+              <i class="fa fa-legal"></i>
+              <%= form_tag(new_job_path, :method => "post",:class=>"job_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+                <%= hidden_field_tag "job_create",nil,:value=>"job"%>
+                <%= link_to "New job","#",:id=>"new_job",:class=>"has_icon",:onclick=>"$('.job_url_link').submit();"%>
+              <%end%> 
+
+            </li>
+           <% else %>
+              <li>
+                <i class="fa fa-legal"></i>
+                <%= form_tag(new_job_path, :method => "post",:class=>"job_url_link",:style=>" display: inline;") do %>
+                  <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                  <%= hidden_field_tag "job_create",nil,:value=>"job"%>
+                  <%= link_to "New job","#",:id=>"new_job",:class=>"has_icon",:onclick=>"$('.job_url_link').submit();"%>
+                <%end%> 
+              </li>
+           <% end %>
+        <%else%>
+          <li>
+            <i class="fa fa-legal"></i>
+            <%= form_tag(new_job_path, :method => "post",:class=>"job_url_link",:style=>" display: inline;") do %>
+              <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+              <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+              <%= link_to "New job","#",:id=>"new_job",:class=>"has_icon",:onclick=>"$('.job_url_link').submit();"%>
+            <%end%> 
+          </li>
+        <%end%>
+        <% if params[:value]=="client_show" %>
+          <li>
+            <i class="fa fa-pencil-square-o"></i>
+            <%= form_tag(new_invoice_path, :method => "post",:class=>"invoice_url_link",:style=>" display: inline;") do %>
+              <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+              <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+              <%= link_to "New Invoice","#",:id=>"new_invoice",:class=>"has_icon",:onclick=>"$('.invoice_url_link').submit();"%>
+            <%end%> 
+          </li>
+        <% else %>
+          <li>
+            <i class="fa fa-pencil-square-o"></i>
+            <%= form_tag(new_invoice_path, :method => "post",:class=>"invoice_url_link",:style=>" display: inline;") do %>
+              <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+              <%= link_to "New Invoice","#",:id=>"new_invoice",:class=>"has_icon",:onclick=>"$('.invoice_url_link').submit();"%>
+            <%end%> 
+          </li>
+        <% end %>
+      </ul>
+    <%end%>    
+  </div>
+  <div class="tab_selector">
+    <a id="tab_active_work" class="selected" href="#tab1" data-onclick-switch-tabs="#active_work" data-container=".fieldset" onclick="$('.selected').removeClass('selected'); $(this).addClass('selected');">Active Work</a>
+    <%if current_user.user_type=="admin"%>
+        <a id="tab_client_quotes" class="" href="#tab2" data-onclick-switch-tabs="#client_quotes" data-container=".fieldset" onclick="$('.selected').removeClass('selected'); $(this).addClass('selected');">Estimate</a>
+
+    <%else%>
+      <%if set_view_permission_for_work_client_property(@team_member.permission.permission_quotes)%>
+        <a id="tab_client_quotes" class="" href="#tab2" data-onclick-switch-tabs="#client_quotes" data-container=".fieldset" onclick="$('.selected').removeClass('selected'); $(this).addClass('selected');">Estimate</a>
+      <%end%>
+      <%end%>
+    <%if current_user.user_type=="admin"%>
+      <a id="tab_client_work_orders" class="" href="#tab3" data-onclick-switch-tabs="#client_work_orders" data-container=".fieldset" onclick="$('.selected').removeClass('selected'); $(this).addClass('selected');">Work Order</a>
+
+    <%else%>
+      <%if set_view_permission_for_work_client_property(@team_member.permission.permission_jobs)%>
+        <a id="tab_client_work_orders" class="" href="#tab3" data-onclick-switch-tabs="#client_work_orders" data-container=".fieldset" onclick="$('.selected').removeClass('selected'); $(this).addClass('selected');">Work Order</a>
+      <%end%>  
+    <%end%>  
+    <%if current_user.user_type=="admin"%>
+      <a id="tab_client_invoices" class="" href="#tab4" data-onclick-switch-tabs="#client_invoices" data-container=".fieldset" onclick="$('.selected').removeClass('selected'); $(this).addClass('selected');">Invoices</a>
+    
+    <%else%>
+      <%if set_view_permission_for_work_client_property(@team_member.permission.permission_invoices)%>
+        <a id="tab_client_invoices" class="" href="#tab4" data-onclick-switch-tabs="#client_invoices" data-container=".fieldset" onclick="$('.selected').removeClass('selected'); $(this).addClass('selected');">Invoices</a>
+      <%end%> 
+    <%end%> 
+  </div>
+</div>

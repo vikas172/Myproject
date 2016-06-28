@@ -1,0 +1,6 @@
+class RemoveColumnToAddOnStatus < ActiveRecord::Migration
+  def change
+  	remove_column :add_on_statuses, :paid
+  	remove_column :add_on_statuses, :charge
+  end
+end

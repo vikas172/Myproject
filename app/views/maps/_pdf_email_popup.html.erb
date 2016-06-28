@@ -1,0 +1,19 @@
+<!-- Modal -->
+<div class="modal fade" id="print_route" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Route direction Pdf And Email</h4>
+      </div>
+      <div class="modal-body">
+        <p>If you want to download pdf for optimize route.</p>
+        <%= link_to "Print Route" ,"#",:onclick=>"$('#route_pdf_display').submit();",:class=>"button_new_index" ,:data=>{:dismiss=>"modal"} ,:style=>"float:left"%>
+        </br>
+        </br>
+        <p>If you want to mail download pdf file for optimize route.</p>
+        <%= link_to "Email Routes" ,"#",:onclick=>"$('#route_pdf_email').submit();",:data=>{:dismiss=>"modal"},:class=>"button_new_index",:style=>"float:left"%>
+      </div>
+    </div>
+  </div>
+</div>

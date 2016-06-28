@@ -1,0 +1,16 @@
+<%= form_for :postcards ,:url=>"/postcards" do |f| %>  
+
+  <div class="message">
+    <div class="row">
+      <div class="span2">Message:</div>
+      <div class="span2"><%= f.text_area :message , cols: "30", rows: "10"%></div>
+    </div>
+  </div>
+  <%if !params[:properties].blank?%>
+  	<% params[:properties].each do |key,value| %>
+    	<%= hidden_field_tag "filters[#{key}]",value %> 
+  	<% end %>
+  <% end %>
+
+ 	<%= f.submit "Add Postcard",:class=>"button_new_create save-new-btn1 pull-right",:style=>"margin-top: 19px;"%>
+<% end %>

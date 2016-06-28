@@ -1,0 +1,40 @@
+<div id="p_scents">
+  <%if !@client.phones.first.blank?%> 
+    <%if !@client.phones.first.primary_phone.blank?%>
+      <% @client.phones.first.primary_phone.each_with_index do |primary_phone,index|%>
+        <p style="height:43px">
+          <%if ((primary_phone == "false") || (primary_phone ==""))%>
+            <a class="star click_ignore phone_star" href="" data-remote="true" data-tooltip="Make Primary" data-onclick-primary-star="true" id="primary_phone_a_<%=index%>" style="display: inline-block; float:left;"></a>
+            <input type="hidden" value="false" name="primary_phone[]" id="primary_phone_<%=index%>">
+          <% else %>
+            <a class="star click_ignore on phone_star" href="" data-remote="true" data-tooltip="Make Primary" data-onclick-primary-star="true" id="primary_phone_a_<%=index%>" style="display: inline-block; float:left;"></a>
+            <input type="hidden" value="true" name="primary_phone[]" id="primary_phone_<%=index%>">
+          <% end %>
+            <%= select_tag("ph_initial[]" ,options_for_select([["Main", "Main"], ["Work", "Work"], ["Home", "Home"], ["Fax", "Fax"], ["Other", "Other"]],:selected=> @client.phones.first.phone_initial[index]),:style=>"")%>
+      
+           <%= text_field_tag "ph_number[]" ,nil,:value=>@client.phones.first.phone_number[index] ,:placeholder=> "phone number..." , :id=>'textbox1',:style=>""%>
+           <b class="remScnt btn btn" >-</b> 
+        </p>    
+      <%end%>
+    <%else%>
+      <p style="height:43px;"><label for="p_scnts">
+        <a class="star click_ignore phone_star" href="" data-remote="true" data-tooltip="Make Primary" data-onclick-primary-star="true" id="primary_phone_a_0" style="display: inline-block;"></a>
+        <input type="hidden" value="false" name="primary_phone[]" id="primary_phone_0">
+        <select  name="ph_initial[]" id="p_scnt"><option value="Main">Main</option><option value="Work">Work</option><option value="Mobile">Mobile</option><option value="Home">Home</option><option value="Fax">Fax</option><option value="Other">Other</option></select>
+        <input type="text" id="p_scnt" size="20" name="ph_number[]" value="" placeholder="phone number..."/>
+       </label>
+        <b class="remScnt btn btn">-</b>
+      </p>
+    <%end%>
+  <%end%>
+</div>
+<p id="addScnt"><a herf="#">+add phone</a></p>  
+<style>
+    @-moz-document url-prefix() {
+      #edit_phone{
+   display: -moz-inline-box ! important;}
+    }
+   #addScnt1 a {
+    margin-right: 205px !important;
+}
+  </style>

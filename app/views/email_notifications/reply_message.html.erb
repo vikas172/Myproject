@@ -1,0 +1,12 @@
+<div class="client_index">
+	<div class="main_container">
+		<%=form_tag message_create_email_notifications_path,:class=>"user_form" do %>
+			<%= text_field_tag "email_notification[to]" ,nil,:value=>params[:from] ,:readonly=>true%></br>
+			<%= text_field_tag "email_notification[from]" ,nil,:value=>params[:to] ,:readonly=>true%></br>
+			<%= text_area_tag "email_notification[body]" %></br>
+			<%= hidden_field_tag "email_notification[user_id]",nil,:value=>params[:user_id] %></br>
+			<%= hidden_field_tag "email_notification[email_type]",nil,:value=>"inbox" %>
+			<%= submit_tag "reply",:class=>"button_new_create"%>
+		<%end%>
+	</div>
+</div>

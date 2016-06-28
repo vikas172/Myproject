@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+      <h4 class="modal-title" id="myModalLabel">Message show</h4>
+    </div>
+    <div class="modal-body">
+    	<div>
+        <table class="table"> 
+          <tr>
+            <td>From:</td>
+            <td><%= @email.from%></td>
+          </tr>
+          <tr>
+            <td>To:</td>
+            <td><%= @email.to%></td>
+          </tr>
+          <tr>
+            <td>Body:</td>
+            <td><%= @email.body%></td>
+          </tr>
+          <tr>
+            <td>Date:</td>
+            <td><%= @email.created_at.to_date%></td>
+          </tr>
+        </table>
+     	</div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

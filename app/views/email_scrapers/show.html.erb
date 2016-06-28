@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @email_scraper.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @email_scraper.email %>
+</p>
+
+<p>
+  <strong>Profession:</strong>
+  <%= @email_scraper.profession %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @email_scraper.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @email_scraper.state %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @email_scraper.address %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @email_scraper.country %>
+</p>
+
+<%= link_to 'Edit', edit_email_scraper_path(@email_scraper) %> |
+<%= link_to 'Back', email_scrapers_path %>

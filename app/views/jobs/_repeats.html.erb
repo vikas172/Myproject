@@ -1,0 +1,69 @@
+<div class="modal fade bs-example-modal-sm" id="repeatModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style=" display: none; width: 20%;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Repeat</h4>
+      </div>
+      <div class="modal-body">
+				<%= form_for @repeat, url: {action: "repeat"}, remote: true,:html=>{ :class=>"repeat-create"} do |f| %>
+					<p> <span for="rs_frequency">Frequency:</span>
+						<%= f.select :frequency, options_for_select([["Daily", "Daily"],["Weekly", "Weekly"], ["Monthly", "Monthly"]],:selected=>@repeat.frequency), :class => "rs_frequency" %>
+					</p>
+					<%= render :partial => "jobs/repeats_edit", :locals => { :f => f }%>
+
+					<div class="yearly_options freq_option_section" style="display: none;"> 
+						<p> Every <%= f.text_field :yearly_interval, size: "2", value: "1", class: "rs_yearly_interval rs_interval" %> year(s) </p> 
+					</div> 
+					<p class="rs_summary" style="width: 180px;"> <span id="sum_daily"><%= get_summary(@repeat)%></span> </p>
+					<div class="controls">
+				<% end %>
+				
+				
+      </div>
+      <div class="modal-footer">
+      	<%= link_to "OK", "#", id: "repeat_job_save", class: "btn btn-default rs_save" %>
+      	<%= link_to "Cancel", "#", id: "repeat_job_save", class: "btn btn-default rs_cancel", data: {dismiss: "modal"} %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$('.rs_dialog a').click(function (event) {
+  event.preventDefault();
+  // or use return false;
+});
+job_repeat();
+
+ $("body").on('click',".days",function(){   
+  var day_value=[];                          
+	$(".day_holder").children("a.selected").each(function(){
+	  day_value.push($(this).attr("data-value"))
+	})
+	$("#day_holder_").val(day_value)
+})
+
+$("body").on('click',".calender-day",function(){   
+  var calender_day=[];                          
+	$(".rs_calendar_day").children("a.selected").each(function(){
+	  calender_day.push($(this).attr("data-value"))
+	})
+	$("#calender_day_").val(calender_day)
+})
+
+$("body").on('click',".calender-week",function(){   
+  var calender_week=[];                          
+	$(".rs_calendar_week").children("a.selected").each(function(){
+	  calender_week.push($(this).attr("instance")+"-"+$(this).attr("day"))
+	})
+	$("#calander_week_").val(calender_week)
+})
+
+</script>
+<style>
+	a.selected {
+		background-color: #89a;
+		color: #fff;
+	}
+</style>

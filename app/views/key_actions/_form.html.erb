@@ -1,0 +1,53 @@
+<%= form_for(@key_action) do |f| %>
+  <% if @key_action.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@key_action.errors.count, "error") %> prohibited this key_action from being saved:</h2>
+
+      <ul>
+      <% @key_action.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :key_id %><br>
+    <%= f.number_field :key_id %>
+  </div>
+  <div class="field">
+    <%= f.label :action_type_id %><br>
+    <%= f.number_field :action_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sequence %><br>
+    <%= f.number_field :sequence %>
+  </div>
+  <div class="field">
+    <%= f.label :say %><br>
+    <%= f.text_field :say %>
+  </div>
+  <div class="field">
+    <%= f.label :play %><br>
+    <%= f.text_field :play %>
+  </div>
+  <div class="field">
+    <%= f.label :dial %><br>
+    <%= f.text_field :dial %>
+  </div>
+  <div class="field">
+    <%= f.label :record %><br>
+    <%= f.text_field :record %>
+  </div>
+  <div class="field">
+    <%= f.label :gather %><br>
+    <%= f.text_field :gather %>
+  </div>
+  <div class="field">
+    <%= f.label :sms %><br>
+    <%= f.text_field :sms %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

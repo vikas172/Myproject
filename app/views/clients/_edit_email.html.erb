@@ -1,0 +1,40 @@
+<div id="p_scents1" style="margin-top: 1%;"><%if !@client.emails.first.blank?%>
+  <%if !@client.emails.first.primary_email.blank?%>
+    <%@client.emails.first.primary_email.each_with_index do |primary_email,index| %>
+      <p style="height:43px;">
+        <%if ((primary_email == "false") || (primary_email == ""))%>
+          <a class="star click_ignore email_star" href="" data-remote="true" data-tooltip="Make Primary" data-onclick-primary-star="true" id="primary_email_a_<%=index%>" style="display: inline-block; float:left;"></a>
+          <input type="hidden" value="false" name="primary_email[]" id="primary_email_<%=index%>">
+        <% else %>
+          <a class="star click_ignore on email_star" href="" data-remote="true" data-tooltip="Make Primary" data-onclick-primary-star="true" id="primary_email_a_<%=index%>" style="display: inline-block; float:left;"></a>
+          <input type="hidden" value="true" name="primary_email[]" id="primary_email_<%=index%>">   
+        <% end %>
+
+          <%= select_tag("email_initial[]" ,options_for_select([["Main", "Main"], ["Work", "Work"],["Other", "Other"]],:selected=> @client.emails.first.email_initial[index]),:style=>"")%>
+
+          <%= text_field_tag "email[]" ,nil,:value=> @client.emails.first.email[index],:placeholder=> "email address..." ,:class=>"validate_email", :id=>'textbox1',:style=>""%>
+
+          <b class="remScnt1 btn btn">-</b>
+        </p>
+      <%end%>
+    <%else%>
+      <p style="height:43px;"><label for="p_scnts1">
+        <a class="star click_ignore email_star" href="" data-remote="true" data-tooltip="Make Primary" data-onclick-primary-star="true" id="primary_email_a_0" style="display: inline-block;"></a>
+        <input type="hidden" value="false" name="primary_email[]" id="primary_email_0">
+         <select  name="email_initial[]" id="p_scnt1"><option value="Main">Main</option><option value="Work">Work</option><option value="Mobile">Personal</option><option value="Other">Other</option></select>
+         <input type="email" id="p_scnt1" size="20" name="email[]" value="" placeholder="email address..." class="validate_email"/></label>
+        <b class="remScnt1 btn btn">-</b>
+      </p>
+    <%end%>  
+  <%end%>
+</div>
+<p id="addScnt1"><a herf="">+add email</a></p>
+<style>
+  @-moz-document url-prefix() {
+    #edit_email{
+ display: -moz-inline-box ! important;}
+  }
+  #addScnt a {
+    margin-right: 205px !important;
+}
+</style>

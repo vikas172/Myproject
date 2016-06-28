@@ -1,0 +1,13 @@
+<%if params[:id]=="quote"%>
+	<%= link_to ' Or Select An Existing Customer', client_select_path,:class=>"button_new_create" ,:style=> "float: right; margin-right: 8px;"%>
+<%elsif params[:id]=="job"%>
+	<%= link_to 'Cancel', jobs_path ,:class=>"model_cancel_button"%>
+<%elsif params[:id]=="invoice"%>
+	<%= link_to 'Cancel', invoices_path ,:class=>"model_cancel_button"%>
+<%elsif params[:id]=="client"%>
+	<%= link_to 'Cancel', properties_path,:class=>"model_cancel_button"%>
+<%elsif params[:id]=="property"%>
+	<%= link_to 'Cancel',properties_path ,:class=>"model_cancel_button"%>
+<%else%>
+	<%= link_to 'Cancel', clients_path ,:class=>"model_cancel_button pull-right"%>
+<%end%>

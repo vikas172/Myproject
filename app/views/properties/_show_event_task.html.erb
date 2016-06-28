@@ -1,0 +1,113 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <%if params[:type]=="event"%>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= @event.property.client.first_name%></h4>
+      </div>
+      <div class="modal-body">
+        <div class="span3" style="float:left;">
+          <div>
+            <label  style="margin-right: 5px;">Schedule: </label>
+            <b><%=@event.start_date%>: <%= @event.start_time.strftime("%I:%M:%S %p") rescue ""%> - <%= @event.end_time.strftime("%I:%M:%S %p") rescue ""%></b>
+          </div>
+
+          <div>
+            <%if !@event.description.blank?%>
+              <%= @event.description%>
+            <%else%>
+              No description
+            <%end%>  
+          </div>
+         </div>
+        <div class="span2" style="float:right;">
+          <div class="" style="text-align:right;margin-bottom:10px;">
+            <%= link_to edit_event_task_path(:event_id=>@event.id), class: "button edit spin_on_click", data: {toggle: "modal", target: "#edit_visit_plan_modal"}, remote: true do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <a href="/delete_event_task?event_id=<%=@event.id%>&event_task=event" method='delete' data-confirm="Are you sure?" class="button trash spin_on_click">
+            <i class="fa fa-minus-circle"></i> Delete
+            </a>
+          </div> 
+        </div>
+
+        <div class="span2 property_display_task" style="margin: 6% 0 10px 27% !important;">
+          <div class="description attachments">
+            <ul>
+              <li class="strong">
+                <i class="fa fa-user fa-2"></i> &nbsp;&nbsp;
+                <a href="/clients/<%=@event.property.client.id%>">
+                  <%=@event.property.client.first_name%> 
+                </a>
+              </li> 
+              <li class="">
+                <i class="fa fa-phone"></i>&nbsp;&nbsp;
+                <%=@event.property.client.mobile_number%>
+              </li>
+              <li class="strong">
+                <i class="fa fa-home"></i>&nbsp;&nbsp;
+                <a href="/properties/<%= @event.property.id%>"> <%= @event.property.try(:street)%>&nbsp;<%= @event.property.try(:street2)%><br><%= @event.property.try(:city)%>, <%= @event.property.try(:state)%>  <%= @event.property.try(:zipcode)%> </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>  
+    <%else%>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= @basic.property.client.first_name%></h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="span3" style="float:left;">
+          <%if @basic.is_completed==true%>
+            <%= check_box_tag "check",nil,true,:onclick=>"basicPropertyTask(#{@basic.id}, false, '#{current_user.id}',#{@basic.property.id})"%>
+          <%else%>
+            <%= check_box_tag "check",nil,false,:onclick=>"basicPropertyTask(#{@basic.id}, true, '#{current_user.id}',#{@basic.property.id})"%>
+          <%end%>
+          <b> Completed ?</b>
+          </br>
+          Schedule: <b>Unscheduled</b>
+          </br>
+          Assigned to: 
+          <%@basic.assigned_to.each do |assign_id| %>
+            <b><%= assign_user_fullname(assign_id)%></b>
+          <%end%>
+
+        </div>
+
+        <div class="span2" style="float:right;">
+          <div class="" style="text-align:right;margin-bottom:10px;">
+            <%= link_to edit_event_task_path(:basic_id=>@basic.id), class: "button edit spin_on_click", data: {toggle: "modal", target: "#edit_visit_plan_modal"}, remote: true do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <a href="/delete_event_task?basic_id=<%=@basic.id%>&event_task=basic" method='delete' data-confirm="Are you sure?" class="button trash spin_on_click">
+            <i class="fa fa-minus-circle"></i> Delete
+            </a>
+          </div> 
+        </div>
+
+        <div class="span2 property_display_task" style="margin: 6% 0 10px 27% !important;">
+          <div class="description attachments">
+            <ul>
+              <li class="strong">
+                <i class="fa fa-user fa-2"></i> &nbsp;&nbsp;
+                <a href="/clients/<%=@basic.property.client.id%>">
+                  <%=@basic.property.client.first_name%> 
+                </a>
+              </li> 
+              <li class="">
+                <i class="fa fa-phone"></i>&nbsp;&nbsp;
+                <%=@basic.property.client.mobile_number%>
+              </li>
+              <li class="strong">
+                <i class="fa fa-home"></i>&nbsp;&nbsp;
+                <a href="/properties/<%= @basic.property.id%>"> <%= @basic.property.try(:street)%>&nbsp;<%= @basic.property.try(:street2)%><br><%= @basic.property.try(:city)%>, <%= @basic.property.try(:state)%>  <%= @basic.property.try(:zipcode)%> </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <%end%>  
+  </div>
+</div>

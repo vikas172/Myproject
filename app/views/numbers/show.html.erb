@@ -1,0 +1,33 @@
+<div class="client_index">
+  <div class="main_container">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Account sid:</strong>
+  <%= @number.account_sid %>
+</p>
+
+<p>
+  <strong>Auth token:</strong>
+  <%= @number.auth_token %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @number.phone_number %>
+</p>
+
+<p>
+  <strong>Phone sid:</strong>
+  <%= @number.phone_sid %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @number.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_number_path(@number) %> |
+<%= link_to 'Back', numbers_path %>
+</div>
+</div>

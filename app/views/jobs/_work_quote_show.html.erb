@@ -1,0 +1,149 @@
+<div class="row work-box horizontal">
+  <div class="module pad_bottom half border_bottom">
+    <div class="col-9">
+      <h3><a href="/quotes">Quotes</a></h3>
+    </div>
+
+    <div class="col-3">
+      <%if current_user.user_type=="admin"%>
+        <button class="button_new_index" data-toggle="modal" data-target="#newqoute" >+ New Estimate</button>
+      <%else%>
+        <% if set_view_permission_readwritedelete(@team_member.permission.permission_quotes)!="read"%>
+          <button class="button_new_index" data-toggle="modal" data-target="#newqoute" >+ New Estimate</button>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+
+  <div class="module pad_top border_top">               
+    <div class="column_thirds">
+      <a href="/quotes?type_filter=Draft">
+        <div class="summary">
+          <div class="numbers">
+            <div class="button inactive">
+              <span><%if !@quotes_draft.blank?%><%=@quotes_draft.count %><%else%>0<%end%></span>
+            </div>   
+          </div><!-- end of column left <-->
+          <div class="col-9">
+            <h3 class="inactive" style="font-size: 20px;">
+              Drafts
+            </h3>        
+            <p>
+              Unsent <span style=" line-height: 150%; " class=" ">$<%@total=0%>
+              <%if !@quotes_draft.blank?%>
+                <%@quotes_draft.each do |quote|%>
+                  <%@total= @total+total_amount(quote)%>
+                <%end%>
+              <%end%>  
+              <%= @total%>
+              </span>
+            </p>
+          </div><!-- end of column right -->
+        </div> <!-- end of summary -->
+      </a>
+      <%if !@quotes_draft.blank?%>
+        <div class="module">
+          <table style="width:100%;">
+            <tbody><tr class="heading">
+              <td style="text-align: left; font-weight: bolder;" >Customer</td>
+              <td align="right"  style="font-weight: bolder;" >Created On</td>
+            </tr>
+              <%@quotes_draft.sort.pop(3).each do |quotes_draft|%>
+                <tr onclick="location.href='/quotes/<%=quotes_draft.id%>'" class="link">
+                  <td><%=quotes_draft.property.client.first_name rescue nil %>&nbsp;<%=quotes_draft.property.client.last_name rescue nil%></td>
+                  <td align="right" ><%= quotes_draft.created_at.strftime("%b %d")%></td>
+                </tr>
+              <%end%>  
+            </tbody>
+          </table>
+        </div>
+        <a class="button_new_index" href="/quotes?type_filter=draft" class="button alpha_top align_right" style=" margin-right: 15%;">View all <%=@quotes_draft.count rescue nil%> </a>
+      <%end%>
+    </div>
+    <div class="column_thirds">
+      <a href="/quotes?type_filter=Sent">
+        <div class="summary">
+          <div class="numbers">
+            <div class="button pending">
+              <span>
+                <%if !@quotes_sent.blank?%>
+                  <%if !@quotes_draft.blank?%>
+                    <%=@quotes_sent.count+ @quotes_draft.count%>
+                  <%else%>
+                    <%=@quotes_sent.count%>
+                  <%end%>
+                <%elsif !@quotes_draft.blank?%> 
+                  <%=@quotes_draft.count%>
+                <%else%>
+                  0
+                <%end%> 
+              </span>
+            </div>   
+          </div><!-- end of column left <-->
+          <div class="col-9">
+            <h3 class="pending" style="font-size: 20px;">
+              Pending
+            </h3> 
+            <p>
+              Prospect <span style=" line-height: 150%; " class=" ">$
+              <%@total_sent=@total%>
+              <%if !@quotes_sent.blank? %>
+                <%@quotes_sent.sort.pop(3).each do |quote|%>
+                  <%@total_sent= @total_sent+total_amount(quote)%>
+                <%end%>
+              <%end%>  
+                <%=@total_sent%>
+              </span>
+            </p>
+          </div><!-- end of column right -->
+        </div><!-- end of summary -->
+      </a>
+      <%if !@quotes_sent.blank?%>
+        <div class="module">
+          <table style="width:100%;">
+            <tbody>
+              <tr class="heading">
+                <td style="text-align: left; font-weight: bolder;" >Customer</td>
+                <td style="text-align: left; font-weight: bolder;" >Created On</td>
+                <td align="right"  style=" font-weight: bolder;" >Amount</td>
+              </tr>
+
+              <%@quotes_sent=@quotes_sent + @quotes_draft %>
+              <%@quotes_sent.sort.pop(3).each do |quotes_sent|%>
+                <tr onclick="location.href='/quotes/<%=quotes_sent.id%>'" class="link">
+                  <td><%=quotes_sent.property.client.first_name rescue nil%>&nbsp;<%=quotes_sent.property.client.last_name rescue nil%></td>
+                  <td class=""><%= quotes_sent.created_at.strftime("%b %d")%></td>
+                  <td align="right" >$<%= total_amount(quotes_sent)%></td>
+                </tr>
+
+              <%end%>  
+            </tbody>
+          </table>
+        </div>
+        <a class="button_new_index" href="/quotes?type_filter=sent" class="button alpha_top align_right" style="margin-right: 5%;">View all <%=@quotes_sent.count rescue nil %> </a>
+      <%end%>  
+    </div>
+                    
+    <div class="column_thirds">
+      <div class="summary">
+        <div class="numbers">
+          <a href="/quotes?type_filter=Won">
+            <div class="button active">
+              <span>0</span>
+            </div>
+          </a>    
+        </div><!-- end of column left <-->
+        <div class="col-9">
+          <a href="/quotes?type_filter=Won">
+            <h3 class="active" style="font-size: 20px;">
+              Approved
+            </h3>
+          </a>  
+          <p style="color:#1f518b;">
+            Converted <span style=" line-height: 150%; " class=" ">$0</span>
+          </p>
+        </div><!-- end of column right -->
+      </div><!-- end of summary -->
+    </div>
+  </div>
+</div>

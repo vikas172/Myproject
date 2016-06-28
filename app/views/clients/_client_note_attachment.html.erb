@@ -1,0 +1,60 @@
+<div id="notes_sidebar" class="fieldset" >
+  <h2 class="title1-font">Internal Notes &amp; Attachments</h2>
+  <div class="content">
+    <div id="notes_list" class="thicklist">
+      <%if current_user.user_type=="user"%>
+        <%if set_permission_attachment_note(@team_member)!= "read"%>
+          <div id="new_note" class="note  auto_new">
+            <%= form_tag({:action => :client_image_upload}, :multipart => true, id: "client_note_attachment_create") do %>
+              <%= text_area_tag :note, nil, :class=>"form-control",:placeholder=>"new note..." ,:style=>"width:97%;"%>   <br/> <br/> 
+              <%= hidden_field_tag :client_id,@client.id %>
+              <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer">Attach Files</div> 
+              <div id="attachment_field" style="display:none;">
+                <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control",:multiple=>true %>
+              </div>
+            <% end %>
+            <%= submit_tag "Save",:class=>"button_new_index", id: "note_submit", style: "display: none;", onclick: "$('form#client_note_attachment_create').submit();" %>
+            <div class="model_cancel_button cancel pull-right" style="display: none; ">Cancel</div>
+          </div> 
+        <%end%>
+      <%else%>
+        <div id="new_note" class="note  auto_new">
+          <%= form_tag({:action => :client_image_upload}, :multipart => true, id: "client_note_attachment_create") do %>
+            <%= text_area_tag :note, nil, :class=>"form-control",:placeholder=>"new note...",:style=>"width:97%;"%>   <br/> <br/> 
+            <%= hidden_field_tag :client_id,@client.id %>
+            <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer">Attach Files</div> 
+            <div id="attachment_field" style="display:none;">
+              <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control",:multiple=>true %>
+            </div>
+          <% end %>
+          <%= submit_tag "Save",:class=>"button_new_index save-new-btn1", id: "note_submit", style: "display: none;", onclick: "$('form#client_note_attachment_create').submit();" %>
+          <div class="model_cancel_button cancel pull-right" style="display: none;">Cancel</div>
+        </div> 
+      <%end%>
+      <%= render "attachment_display"%>
+      <%@client.notes.reverse.each do |note|%>
+        <div id = "noteshow_<%=note.id%>" class="note row no_hover" style="display:none"> 
+          <%= form_tag({:action => :update_note}, :multipart => true, id: "client_note_attachment") do %>
+            <br>
+            <p>
+              <%= link_to 'Delete',note_destroy_path(note_id: note), data: { confirm: 'Are you sure?' } %>
+            </p>
+            <%@note=Note.find(note.id)%>     
+            <%= text_area_tag 'note',note.note, :class=>"form-control",:style=>"width: 440px;height:100px;"%>   <br/> <br/> 
+            <%= hidden_field_tag :client_id,@client.id %>
+            <%= hidden_field_tag :note_id,note.id %>
+            <div id="attach">
+              <%= render "attachments" %>
+            </div>
+            <div id="attachment_field" style="display:block;">
+              <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control",:multiple=>true %>
+            </div>
+          <% end %>
+          <%= submit_tag "Save",:class=>"btn btn save-new-btn1", id: "note_submit", onclick: "$('form#client_note_attachment').submit();" %>
+          <%= link_to "Cancel", request.original_url, class: "model_cancel_button cancel" %>
+        </div>
+      <%end%>
+    </div>
+  </div>
+  <%= render "client_delete_model"%>
+</div>

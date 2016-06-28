@@ -1,0 +1,209 @@
+<% if params[:controller] == "home" %>
+	<div id="column_selector_model" class=" modal fade column_selector_model click_focus" tabindex="-1" role="tool-tip" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none">
+		<% if params[:action] == "quote_list" %>
+			<label>
+				<input type="checkbox" checked="checked" name="client_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="drafted_date"> Drafted Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="hash"> #
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="status">status
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "products_and_services" %>
+			<label>
+				<input type="checkbox" checked="checked" name="name"> Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="quote_qty"> Estimate Qty
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="quot_doller"> Estimate $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="on_job_qty"> On Work Orders Qty
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="on_job_doller"> On Work Orders $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="invoice_qty"> Invoiced Qty
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="invoiced_doller"> Invoiced $
+			</label>
+		<% elsif params[:action] == "visits_list" %>
+			<label>
+				<input type="checkbox" checked="checked" name="date"> Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="times"> Time
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="client_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="street"> Street
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="city"> City
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="assign_to"> Assign to			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="job_dtail"> Work Order Details
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="line_items"> Line Items
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="duration"> Duration
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> Work Order $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "job_list" %>
+			<label>
+				<input type="checkbox" checked="checked" name="created"> Created
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="client_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="description"> Description
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="scheduled"> Scheduled
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="completed"> Completed
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="hash"> #
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="visits_assigned_to"> Visits Assigned To
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="client_email"> Customer Email
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "recurring_contracts" %>
+			<label>
+				<input type="checkbox" checked="checked" name="created"> Created
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="client_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="description"> Description
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="contract_start"> Contract Start
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="closed"> Closed
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="completed_visits"> Completed Visits
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="job"> Job #
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="visits_assigned_to"> Visits Assigned To
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="billing_type"> Billing Type
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="invoices"> Invoices
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="line_items"> Line Items
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "expenses" %>
+			<label>
+				<input type="checkbox" checked="checked" name="item_name"> Item Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="detail"> Detail
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="dolller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="entered_by"> Entered By
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="reimburesable_to"> Reimburesable To
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="job"> Job #
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="date"> Date 
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="act_code"> Act Code 
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open 
+			</label>
+		<% elsif %>
+			<label>
+				<input type="checkbox" checked="checked" name="cleint_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="sent_date"> Sent Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="to"> To
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="cc"> CC
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="subject"> Subject
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="status1"> Status
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="type"> Type
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="sent_time"> Sent Time
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="opened_date"> Opened Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% end %>
+	</div>
+<% end %>

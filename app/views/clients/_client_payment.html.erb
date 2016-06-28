@@ -1,0 +1,72 @@
+<!--  -->
+<div class="modal fade" id="client_payment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create Payment Record</h4>
+      </div>
+      <div class="modal-body">
+        <div class="content_invoice balance_adjustment">
+          <%= form_for @payment_invoice, url: {:action=>"payment" ,:controller=>"clients"}, :html => {:class=>"compressed_form payment_form" } do |f| %>
+            <%= f.hidden_field :transaction_type, :value=>"" %>
+            <%= f.hidden_field :user_id, :value=>current_user.id %>
+            <p>
+              <label for="balance_adjustment_adjustment_type">Transaction Type</label>
+              <% if @client_initial_balance.blank? %>
+                <%= f.select :transaction_type, options_for_select([["Payment","payment"],["Deposit","deposit"],["----------","----------"],["Initial Balance","initial_balance"]]),:class=>"invoice_payment_method"%>
+              <% else %>
+                <%= f.select :transaction_type, options_for_select([["Payment","payment"],["Deposit","deposit"]]),:class=>"invoice_payment_method"%>
+              <% end %>
+            </p>
+
+            <p style="display:none;" id="initial_balance_warning">
+              <strong>Note:</strong> This refers to the Customers initial outstanding receivables when added to CopperService. Not for recording ongoing transactions.
+            </p>
+
+            <p class="strong">
+              <label style="font-size:14px; margin-top:3px" for="balance_adjustment_clean_amount">Payment Amount $</label>
+              <%= f.text_field :pay_amount,:value=>"",:id=>"payment_amount"%>
+            </p>
+
+            <p class="ba_entry_date" id="payment_client_entry">
+              <label for="balance_adjustment_clean_entry_date">Entry Date</label>
+              <%= f.text_field :entry_date,:value=>Date.today.strftime("%m/%d/%Y"),:class=>"datepicker"%>
+            </p>
+
+            <p id="payment_client">
+              <label for="balance_adjustment_payment_type">Payment Method</label>
+              <%= f.select :pay_method, options_for_select([["Cash","cash"],["Cheque","cheque"],["Credit Card","credit_card"],["Bank Transfer","bank_transfer"],["Money Order","money_order"],["Other","other"]]),:class=>"invoice_payment_method"%>
+            </p>
+
+            <p style="display:none;" id="cheque_number">
+              <label for="balance_adjustment_cheque_number">Cheque #</label>
+              <%= f.text_field :cheque_number ,:id=>"cheque_number_text"%>
+            </p>
+
+            <p style="display:none;" id="cc_transaction_number">
+              <label for="balance_adjustment_cc_transaction_number">Transaction #</label>
+              <%= f.text_field :transaction_number ,:id=>"transaction_number_text"%>
+            </p>
+
+            <p style="display:none;" id="confirmation_number">
+              <label for="balance_adjustment_confirmation_number">Confirmation #</label>
+              <%= f.text_field :confirmation_number,:id=>"confirmation_number_text"%>
+            </p>
+
+            <p>
+              <label for="balance_adjustment_note">Additional Note</label>
+              <%=f.text_area :additional_note,:value=>"" %>
+            </p>
+
+            <p></p>
+
+            <p></p>
+            <%= f.submit "save",:class=>"model_save_button save-new-btn1" %>
+            <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

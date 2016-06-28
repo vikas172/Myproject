@@ -1,0 +1,57 @@
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Payment</h4>
+      </div>
+      <div class="modal-body">
+        <div id="client_selector">
+          <p>Which Customer would you like to use for this Invoice?</p> 
+          <br/>
+
+          <div class ="search-div row">
+            <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Clients...",:require=>true,:id=>"search_input_job_client_model",:style=>"width: 48%;",:onkeyup => "searchClientInvoiceModel($(this).val())" %>
+            <span class="or">or</span>
+          
+          <%= link_to 'Create New Customer', new_client_path(:id=>"invoice"),:class=>"button_new_create",:style=>"float:right;"%><br/><br/>
+          </div>
+          <h4>Some Recently Used Clients:</h4><br/>
+
+          <ul class="thicklist invoice_client "id="client_list_display"> 
+            <%if !@clients.blank?%>
+              <% @clients.each do |client| %>
+                <li>
+                  <div class="popover_user">
+                    <i class="fa fa-user fa-2"></i>
+                  </div>
+                  <div class="user_contain_search">
+                    <%= link_to client_payment_path(client), remote: true, class: "row spin_on_click", data: {toggle: "modal", target: '#payment_show'} do %>   
+                      <h3 class="client_name individual">
+                        <%= client.initial rescue "" %>
+                        <%= client.first_name.titleize rescue "" %>
+                        <%= client.last_name.titleize rescue "" %>&nbsp;(<%=client.company_name.titleize rescue "" %>)
+                      </h3>
+                      <span class="last_active" style="float:right;">
+                        Activity &nbsp;<%= time_ago_in_words(client.created_at, include_seconds: true) rescue "" %>&nbsp; ago
+                      </span>
+                      <span style="display:inline-block; width:120px; padding-left:25px;"><%= client.properties.count rescue "" %> Pool</span>
+                      <span><%= client.phone_number rescue "" %></span>
+                    <% end %>
+                  </div>
+                </li>
+              <% end %>
+            <% else %>
+              No result found
+            <%end%>
+          </ul>
+        </div>  
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  paymentClient();
+</script>

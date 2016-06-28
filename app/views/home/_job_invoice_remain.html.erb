@@ -1,0 +1,125 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Reminder: Invoice Sample Customer for Work Order #<%= @job.id rescue "" %></h4>
+    </div>
+    <div class="modal-body">
+      <div class="content to_do show">
+        <div style="float:left">
+          <div><label>Schedule: </label><b><%= @job.start_date.strftime("%m/%d/%Y") rescue "" %> Anytime</b></div>
+          <div class="assigned_to">
+            Not Assigned Yet
+          </div>
+        </div>
+        <div class="dialog_box ui-draggable">
+          <div class="content to_do show">
+            <div style="float:right">
+              <%= link_to "#", class: "button edit spin_on_click", data: {toggle: "modal", target: "#invoice_reminder"}, remote: true do %>
+                <img alt="Edit" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/pencil-d1f7539f9f3b56981e39beebbe7597c6.svg" title="Edit">
+              <% end %>
+              <a href="jobs/<%= @job.id %>" method='delete' data-confirm="are you sure?" class="button trash spin_on_click">
+                <img alt="Delete" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/trash-fcc0d3720f0cd5c255fe5f8691a17f46.svg" title="Delete">
+              </a>
+            </div>
+            <div class="attachments_holder">
+              <div class="description attachments">
+                <ul>
+                  <li class="work_order strong"><%= link_to "Job ##{@job.id}", job_path(@job) %></li>
+                  <li class="strong client"><%= link_to "#{@client.first_name rescue ""} #{@cient.last_name rescue ""}", client_path(@client) %></li>
+                  <li class="phone"><%= @client.phones.first[0] rescue "" %></li>
+                  <li class="property strong"><%= link_to "#{@property.street rescue ""} #{@property.street2 rescue ""} #{@property.city rescue ""} #{@property.state rescue ""}, #{@property.country rescue ""}", property_path(@property) %></li>
+                </ul>
+              </div>
+            </div>
+            <p class="description" style="clear:left; padding-top:20px">
+              Work Order was completed on <%= @job.complete_on.strftime("%m/%d/%Y") rescue "" %>, but no invoice has been created yet.<br>
+              <br>
+              Time to get paid.
+            </p>
+            <p>
+            <a class="button larger new spin_on_click" href="/genrate_job_invoice?job_id=<%= @job.id %>"><span class="plus">+</span>Make invoice now</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render "jobs/invoice_reminder" %>
+<style>
+.to_do .attachments ul {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+.attachments ul li {
+background-position: 0 1px;
+background-repeat: no-repeat;
+line-height: 20px;
+padding: 0 0 4px 22px;
+}
+.button {
+-webkit-transition: all 0.1s ease-in-out;
+-moz-transition: all 0.1s ease-in-out;
+transition: all 0.1s ease-in-out;
+margin: 0px;
+padding: 8px 10px;
+background: white;
+display: inline-block;
+box-sizing: border-box;
+border-radius: 3px;
+border: 1px solid #CCC;
+color: #444444;
+font: bold 12px "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+letter-spacing: 1px;
+text-decoration: none;
+text-transform: uppercase;
+text-shadow: 0px 1px 0px #FFF;
+box-shadow: 0 1px 0 #B3B3B3;
+}
+.button.new {
+background-color: #B87333;
+border: 1px solid #B87333;
+color: #FFFFFF;
+box-shadow: 0 1px 0 #447744;
+text-shadow: 0 1px 2px rgba(46,112,68,0.75);
+}
+.button.new:active {
+box-shadow: none;
+}
+.dialog_box .to_do.show .attachments_holder {
+  float: right;
+  clear: right;
+  margin-top: 10px;
+}
+.to_do .attachments_holder {
+border: 1px solid #ccc;
+padding: 5px 8px;
+margin: 0 0 10px 0px;
+width: 170px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+position: relative;
+background-color: #fff;
+z-index: 2;
+}
+.description {
+color: #595959;
+font-size: 13px;
+line-height: 16px;
+font-weight: normal;
+}
+.dialog_box_holder .dialog_box .content {
+padding: 15px;
+overflow-x: hidden;
+overflow-y: auto;
+}
+.button:not(.custom_icon) img{
+display: inline-block;
+position: relative;
+height: 16px;
+width: 16px;
+margin: -3px 1px -3px 1px;
+}
+</style>

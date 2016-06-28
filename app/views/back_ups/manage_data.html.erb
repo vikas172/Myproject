@@ -1,0 +1,84 @@
+<div class="client_index">
+  <div class="main_container">
+    <h2 class="title1-font" style="text-align:center;margin-bottom: 10px;">Manage Data</h2>
+    <h2 class="subheader">Import Data</h2>
+    <div class="row manage-data">
+      <h3>Import Customers</h3>
+      Here you can import new Customer data or update existing data.
+      <%=link_to "Import",csv_upload_path(:csv_file=>"clients"),:remote=>true, data: {toggle: "modal", target: '#client_modal'},:class=>"button",:style=>"float:right; margin-top:-15px;"%>
+      <%=link_to "Download Template File",download_template_path(:temp=>"clients"),:class=>"button",:style=>" float:right; margin-top:-15px; margin-right: 10px;"%>
+
+    </div>
+
+    <div class="row manage-data">
+      <h3>Import Work Orders</h3>
+      Here you can import Work Order Data.
+      <%=link_to "Import",csv_upload_path(:csv_file=>"jobs"),:remote=>true, data: {toggle: "modal", target: '#client_modal'},:class=>"button",:style=>"float:right; margin-top:-15px;"%>
+      <%=link_to "Download Template File",download_template_path(:temp=>"jobs"),:class=>"button",:style=>" float:right; margin-top:-15px; margin-right: 10px;"%>
+    </div>
+
+    <div class="row manage-data">
+      <h3>Import Inventory</h3>
+      Here you can import Inventory Data.
+      <%=link_to "Import",csv_upload_path(:csv_file=>"items"),:remote=>true, data: {toggle: "modal", target: '#client_modal'},:class=>"button",:style=>"float:right; margin-top:-15px;"%>
+      <%=link_to "Download Template File",download_template_path(:temp=>"items"),:class=>"button",:style=>" float:right; margin-top:-15px; margin-right: 10px;"%>
+    </div>
+
+    <h2 class="subheader-export">Export Data</h2>
+    <div class="row manage-data">
+      <h3>Export Customers</h3>
+      Here you can export all existing Customer data.
+      <%=link_to "Export",csv_generate_path(:csv_file=>"clients"),:class=>"button",:style=>"float:right; margin-top:-15px;"%>
+    </div>
+
+    <div class="row manage-data">
+      <h3>Export Work Orders</h3>
+      Here you can export Work Order Data.
+      <%=link_to "Export",csv_generate_path(:csv_file=>"jobs"),:class=>"button",:style=>"float:right; margin-top:-15px;"%>
+    </div>
+
+    <div class="row manage-data">
+      <h3>Export Inventory</h3>
+      Here you can export existing inventory data..
+      <%=link_to "Export",csv_generate_path(:csv_file=>"items"),:class=>"button",:style=>"float:right; margin-top:-15px;"%>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="client_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;"></div>
+
+<style type="text/css">
+  .manage-data:nth-of-type(odd) {
+    padding: 10px 20px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid #DDDDDE;
+    background: #f4f4f4;
+    color: #3E3E3E;
+  }
+  .manage-data:nth-of-type(even) {
+    border-top: 1px solid white;
+    background: #EAEAEA;
+    padding: 10px 20px;
+    color: #3E3E3E;
+  }
+  .manage-data h3 {
+    font-size: 16px;
+    font-weight: bold !important;
+    color: #3E3E3E;
+    line-height:0px!important;
+  }
+  h2.subheader {
+    font-size: 14px !important;
+    line-height: 10px !important;
+    padding: 15px 0px 11px 22px !important;
+    font-weight: bold !important;
+    border-bottom:1px solid #DDDDDD; 
+    border-top:1px solid #DDDDDD;
+  }
+  h2.subheader-export {
+    font-size: 14px !important;
+    line-height: 10px !important;
+    padding: 15px 0px 11px 22px !important;
+    font-weight: bold !important;
+  }
+</style>

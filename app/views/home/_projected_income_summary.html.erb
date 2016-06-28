@@ -1,0 +1,41 @@
+<div id="summary" style="margin:10px;">
+  <div data-dynamic="true" class="summary_bars">
+    <%= link_to("/reports/projected_income", :class=>"subsection_link #{get_selected_default}" ) do %>
+      <h3>
+        Outstanding
+        <span class="count"><%= @due_total_invoice.count %></span>
+      </h3>
+       <span data-value="<%= get_due_invoice_total("more_than_30", @due_total_invoice) %>" class="total" style="width: 330px;">$<%= get_due_invoice_total("", @due_total_invoice) %></span>
+    <% end %>
+    <div class="short_separator"></div><br><br><br><h4>Due In</h4>
+    <%= link_to("/reports/projected_income/7_days", :class=>"subsection_link #{get_selected("7_days")}" ) do %>
+      <h3>
+        < 7 days
+        <span class="count"><%= get_due_invoice_count("7_days", @due_total_invoice) %></span>
+      </h3>
+       <span data-value="<%= get_due_invoice_total("more_than_30", @due_total_invoice) %>" class="total" style="width: 330px;">$<%= get_due_invoice_total("7_days", @due_total_invoice) %></span>
+    <% end %>
+    <%= link_to("/reports/projected_income/30_days", :class=>"subsection_link #{get_selected("30_days")}" ) do %>
+      <h3>
+        7 - 30 days
+        <span class="count"><%= get_due_invoice_count("30_days", @due_total_invoice) %></span>
+      </h3>
+       <span data-value="<%= get_due_invoice_total("more_than_30", @due_total_invoice) %>" class="total" style="width: 330px;">$<%= get_due_invoice_total("30_days", @due_total_invoice) %></span>
+    <% end %>
+    <%= link_to("/reports/projected_income/more_than_30", :class=>"subsection_link #{get_selected("more_than_30")}" ) do %>
+      <h3>
+        > 30 days
+        <span class="count"><%= get_due_invoice_count("more_than_30", @due_total_invoice) %></span>
+      </h3>
+       <span data-value="<%= get_due_invoice_total("more_than_30", @due_total_invoice) %>" class="total" style="width: 330px;">$<%= get_due_invoice_total("more_than_30", @due_total_invoice) %></span>
+    <% end %>
+    <div class="short_separator"></div>
+    <%= link_to("/reports/projected_income/late", :class=>"subsection_link #{get_selected("late")}" ) do %>
+      <h3>
+        Late
+        <span class="count"><%= get_due_invoice_count("late", @due_total_invoice) %></span>
+      </h3>
+       <span data-value="<%= get_due_invoice_total("more_than_30", @due_total_invoice) %>" class="total" style="width: 330px;">$<%= get_due_invoice_total("late", @due_total_invoice) %></span>
+    <% end %>
+  </div>
+</div>

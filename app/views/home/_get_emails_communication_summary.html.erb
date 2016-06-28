@@ -1,0 +1,46 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="145px" class="client_name">Customer Name</th>
+        <th width="189px" class="sent_date">Sent date</th>
+        <th width="257px" class="to">To</th>
+        <th width="169px" class="cc">CC</th>
+        <th width="169px" class="subject">Subjet</th>
+        <th width="169px" class="status1">status</th>
+        <th width="225px" class="type">Type</th>
+        <th width="92px" class="sent_time">~Sent Time</th>
+        <th width="92px" class="opened_date">Opened Date</th>
+        <th width="42px" class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @emails_communication_summary.blank?%>
+      <% @emails_communication_summary.each_with_index do |emails,i| %>
+        <tr> 
+          <td class="client_name"><%= current_user.clients.find(emails.client_id).first_name rescue "" %> <%= current_user.clients.find(emails.client_id).last_name rescue "" %></td>
+          <td class="sent_date"><%= emails.sent_date.strftime("%m-%d-%Y") rescue "" %></td>
+          <td class="to">
+            <% emails.to.each_with_index do |to, i| %>
+              <% if i==0 %>
+                <%= to %>
+              <% else %>
+                , <%= to %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="cc"><%= cc rescue "" %></td>
+          <td class="subject"><%= emails.subject rescue "" %></td>
+          <td class="status1"><%= emails.status rescue "" %></td>
+          <td class="type"><%= emails.type rescue "" %></td>
+          <td class="sent_time"><%= emails.sent_time.strftime("%H:%M %b") rescue "" %></td>
+          <td class="opened_date"><%= emails.opened_date rescue ""%></td>
+          <td class="open"><a target="_blank" href="#" class="open ui-icon ui-icon-newwin">open</a></td>
+        </tr>
+      <% end %>
+    <%end%> 
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

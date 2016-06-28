@@ -1,0 +1,7 @@
+
+<%if @base_charge.to_f < 0%>
+	$("#payment_pay").html("<%= escape_javascript(render 'subscriptions/refund_payment') %>");
+<%else%>
+	$("#payment_pay").html("<%= escape_javascript(render 'subscriptions/new_payment') %>");
+<%end%>
+$("#payment_pay").modal("show");

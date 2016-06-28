@@ -1,0 +1,251 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header new-modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Service Items</h4>
+		</div>
+		<div class="modal-body">
+
+    <%= form_for(@service_plans,:url=>service_items_create_pool_services_path) do |f| %>
+			<% if @plan_service.filter_cleaned%>
+				<div class="span3">
+					<label><%= @plan_label.filter_cleaned.blank? ? "Filter Cleaned" : @plan_label.filter_cleaned%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :filter_cleaned%>
+				</div>
+			<% end %>
+
+			<% if @plan_service.backwash == true %>	
+				<div class="span3">
+					<label><%= @plan_label.backwash.blank? ? "Backwash (sand filter)" : @plan_label.backwash %></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :backwash%>
+				</div>
+			<%end%>	
+
+			<% if @plan_service.brushed_walls_steps == true %>	
+				<div class="span3">
+					<label><%= @plan_label.brushed_walls_steps.blank? ? "Brushing walls" : @plan_label.brushed_walls_steps %></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :brushed_walls_steps%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.skimming_surface == true %>
+				<div class="span3">
+					<label><%= @plan_label.skimming_surface.blank? ? "Skimming Surface" : @plan_label.skimming_surface%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :skimming_surface%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.waterline_tiles_cleaned == true %>
+				<div class="span3">
+					<label><%= @plan_label.waterline_tiles_cleaned.blank? ? "Waterline tiles cleaned" : @plan_label.waterline_tiles_cleaned %></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :waterline_tiles_cleaned%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.cleaned_skimmer_baskets == true %>
+				<div class="span3">
+					<label><%=@plan_label.cleaned_skimmer_baskets.blank? ? "Cleaned Skimmer Baskets" : @plan_label.cleaned_skimmer_baskets%></label>
+				</div>
+				<div class="span2" >
+					<%= f.check_box :cleaned_skimmer_baskets%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.netted_surface_debris == true %>
+				<div class="span3">
+					<label><%=@plan_label.netted_surface_debris.blank? ? "Netted Surface Debris" : @plan_label.netted_surface_debris%></label>
+				</div>
+				<div class="span2" >
+					<%= f.check_box :netted_surface_debris%>
+				</div>
+			<%end%>
+
+
+			<% if @plan_service.floor_vacuumed == true %>
+				<div class="span3">
+					<label><%=@plan_label.floor_vacuumed.blank? ? "Floor vacuumed" : @plan_label.floor_vacuumed%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :floor_vacuumed%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.pump_strainer_baskets == true %>
+				<div class="span3">
+					<label><%=@plan_label.pump_strainer_baskets.blank? ? "Pump strainer baskets" : @plan_label.pump_strainer_baskets%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :pump_strainer_baskets%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.cleaned_pump_basket == true %>
+				<div class="span3">
+					<label><%=@plan_label.cleaned_pump_basket.blank? ? "Cleaned Pump Basket" : @plan_label.cleaned_pump_basket%></label>	
+				</div>
+				<div class="span2">
+					<%= f.check_box :cleaned_pump_basket%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.vacuumed_pool == true %>
+				<div class="span3">
+					<label><%=@plan_label.vacuumed_pool.blank? ? "Vacuumed Pool" : @plan_label.vacuumed_pool%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :vacuumed_pool%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.checked_water_level == true %>
+				<div class="span3">
+					<label><%=@plan_label.checked_water_level.blank? ? "Checked Water Level" : @plan_label.checked_water_level%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :checked_water_level%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.inspected_pump == true %>
+				<div class="span3">
+					<label><%=@plan_label.inspected_pump.blank? ? "Inspected Pump" : @plan_label.inspected_pump%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :inspected_pump%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.pool_sweep_cleaner == true %>
+				<div class="span3">
+					<label><%=@plan_label.pool_sweep_cleaner.blank? ? "Pool Sweep / Cleaner" : @plan_label.pool_sweep_cleaner%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :pool_sweep_cleaner%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.net_surface_bottom == true %>
+				<div class="span3">
+					<label><%=@plan_label.net_surface_bottom.blank? ? "NET surface & bottom" : @plan_label.net_surface_bottom%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :net_surface_bottom%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.inspect_pool_spa_eqip == true %>
+				<div class="span3">
+					<label><%=@plan_label.inspect_pool_spa_eqip.blank? ? "Inspect Pool & Spa Equipment" : @plan_label.inspect_pool_spa_eqip%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :inspect_pool_spa_eqip%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.wipe_ladder_handrails == true %>
+				<div class="span3">
+					<label><%=@plan_label.wipe_ladder_handrails.blank? ? "Wipe ladder and handrails" : @plan_label.wipe_ladder_handrails%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :wipe_ladder_handrails%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.adjust_timeclock == true %>
+				<div class="span3">
+					<label><%=@plan_label.adjust_timeclock.blank? ? "Adjust TimeClock as needed" : @plan_label.adjust_timeclock%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :adjust_timeclock%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.add_water_needed == true %>
+				<div class="span3">
+					<label><%=@plan_label.add_water_needed.blank? ? "ADD water  as needed" : @plan_label.add_water_needed%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :add_water_needed%>
+				</div>
+			<%end%>
+
+			<% if @plan_service.filter_pressure_monitor == true %>
+				<div class="span3">
+					<label><%=@plan_label.filter_pressure_monitor.blank? ? "Filter Pressure Monitor" : @plan_label.filter_pressure_monitor%></label>
+				</div>
+				<div class="span2">
+					<%= f.check_box :filter_pressure_monitor%>
+				</div>
+			<%end%>
+
+			<div class="span3">
+				<label>Complete</label>
+			</div>	
+			<div class="span2">
+				<%= f.radio_button :status, 'complete'%>
+			</div>
+			
+			<div class="span3">
+				<label>InComplete</label>
+			</div>
+			<div class="span2">
+				<td><%= f.radio_button :status, 'incomplete'%></td>
+			</div>
+
+			<div class="span3">
+				<label>Waiting for parts</label>
+			</div>
+			<div class="span2">
+				<%= f.radio_button :status, 'waiting_parts'%>
+			</div>
+			
+
+			<div class="span3">
+				<label>SMS</label>
+			</div>
+			<div class="span2">
+				<%= radio_button_tag "send" ,"sms"%>
+			</div>
+
+			<div class="span3">
+				<label>Email</label>
+			</div>
+			<div class="span2">
+				<%= radio_button_tag "send","email"%>
+			</div>
+		
+			<div class="clearfix"></div>
+			
+			<div class="span3">
+				<label><%=@plan_label.notes_to_customer.blank? ? "Customer Note" : @plan_label.notes_to_customer%></label></div>
+			</br>
+			<div class="row">
+				<%= f.text_area :customer_note%>
+			</div>
+			<%= f.hidden_field :user_id ,:value=>current_user.id%>
+			<%= f.hidden_field :property_id ,:value=>params[:property_id]%>
+			<%= hidden_field_tag "service_type",nil,:value=>"service_items"%>	
+			<div class="clearfix"></div>
+			<%= f.submit "submit",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+			<button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>
+		<%end%>
+
+		</div>
+	</div>
+</div>
+<style type="text/css">
+#service_plan_customer_note{
+	width: 94%;
+  margin-left: 28px;
+}
+</style>

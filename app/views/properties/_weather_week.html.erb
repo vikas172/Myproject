@@ -1,0 +1,13 @@
+<%keys = {api: 'ddc0472200ecbb715cf9901ded8320cb'}%>
+<%if Rails.env== "development"%>
+  <%query = find_current_address("122.168.204.0")%>
+<%else%>
+  <%query = find_current_address(request.remote_ip)%>
+<%end%>
+<%@barometer = find_current_barometer(query,keys)%>
+<% @weather=find_current_weather(@barometer.query)%>
+<%if ((!current_user.city.blank?) && (!current_user.street.blank?))%>
+  <%= render "properties/address_weather"%>  
+<%else%>
+  <%= render "properties/ip_weather"%>  
+<%end%>

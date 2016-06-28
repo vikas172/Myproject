@@ -1,0 +1,96 @@
+<div id="add_more_work">
+<%if !@job_works.blank?%>
+    <%@job_works.each_with_index do |job_work, index| %>
+      <p><label for="p_scnts">
+        <%= text_field_tag "name[]",nil,:placeholder=>"name...", :value=>job_work.name,:style=>"margin-left: 40px; width: 14%;",:id=>"p_name_#{index+1}",:class=>"work_name"%>
+        <%= text_area_tag "description[]",job_work.description, :value=>job_work.description,:placeholder=>"description...",:style=>"height: 47px; width: 46%; margin-left: 36px;",:id=>"p_description_#{index+1}" %>
+        <%= text_field_tag "quantity[]",nil, :value=>job_work.quantity,:style=>"width: 4%; margin-left: 7.5%;",:id=>"p_quantity_#{index+1}",:onchange=>"AddQuantity(this.id)"%>
+        $<%= text_field_tag "unit_cost[]",nil, :value=>job_work.unit_cost,:placeholder=>"0.00",:style=>"width: 4%; margin-left: 1%;",:id=>"p_unit_cost_#{index+1}" ,:onchange=>"AddUnitCost(this.id)"%>
+        $<%= text_field_tag "total[]",nil, :value=>job_work.total, :placeholder=>"0.00",:style=>"margin-left: 1%; width: 6%;",:id=>"p_total_#{index+1}",:class=>"p_total" ,:readonly => true%></label>
+        <span style="margin-top: -104px; width: 1%; font-size: 30px !important;" class="remScnt btn btn">-</span>
+      </p>
+    <% end %>
+    <% if !@job_expenses.blank?%>
+      <%@job_expenses.each_with_index do |job_expense,index|%>
+        <%count=index+1+@job_works.count %>
+        <%@category=CustomCategory.find(job_expense.exp_category)%>
+        <p><label for="p_scnts">
+          <%= text_field_tag "name[]",nil,:placeholder=>"name...", :value=>@category.category,:style=>"margin-left: 40px; width: 14%;",:id=>"p_name_#{count}",:class=>"work_name"%>
+          <%= text_area_tag "description[]",nil, :value=>"",:placeholder=>"description...",:style=>"height: 47px; width: 46%; margin-left: 36px;",:id=>"p_description_#{count}" %>
+          <%= text_field_tag "quantity[]",nil, :value=>"",:style=>"width: 4%; margin-left: 7.5%;",:id=>"p_quantity_#{count}",:onchange=>"AddQuantity(this.id)"%>
+          $<%= text_field_tag "unit_cost[]",nil, :value=>job_expense.cost,:placeholder=>"0.00",:style=>"width: 4%; margin-left: 1%;",:id=>"p_unit_cost_#{count}" ,:onchange=>"AddUnitCost(this.id)"%>
+          $<%= text_field_tag "total[]",nil, :value=>"", :placeholder=>"0.00",:style=>"margin-left: 1%; width: 6%;",:id=>"p_total_#{count}",:class=>"p_total" ,:readonly => true%></label>
+          <span style="margin-top: -104px; width: 1%; font-size: 30px !important;" class="remScnt btn btn">-</span>
+        </p>
+      <%end%>
+    <%end%>
+
+    <% if !@job_timesheets.blank?%>
+      <%@job_timesheets.each_with_index do |job_time,index|%>
+        <%count=(index+1+@job_works.count+@job_expenses.count )  if !@job_expenses.blank? %>
+        <%count=(index+1+@job_works.count)  if @job_expenses.blank? %>
+        <%@category=job_time.custom_category.category rescue ""%>
+        <p><label for="p_scnts">
+          <%= text_field_tag "name[]",nil,:placeholder=>"name...", :value=>@category,:style=>"margin-left: 40px; width: 14%;",:id=>"p_name_#{count}",:class=>"work_name"%>
+          <%= text_area_tag "description[]",nil, :value=>"",:placeholder=>"description...",:style=>"height: 47px; width: 46%; margin-left: 36px;",:id=>"p_description_#{count}" %>
+          <%= text_field_tag "quantity[]",nil, :value=>"",:style=>"width: 4%; margin-left: 7.5%;",:id=>"p_quantity_#{count}",:onchange=>"AddQuantity(this.id)"%>
+          $<%= text_field_tag "unit_cost[]",nil, :value=>"",:placeholder=>"0.00",:style=>"width: 4%; margin-left: 1%;",:id=>"p_unit_cost_#{count}" ,:onchange=>"AddUnitCost(this.id)"%>
+          $<%= text_field_tag "total[]",nil, :value=>"", :placeholder=>"0.00",:style=>"margin-left: 1%; width: 6%;",:id=>"p_total_#{count}",:class=>"p_total" ,:readonly => true%></label>
+          <span style="margin-top: -104px; width: 1%; font-size: 30px !important;" class="remScnt btn btn">-</span>
+        </p>
+      <%end%>
+    <%end%>
+  <%else%>
+    <% if !@job_expenses.blank? %>
+      <%@job_expenses.each_with_index do |job_expense,index|%>
+        <%@category=CustomCategory.find(job_expense.exp_category) rescue ""%>
+          <%if !@category.blank?%>
+            <p><label for="p_scnts">
+              <%= text_field_tag "name[]",nil,:placeholder=>"name...", :value=>@category.category,:style=>"margin-left: 40px; width: 14%;",:id=>"p_name_#{index+1}",:class=>"work_name"%>
+              <%= text_area_tag "description[]",nil, :value=>"",:placeholder=>"description...",:style=>"height: 47px; width: 46%; margin-left: 36px;",:id=>"p_description_#{index+1}" %>
+              <%= text_field_tag "quantity[]",nil, :value=>"",:style=>"width: 4%; margin-left: 7.5%;",:id=>"p_quantity_#{index+1}",:onchange=>"AddQuantity(this.id)"%>
+              $<%= text_field_tag "unit_cost[]",nil, :value=>job_expense.cost,:placeholder=>"0.00",:style=>"width: 4%; margin-left: 1%;",:id=>"p_unit_cost_#{index+1}" ,:onchange=>"AddUnitCost(this.id)"%>
+              $<%= text_field_tag "total[]",nil, :value=>"", :placeholder=>"0.00",:style=>"margin-left: 1%; width: 6%;",:id=>"p_total_#{index+1}",:class=>"p_total" ,:readonly => true%></label>
+              <span style="margin-top: -104px; width: 1%; font-size: 30px !important;" class="remScnt btn btn">-</span>
+            </p>
+          <%end%>
+        <%end%>
+        <% if !@job_timesheets.blank?%>
+          <%@job_timesheets.each_with_index do |job_time,index|%>
+            <%count=(index+1+@job_expenses.count )%>
+            <%@category=job_time.custom_category.category rescue ""%>
+            <p><label for="p_scnts">
+              <%= text_field_tag "name[]",nil,:placeholder=>"name...", :value=>@category,:style=>"margin-left: 40px; width: 14%;",:id=>"p_name_#{count}",:class=>"work_name"%>
+              <%= text_area_tag "description[]",nil, :value=>"",:placeholder=>"description...",:style=>"height: 47px; width: 46%; margin-left: 36px;",:id=>"p_description_#{count}" %>
+              <%= text_field_tag "quantity[]",nil, :value=>"",:style=>"width: 4%; margin-left: 7.5%;",:id=>"p_quantity_#{count}",:onchange=>"AddQuantity(this.id)"%>
+              $<%= text_field_tag "unit_cost[]",nil, :value=>"",:placeholder=>"0.00",:style=>"width: 4%; margin-left: 1%;",:id=>"p_unit_cost_#{count}" ,:onchange=>"AddUnitCost(this.id)"%>
+              $<%= text_field_tag "total[]",nil, :value=>"", :placeholder=>"0.00",:style=>"margin-left: 1%; width: 6%;",:id=>"p_total_#{count}",:class=>"p_total" ,:readonly => true%></label>
+              <span style="margin-top: -104px; width: 1%; font-size: 30px !important;" class="remScnt btn btn">-</span>
+            </p>
+          <%end%>
+        <%end%>
+      <%elsif !@job_timesheets.blank? %>
+        <%@job_timesheets.each_with_index do |job_time,index|%>
+          <%count=(index+1 )%>
+          <%@category=job_time.custom_category.category rescue ""%>
+          <p><label for="p_scnts">
+            <%= text_field_tag "name[]",nil,:placeholder=>"name...", :value=>@category,:style=>"margin-left: 40px; width: 14%;",:id=>"p_name_#{count}",:class=>"work_name"%>
+            <%= text_area_tag "description[]",nil, :value=>"",:placeholder=>"description...",:style=>"height: 47px; width: 46%; margin-left: 36px;",:id=>"p_description_#{count}" %>
+            <%= text_field_tag "quantity[]",nil, :value=>"",:style=>"width: 4%; margin-left: 7.5%;",:id=>"p_quantity_#{count}",:onchange=>"AddQuantity(this.id)"%>
+            $<%= text_field_tag "unit_cost[]",nil, :value=>"",:placeholder=>"0.00",:style=>"width: 4%; margin-left: 1%;",:id=>"p_unit_cost_#{count}" ,:onchange=>"AddUnitCost(this.id)"%>
+            $<%= text_field_tag "total[]",nil, :value=>"", :placeholder=>"0.00",:style=>"margin-left: 1%; width: 6%;",:id=>"p_total_#{count}",:class=>"p_total" ,:readonly => true%></label>
+            <span style="margin-top: -104px; width: 1%; font-size: 30px !important;" class="remScnt btn btn">-</span>
+          </p>
+        <%end%>
+      <%else%>
+        <p><label for="p_scnts">
+          <%= text_field_tag "name[]",nil,:placeholder=>"name...",:style=>"margin-left: 40px; width: 14%;",:id=>"p_name_1",:required=>true,:class=>"work_name"%>
+          <%= text_area_tag "description[]",nil,:placeholder=>"description...",:style=>"height: 47px; width: 46%; margin-left: 36px;",:id=>"p_description_1" ,:class=>"work_description"%>
+          <%= text_field_tag "quantity[]",nil,:value=>"",:style=>"width: 4%; margin-left: 8%;",:id=>"p_quantity_1",:onchange=>"AddQuantity(this.id)"%>
+          $<%= text_field_tag "unit_cost[]",nil,:placeholder=>"0.00",:style=>"width: 4%; margin-left: 1%;",:id=>"p_unit_cost_1" ,:onchange=>"AddUnitCost(this.id)"%>
+          $<%= text_field_tag "total[]",nil,:placeholder=>"0.00",:style=>"margin-left: 1%; width: 6%;",:id=>"p_total_1",:class=>"p_total" ,:readonly => true%></label>
+          <span style="margin-top: -104px; width: 1%; font-size: 30px !important;" class="remScnt btn btn">-</span>
+        </p>
+      <%end%>
+    <%end%>
+  </div>

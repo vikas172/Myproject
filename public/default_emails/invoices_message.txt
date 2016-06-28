@@ -1,0 +1,10 @@
+Greetings {{CLIENT_NAME}},
+
+Thank you for your recent business with us. Please find attached a detailed copy of Invoice {{INVOICE_NUMBER}} for '{{INVOICE_SUBJECT}}'.
+
+The total amount due is {{INVOICE_TOTAL}}, to be paid by {{INVOICE_DUE_DATE}}.
+
+If you have any questions or concerns with this invoice, please don't hesitate to get in touch with us at {{DEFAULT_EMAIL}}.
+
+Sincerely,
+{{COMPANY_NAME}}

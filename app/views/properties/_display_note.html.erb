@@ -1,0 +1,104 @@
+<div class="display-smen">
+  <%if !@property.activities.blank?%>
+    <%@property.activities.last(4).each do |activity|%>
+      <div class="row show-activity">
+        <%if !activity.email_notification_id.blank? %>
+          <% email_notification= get_email_notification(activity.email_notification_id)%>
+          <i class="fa fa-share" style="float:left;"></i>
+          <div style="width:65%; float:left;">
+            <div class="row">
+              <div class="span1">From:</div>
+              <div class="span2"><%= email_notification.from%>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span1">To:</div>
+              <div class="span2"><%= email_notification.to%>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span1">Content:</div>
+              <div class="span2"><%= email_notification.body%>
+              </div>
+            </div>
+          </div>
+        <%elsif !activity.note_id.blank? %>
+
+          <% note = get_property_note(activity.note_id)%>
+            <i class="fa fa-comment" style="float:left;"></i>
+          <div style="width:65%; float:left;">
+           <div class="row">
+            
+<!--             <%#if !note.attachments.blank?%>
+              <div class="notes_images">
+                <img src=<%#=note.attachments.last.image(:medium)%> alt="Image1s" style="width:15%!important;"><br>
+                <%#=note.attachments.count%> files</a>
+              </div>
+            <%#end%> -->
+            <div class="span1"> Note </div>
+
+            <div style="width:40%; float:left;">
+              <div class="span3"><%= note.note%></div>
+            </div>
+          </div>  
+          </div>  
+        <%elsif !activity.sms_property_id.blank?%>
+          <% property_sms = get_property_sms(activity.sms_property_id )%>
+          <i class="icon-envelope" style="float:left;"></i>
+          <div style="width:65%; float:left;">
+            <div class="row">
+              <div class="span1">From:</div>
+              <div class="span2"><%= property_sms.from%>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span1">To:</div>
+              <div class="span2"><%= property_sms.to%>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="span1">Content:</div>
+              <div class="span2"><%= property_sms.body%>
+              </div>
+            </div>
+          </div>
+        <%else%>
+          <% property_call = get_property_call(activity.property_call_id )%>
+         <i class="fa fa-phone" style="float:left;"></i>
+          <div style="width:65%; float:left;">
+            <div class="row">
+              <div class="span1">From:</div>
+              <div class="span2"><%= property_call.from%>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span1">To:</div>
+              <div class="span2"><%= property_call.to%>
+              </div>
+            </div>
+          </div>
+        <%end%>
+
+        <div class="created-at" style="text-align:right; float:right; width:30%;"><%= time_ago_in_words(activity.updated_at)+ " ago"%>
+          <br/>
+          <%= activity.updated_at.strftime("%m-%e-%Y  %l:%M %p ")%>
+        </div>
+      </div>  
+    <%end%>
+  <%else%>
+  <p>No logs present</p>
+  <%end%>  
+
+  <%if @property.activities.count > 4%>
+    <div class="row show-activity" style="border:none;">
+      <%= link_to "See More Activity",more_activity_path(:property_id=>@property.id),:style=>"float:right;",:class=>"button"%>
+    </div>
+  <%end%>
+</div>
+<style type="text/css">
+.show-activity{
+  border-bottom: 1px solid #dadada;
+  margin-bottom: 10px;
+}
+</style>

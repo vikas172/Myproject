@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel"><%= @event.title rescue "" %></h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="span3" id="popover_left">
+            <div class="">
+              Schedule: <b><%= @event.start_date.strftime("%m/%d/%Y") rescue "" %> Anytime</b>
+              <div class="assigned_to">
+                <%= @event.description%>
+              </div>
+            </div>
+        </div>
+        <%if current_user.user_type == "admin"%>
+        <div class="span2">
+          <div class="" style="text-align:right;margin-bottom:10px;">
+
+            <%= link_to edit_event_path(@event), class: "button edit spin_on_click save-new-btn1", data: {toggle: "modal", target: "#edit_calender_task"}, remote: true do %>
+             <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to @event, method:'delete',  html:{data:{confirm:"are you sure?"}}, class: "button trash spin_on_click save-new-btn1" do %>
+            <i class="fa fa-minus-circle"></i> Delete
+            <% end %>
+          </div>
+        </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>

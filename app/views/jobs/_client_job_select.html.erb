@@ -1,0 +1,29 @@
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Work Order</h4>
+      </div>
+      <div class="modal-body">
+        <div id="client_selector">
+          Which Customer would you like to use for this Work Order? 
+          <br/>
+
+          <div class ="search-div row">  
+            <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Clients...",:require=>true,:id=>"search_input_job_client_model",:style=>"width: 48%;",:onkeyup => "searchClientJobModel($(this).val())" %>
+            <span class="or">or</span>
+            <%= link_to 'Create New Customer', new_client_path(:id=>"job"),:class=>"button_new_create save-new-btn1" ,:style=>"float:right;"%><br/><br/>
+          </div>
+
+          <h4 class="title1-font">Some Recently Used Customers:</h4><br/>
+          <ul class="thicklist " id="client_list_display"> 
+            <%= render "jobs/search_client_job"%>
+          </ul>
+        </div>  
+      </div>
+      <!-- <div class="modal-footer">
+      </div> -->
+    </div>
+  </div>
+</div>

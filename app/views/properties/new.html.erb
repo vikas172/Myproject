@@ -1,0 +1,16 @@
+<div class="client_index">
+	<div class="main_container">
+		<%= render "clients/error_message_and_flash" %>
+		<p style="padding-top: 15px;">
+			<% if !params[:client_id].nil? %>
+	    	<h3 class="main_heading" style="margin-left: 60px;">New Pool for &nbsp;<%= @client.try(:initial) rescue "" %>
+	      <%= @client.first_name.titleize rescue ""%>
+	      <%= @client.last_name.titleize rescue "" %></h3>
+  		<% end %>
+  	</p>
+  	</br>
+		<%= render 'form' %>
+		<%= render 'cancel_link',:locale=>{:params=>params} %>
+	</div>
+</div>
+

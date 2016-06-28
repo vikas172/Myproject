@@ -1,0 +1,94 @@
+<div id="job_visit_replace">
+	<div class="to_do_content" id="to_do_content">
+	  <% unless @complete_jobs.blank? %>
+	    <h3 class="section_header complete" style="background-color: #DDEEDD!important; color: #447744!important;font-size:18px; padding:5px;">Completed Today </h3>
+	    <% @complete_jobs.each do |complete_job| %>
+	      <div class="row" id="visit_job_<%= complete_job.id %>">
+	        <%= check_box_tag "check",nil,true,:onclick=>"CompleteJob(#{complete_job.id}, false, '#{current_user.full_name}')"%>
+	        <a href="<%= job_assigned_visit_path(complete_job) %>" onclick="return false;" data-toggle="modal", data-target="#assigned_visit_modal" data-remote="true">
+	          <span><%=complete_job.start_date.strftime("%d/%m/%Y") rescue "" %></span>
+	          <span> Completed on: <%= complete_job.complete_on%></span>
+	          <span class="details">
+	            <% unless complete_job.crew.blank? %>
+	              Completed by &nbsp;<%=   %> &nbsp; <%= @job.property.client.last_name %>
+	            <% else%>
+	              Not Assigned Yet
+	            <% end %>
+	          </span>
+	        </a>
+	      </div>
+	    <% end %>
+	  <% end %>
+
+	  <% unless @job_visit.blank? %>
+	    <h3 class="section_header complete" style="background-color: lightyellow!important; color: darkorange!important;font-size:18px; padding:5px;">All day / Any time</h3>
+	    <% @job_visit.each do |visit| %>
+	      <div class="row all_job" id="visit_job_<%= visit.id %>">
+	        <%= check_box_tag "check",nil,false,:onclick=>"CompleteJob(#{visit.id}, true, '#{current_user.full_name}')", data: {toggle: "modal", target: "#all_job_complete"} %>
+	        <a href="<%= job_assigned_visit_path(visit) %>" onclick="return false;" data-toggle="modal", data-target="#assigned_visit_modal" data-remote="true">
+	          <span><%=visit.start_date.strftime("%d/%m/%Y") rescue "" %></span>
+	          <span> Completed on: <%= visit.complete_on%></span>
+	          <span class="details">
+	            <% unless visit.crew.blank? %>
+	              Completed by &nbsp;<%= current_user.full_name %> &nbsp; <%#= current_user.last_name %>
+	            <% else%>
+	              Not Assigned Yet
+	            <% end %>
+	          </span>
+	        </a>
+	      </div>
+	    <% end %>
+	  <% end %>
+
+	  <% unless @job_overdue.blank? %>
+	    <h3 class="section_header complete" style="background-color: #fdd!important; color: #b22f23!important;">Overdue</h3>
+	    <% @job_overdue.each do |overdue| %>
+	      <div class="row overdue_job" id="visit_job_<%= overdue.id %>">
+	        <%= check_box_tag "check",nil,false,:onclick=>"CompleteJob(#{overdue.id}, true, '#{current_user.full_name})", data: {toggle: "modal", target: "#{@all_job_complete}"}%>
+	        <a href="<%= job_assigned_visit_path(overdue) %>" onclick="return false;" data-toggle="modal", data-target="#assigned_visit_modal" data-remote="true">
+	          <span><%=overdue.start_date.strftime("%d/%m/%Y") rescue "" %></span>
+	          <span> Completed on: <%= overdue.complete_on%></span>
+	          <span class="details">
+	            <% unless overdue.crew.blank? %>
+	              Completed by &nbsp;<%= @job.property.client.first_name %> &nbsp; <%= @job.property.client.last_name %>
+	            <% else%>
+	              Not Assigned Yet
+	            <% end %>
+	          </span>
+	        </a>  
+	      </div>  
+	    <% end %>
+	  <% end %>
+	  <div class="modal fade" id="assigned_visit_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="display:none;"></div>
+	</div>
+	<!-- Modal start-->
+	<div class="modal fade" id="all_job_complete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="display:none;">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" id="myModalLabel"><%=@job.property.client.first_name%>&nbsp;<%= @job.property.client.last_name%>&nbsp;-&nbsp;<%= truncate(@job.description, length: 10)%></h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="content">
+	          <h3>Last Visit Completed</h3>
+	          <ol class="to_do_update_options">
+	            <li>
+	              <%= link_to 'Close the Job', status_edit_job_path(@job, job_status: "complete"), method: "post" %>
+	            </li>
+	            <li>
+	              <%= link_to 'Schedule Next Visit', '#', data: {toggle: "modal", target: "#plan_visit_model"}, onclick: "return false;" %>
+	            </li>
+	            <li>
+	              <%= link_to 'Do Nothing', "", data: {dismiss: "modal"} %>
+	              <!-- <a href="#" data-dismiss="modal">Set Status as "Action Required"</a> -->
+	            </li>
+	          </ol>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal end-->
+</div>  

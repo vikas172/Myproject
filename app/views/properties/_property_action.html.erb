@@ -1,0 +1,72 @@
+<div class="dropdown_menu icon_drop">
+  <li class="dropdown" style="list-style: none; float:right; margin-top: 0%;">
+    <a href="#" class="dropdown-toggle dropdown_button save-new-btn1" data-toggle="dropdown">Actions <span class="caret"></span></a>
+    <ul class="dropdown-menu edit_drop_menu" role="menu">
+      <span class="arrow_action"></span>
+      <li>
+        <i class="fa fa-map-marker"></i>
+        <%if !@property.latitude.blank?%>
+          <%= link_to "Show on Map","http://maps.google.com?q=#{@property.latitude},#{@property.longitude}" ,:id=>"map",:class=>"has_icon", target: '_blank'%>
+        <%else%>
+          <%= link_to "Show on Map","http://maps.google.com?q=#{@property.street} #{@property.street2}, #{@property.city},#{@property.state},#{@property.country}" ,:id=>"map",:class=>"has_icon", target: '_blank'%>
+        <%end%>
+      </li>
+      <li>
+        <i class="fa fa-map-marker"></i>
+        <%= link_to "Adjust Map Location","/properties/#{@property.id}/manually_geocode" ,:id=>"map",:class=>"has_icon"%>
+      </li>
+
+      <li class="divider"></li>
+      <%if set_view_permission_client_property_view(@team_member)%>
+        <%if current_user.user_type=="user"%>
+          <%if set_permission_for_work_quote_new(@team_member.permission.permission_quotes)!="read"%>
+            <li>
+              <i class="fa fa-quote-left"></i>
+              <%= link_to "Estimate",new_quote_path(:property_id=>@property.id),:id=>"new_quote",:class=>"has_icon"%>
+            </li>
+          <%end%>  
+          <%if set_permission_for_work_quote_new(@team_member.permission.permission_jobs)!="read"%>
+            <li>
+              <i class="fa fa-legal"></i>
+              <%= link_to "Work Order",new_job_path(:property_id=>@property.id),:id=>"new_job",:class=>"has_icon"%>
+            </li>
+          <%end%>  
+        <%else%>
+          <li>
+            <i class="fa fa-quote-left"></i>
+            <%= link_to "Estimate",new_quote_path(:property_id=>@property.id),:id=>"new_quote",:class=>"has_icon"%>
+          </li>
+
+          <li>
+            <i class="fa fa-legal"></i>
+            <%= link_to "Work Order",new_job_path(:property_id=>@property.id),:id=>"new_job",:class=>"has_icon"%>
+          </li>
+        <%end%>  
+      <%end%>  
+      <li>
+        <i class="fa fa-check-square-o"></i>
+        <%= link_to "Basic Task",property_basic_task_path(:property_id=>@property.id) ,:remote=>true,:data=>{:toggle=>"modal",:target=>"#propertytaskmodal_#{@property.id}"},:id=>"new_to_do123",:class=>"has_icon"%>
+      </li>
+
+      <li>
+        <i class="fa fa-calendar"></i>
+        <%= link_to "Calendar Event",property_event_path(:property_id=>@property.id) ,:remote=>true,:id=>"new_calendar_event123",:class=>"has_icon",:data=>{:toggle=>"modal",:target=>"#propertyevent_#{@property.id}"}%>
+      </li>
+
+      <li> 
+        <%if current_user.user_type=="user"%>
+          <%if set_view_permission_action_view_delete(@team_member.permission.permission_client_properties)%>
+            <i class="fa fa-minus-circle"></i>
+            <%= link_to 'Delete',"#",:id=>"",:class=>"has_icon" ,:'data-toggle'=>"modal" ,:'data-target'=>"#delete_model"%>
+          <%end%>
+        <%else%>
+          <i class="fa fa-minus-circle"></i>
+          <%= link_to 'Delete',"#",:id=>"",:class=>"has_icon" ,:'data-toggle'=>"modal" ,:'data-target'=>"#delete_model"%>
+        <%end%>    
+      </li>
+    </ul>
+  </li>
+</div>
+
+<%#= render "property_basic_task"%>
+<%#= render "property_event"%>

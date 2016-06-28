@@ -1,0 +1,89 @@
+<script type="text/javascript">
+$("#change-address").click(function(){
+	$.LiveAddress("2676492808779544509");
+})
+</script>
+<div class="modal fade" id="general_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header new-modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">General Info</h4>
+			</div>
+			<div class="modal-body">
+				<%= form_for @general_account,:url=>"general_account_update" do |f|%>
+					<h4 class="title2-font">General</h4>
+					<div class="row">
+						<div class="span2">
+							Street 1
+						</div>
+						<div class="span3">
+							<%= text_field_tag "general_info[street1]",current_user.try(:general_info).try(:street1), autofocus: true ,:class=>"large wide"%>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							Street 2
+						</div>
+						<div class="span3">
+							<%= text_field_tag "general_info[street2]",current_user.try(:general_info).try(:street2), autofocus: true ,:class=>"large wide"%>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							City
+						</div>
+						<div class="span3">
+							<%= text_field_tag "general_info[city]",current_user.try(:general_info).try(:city),autofocus: true ,:class=>"large wide"%>
+						</div>	
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							State
+						</div>
+						<div class="span3">
+							<%= text_field_tag "general_info[state]",current_user.try(:general_info).try(:state),autofocus: true ,:class=>"large wide"%>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							Zipe Code
+						</div>
+						<div class="span3">
+							<%= text_field_tag "general_info[zipcode]",current_user.try(:general_info).try(:zipcode),autofocus: true ,:class=>"large wide"%>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							Country
+						</div>
+						<div class="span3">
+							<%= f.country_select :country, {priority: %w(US CA), prompt: @property.try(:country)},:class=>"billing_country"%>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							Company Phone
+						</div>
+						<div class="span3">
+							<%= text_field_tag "general_info[company_phone]",current_user.try(:general_info).try(:company_phone),autofocus: true ,:class=>"phone large wide mobile_number_team_member",:maxLength=>12%>
+						</div>
+					</div>
+					<%=f.hidden_field :user_id, :value => current_user.id%>
+
+					<br>
+					<div class="row text-right">
+						<%=f.submit "Update",:class=>"model_save_button pull-right save-new-btn1"%>
+						<button type="button" class="model_cancel_button pull-right" data-dismiss="modal">CANCEL</button>
+					</div>
+				<% end %>	
+			</div>
+		</div>
+	</div>
+</div>

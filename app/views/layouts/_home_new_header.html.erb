@@ -1,0 +1,52 @@
+<header id="header" class="header">  
+    <div class="container">            
+        <h1 class="logo pull-left">
+            <a href="index.html">
+                <span class="logo-title"><img src="../assets/large1.png" alt="" /></span>
+            </a>
+        </h1><!--//logo-->              
+        <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button><!--//nav-toggle-->
+            </div><!--//navbar-header-->            
+            <div class="navbar-collapse collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav no-new-padd">
+                    <!-- <li class="active nav-item"><a href="/">Home</a></li> -->
+                    <li class="<%= active_class(root_path) %>">
+                        <%= link_to "home", root_path %></li>
+
+                    <li class="<%= active_home_page("tour")%>"><a href="/tour">Tour</a></li>
+
+                    <li class="<%= active_home_page("pricing")%>"><a href="/pricing">Pricing</a></li>
+
+                    <li class="<%= active_home_page("blog")%>"><a href="/blog">Blog</a></li>
+
+                    <li class="<%= active_home_page("contact")%>"><a href="/contact">Contact</a></li>
+
+                    <!-- <li class="nav-item nav-item-cta last"><button type="button" class="btn btn-cta btn-cta-primary" data-toggle="modal" data-target="#signup-modal" >Sign Up</button></li>                            
+
+                    <li class="nav-item"><button type="button" class="login-trigger btn btn-link" data-toggle="modal" data-target="#login-modal">Log in</button></li> -->
+                    <% if user_signed_in? %>
+                      <li class="nav-item">
+                        <%= link_to "Log out",destroy_user_session_path,:method=>:get %> 
+                      </li>
+                    <%else%>
+                      <li class="<%= active_home_page("new")%>">
+                        <%= link_to "LOG IN",new_user_session_path%>
+                      </li>
+                      <li class="nav-item">
+                        <%= link_to "Sign Up",pricing_path %> 
+                      </li>
+                      
+                    <%end%>
+
+                </ul><!--//nav-->
+            </div><!--//navabr-collapse-->
+        </nav><!--//main-nav-->           
+    </div><!--//container-->
+</header>

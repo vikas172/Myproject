@@ -1,0 +1,89 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vehicle name:</strong>
+  <%= @vehicle.vehicle_name %>
+</p>
+
+<p>
+  <strong>Vin no:</strong>
+  <%= @vehicle.vin_no %>
+</p>
+
+<p>
+  <strong>Vehicle type:</strong>
+  <%= @vehicle.vehicle_type %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @vehicle.year %>
+</p>
+
+<p>
+  <strong>Make:</strong>
+  <%= @vehicle.make %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @vehicle.model %>
+</p>
+
+<p>
+  <strong>Trim:</strong>
+  <%= @vehicle.trim %>
+</p>
+
+<p>
+  <strong>License plate:</strong>
+  <%= @vehicle.license_plate %>
+</p>
+
+<p>
+  <strong>Registation:</strong>
+  <%= @vehicle.registation %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @vehicle.status %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= @vehicle.group %>
+</p>
+
+<p>
+  <strong>Driver:</strong>
+  <%= @vehicle.driver %>
+</p>
+
+<p>
+  <strong>Ownership:</strong>
+  <%= @vehicle.ownership %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <%= @vehicle.color %>
+</p>
+
+<p>
+  <strong>Body type:</strong>
+  <%= @vehicle.body_type %>
+</p>
+
+<p>
+  <strong>Body subtype:</strong>
+  <%= @vehicle.body_subtype %>
+</p>
+
+<p>
+  <strong>Msrp:</strong>
+  <%= @vehicle.msrp %>
+</p>
+
+<%= link_to 'Edit', edit_vehicle_path(@vehicle) %> |
+<%= link_to 'Back', vehicles_path %>

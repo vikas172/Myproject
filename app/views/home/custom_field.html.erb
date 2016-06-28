@@ -1,0 +1,89 @@
+<div id="app_wrapper">
+	<div class="client_index">
+  	<div class="main_container">
+      <div>
+        <%=render "home/work_item_side_bar" %>
+				<div id="settings_area">   
+				<h4 class="title1-font"> Custom field Overview</h4>   
+					<div class="config_description">
+					  Custom fields help you track additional information. These fields can be specific to your business. <br><br> Example: storing who referred a Customer, or how far a property is from your headquarters.
+					</div>
+
+					<h4 class="title2-font">
+					  Custom fields for Customers
+					  <a data-toggle="modal" data-target="#custom_add_field_model" class="add_button_setting save-new-btn1" id="Clients" href="<%=add_new_custom_field_path(:field_type=>'Clients')%>" data-remote="true">+ Add Field</a>
+					</h4>
+					<%= render  :partial=>"home/custom_field_edit_model",:locals=>{:@custom_field=>@custom_clients,:not_present=>"clients"}%>
+					</br>
+					<h4 class="title2-font">
+					  Custom fields for properties
+					   <a data-toggle="modal" data-target="#custom_add_field_model" class="add_button_setting save-new-btn1" id="Properties"  href="<%=add_new_custom_field_path(:field_type=>'Properties')%>" data-remote="true">+ Add Field</a>
+					</h4>
+					<%= render  :partial=>"home/custom_field_edit_model",:locals=>{:@custom_field=>@custom_properties ,:not_present=>"properties"}%>
+					</br>
+					<h4 class="title2-font">
+					  Custom fields for Work Orders
+					   <a data-toggle="modal" data-target="#custom_add_field_model" class="add_button_setting save-new-btn1" id="Jobs"  href="<%=add_new_custom_field_path(:field_type=>'Jobs')%>" data-remote="true">+ Add Field</a>
+					</h4>
+					<%= render  :partial=>"home/custom_field_edit_model",:locals=>{:@custom_field=> @custom_jobs ,:not_present=>"jobs"}%>
+				  </br>
+					<h4 class="title2-font">
+					  Custom fields for invoices
+					  <a style="margin-left: 15px;"  data-toggle="modal" data-target="#custom_add_field_model" class="add_button_setting save-new-btn1" id="Invoices"  href="<%=add_new_custom_field_path(:field_type=>'Invoices')%>" data-remote="true">+ Add Field</a>
+					</h4>
+					<%= render  :partial=>"home/custom_field_edit_model",:locals=>{:@custom_field=> @custom_invoices ,:not_present=>"invoices"}%>
+				  </br>
+					<h4 class="title2-font">
+					  Custom fields for Work Orders
+					   <a data-toggle="modal" data-target="#custom_add_field_model" class="add_button_setting save-new-btn1" id="Quotes"  href="<%=add_new_custom_field_path(:field_type=>'Quotes')%>" data-remote="true">+ Add Field</a>
+					</h4>
+					<%= render  :partial=>"home/custom_field_edit_model",:locals=>{:@custom_field=> @custom_quotes ,:not_present=>"quotes"}%>
+				  </br>
+					<h4 class="title2-font">
+					  Custom fields for team members
+					  <a data-toggle="modal" data-target="#custom_add_field_model" class="add_button_setting save-new-btn1" id="User"  href="<%=add_new_custom_field_path(:field_type=>'User')%>" data-remote="true">+ Add Field</a>
+					</h4>
+					<%= render  :partial=>"home/custom_field_edit_model",:locals=>{:@custom_field=> @custom_team_members ,:not_present=>"team members"}%>
+
+				  </br>
+					<h4 class="title2-font">
+					  Custom fields for items
+					   <a data-toggle="modal" data-target="#custom_add_field_model" class="add_button_setting save-new-btn1" id="Items"  href="<%=add_new_custom_field_path(:field_type=>'Items')%>" data-remote="true">+ Add Field</a>
+					</h4>
+					<%= render  :partial=>"home/custom_field_edit_model",:locals=>{:@custom_field=> @custom_items ,:not_present=>"items"}%>
+				  </br>
+
+					<h4 class="title2-font">
+					  Custom fields for parts
+					   <a data-toggle="modal" data-target="#custom_add_field_model" class="add_button_setting save-new-btn1" id="Parts"  href="<%=add_new_custom_field_path(:field_type=>'Parts')%>" data-remote="true">+ Add Field</a>
+					</h4>
+					<%= render  :partial=>"home/custom_field_edit_model",:locals=>{:@custom_field=> @custom_parts ,:not_present=>"parts"}%>
+      	</div>
+      </div>
+    </div>
+  </div>
+	<%#= render "custom_fields_model"%>
+	<!-- Modal -->
+	<div class="modal fade" id="custom_field_show_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;"></div>
+	<div class="modal fade" id="custom_add_field_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;"></div>
+</div>
+
+<script>
+
+$("#custom_field_value_type").on("change",function() {
+
+  var value=$(this).val();
+  if (value=="boolean"){
+  $('#boolean_options').html('<p><label for="custom_field_info_options_default_bool_value">Default value</label><select name="custom_field[value_type][]" id="custom_field_info_options_default_bool_value"><option value="true">True</option><option value="false">False</option></select></p>');}
+
+  if (value=="integer"){
+    $('#boolean_options').html('<p><label for="custom_field_info_options_default_int_value">Default value</label><input type="text" value="0" size="4" name="custom_field[value_type][]" id="custom_field_info_options_default_int_value" style="float: left;"></p><p><label for="custom_field_info_options_int_unit">Unit</label><input type="text" value="M" name="custom_field[value_type][]" id="custom_field_info_options_int_unit" style="float: left;"></p>');}
+
+  if (value=="area"){
+    $('#boolean_options').html('<p><label for="custom_field_info_options_default_area_value_1">Default value</label><input type="text" value="0" size="3" name="custom_field[value_type][]" id="custom_field_info_options_default_area_value_1" style="width:10%;float: left;"><span> X</span><input type="text" value="0" size="3" name="custom_field[value_type][]" id="custom_field_info_options_default_area_value_2" style="width:10%;float: left;"></p><p><label for="custom_field_info_options_int_unit">Unit</label><input type="text" value="M" name="custom_field[value_type][]" id="custom_field_info_options_int_unit" style="float: left;"></p>');}
+
+  if (value=="text"){$('#boolean_options').html('<p><label for="custom_field_info_options_default_text_value">Default value</label><br><input type="text" value="" name="custom_field[value_type][]" id="custom_field_info_options_default_text_value" class="wide large" style="margin-top: -17px; float: left;"></p>')}
+
+    if (value=="select"){$('#boolean_options').html('Can be set to one of these options:<br/><div id="TextBoxesGroup"><div id="TextBoxDiv1"><label>1 </label><input type="text" id="textbox1" name="custom_field[value_type][]" style="float: left;"></div></div><input type="button" value=" + Add another option" id="addButton" class="model_save_button" style="float:left;">')}
+  })
+</script>

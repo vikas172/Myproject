@@ -1,0 +1,55 @@
+<div class="modal fade" id="client_export" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close export_close" onclick="$('.tags_pointer').removeClass('selected');$('.name').val('{}'');" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Customer Export</h4>
+      </div>
+      <div class="modal-body">
+        <p><i class="fa fa-tags"></i>
+          Select any Tags the export should include. If none are selected your entire Customer list will be exported. </p>
+          <div id="tags_container">
+            <div id="tag_expo" class="tag_selectors_all">
+              <div id="start_expo">
+                <%@tags.uniq.each_with_index do |name,index|%>
+                  <a id="tag_expo_<%= index rescue 0 %>" value="<%= name rescue 0%>" class= "tags_pointer" onclick='exportAllTag("<%= index rescue 0 %>");'><%= name%></a>
+                <%end%>
+              </div>
+            </div>
+          </div>
+        <br>
+        <h4 style="margin-top:0px; color: #555;" class="title1-font">Select an Export Format</h4>
+        <p>
+          <div class="export_format_box"><%= form_tag('/vfc_export', method: :get) do %>
+            <%= hidden_field_tag :name,{},class: "name"%>
+            <%= submit_tag 'VCard',:class=>"button_new_create save-new-btn1" %>
+            <b> to use with your address book or E-mail Customer</b>
+
+          <% end %> </div>
+           <div class="export_format_box">
+          <%= form_tag('/csv_export', method: :get) do %>
+            <%= hidden_field_tag :name,{},class: "name" %>
+            <%= submit_tag 'CSV' ,:class=>"button_new_create save-new-btn1",:id=>"csv_btn"%>
+            <b> to use with your address book or E-mail Customer</b>
+          <% end %> </div>
+        </p>
+      </div>
+     <!--  <div class="modal-footer">
+      </div> -->
+    </div>
+  </div>
+</div>
+<style type="text/css">
+.export_format_box{
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+.export_format_box .button_new_create{
+    margin-right: 10px;
+}
+#csv_btn{
+    padding: 6px 17px !important;
+}
+
+</style>

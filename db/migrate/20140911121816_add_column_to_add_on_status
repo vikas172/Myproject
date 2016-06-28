@@ -1,0 +1,8 @@
+class AddColumnToAddOnStatus < ActiveRecord::Migration
+  def change
+    change_column :add_on_statuses, :status, :boolean, default: false
+  	change_column :add_on_statuses, :paid, :string
+  	change_column :add_on_statuses, :charge, :float
+  	add_column :add_on_statuses, :active_date, :date
+  end
+end

@@ -1,0 +1,172 @@
+<div class="modal fade" id="file_document" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Documents</h4>
+      </div>
+      <div class="modal-body">
+        <%if current_user.user_type == "admin"%>
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#hr_doc" aria-controls="hr_doc" role="tab" data-toggle="tab"><i class="icon-file"></i> Hr Document</a></li>
+            <li role="presentation"><a href="#contract_doc" aria-controls="contract_doc" role="tab" data-toggle="tab"><i class="icon-file"></i></i> Contract Document</a></li>
+            <li role="presentation"><a href="#company_doc" aria-controls="company_doc" role="tab" data-toggle="tab"><i class="icon-file"></i> Company Document</a></li>
+          </ul>
+          <div class="tab-content">
+            <!-- Tab panes -->
+       
+            <div role="tabpanel" class="tab-pane active" id="hr_doc">
+             <!--  <p> Hr Document </p> -->
+              <%= form_for(@document) do |f| %>
+                <div class="row fileUpload">
+                  <%= f.file_field :file ,:multipart=>true%>
+                  <%= hidden_field_tag "file_type",nil,:value=>"hr_document"%>
+                </div>
+                <br> 
+                <div class="">
+                  <%= f.submit "File Save",:class=>"button_new_create"%>
+                </div>  
+              <%end%>
+              </br>
+              </br>
+              <%if !@documents_hr.blank?%>
+                <table class="table-bordered table file-document">
+                  <thead>
+                    <th>Name</th>
+                    <th>File Size</th>
+                    <th> Modify By</th>
+                    <th>Modify Date</th>
+                    <th colspan="2" style="text-align: center!important;"> Actions</th>
+                  </thead> 
+                  <tbody>
+                    <%@documents_hr.each do |document|%>
+                    <tr>
+                      <td><img border="0" src="../assets/xxxxx.gif">
+                        <%= link_to truncate(document.file_file_name,:length=>10) ,download_document_path(document) %></td>
+                      <td><%= ((document.file_file_size)*(0.001)).round(2)%>KB</td>
+                      <td><%= current_user.full_name%></td>
+                      <td><%= document.updated_at.strftime("%m-%e-%y %H:%M %p")%></td>
+                      <td><%= link_to "" ,download_document_path(document),:class=>"fa fa-download" %>
+                      </td>
+                      <td><%= link_to "Delete" ,document, method: :delete, data: { confirm: 'Are you sure?' }%></td>
+                    </tr>
+                    <%end%>
+                  </tbody>
+                </table>
+              <%else%>
+                No Document Present
+              <%end%>
+            </div>
+   
+            <div role="tabpanel" class="tab-pane" id="contract_doc">
+            <!--   <p> Contract Document  </p> -->
+              <%= form_for(@document) do |f| %>
+                <div class="row fileUpload">
+                  <%= f.file_field :file ,:multipart=>true%>
+                  <%= hidden_field_tag "file_type",nil,:value=>"contract_document"%>
+                </div>
+                <br> 
+                <div class="">
+                  <%= f.submit "File Save",:class=>"button_new_create"%>
+                </div>  
+              <%end%>
+              </br>
+              </br>
+              <%if !@documents_contract.blank?%>
+                <table class="table-bordered table file-document">
+                  <thead>
+                    <th>Name</th>
+                    <th>File Size</th>
+                    <th> Modify By</th>
+                    <th>Modify Date</th>
+                    <th colspan="2" style="text-align: center!important;"> Actions</th>
+                  </thead> 
+                  <tbody>
+                    <%@documents_contract.each do |document|%>
+                      <tr>
+                        <td><img border="0" src="../assets/xxxxx.gif">
+                          <%= link_to truncate(document.file_file_name,:length=>10) ,download_document_path(document) %></td>
+                           <td><%= ((document.file_file_size)*(0.001)).round(2)%>KB</td>
+                        <td><%= current_user.full_name%></td>
+                        <td><%= document.updated_at.strftime("%m-%e-%y %H:%M %p")%></td>
+                        <td><%= link_to "" ,download_document_path(document),:class=>"fa fa-download" %>
+                        </td>
+                        <td><%= link_to "Delete" ,document, method: :delete, data: { confirm: 'Are you sure?' }%></td>
+                      </tr>
+                    <%end%>
+                  </tbody>
+                </table>
+              <%else%>
+                No Document Present
+              <%end%>
+            </div>
+       
+            <div role="tabpanel" class="tab-pane" id="company_doc">
+             <!--  <p> Company Document </p> -->
+              <%= form_for(@document) do |f| %>
+                <div class="row fileUpload">
+                  <%= f.file_field :file ,:multipart=>true%>
+                  <%= hidden_field_tag "file_type",nil,:value=>"company_document"%>
+                </div>
+                <br> 
+                <div class="">
+                  <%= f.submit "File Save",:class=>"button_new_create"%>
+                </div>  
+              <%end%>
+              </br>
+              </br>
+              <%if !@documents_company.blank?%>
+                <table class="table-bordered table file-document">
+                  <thead>
+                    <th>Name</th>
+                    <th>File Size</th>
+                    <th> Modify By</th>
+                    <th>Modify Date</th>
+                    <th colspan="2" style="text-align: center!important;"> Actions</th>
+                  </thead> 
+                  <tbody>
+                    <%@documents_company.each do |document|%>
+                      <tr>
+                        <td><img border="0" src="../assets/xxxxx.gif">
+                          <%= link_to truncate(document.file_file_name,:length=>10) ,download_document_path(document) %></td>
+                           <td><%= ((document.file_file_size)*(0.001)).round(2)%>KB</td>
+                        <td><%= current_user.full_name%></td>
+                        <td><%= document.updated_at.strftime("%m-%e-%y %H:%M %p")%></td>
+                        <td><%= link_to "" ,download_document_path(document),:class=>"fa fa-download" %>
+                        </td>
+                        <td><%= link_to "Delete" ,document, method: :delete, data: { confirm: 'Are you sure?' }%></td>
+                      </tr>
+                    <%end%>
+                  </tbody>
+                </table>
+              <%else%>
+                No Document Present
+              <%end%>
+            </div>
+          </div>
+        <%else%>
+          <% @user = @team_member.user %>
+          <%= render "home/team_document", :locals => {:user => @user } %>
+        <%end%>  
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style type="text/css">
+  table.file-document {
+    font-size: 14px;
+    font-weight: normal;
+    font-family: fantasy;
+  }
+
+  .table th, .table td {
+    line-height: 12px;
+    padding: 5px;
+}
+</style>

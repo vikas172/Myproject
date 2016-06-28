@@ -1,0 +1,54 @@
+<div class="unscheduled_task content" data-thicklist="true" data-thicklist-headers="true">
+  <div class="section_header in_progress all_day_title" >All day / Any time</div>
+  <% unless @jobs_complete.blank? %>
+    <% @jobs_complete.each do |job| %>
+      <% unless job.invoice_present(job.id) %>
+        <div id="to_do_<%= job.id %>" class="row to_do all_todo_contain" header_title="All day / Any time" header_class="in_progress" style="border:1px solid #ccc; margin-bottom:20px;">
+          <a class="" href="<%= open_job_dialog_path(job.id) %>" data-remote="true" data-target="#job_dialog" data-toggle="modal">
+            <div class="to_do_content spin_on_click">
+              <span class="details">
+              <span>10/05/2014</span>
+              <br>
+              Not Assigned Yet
+              </span>
+              <h3 style="display:inline;">
+                Reminder: Invoice Sample Customer for Work Order #<%= job.id%>
+              </h3>
+              <div class="attached_to" style="padding:5px 0 0px 0;">
+                re: <%= job.property.client.first_name %>
+              </div>
+            </div>
+            <div class="description" style="padding:5px 0 5px 0;">
+              Work Order was completed on 10/05/2014, but no invoice has been created yet.
+              Time t...
+            </div>
+            <div style="clear:both"></div>
+          </a>
+        </div>
+      <% end -%>
+    <% end %>
+  <% end %>
+  <div class="section_header unscheduled all_day_title">Unscheduled</div>
+  <div id="to_do_11467942" class="row to_do all_todo_contain" header_title="Unscheduled" header_class="unscheduled" sort_order="1_" style="border:1px solid #ccc;">
+    <form accept-charset="UTF-8" action="/to_dos/11467942" class="edit_to_do" data-remote="true" id="edit_to_do_11467942" method="post" style="display:inline; position:relative">
+      <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden" value="patch"></div>
+      <input name="to_do[completed]" type="hidden" value="0"><input id="to_do_completed" name="to_do[completed]" onclick="to_do.update_to_do_completion(this);" type="checkbox" value="1"  style="float: left;">
+    </form>
+    <a class="" href="/to_dos/11467942" onclick="$.ajax({url:'/to_dos/11467942.dialog', type:'GET'}); return false;">
+      <div class="to_do_content spin_on_click">
+        <span class="details">
+        <span>Unscheduled</span>
+        <br>
+        Not Assigned Yet
+        </span>
+        <h3 style="display:inline;">
+          Sample Task
+        </h3>
+      </div>
+      <div class="description unscheduled_description">
+        Try marking me as complete
+      </div>
+      <div style="clear:both"></div>
+    </a>
+  </div>
+</div>

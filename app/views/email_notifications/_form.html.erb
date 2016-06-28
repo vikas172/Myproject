@@ -1,0 +1,27 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+      <h4 class="modal-title" id="myModalLabel">New Email</h4>
+    </div>
+    <div class="modal-body">
+			<%= form_for(@notification) do |f| %>
+			  <div class="row">
+					<%= f.select "to", options_from_collection_for_select(@users, "email", "full_name") %>
+				</div>
+				<%= f.hidden_field "from",:value=>current_user.email %>
+				<%= f.hidden_field "email_type",:value=>"sent" %>
+				<%= f.hidden_field "user_id",:value=>current_user.id %>
+				<div class="row">  
+					<%= f.text_area "body" ,:required=>true%>
+				</div>
+				<div class="form-actions">
+					<%= f.submit "Email Send",:class=>"button_new_create"%>
+				</div>
+			<%end%>
+		</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

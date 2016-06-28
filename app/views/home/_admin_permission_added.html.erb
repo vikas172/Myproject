@@ -1,0 +1,132 @@
+
+<fieldset style="margin-top: 10%;">
+  <div class="permission">
+    <div class="parent">
+      <input type="checkbox" disabled="disabled" checked="checked">
+      <label>Tasks</label>
+      <div class="description">Applies to basic tasks, reminders,<br>
+        events and visits.
+      </div>
+    </div>
+    <div class="detail">
+      <ul class="vertical">
+        <li>
+          <input checked="" id="permission_to_dos_" name="permission[to_dos]" type="radio" value="view_complete">
+          <label for="user_permissions_to_dos_1">View and Complete Their Tasks</label>
+        </li>
+        <li>
+          <input checked="" id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit"><label for="user_permissions_to_dos_2">Edit Their Tasks</label>
+        </li>
+        <li>
+          <input checked="" id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit_all"><label for="user_permissions_to_dos_6">Edit All Tasks</label>
+        </li>
+        <li>
+          <input checked="checked" id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit_delete_all"><label for="user_permissions_to_dos_8">Edit &amp; Delete All Tasks</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</fieldset>
+<fieldset style="margin-top: 10%;">
+  <div class="permission">
+    <div class="parent">
+      <input type="checkbox" id="user_permissions_pricing" class="has_details" name="permission[permission_show_pricing]" checked> 
+      <label for="user_permissions_pricing">Show Pricing</label>
+      <div class="description">Required to edit Estimate, invoices and line items on Work Orders.</div>
+    </div>
+  </div>
+</fieldset>
+<fieldset>
+  <div class="permission">
+    <div class="parent">
+      <input type="checkbox" id="user_permissions_clients" class="has_details" checked=""> 
+      <label for="user_permissions_clients">Clients &amp; Properties</label>
+    </div>
+    <div class="detail diplay_client_properties_detail">
+      <select class="rwd" id="user_permissions_clients_rwd" name="permission[permission_client_properties][]">
+        <option value="1">Read</option>
+        <option value="2">Read Write</option>
+        <option value="3" selected="">Read, Write Delete</option>
+      </select>
+      <p>
+        <input type="checkbox" id="user_permissions_clients_index" class="" name="permission[permission_client_properties][]" checked=""> <label for="user_permissions_clients_index">List All Clients &amp; Properties</label>
+      </p>
+    </div>
+  </div>
+  <div class="permission indent pad-top">
+    <div class="parent">
+      <input type="checkbox" id="user_permissions_quotes" class="has_details require_clients check_box_unselect" checked=""> <label for="user_permissions_quotes" class="disabled check_box_unselect">Estimate</label>
+    </div>
+    <div class="detail diplay_quotes_detail">
+      <span style="" class="has_pricing">
+        <select class="rwd" id="user_permissions_quotes_rwd" name="permission[permission_quotes][]">
+          <option value="1">Read</option>
+          <option value="2">Read Write</option>
+          <option value="3" selected="">Read, Write Delete</option>
+        </select>
+      </span>
+      <span class="not_has_pricing" style="display: none;">
+      Read Only
+      </span>
+      <p>
+        <input type="checkbox" id="user_permissions_quotes_index" class="" name="permission[permission_quotes][]" checked=""> <label for="user_permissions_quotes_index">List All Estimate</label>
+      </p>
+    </div>
+  </div>
+  <div class="permission indent pad-top">
+    <div class="parent">
+      <input type="checkbox" id="user_permissions_invoices" class="require_clients has_details check_box_unselect" checked=""> <label for="user_permissions_invoices" class="disabled">Invoices</label>
+    </div>
+    <div class="detail diplay_invoices_detail">
+      <span style="" class="has_pricing">
+        <select class="rwd" id="user_permissions_invoices_rwd" name="permission[permission_invoices][]">
+          <option value="1">Read</option>
+          <option value="2">Read Write</option>
+          <option value="3" selected="">Read, Write Delete</option>
+        </select>
+      </span>
+      <span class="not_has_pricing" style="display: none;">
+      Read Only
+      </span>
+      <p>
+        <input type="checkbox" name="permission[permission_invoices][]" id="user_permissions_invoices_index" class="" checked=""> <label for="user_permissions_invoices_index">List All Invoices</label>
+      </p>
+    </div>
+  </div>
+  <div class="permission indent pad-top">
+    <div class="parent">
+      <input type="checkbox" name="" id="user_permissions_work_orders" class="require_clients has_details check_box_unselect" checked="">
+      <label for="user_permissions_work_orders" class="disabled">Work Orders</label>
+    </div>
+    <div class="detail display_work_orders_detail">
+      <select class="rwd" id="user_permissions_work_orders_rwd" name="permission[permission_jobs][]">
+        <option value="1">Read</option>
+        <option value="2">Read Write</option>
+        <option value="3" selected="">Read, Write Delete</option>
+      </select>
+      <p>
+        <input type="checkbox" id="user_permissions_work_orders_index" name="permission[permission_jobs][]" class="" checked=""> <label for="user_permissions_work_orders_index">List All Work Orders</label>
+      </p>
+    </div>
+  </div>
+  <div class="permission indent pad-top">
+    <div class="parent">
+      <input type="checkbox" id="user_permissions_notes" class="require_clients has_details check_box_unselect" checked="">
+      <label for="user_permissions_notes" class="disabled">Note &amp; Attachments</label>
+      <div class="description">On Customers, Estimate, Invoices &amp; Work Orders.</div>
+    </div>
+    <div class="detail display_attachment_notes_detail">
+      <select class="rwd" id="user_permissions_notes_rwd" name="permission[permission_note_attachment][]">
+        <option value="1">Read</option>
+        <option value="2">Read Write</option>
+        <option value="3" selected="">Read, Write Delete</option>
+      </select>
+      <p>
+        <input type="hidden" id="user_permissions_work_orders_index" name="permission[permission_note_attachment][]" class="" value="on">
+      </p>
+    </div>
+  </div>
+  <div class="permission indent pad-top" style="margin-top: 50% ! important; margin-left: 0% ! important;">
+    <input type="checkbox" class="require_clients check_box_unselect" name="permission[permission_reports]" checked="">  <label for="user_permissions_reports" class="disabled">Reports</label>
+  </div>
+</fieldset>

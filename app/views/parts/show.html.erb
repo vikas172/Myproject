@@ -1,0 +1,106 @@
+<div class="client_index">
+  <div class="main_container">
+    <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= @part.item_code %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="container">
+
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @part.l_description.blank? ? "Description" : @part.l_description%></b></div>
+          <div class="col-md-8"><%= simple_format(@part.description) %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @part.l_p_price.blank? ? "Purchase Price" : @part.l_p_price%></b></div>
+          <div class="col-md-4"><%= @part.purchase_price %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @part.l_p_code.blank? ? "Purchase Code" : @part.l_p_code%></b></div>
+          <div class="col-md-4"><%= @part.purchase_code %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @part.l_s_price.blank? ? "Sale Price" : @part.l_s_price%></b></div>
+          <div class="col-md-4"><%= @part.sales_price %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @part.l_s_code.blank? ? "Sale Code" : @part.l_s_code%></b></div>
+          <div class="col-md-4"><%=@part.sales_code %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @part.l_profit.blank? ? "Profit" : @part.l_profit%></b></div>
+          <div class="col-md-4"><%= @part.profit %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @part.l_margin.blank? ? "Margin" : @part.l_margin%></b></div>
+          <div class="col-md-4"><%= @part.margin %></div>
+        </div>
+
+        <div class="row">
+          <%= render "items/custom_show_field"%>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"></div>
+            <%= link_to 'Edit', edit_part_path(@part), :class => "button_new_create save-new-btn1 pull-right" ,:style=>"padding: 3px 28px 9px!important;"%>
+             <%= link_to 'Cancel', parts_path, :class => "model_cancel_button pull-right" %>
+            <%#= link_to 'Delete', @part, confirm: 'Are you sure?', method: :delete, :class => "btn btn-warning" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+
+.panel-primary {
+  border-color: #428bca;
+}
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+
+.panel-primary>.panel-heading {
+  color: #fff;
+  background-color: #808080;
+  border-color: #808080;
+}
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+.panel-body {
+  padding: 15px;
+}
+.col-md-2 {
+  width: 16.66666667%;
+  float: left;
+
+}.col-md-8 {
+  width: 66.66666667%;
+  float: left;
+}
+.col-md-4 {
+  width: 33.33333333%;
+  float: left;
+}
+
+</style>

@@ -1,0 +1,83 @@
+<div class="client_index">
+	<div class="main_container">
+		<%= link_to "Back",vendor_setting_vendors_path,:class=>"button_new_create",:style=>"float:right; padding: 5px 30px !important;"%>
+		<div class="display-vendors">
+			<h4> Vendor Show</h4>
+			<div class="row">
+				<div class="col-md-2">Type</div>
+				<div>
+					<%= @vendor.try(:vendor_type)%>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">Name</div>
+				<div>
+					<%= @vendor.try(:name)%>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">Location Name</div>
+				<div>
+					<%= @vendor.try(:location_name)%>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">Address</div>
+				<div>
+					<%= @vendor.try(:street)%>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">City</div>
+				<div>
+					<%= @vendor.try(:city)%>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">State</div>
+				<div>
+					<%= @vendor.try(:state)%>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">Zip</div>
+				<div>
+					<%= @vendor.try(:zipcode)%>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">Phone</div>
+				<div>
+					<%= @vendor.try(:phone)%>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">Source</div>
+				<div>
+					<%= @vendor.try(:source)%>
+				</div>
+			</div>	
+		</div>	
+	</div>
+</div>
+
+<style type="text/css">
+
+ .display-vendors .col-md-2 {
+  font-weight: bold;
+  padding: 5px;
+}
+
+.display-vendors {
+  border: 1px solid #dadada;
+  padding: 30px;
+}
+</style>

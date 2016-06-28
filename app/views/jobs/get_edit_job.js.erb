@@ -1,0 +1,1 @@
+$("#edit_<%= params[:index]%>").html("<%= escape_javascript(  render :partial => 'repalce_job_work_to_edit',  :locals => {:job_work => @job_work} ) %> ")

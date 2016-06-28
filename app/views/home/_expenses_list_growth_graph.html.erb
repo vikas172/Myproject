@@ -1,0 +1,4 @@
+<div id="chart"></div>
+<script type="text/javascript">
+	pie_plot("chart", <%= @expense_summary.pluck(:cost).sum %>, "", "Expense")
+</script>

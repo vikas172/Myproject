@@ -1,0 +1,38 @@
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <div>
+        <%=render "home/work_item_side_bar" %>
+        <div id="settings_area">        
+          <h4 class="title1-font">Statement Overview</h4> 
+          <form method="post" id="edit_work_configuration_20800" enctype="multipart/form-data" class="edit_work_configuration compressed_form" action="/work_configuration/edit/statements" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="patch" name="_method"><input type="hidden" value="Td5YAe4qq6C/hVuyBDZpof73Jctk48GEENIyJ+Y5BDw=" name="authenticity_token"></div>  
+            <input type="hidden" value="statements" name="subsection" id="subsection">
+            <div>
+              <div class="config_description">
+                This is where you can set the defaults which apply to your statements.
+              </div>
+              <p>
+                <label for="work_configuration_statement_sort_order">Sort Order of line items</label>
+                <%=select_tag "work_configuration[statement_sort_order]" ,options_for_select([["Newest On Top", "desc"], ["Oldest On Top", "asc"]],:selected=>current_user.statement_order)%>
+              </p>
+              <p>
+                <label for="work_configuration_statement_contract">
+                  Contract/Disclaimer<br>
+                  <span class="description">
+                  This message will appear at the bottom of every statement
+                  </span>
+                </label>
+                <textarea rows="4" name="work_configuration[statement_contract]" id="work_configuration_statement_contract" class="set_text_width" style="width:400px;">
+                  <%=raw current_user.statement rescue ""%>
+                </textarea>
+              </p>
+            </div>
+            <p>
+              <input type="submit" value="Update Settings" name="commit" data-disable-with="Updating..." class="update_button_setting" style="margin-top: 2%; float:right;">
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

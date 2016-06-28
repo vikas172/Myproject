@@ -1,0 +1,32 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="145px" class="name">Name</th>
+        <th width="189px" class="quote_qty">Estimate Qty</th>
+        <th width="257px" class="quot_doller">Estimate $</th>
+        <th width="169px" class="on_job-qty">On Jobs Qty</th>
+        <th width="169px" class="on_job_doller">On Jobs $</th>
+        <th width="169px" class="invoice_qty">Invoiced Qty</th>
+        <th width="225px" class="invoiced_doller">Invoiced $</th>
+      </tr>
+    </thead>
+    <% unless @job_works.blank?%>
+      <% get_name_summary(@invoice_works,@job_works,@quote_works).each_with_index do |product,i| %>
+        <tr> 
+          <td class="name"><%= product%></td>
+          <td class="quote_qty"><%= get_count_summary(product, @quote_works)%></td>
+          <td class="quot_doller"><%= get_total_summary(product, @quote_works)%></td>
+          <td class="on_job_qty"><%= get_job_work_count_summary(product, @job_works)%></td>
+          <td class="on_job_doller"><%= get_job_work_total_summary(product, @job_works)%></td>
+          <td class="invoice_qty"><%= get_count_summary(product, @invoice_works)%></td>
+          <td class="invoiced_doller"><%= get_total_summary(product, @invoice_works)%></td>
+        </tr>
+      <% end %>
+    <% end %> 
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

@@ -1,0 +1,50 @@
+<div class="client_index">
+  <div class="main_container">
+    <div id="client_selector">
+      <p>
+        Which <strong>Client</strong> would you like to
+        <strong>Estimate</strong>?
+      </p>
+      <div class ="search-div row">
+        <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Customers...",:require=>true,:id=>"search_input_job_client_model",:style=>"width:50%;",:onkeyup => "searchClientQuoteModel($(this).val())" %> 
+          <span class="or">or</span>
+        <a href="/clients/new?id=quote" class="button_new_create" style="float:right;margin-right: 200px;">+ Create New Customer</a>
+      </div>
+      <div class="select_list" id="select_client_list" style="margin-top:3%;">  <!-- <h4>Please choose a Client to Invoice:</h4> -->
+        <br>
+        <ul class="thicklist quotes_client" id="client_list_display">  
+          <%if !@clients.blank?%>
+            <% @clients.reverse.each do |client| %> 
+              <li>
+                <div class="popover_user">
+                  <i class="fa fa-user fa-2"></i>
+                </div>
+                <div class="user_contain_search">
+                  <%if client.properties.count==1 %>
+                    <a href="/quotes/new?property_id=<%= client.properties.first.id%>" class="row  spin_on_click">
+                  <%else%>
+                    <a href="/quotes/new?client_id=<%= client.id %>&quote_create=quote" class="row  spin_on_click">
+                  <%end%>
+
+                      <h3 class="client_name individual">
+                        <%= client_name_display(client) %>
+                      </h3>
+
+                      <span class="last_active">
+                        <span class="last_active">
+                          Activity &nbsp;<%= time_ago_in_words(client.created_at, include_seconds: true)%>&nbsp; ago
+                        </span>
+                      </span>
+
+                      <span style="display:inline-block; width:120px; padding-left:25px;"><%=client.properties.count%> Pool</span>
+                    </a>
+                </div>
+              </li>  
+            <%end%>
+          <%end%>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+

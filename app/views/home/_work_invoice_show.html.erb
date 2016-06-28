@@ -1,0 +1,84 @@
+<div class="col-4 box horizontal">
+  <div class="">
+    <div class="title work-summary">
+      <i class="icon-edit"></i>
+      Invoices
+    </div>
+  </div>
+  <div class="work-boxnew">
+  <div class="module border_top">                
+    <div class="column_thirds">
+      <div class="summary">
+        <div class="numbers">
+          <a href="/invoices?type_filter=Draft">
+            <div class="button set_width inactive_invoice summary-work">
+              <span class="inactive"> Draft <span ><%=@invoices_draft.count rescue nil%></span> </span>
+                       
+              <p>
+                Unsent <span style="line-height: 150%;">$<%@total_invoice=0%>
+                <%if !@invoices_draft.blank?%>
+                  <%@invoices_draft.each do |invoice|%>
+                    <%@total_invoice= @total_invoice+total_amount_invoice(invoice)%>
+                  <%end%>
+                <%end%>  
+                <%=@total_invoice.round(2) rescue 0.00%></span>
+              </p>
+            </div>
+          </a>      
+        </div><!-- end of column left <-->
+      </div><!-- end of summary -->
+    </div>
+           
+    <div class="column_thirds">
+      <a href="/invoices?type_filter=outstanding">
+        <div class="summary">
+          <div class="numbers">
+           
+              <div class="button set_width pending summary-work">
+                <span class="pending inactive" style="font-size: 14px;">Outstanding 
+                <span><%if !@invoices_outstand.blank?%><%= @invoices_outstand.count %><%else%>0<%end%></span>
+                </span>
+                <p>
+                  Yet Due
+                  <span style=" line-height: 150%; " class=" ">$<% @total_out=0%>
+                    <%if !@invoices_outstand.blank?%>
+                      <%@invoices_outstand.each do |invoice|%>
+                      <%@total_out= @total_out + total_amount_invoice(invoice)%>
+                      <%end%>
+                    <%end%>
+                    <%=@total_out.round(2) rescue 0.00%>
+                  </span>
+                </p>
+              </div>
+          </div><!-- end of column left <-->
+        </div><!-- end of summary -->
+      </a>
+    </div>
+            
+    <div class="column_thirds">
+      <a href="/invoices?type_filter=past_due">
+        <div class="summary">
+          <div class="numbers">
+            <div class="button set_width late_invoice summary-work">
+              <span class="late inactive" style="font-size: 14px;">
+                Past Due
+              <span><%= @invoices_past.count rescue ""%></span>
+              </span>
+              <p>
+                Overdue 
+                <span style=" line-height: 150%; " class=" ">$<%@total_invoice_past=0%>
+                <%if !@invoices_past.blank?%>
+                  <%@invoices_past.sort.pop(3).each do |invoice|%>
+                    <%@total_invoice_past= @total_invoice_past+total_amount_invoice(invoice)%>
+                  <%end%>
+                <%end%>  
+                <%=@total_invoice_past.round(2) rescue 0.00%></span>
+              </p>
+            </div>      
+          </div><!-- end of column left <-->
+        </div><!-- end of summary -->
+      </a>
+    </div>
+  </div>
+</div>
+</div>

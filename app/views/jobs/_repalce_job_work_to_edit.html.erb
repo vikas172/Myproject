@@ -1,0 +1,29 @@
+
+<%= form_for :job_works, url: job_work_update_path(@job_work) ,method: "post" , :html=> {:id => params[:index], class: "clas row_div work_order_line_item"},:remote=>true do |f|%>
+  <%= hidden_field_tag "work_id", nil, value: params[:index] %>
+  <%=f.hidden_field :job_id,:value=>@job_work.job_id %>
+
+  <span class="work_job_name">
+    <%= f.text_field :name,:placeholder=>"name...",:style=>"",:id=>"p_name_#{params[:index].split('_')[2]}",:required=>true,:class=>"work_name", :value=> job_work.name %>
+  </span>
+
+  <span class="work_job_description">
+    <%= f.text_area(:description, :value => job_work.description ,:placeholder=>"description...",:style=>"",:id=>"p_description_#{params[:index].split('_')[2]}" ,:class=>"work_description") %>
+  </span>
+ 
+  <div class="work_job_right">
+    <span class="work_job_cost">
+      <%= f.text_field :quantity,:value=>"1",:style=>"",:id=>"p_quantity_#{params[:index].split('_')[2]}",:onchange=>"AddjobQuantity($(this).val(),#{params[:index].split('_')[2]})", :value=> job_work.quantity %>$
+    </span>
+
+    <span class="work_job_column">
+      <%= f.text_field :unit_cost,:placeholder=>"0.00",:style=>"",:id=>"p_unit_cost_#{params[:index].split('_')[2]}" ,:onchange=>"AddJobUnitCost($(this).val(),#{params[:index].split('_')[2]})", :value=> job_work.unit_cost %>$
+    </span>  
+
+    <span class="work_job_column">
+      <%= f.text_field :total,:placeholder=>"0.00",:style=>"",:id=>"p_total_#{params[:index].split('_')[2]}",:class=>"p_total" ,:readonly => true, :value=> job_work.total %>
+    </span>  
+  </div> <div class="clear"></div>
+  <%=f.submit "Save"  ,:style=>"float:right;",:class=>"save button_new_index", onclick: "$(this).submit();" %>
+  <%= link_to "Remove", job_work_destroy_path(job_work), confirm: "Are you sure?", method: "post", remote: true, style: "float:right; margin-right:10px;", class: "remScnt model_cancel_button" %>
+<% end %>

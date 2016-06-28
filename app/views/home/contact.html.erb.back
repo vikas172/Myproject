@@ -1,0 +1,87 @@
+<body class="contact-page">    
+    <div class="wrapper">
+        
+        
+        <!-- ******CONTACT MAIN****** --> 
+        <section id="contact-main" class="contact-main section">
+            <div class="container text-center">
+                <h2 class="title">Get in touch</h2>
+                <p class="intro">We'd love to hear from you. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </p>
+                <div class="row">
+                    <div class="item col-md-4 col-sm-12 col-xs-12">
+                        <div class="item-inner">
+                            <div class="icon">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="details">
+                                <h4>Email us at:</h4>
+                                <p><a href="#">support@website.com</a></p>
+                            </div><!--details-->
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                    <div class="item col-md-4 col-sm-12 col-xs-12">
+                        <div class="item-inner">
+                            <div class="icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="details">
+                                <h4>Call us on:</h4>
+                                <p class="phone">0800 123 456</p>
+                                <p class="day">Mon-Sat 9am-6pm (GMT)</p>
+                            </div><!--details-->
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                    <div class="item col-md-4 col-sm-12 col-xs-12 last">
+                            <div class="item-inner">
+                            <div class="icon">
+                                <i class="fa fa-map-marker"></i>
+                            </div>
+                            <div class="details">
+                                <h4>Find us at:</h4>
+                                <p class="address">123 Queen Square<br />Bristol, UK</p>
+                            </div><!--details-->
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                </div><!--//row-->
+            </div><!--//container-->
+        </section><!--//contact-->      
+        <section class="map-section">
+            <div id="map"></div><!--//map-->
+        </section><!--//map-->
+        <!-- ******SIGNUP****** --> 
+        <section id="signup" class="signup has-bg-color">
+            <div class="container text-center">
+                <h2 class="title">Ready to kickstart your business with CopperService?</h2>
+                <p class="summary">Sign up to try CopperServiceFREE for 30 days! No credit card needed.</p>
+                <form class="signup-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter your email address">
+                    </div>
+                    <button type="submit" class="btn btn-cta btn-cta-primary">SIGN UP</button>
+                </form><!--//signup-form-->
+            </div>
+        </section><!--//signup-->
+            
+    </div><!--//wrapper-->
+
+
+    <!-- Javascript -->          
+    <script type="text/javascript" src="assets/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/detectmobilebrowser.js"></script> 
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="assets/plugins/back-to-top.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-placeholder/jquery.placeholder.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-inview/jquery.inview.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/FitVids/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="assets/plugins/gmaps/gmaps.js"></script>  
+    <script type="text/javascript" src="assets/js/map.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>   
+    
+    
+    <!--[if !IE]>--> 
+    <script type="text/javascript" src="assets/js/animations.js"></script> 
+    <!--<![endif]-->           
+</body>
+</html> 

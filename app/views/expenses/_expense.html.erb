@@ -1,0 +1,60 @@
+<div class="row_holder extend_to_footer" style="overflow: auto;">
+	<% unless @expenses.blank? %>
+		<% @expenses.each do |expense| %>
+			<div class="expenses-week-container clearfix js-2015-05-25">
+				<aside class="grid1of5 expenses-week-dates">
+					<h5>
+						<strong>
+							<%if current_user.company.blank?%>
+								<span style="font-size:12px"><%= expense.clean_date.beginning_of_week(start_day = :monday).strftime("%d") + "- " + expense.clean_date.end_of_week(start_day = :monday).strftime(" %d %b %Y   ") rescue "" %></span>
+							<%else%>
+								<span style="font-size:12px"><%= expense.clean_date.beginning_of_week(start_date= current_user.company.start_week_on.to_sym).strftime("%d") %> - <%= expense.clean_date.end_of_week(start_date= current_user.company.start_week_on.to_sym).strftime("%d %b %Y  ")  %></span>
+							<%end%>	
+						</strong>
+					</h5>
+				</aside>
+				<article class="grid4of5">
+					<table class="table-expenses expenses-table js-expenses-list">
+						<tfoot>
+							<tr>
+								<td colspan="3" class="week-total pull-right js-expense-week-total-container">
+									<span>Total:</span>
+									<span class="js-expense-week-total"><strong class="js-expense-week-total-USD">$<%= expense.cost %></strong>
+									</span>
+								</td>
+								<td></td>
+							</tr>
+						</tfoot>
+						<tbody>
+							<tr class="expense js-expense-7904944 test-expense-row test-expense-7904944">
+								<td class="col-date">
+									<%= expense.clean_date.strftime("%e %b ")%>
+								</td>
+								<td class="col-meta">
+									<strong class="test-project"><%=truncate(expense.job.description,:length=>15) rescue ""%></strong>
+									<span class="test-client"></span>
+									<div class="notes">
+										<span class="text-label-btn text-label-primary test-billable-text-label">
+											<%if expense.exp_billable == "billable"%>
+												Billable
+											<%else%>
+											Reimbursable
+											<%end%>
+										</span>
+										<span class="category"><%= get_category_expense(expense).category rescue ""%></span>
+									</div>
+								</td>
+								<td class="col-amount pull-right">
+									<strong>$<%= expense.cost %></strong>
+								</td>
+								<td class="pull-right" width="10%;">
+									<%= link_to "",edit_expense_path(expense),:id=>"expense_#{expense.id}" ,:class=>"fa fa-pencil" ,data: {toggle: "modal", target: "#new_expenses"},:remote=>true%>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</article>
+			</div>
+		<% end %>
+	<% end %>
+</div>

@@ -1,0 +1,206 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<%= form_tag({:action => :create}, :multipart => true) do %>
+  <% if @property.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@property.errors.count, "error") %> prohibited this property from being saved:</h2>
+
+      <ul>
+      <% @property.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="span12 new-form-design">
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :street %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[street]" ,nil,:value=>@property.try(:street),:placeholder=>"street"%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :street2 %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[street2]" ,nil,:value=>@property.try(:street2),:placeholder=>"street2"%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :city %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[city]",nil,:value=>@property.try(:city),:placeholder=>"city"%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :state%>
+      </div> 
+      <div class="span7"> 
+        <%= text_field_tag "property[state]",nil,:value=>@property.try(:state),:placeholder=>"state"%>
+      </div>  
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :zipcode %>
+      </div>  
+      <div class="span7">
+        <%= text_field_tag "property[zipcode]" ,nil,:value=>@property.try(:zipcode),:placeholder=>"zipcode"  %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :country %>
+      </div>
+      <div class="span7">
+        <%= country_select "property[country]",nil, {priority: %w(US CA), prompt: @property.try(:country)} %>
+      </div>
+    </div>
+    
+    <hr style="border:1px solid #D3D3D3;">
+    <!-- <h3 class="main_heading" style="margin-left: 28px;">Pool Summary</h3> -->
+    <button type="button" class="btn-new save-new-btn1">Pool Summary</button>
+      <div id="poll_show">
+        <div class="row">
+          <div class="span2">
+            <%= label_tag :pool_name %>
+          </div>
+          <div class="span7">
+            <%= text_field_tag "property[pool_name]",nil,:value=>@property.try(:pool_name),:placeholder=>"Sample Pool" %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span2">
+            <%= label_tag :pool_activity %>
+          </div>
+          <div class="span7">
+            <%= select_tag "property[pool_activity]",options_for_select([["Lead","lead"],["FollowUp","followup"],["Active","active"],["Inactive","inactive"]])%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span2">
+            <%= label_tag :pool_type %>
+          </div>
+          <div class="span7">
+            <%= text_field_tag "property[pool_type]",nil,:value=>@property.try(:pool_type),:placeholder=>"Commercial Pool"%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span2">
+            <%= label_tag :pool_volume %>
+          </div>
+          <div class="span7">
+            <%= text_field_tag "property[pool_volume]",nil,:value=>@property.try(:pool_volume),:placeholder=>"75000"%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span2">
+            <%=label_tag :pool_volume2 %>
+          </div>
+          <div class="span7">
+            <%= text_field_tag "property[pool_volume2]",nil,:value=>@property.try(:pool_volume2),:placeholder=>"2000"%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span2">
+            <%= label_tag :pool_gate_code %>
+          </div>
+          <div class="span7">
+            <%= text_field_tag "property[pool_gate_code]",nil,:value=>@property.try(:pool_gate_code),:placeholder=>"Gate Code"%>
+          </div>
+        </div>
+        <%if !@market_sources.blank?%>
+          <div class="row">
+            <div class="span2">
+              <%= label_tag :market_source %>
+            </div>
+            <div class="span7">
+              <%= select_tag "property[market_source]",options_from_collection_for_select(@market_sources, "id", "source_name")%>
+            </div>
+          </div>
+        <%end%>
+        <div class="row">
+          <div class="span2">
+            <%= label_tag :source%>
+          </div>
+          <div class="span7">
+            <%= select_tag "property[source]",options_for_select([["Maps","maps"],["Referal","referal"],["CL","cl"],["PennySaver","pennysaver"],["HomeAdvisor","homeadvisor"],["AngiesList","angieslist"]])%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span2">
+            <%= label_tag :pool_lifeguards %>
+          </div>
+          <div class="span7">
+            <%= text_field_tag "property[pool_lifeguards]",nil,:value=>@property.try(:pool_lifeguards),:placeholder=>"0"%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span2">
+            <%= label_tag :pool_notes %>
+          </div>
+          <div class="span7">
+            <%= text_area_tag "property[pool_notes]",@property.try(:pool_notes),:rows=>"4" ,:placeholder=>"This is the pool notes"%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span2">
+            Pool Photos
+          </div>
+
+          <div class="span7">
+           <%=file_field_tag "photos[]", multiple: true%>
+          </div>
+        </div>
+      </div>
+    <div class="client_custom_field">
+      <%= render "clients/custom_field_display" if params[:action] == "new" %>
+      <%= render "clients/edit_custom_field_display" if params[:action] == "edit" %>
+    </div>
+    <%= render "properties/hidden_field_value"%>
+    
+  </div>
+  <div class="new-saves" >
+    <div >
+      <%= submit_tag "save", :class=>"button_new_create client_create save-new-btn1",:id=>"create_property"%>
+    </div>
+  </div>  
+<% end %>
+<style>
+  .btn-new{
+    background-color: #b87333;
+    border: medium none;
+    border-radius: 5px;
+    color: #fff !important;
+    display: block;
+    font-size: 14px;
+    line-height: 170%;
+    margin: 10px 10px 10px 29px;
+    padding: 6px 10px !important;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: none;
+    width: auto;
+  }
+</style>
+<script>
+  $( "button" ).click(function() {
+    $( "#poll_show" ).toggle();
+  });
+</script>

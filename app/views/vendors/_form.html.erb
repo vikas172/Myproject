@@ -1,0 +1,95 @@
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Custom new Vendor</h4>
+		</div>
+		<div class="modal-body">
+
+			<%=form_for @vendor do |f|%>
+				<div class="row">
+					<div class="col-md-2">Type</div>
+					<div>
+						<%= f.select :vendor_type,options_for_select([[ "Supplier", "Supplier" ],[ "Vendor", "Vendor" ],[ "Other", "Other" ]])%>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">Name</div>
+					<div>
+						<%= f.text_field :name %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">Location Name</div>
+					<div>
+						<%= f.text_field :location_name %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">Address</div>
+					<div>
+						<%= f.text_field :street %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">City</div>
+					<div>
+						<%= f.text_field :city %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">State</div>
+					<div>
+						<%= f.text_field :state %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">Zip</div>
+					<div>
+						<%= f.text_field :zipcode %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">Phone</div>
+					<div>
+						<%= f.text_field :phone %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">FAX</div>
+					<div>
+						<%= f.text_field :fax %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">Source</div>
+					<div>
+						<%= f.select :source ,options_for_select([[ "System", "System" ],[ "User", "User"]])%>
+					</div>
+				</div>
+
+				<div class="clearfix"></div>
+				<div class="row">
+					<%if params[:action] == "edit"%>
+						<%=f.submit "Update Custom Vendor",:class=>"button_new_create",:style=>"float:right;"%>
+					<%else%>
+						<%=f.submit "Create Custom Vendor",:class=>"button_new_create",:style=>"float:right;"%>
+					<%end%>
+					<button type="button" class="btn btn-default model_cancel_button" data-dismiss="modal">Close</button>
+				</div>
+			<%end%>
+		</div>
+		<div class="modal-footer">
+			
+		</div>
+	</div>
+</div>

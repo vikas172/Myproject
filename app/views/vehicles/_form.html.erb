@@ -1,0 +1,220 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="margin-right: 0px!important;">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">New Vehicle</h4>
+    </div>
+    <div class="modal-body">
+      <div class="">
+        <div class="">
+          <%= form_for(@vehicle) do |f| %>
+            <% if @vehicle.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@vehicle.errors.count, "error") %> prohibited this vehicle from being saved:</h2>
+
+                <ul>
+                <% @vehicle.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+           
+            
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :vehicle_name %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :vehicle_name , :placeholder=>"numbering convention ideas" %>
+            </div>
+            </div>
+
+            
+            <div class="field" id="new_da">
+              <div class="col-md-3">
+              <%= f.label :vin_no %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :vin_no , :placeholder=>"Vehicle Identification Number"%>
+            </div>
+            
+            <div class="col-md-6" id="results-body">
+              <button type="button" class="model_save_button save-new-btn1">Decode</button>
+            </div>
+            </div>
+              <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :vehicle_type %></div>
+              <div class="col-md-6 no-padding">
+              <%#= f.text_field :vehicle_type %>
+              <%= f.select :vehicle_type, options_for_select([["ATV","ATV"],["Boat","Boat"],["Bus","Bus"],["Car","Car"],["Forklift","Forklift"],["Generator","Generator"],["Loader","Loader"],["Motorcycle","Motorcycle"],["Mower","Mower"],["Other","Other"],["Tractor","Tractor"],["Trailer","Trailer"],["Truck","Truck"],["Van","Van"]])%>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :year %>
+              </div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :year , :placeholder=>"e.g. 1999, 2012, etc"%>
+              </div>
+            </div>
+              <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :make %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :make, :placeholder=>"e.g. Toyota, GMC,etc" %>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :model %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :model, :placeholder=>"e.g. 4Runner, Yukon,etc" %>
+              </div>
+            </div>
+              <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :trim %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :trim, :placeholder=>"e.g. SE, LE, XLE, etc"%>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :license_plate %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :license_plate %></div>
+            </div>
+             <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :registation %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :registation %></div>
+            </div>
+            <div class="field ">
+           
+              <div class="col-md-3">
+              <%= f.label :status %></div>
+              <div class="col-md-6 no-padding">
+              <%#= f.text_field :status %>
+              <%= f.select :status, options_for_select([["Active","Active"],["Inactive","Inactive"],["In Shop","In Shop"],["Out Of Service","Out Of Service"],["Sold","Sold"]])%>
+            </div>
+
+            </div>
+              <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :group %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :group, :placeholder=>"Vehicle's group" %>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :driver %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :driver %>
+            </div>
+            </div>
+              <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+              <%= f.label :ownership %></div>
+              <div class="col-md-6 no-padding">
+              <%#= f.text_field :ownership %>
+               <%= f.select :ownership, options_for_select([["Owned","Owned"],["leased","leased"],["rented","rented"],["customer","customer"]])%>
+              </div>
+            </div>
+            <div class="field ">
+             
+              <div class="col-md-3">
+              <%= f.label :color %></div>
+              <div class="col-md-6 no-padding">
+              <%= f.text_field :color %>
+            </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="field">
+              <div class="col-md-3">
+                <%= f.label :body_type %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :body_type, :placeholder=>"Convertible, Coupe, etc..."%>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :body_subtype %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :body_subtype, :placeholder=>"Extended Cab, Crew Cab, etc.." %>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :msrp %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :msrp, :placeholder=>"Manufacturer retail price" %>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :vehicle_image %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.file_field :vehicle_image%>
+              </div>
+            </div>
+            <div class="actions">
+              <% if params[:action] == "edit" %>
+                <%= link_to "Delete Vehicle", vehicle_path(@vehicle), method: "delete", class: "button remove delete_expense pull-left" %>
+              <% end %>
+              <%= f.submit "SAVE", class: "model_save_button pull-right save-new-btn1" %>
+              <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $("#new_da").click(function() {
+      window.sdkAsyncInit = function() {
+        // Instantiate the SDK
+      var res = new EDMUNDSAPI('72g3vx99n2v8z27u3by97srx');
+      // Optional parameters
+      var options = {
+        "vin": "4JGDF7EE5FA598744"
+      };
+      // Callback function to be called when the API response is returned
+      function success(res) {
+        var body = document.getElementById('results-body');
+        body.innerHTML = "The car make is: " + res.styleHolder[0].makeName;
+      }
+      // Oops, Houston we have a problem!
+      function fail(data) {
+        console.log(data);
+      }
+      // Fire the API call
+      res.api('/v1/api/toolsrepository/vindecoder', options, success, fail);
+        // Additional initialization code such as adding Event Listeners goes here
+    };
+  })
+    // Load the SDK asynchronously
+    // (function(d, s, id){
+    //     var js, sdkjs = d.getElementsByTagName(s)[0];
+    //     if (d.getElementById(id)) {return;}
+    //     js = d.createElement(s); js.id = id;
+    //     js.src = "https://github.com/EdmundsAPI/sdk-javascript/blob/master/edmunds.api.sdk.js";
+    //     sdkjs.parentNode.insertBefore(js, sdkjs);
+    //  }(document, 'script', 'edmunds-jssdk'));
+  </script>
+  <style>
+  .button.remove {
+    padding: 7px;
+    margin-right: 13px;
+  }
+  </style>

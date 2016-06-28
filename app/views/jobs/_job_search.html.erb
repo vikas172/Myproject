@@ -1,0 +1,85 @@
+<div class="row_holder extend_to_footer" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @jobs.blank? %> 
+        <div id="output"></div> 
+          <% @jobs.each_with_index do |job,index| %>
+            <tr data-link="/jobs/<%=job.id%>" class="propert" >
+              <td>#<%= index+1%> : <% @client = job.property.client rescue "" %>
+                <%if params["sort_by"]== "last_name"%>
+                  <%= @client.try(:last_name) rescue ""  %> <%= @client.try(:first_name) rescue ""  %> <%= @client.try(:initial) rescue ""  %>
+                <%else%>
+                  <%= @client.try(:initial) rescue "" %><%= @client.try(:first_name) rescue "" %>&nbsp;<%= @client.try(:last_name) rescue "" %>
+                <%end%><br>
+                <span class="status active">
+                 <%if job.job_status.nil? && !job.try(:start_date).blank?%>
+                  <%if job.try(:start_date) > get_date_today %>
+                    <span style="background-color: #1f518b; color:white" class="status upcoming"> Upcoming</span>
+                  <%elsif job.start_date == get_date_today %>
+                    <span  style="background-color: #1f518b; color:white" class="status"> Today </span>
+                  <%elsif !job.end_date.nil?%>
+                    <%if ((job.end_date < get_date_today ) || (job.start_date < get_date_today ))%>
+                      <span style=" background-color: #B22F23; color:white" class="status"> Late </span>
+                    <%end%>
+                  <%elsif (job.start_date < get_date_today)%> 
+                    <span style=" background-color: #B22F23; color:white" class="status"> Late </span>   
+                  <%end%> 
+                <%elsif job.job_required== "Require Invoice"%> 
+                  <%@count=check_job_invoice_genrate(job)%>
+                  <%if @count== 0%>
+                    <span style=""  class="status send">Requires Invoicing</span>
+                  <%else%>
+                    <span  style=" background-color: #888888; color: #FFFFFF;" class="status">Archived</span>
+                  <%end%>
+                <%elsif job.scheduled%>
+                  <span  style="" class="status send">Action Required</span>
+                <%else%>  
+                  <span  style="" class="status send">Unscheduled</span>
+                <%end%> 
+                </span>  
+              </td>
+
+              <td>
+                <small>Next Visit</small><br/>
+                <%if job.job_type== "recurring_contract" %>
+                  <%= job.visit_schedules.first.start_date rescue ""%>
+                <%elsif  (job.job_complete) || (!job.scheduled)%>
+
+                <%else%>
+                  <span style=""><%= job.start_date%></span>
+                <%end%>
+              </td>
+
+              <td>
+                <small>Scheduled for</small><br/>
+                <%if job.scheduled%>
+                  <%= job.start_date%><br/><%= job.end_date%>
+                <%elsif job.job_type == "recurring_contract"%>
+                  <%= job.start_date%>
+                  <br>
+                  <%= job.number_of_invoice%> &nbsp; <%= job.invoice_type%>
+                <%else%>
+                  Not Scheduled
+                <%end%>  
+              </td>
+
+              <td><%= @client.try(:company_name) rescue ""  %><br><%= @client.try(:city) rescue ""  %>&nbsp; <%= @client.try(:state) rescue ""  %>  &nbsp; <%= @client.try(:zipe_code)%>
+              </td>
+
+              <td><span class="summary"><%= truncate(job.description, :length => 50)%></span><br/>
+                <%if job.scheduled%>
+                  Visits:<%= job.visits%>
+                <%end%>
+                </td>
+              <td>   
+                $<%if job_requires_amount_show(job).nil?%>0.00<%else%><%=job_requires_amount_show(job)%><%end%>
+              </td>
+            </tr>
+          <% end %>
+      <% else %>
+        <b>No matches found</b>
+      <% end %>  
+    </table>
+  </div>
+</div>   
+

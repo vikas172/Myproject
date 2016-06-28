@@ -1,0 +1,28 @@
+<div class="client_index">
+  <div class="main_container">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ivr.name %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @ivr.phone %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @ivr.status %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @ivr.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_ivr_path(@ivr) %> |
+<%= link_to 'Back', ivrs_path %>
+</div>
+</div>

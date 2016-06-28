@@ -1,0 +1,39 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header new-modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Import csv</h4>
+		</div>
+		<div class="modal-body">
+		<%= form_for  @attachment ,:url=>csv_import_path, multipart: true,:class=>"csv-file" do |f|%>
+		<div class="row">
+			<label>Select the file to Import</label>
+			<%#= file_field_tag "file_csv",:required=>true,:accept=>".csv",:onChange=>"checkFile(this)"%>
+			<%= f.file_field :image ,:accept=>".csv",:required=>true%>
+			<%= hidden_field_tag "csv_file",params[:csv_file]%>
+		</div>
+		<br/>
+		<div class="row text-right">
+        	<button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+			<%= submit_tag "Import",:class=>"button pull-right"%>
+		</div>
+		<%end%>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+function checkFile(theField){
+  fName = theField.name;
+  if(!theField.value.match(/\.csv$/i)){
+  	$("#file_csv").val("");
+    alert("Only CSV files allowed.");
+  }
+}
+</script>
+<style>
+.model_cancel_button{
+  padding: 6px 10px;
+}
+</style>

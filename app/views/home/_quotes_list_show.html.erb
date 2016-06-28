@@ -1,0 +1,39 @@
+<a class="button_new_create" id="column_selector" href="#column_selector_model" data-toggle="modal" style="float: right; z-index: 9;margin-right:16px;"><span id = "column_selector_count"></span> Columns</a>
+<div id="quotes_report_summary">
+  <div class="tables" style="width: 98%; margin: 10px;">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+      <thead class="thead">
+        <tr>
+          <th width="363px" class="client_name">Customer Name</th>
+          <th width="280px" class="drafted_date">Drafted Date</th>
+          <th width="136px" class="hash">#</th>
+          <th width="176px" class="status">Status</th>
+          <th width="142px" class="doller">$</th>
+          <th width="42px"  class="open">Open</th>
+        </tr>
+      </thead>
+      <% unless @quotes_summary.blank?%>
+        <% @quotes_summary.each_with_index do |quote,index| %>
+        <tr> 
+          <td class="client_name"><%= quote.property.client.first_name rescue "" %> &nbsp;<%= quote.property.client.last_name rescue "" %></td>
+          <td class="drafted_date"><%= quote.created_at.strftime("%d-%m-%Y") rescue "" %></td>
+          <td class="hash"><%=index+1 %></td>
+          <td class="status">
+            <% if quote_status(quote) %>
+              <span >Won</span>
+            <% elsif quote.sent %>
+              <span>Sent </span>
+            <% elsif !quote.archive && quote.sent %>
+              <span >Outstanding</span>
+            <% elsif !quote.sent %>
+              <span >Draft</span>
+            <% end %>
+          </td>
+          <td class="doller"><%=@total= total_amount(quote) rescue 0 %></td>
+          <td class="open"><a target="_blank" href="/quotes/<%= quote.id %>" class="open ui-icon ui-icon-newwin">open</a></td>
+        </tr>
+        <% end %>
+      <%end%> 
+    </table>
+  </div>
+</div>

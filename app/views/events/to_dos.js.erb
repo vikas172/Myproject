@@ -1,0 +1,4 @@
+$('.popover').hide();
+$('.dropdown').removeClass('open');
+$("#myModalBox").html("<%= escape_javascript(render 'events') %>");
+$('#myModal').modal('show');

@@ -1,0 +1,28 @@
+<% if !current_user.notification.blank?%>
+  <%if current_user.notification.client_notification_by =="sms"%>
+    <%= f.radio_button("preference_notification", "sms",:style=>"margin: 0 15px 0 1px;" ,:checked=>true)%>SMS
+    <%= f.radio_button("preference_notification","email",:style=>"margin: 0px 10px 0px 30px;")%>Email
+  <%else%>
+    <%= f.radio_button("preference_notification", "sms",:style=>"margin: 0 6px 0px 1px;")%>SMS
+    <%= f.radio_button("preference_notification","email",:style=>"margin: 0px 6px 0px 30px;",:checked=>true)%>Email
+  <%end%>  
+<%else%> 
+  <%if @team_member%>
+    <% @notice= @team_member.user.notification%>
+    <%if @notice%>
+    	<%if @notice.client_notification_by =="sms"%>
+      	<%= f.radio_button("preference_notification", "sms",:style=>"margin: 0 15px 0 1px;" ,:checked=>true)%>SMS
+      	<%= f.radio_button("preference_notification","email",:style=>"margin: 0px 10px 0px 30px;")%>Email
+      <%else%>
+        <%= f.radio_button("preference_notification", "sms",:style=>"margin: 0 15px 0 1px;")%>SMS
+      	<%= f.radio_button("preference_notification","email",:style=>"margin: 0px 10px 0px 30px;" ,:checked=>true)%>Email
+      <%end%>	 
+    <%else%>
+      <%= f.radio_button("preference_notification", "sms",:style=>"margin: 0 15px 0 1px;")%>SMS
+      <%= f.radio_button("preference_notification","email",:style=>"margin: 0px 10px 0px 30px;")%>Email 
+    <%end%>  
+  <%else%>
+    <%= f.radio_button("preference_notification", "sms",:style=>"margin: 0 15px 0 1px;")%>SMS
+    <%= f.radio_button("preference_notification","email",:style=>"margin: 0px 10px 0px 30px;")%>Email 
+  <%end%>
+<%end%>

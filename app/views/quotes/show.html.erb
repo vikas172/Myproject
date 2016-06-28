@@ -1,0 +1,262 @@
+<div class="client_index quotes-index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %><p style="padding-top: 15px;">
+    <div class="show_page_quote_action"> 
+      <%if permission_for_edit_work_quotes(@team_member)!= "read"%>
+        <%= render "quotes_action_dropdown" %>
+        <%= link_to 'Edit', edit_quote_path(@quote),:class=>"button_new_index  icon-pencil save-new-btn1"%>       
+      <%end%>
+      <%= link_to(image_tag("printer.png", :alt => "printer", :title => "print"),quote_pdf_path(:id=>@quote.id), target: "_blank" , :class=>"pdf_quote_show") %>
+    </div>
+    <%= render "signature_quote"%>
+    <div id="print_override" class="work_area quote">
+      <div class="stamp">
+        <%if ((@quote.sent==false) && (@quote.archive==false))%>
+          <span style="color:#888888;"> DRAFT</span>
+        <%elsif ((@quote.sent==true) &&(@quote.archive==false)) %>
+          <span  style="color:1f518b;"> SENT</span>
+        <%elsif ((@quote.archive==true) && (@quote.sent==true))%>
+          <span style="color: #1f518b;"> ARCHIVED </span>
+        <%else%>
+          <span style="color:1f518b;">SENT</span>
+        <%end%> 
+      </div>
+      <div class="top clearfix">
+        <%@client=@quote.property.client rescue "" %>
+        <div class="span7 content_align">
+          <div class="left">
+            <h3>
+              <a href="/clients/<%= @client.id%>?link=client&quote_id=<%=@quote.id%>"><%= @client.initial rescue ""%> <%= @client.first_name rescue ""%> <%= @client.last_name rescue ""%></a>
+            </h3>
+            <p class="property_address">
+             <%= @quote.property.street rescue "" %>&nbsp; <%= @quote.property.street2 rescue "" %></br> <%= @quote.property.city rescue "" %>,  <%= @quote.property.state rescue "" %>  <%= @quote.property.zipcode rescue "" %>
+            </p>
+          </div><!-- end of left -->
+        </div>
+        <div class="span5">
+          <table class="right_show_quote right" >
+            <tbody>
+              <tr>
+                <td class="label">Estimate</td>
+                <td>#<%= @quotes rescue "" %></td>
+              </tr>
+              <tr>
+                <td class="label">Rating</td>
+                <td><span data-tooltip="Likely">
+                  <span id="show_rating" value="<%=@quote.raty_score rescue "" %>"></span></span></td>
+              </tr>
+              <tr>
+                <td class="label" nowrap>Created On</td>
+                <td><%= @quote.created_at.strftime("%m/%d/%Y") rescue "" %></td>
+              </tr>
+              <% unless @quote_job.blank? %>
+                <tr>
+                  <td class="label">Used For</td>
+                  <td>
+                    <% @quote_job.each_with_index do |used_job,index|%>
+                      <% if index==0%>
+                      <%= link_to 'job#'+used_job.id.to_s, '/jobs/'+used_job.id.to_s %>
+                      <% else %>
+                      ,<%= link_to 'job#'+used_job.id.to_s, '/jobs/'+used_job.id.to_s %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              <%if !@quote.discount.blank? && @quote.discount != 0.00%>
+                <tr>
+                  <td class="label">Discount</td>
+                  <td>$<%= @quote.discount rescue "" %> </td>
+                </tr>
+              <%end%>
+              <%if !@quote.require_deposit.blank? && @quote.require_deposit != 0.00%>
+                <tr>
+                  <td class="label">Deposit</td>
+                  <td>$<%= @quote.require_deposit rescue "" %></td>
+                </tr>
+              <%end%>
+              <tr>
+                <td><%= render "clients/custom_field_show"%></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> <!-- end of top -->
+
+      <div id="line_items">
+        <div id="line_items_head" class="display_work_quote">
+          <span class="name">Work Item</span>
+          <span class="short">Area or Description</span>
+
+          <div style="float: right;">
+            <span class="centered hours_column">Qty.</span>
+              <span class="centered cost_column">Unit Cost</span>
+              <span class="centered cost_column">Total</span>
+          </div>
+        </div>
+
+        <div id="line_items_body"> 
+          <%@total_value=0%>
+          <% if !@quote.quote_works.blank? %>
+            <%@quote.quote_works.first.name.each_with_index do |value,index|%>
+              <div class="line_item">
+                <span class="name">
+                  <%= @quote.quote_works.first.name[index] rescue "" %>
+                </span>
+
+                <span class="description short">
+                  <%= @quote.quote_works.first.description[index] rescue "" %>
+                </span>
+
+                <div class="right_items">
+                  <span class="hours_column hide_from_client">
+                    <%= @quote.quote_works.first.quantity[index].to_f rescue "" %>
+                  </span>
+                    <span class="cost_column hide_from_client">
+                      $<%= @quote.quote_works.first.unit_cost[index].to_f rescue "" %>
+                    </span>
+                    <span class="cost_column hide_from_client">
+                     $<%= @quote.quote_works.first.total[index] rescue "" %>
+                    </span>
+                    <%#@total_value= @quote.quote_works.first.total[index].to_i rescue "" + @total_value rescue "" %>
+                    <%@total_value= @quote.quote_works.first.total[index].to_i+ @total_value%>
+                  </div>
+                </div>
+            <%end%> 
+          <%end%>  
+        </div>
+      </div>
+
+      <div class="page_breaker" style="margin-top:10%;"></div>
+      <div class="clearfix" id="bottom">
+        <div class="" id="totals">
+          <%if @total_value!=0%>
+            <%if ((@quote.tax!=0.00) && (@quote.discount!=0.00))%>
+              <div>
+                <span>Subtotal: </span>
+                <span class="cost_column important">$<%=@total_value rescue 0 %></span>
+              </div>
+            <%end%>
+          <%end%>  
+          <div>
+            <% if !@quote.discount.nil?%> 
+              <% if @quote.discount!=0.0 %> 
+                <span> (<%=@quote.discount %>) Discount: </span>
+                <%@tax=show_tax(@quote,@total_value) rescue "" %>
+                <span class="cost_column">$<%= @tax_calculate rescue "" %></span>
+              <%end%>
+            <%end%> 
+          </div>
+          <% if !@quote.tax.nil? %>
+            <% if @quote.tax!= 0.00 %>
+              <div id="total_tax"> 
+                <span class="description">(<%=@quote.tax rescue "" %>%) Tax: </span>
+                <%@tax=show_tax(@quote,@total_value) rescue "" %>       
+                <span class="cost_column">$<%= @tax rescue "" %></span> 
+              </div>
+            <%end%>  
+          <%end%>
+          <div>
+            <span>Total Estimate: </span>
+            <%if !@tax.nil?%>
+              <span class="cost_column very_important">$<%=@tax_calculate + @tax %></span>
+            <%elsif @tax_calculate.nil?%>
+            <%if !@total_value.nil?%>
+
+              <span class="cost_column very_important">$ <%= @total_value rescue "" %></span>
+            <%else%>
+              <span class="cost_column very_important">$ 0.00</span>
+            <%end%>
+            <%else%>
+              <span class="cost_column very_important">$<%=@tax_calculate rescue "" %></span>
+            <%end%>
+          </div>
+
+          <div>
+            <span>Estimate Created: </span>
+            <span style="font-weight:normal" class="cost_column"><%=@quote.created_at.strftime("%m/%d/%Y") rescue "" %></span>
+          </div>
+        </div>
+      </div>
+      <p style="display:none;" id="nontaxable_footnote">
+        <span class="tax_asterisk">*</span>
+        Non-taxable
+      </p>
+
+      <div id="message" style="float:none;">
+        <h3 class="title3-font">Client Message</h3>
+        <%=@quote.client_message rescue "" %><br>
+        This quote is valid for the next 30 days, after which values may be subject to change.
+      </div>
+    </div>
+    <div id="notes_sidebar" class="fieldset">
+      <h2>Internal Notes &amp; Attachments</h2>
+      <div class="content"><div id="notes_list" class="">
+        <div id="new_note" class="note container auto_new">
+          <%if current_user.user_type=="user"%>
+            <%if set_permission_attachment_note(@team_member)!= "read"%>
+              <%= form_tag({:action => :quote_image_upload}, :multipart => true,:method=>"post",:id=>"image_upload_form") do %>
+                <%= text_area_tag :note, nil, :class=>"form-control",:placeholder=>"new note...",:style=>"width:99%;height:100px;"%>   <br/> <br/> 
+                
+                <%= hidden_field_tag :quote_id,@quote.id %>
+              
+                <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer">Attach Files</div> 
+                <div id="attachment_field" style="display:none;">
+                <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control save",:multiple=>true %>
+                <div class="row">
+                  <%= submit_tag "Save",:class=>"button_new_index note_save"%>
+                  <div class="model_cancel_button cancel" style="display:none;">Cancel</div>
+                </div>  
+              </div>
+              <% end %>
+             
+          <%end%> 
+        <%else%>
+          <%= form_tag({:action => :quote_image_upload}, :multipart => true,:method=>"post",:id=>"image_upload_form") do %>
+            <%= text_area_tag :note, nil, :class=>"form-control",:placeholder=>"new note...",:style=>"width: 99%; height:100px;"%>   <br/> <br/> 
+            
+            <%= hidden_field_tag :quote_id,@quote.id %>
+          
+            <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer">Attach Files</div> 
+            <div id="attachment_field" style="display:none;">
+              <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control save",:multiple=>true %>
+                <div class="row">
+                  <%= submit_tag "Save",:class=>"button_new_index note_save"%>
+                  <div class="model_cancel_button cancel" style="display:none;">Cancel</div>
+                </div>  
+              <% end %>
+            </div>
+          <%end%>
+        </div>
+      </div>
+      <div style="width:200px;display:none;" class="progress_div">
+        <div class="progress">
+          <div class="bar"></div >
+          <div class="percent">0%</div >
+        </div>
+      </div>
+
+      <div class="quote_image">
+        <%= render "show_quotes_notes",:locals=>{:@quote=>@quote} %>
+      </div>
+    </div>
+  </div>
+</div>
+<% unless session[:send_mail].blank? %>
+  <%= render partial: "send_email" unless session[:mail_by].blank? %>
+<% end %>
+<script>
+$(document).ready(function(){ 
+  var a=parseInt('<%= session[:send_mail] %>')
+  <% session[:send_mail] = nil %>
+  if (a==1){
+    $('#send_email').modal('show')
+  }
+})
+  ProgressBar()
+$('#show_rating').raty({
+ readOnly   : true,
+ score: "<%= @quote.raty_score%>"});
+ShowHide()
+</script>
+

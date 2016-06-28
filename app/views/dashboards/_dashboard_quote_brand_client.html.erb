@@ -1,0 +1,81 @@
+<%if set_view_permission_client_property(@team_member)%>
+  <%if !@clients.blank?%>   
+    <li class="completed">
+      <span>
+      <i class="fa fa-check"></i>
+      </span>
+      <a href="/clients/new">Create your first Customer</a>
+    </li>
+  <%else%>
+    <li class="">
+      <a href="/clients/new">Create your first Customer</a>
+    </li>
+  <%end%>
+<%end%>
+<%if current_user.user_type=="admin"%>
+  <%if !@quotes.blank?%>
+    <li class="completed">
+      <span>
+      <i class="fa fa-check"></i>
+      </span>
+      <a href="/select">Create a Estimate</a>
+    </li>
+  <%else%>
+    <li>
+      <a href="/select">Create a Estimate</a>
+    </li>
+  <%end%>
+<%else%>
+  <%if set_view_permission_for_work_client_property(current_user.permission.permission_quotes)%>
+    <%if !@quotes.blank?%>
+      <li class="completed">
+        <span>
+        <i class="fa fa-check"></i>
+        </span>
+        <a href="/select">Create a Estimate</a>
+      </li>
+    <%else%>
+      <li>
+        <a href="/select">Create a Estimate</a>
+      </li>
+    <%end%>
+  <%end%>
+<%end%>
+<%if current_user.user_type=="admin"%>  
+  <%if !@company_brands.blank?%>
+    <li class="completed">
+      <span>
+       <i class="fa fa-check"></i>
+      </span>
+      <a href="/work_configuration/edit">Setup company branding</a>
+    </li>
+  <%else%>
+  <li>
+    <a href="/work_configuration/edit">Setup company branding</a>
+ </li>
+  <%end%> 
+<%end%>   
+<%if !@team_members.blank?%>
+  <%if current_user.user_type=="admin"%>
+    <li class="completed">
+      	<span>
+        <i class="fa fa-check"></i>
+        </span>
+      <a href="/users">Add your team to CopperService</a>
+    </li>
+  <%else%>
+    <li><a href="/users">Add your team to CopperService</a></li>
+  <%end%>
+<%end%> 
+<%if current_user.user_type=="admin"%> 
+  <%if @addons_status.blank?%> 
+    <li><a href="/accounts/billing_info/addons">Find more features with Add-ons</a></li>
+  <%else%>
+    <li class="completed">
+        <span>
+       <i class="fa fa-check"></i>
+        </span>
+      <a href="/accounts/billing_info/addons">Find more features with Add-ons</a>
+    </li>
+  <%end%>  
+<%end%>

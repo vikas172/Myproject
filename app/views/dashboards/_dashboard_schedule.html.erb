@@ -1,0 +1,75 @@
+<div class="schedule_calender">
+  <div class="col-6" style="float:right;">
+    <div class="col-6 box">
+      <div class="box-header">
+        <div class="title title1-font">
+          <img src="/assets/1417718988_weather-partlycloudy-32.png">
+          Quick Links
+        </div>
+      </div>  
+
+      <div class="box-content pull_content">
+        <div id="stats-chart2">       
+          <div class="cell_wrapper time_zone_full box_dashbord dash-board-btn" id ="quick-links-dashboard"> 
+            <%#= render "home/quick_links"%>
+            <div class="align-center padding-10">
+              <i class="fa fa-cog fa-spin"></i>
+              Loading data...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 box">
+      <div class="box-header">
+        <div class="title title1-font">
+          <i class="icon-calendar"></i>
+          Calender
+        </div>
+      </div>
+      <div class="box-content pull_content display-calender01">
+      <div id="datepicker"></div>
+      </div>
+   
+    </div>
+  </div>  
+<!--   <%#if current_user.user_type=="admin"%>
+    <div class="col-6 box">
+      <div class="box-header">
+        <div class="title title1-font">
+          <i class="fa fa-file-text"></i>
+          Summary
+        </div>
+      </div>
+      <div class="box-content pull_content">
+        <div id="stats-chart2">         
+          <div class="cell_wrapper">
+            <%#= render "dashboards/dashboard_work"%>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%#else%>
+    <%#= render "dashboards/team_communication"%>
+  <%#end%> -->
+</div>
+
+<script type="text/javascript">
+ var calendar = $('#datepicker');
+calendar.fullCalendar
+({
+    defaultView: 'month',
+    defaultEventMinutes: 60,
+    aspectRatio: 1.5,
+    selectable: true,
+    selectHelper: true,    
+    editable: true
+});
+</script>
+<style type="text/css">
+.dash-board-btn{
+  width: 100%;
+}
+
+</style>

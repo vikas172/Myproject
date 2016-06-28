@@ -1,0 +1,50 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="363px" class="date">Date</th>
+        <th width="280px" class="times">Times</th>
+        <th width="136px" class="client_name">Customer Name</th>
+        <th width="176px" class="street">Street</th>
+        <th width="142px" class="city">City</th>
+        <th width="142px" class="assign_to">Assign to</th>
+        <th width="142px" class="job_dtail">Job Details</th>
+        <th width="142px" class="line_items">Line Items</th>
+        <th width="142px" class="duration">Duration</th>
+        <th width="142px" class="doller">Job $</th>
+        <th width="42px"  class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @visits_summary.blank?%>
+      <%@visits_summary.each do |visit|%>
+        <tr>
+          <td class="date"><%= visit.start_date.strftime("%d-%m-%Y") rescue "" %></td>
+          <td class="times"><%= visit.start_time.strftime("%H:%M") rescue ""%>- <%= visit.end_time.strftime("%H:%M") rescue ""%></td>
+          <td class="client_name"><%= visit.job.property.client.first_name rescue "" %> &nbsp;<%= visit.job.property.client.last_name rescue "" %></td>
+          <td class="street"><%= visit.job.property.client.street1 rescue "" %></td>
+          <td class="city"><%= visit.job.property.client.city rescue "" %></td>
+          <td class="assign_to">
+            <% unless visit.crew.blank? %>
+              <% visit.crew.first.split(',').each_with_index do |assigned_user, index| %>
+                <% if index == 0 %>
+                  <%= visit.get_assigned_name(assigned_user) rescue "" %>
+                <% else %>
+                  , <%= visit.get_assigned_name(assigned_user) rescue "" %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="job_dtail"><%= "##{visit.job.id}: #{visit.job.description}" rescue ""%></td>
+          <td class="line_items"><%= get_line_item(visit.job.job_works.pluck(:name)) rescue "" %></td>
+          <td class="duration"><%= get_visit_duration(visit) rescue ""%></td>
+          <td class="doller"><%= visit.job.get_job_total(visit.job.id) rescue ""%></td>
+          <td class="open"><a target="_blank" href="/jobs/<%=visit.job.id rescue "" %>" class="open ui-icon ui-icon-newwin">open</a></td>
+        </tr>
+      <% end %>
+    <%end%> 
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

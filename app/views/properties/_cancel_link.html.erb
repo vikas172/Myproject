@@ -1,0 +1,13 @@
+<%if params[:quote_create]== "quote"%>
+		<%= link_to 'Cancel', quotes_path,:class=>"model_cancel_button",:style=>"margin-right: 192px; margin-top: -36px;"%>
+<%elsif !params[:client_id].blank? %>
+	<%if params[:value]=="client_show"%>
+		<%= link_to 'Cancel', :back,:class=>"model_cancel_button"%>
+	<%elsif params[:job_prop]=="job" %>
+		<%= link_to 'Cancel', jobs_path,:class=>"model_cancel_button" ,:style=>"margin-right: 192px; margin-top: -36px;"%>
+	<%else%>
+	  <%= link_to 'Cancel', properties_path,:class=>"model_cancel_button pull-right"%>
+	<%end%>
+<%else%>
+	<%= link_to 'Cancel', properties_path,:class=>"model_cancel_button",:style=>"margin-right: 192px; margin-top: -36px;"%>
+<%end%>

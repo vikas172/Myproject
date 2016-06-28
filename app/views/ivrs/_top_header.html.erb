@@ -1,0 +1,8 @@
+<ul class="side-nav" id="aa-sidebar" style="width: 35%; display: inline-flex;text-decoration: blink; color: white;list-style: none;margin-left:0px;">
+	<li><%= link_to 'Settings', edit_ivr_path(@ivr.uuid) ,:class=>"#{get_ivrs_active(params[:controller], "edit")}"%></li>
+
+	<li><%= link_to 'Call Logs', calls_ivr_path(@ivr.uuid) , :id => "calls_recordings" ,:class=>"#{get_ivrs_calls(params[:controller], "call")}"%></li>
+	<li><%= link_to 'Analytics', analytics_ivr_path(@ivr.uuid) , :id => "analytics",:class=>"#{get_ivrs_analytics(params[:controller], "analytics")}"%></li>
+	<li class="divider"></li>
+	<li ><%= link_to 'Numbers', numbers_path ,:class=>"#{get_ivrs_numbers(params[:controller], "index")}"%></li>
+</ul>

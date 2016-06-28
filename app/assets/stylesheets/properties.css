@@ -1,0 +1,182 @@
+
+
+.thicklist .row.selected h3, .thicklist .row.selected span, .thicklist .row:hover:not(.no_hover) h3, .thicklist .row:hover:not(.no_hover) span, .thicklist .row:focus:not(.no_hover) h3, .thicklist .row:focus:not(.no_hover) span {
+    color: #1f518b;
+}
+
+.main_heading {
+    color: #1f518b;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
+
+ .property_display_task{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 0 0 10px;
+    padding: 5px 8px;
+    position: relative;
+    width: 170px;
+    z-index: 2;
+    float: right;
+    margin-top: 20%;
+  }
+
+  .property_display_task li {
+    background-position: 0 1px;
+    background-repeat: no-repeat;
+    line-height: 20px;
+    padding: 0 0 4px 22px;
+}
+
+  .property_display_task a {
+    float: right;
+    width: 122px;
+}
+table.sortable td {
+    line-height: 20px;
+    padding: 8px;
+}
+.propert1 {
+    background-color: white !important;
+    border-bottom: 1px solid #ccc !important;
+}
+table thead, .thead {
+    background-color: #9b9ba0;
+    background-image:none; 
+    color: #fff;
+    font-weight: bold;
+    position: relative;
+    height: 30px !important;
+}
+
+.modal-title {
+    cursor: move;
+    text-transform:uppercase;    
+}left
+.thicklist .row span {
+    color: #666666;
+}
+.row.client .last_active {
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+}
+.row.client h3.individual {
+    background-image: url("//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/user_green_16x16-287c7d3a069f06e6f09464d37d235593.png");
+}
+.row.client h3.client_name {
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+.thicklist .row h3 {
+    color: #333333;
+    font-size: 14px;
+    margin-bottom: 7px;
+    margin-top: 5px;
+}
+
+.thicklist .row {
+    background-color: #FFFFFF;
+    border-top:0;
+    border-bottom: none;
+
+    display: block;
+    padding: 5px 10px;
+    position: relative;
+    text-decoration: none;
+}
+
+#client_selector .thicklist {
+    margin-top: 0;
+}
+table.wide {
+    width: 100%;
+}
+table.sortable {
+    border: 1px solid gainsboro !important;
+    padding: 0;
+   
+}
+table {
+    position: relative;
+}
+.propert:hover td
+{
+background-color:#E6E6E6 ;
+color: #1f518b;
+cursor: pointer;
+}
+
+
+.propert > td {
+    height: 40px;
+}
+
+
+    #client_search{
+      width:80px !important;
+    }
+
+
+    .thicklist {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: gainsboro gainsboro -moz-use-text-color;
+  /*  border-style: solid solid none;*/
+    border-width: 1px 1px 0;
+    display: block;
+    list-style: none outside none;
+    overflow-x: hidden;
+    padding: 0;
+    position: relative;
+}
+
+th {
+text-align: left !important;
+}
+
+.fieldset > h2 {
+    background-color: #DADAD0;
+    background-image: -moz-linear-gradient(center top , #EBEBE0, #C8C8BF);
+    border-color: #DADAD0;
+    border-radius: 3px 3px 0 0;
+    border-style: solid;
+    border-width: 1px 1px 0;
+
+    color: #666666;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 27px;
+    margin: 0;
+    padding: 0 0 0 10px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.fieldset .content.with_padding {
+    padding: 20px;
+}
+.fieldset .content {
+    background-color: #FFFFFF;
+    border-color: #DADAD0;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    overflow: auto;
+}
+
+select {
+    background: -moz-linear-gradient(center top , #F6F6F6, #DDDDDD) repeat scroll 0 0 #FEFEFE;
+}
+
+
+.empty_property_display {
+    float: left !important;
+    margin-top: 4px;
+    width: 28% !important;
+}

@@ -1,0 +1,27 @@
+<div class="head hide">Change Time Range</div>
+<div class="content hide">
+  <div id="popup">
+    <%= form_tag({:action => locals[:quotes_action]}, :id=>"new_report", :class=>"new_report", remote: true) do %>
+      <p>
+        <label for="report_range">Date Range</label>
+        <select name="report[range]" id="report_range" onChange="report_range_selecct()">
+          <option value="week">this week</option>
+          <option value="month">this month</option>
+          <option value="12_months" selected="selected">last 12 months</option>
+          <option value="calendar_year">this calendar year</option>
+          <option value="custom">a custom range</option>
+        </select>
+      </p>
+      <%= hidden_field_tag "any",nil ,:value => "#{params[:any]}" %>
+      <p id="pickers" style="display: none;">
+        <%= text_field_tag "report[start_date]",nil ,:id=>"report_start_date",:style=>"width: 50%;" %> - 
+        <%= text_field_tag "report[end_date]",nil, :id=>"report_end_date",:style=>"width: 50%;" %>
+      </p>
+
+      <p class="controls">
+        <%= button_tag "submit", :class=>"popover-button submit" %>
+        <a class="popover-button cancel" , onclick="$(&quot;.popover-markup>.trigger&quot;).popover(&quot;hide&quot;);">cancel</a>
+      </p>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="client_index">
+  <div class="main_container">
+    <div id="head">
+      <h1>Recurring Contracts Report</h1>
+    </div>
+    <%= render "report_summary_time_picker", :locals => {:quotes_action => "recurring_contracts_summary"}%>
+    <%= render "recurring_contracts_summary"%>
+    <a class="button_new_create" id="column_selector" href="#column_selector_model" data-toggle="modal" style="float: right; z-index: 9; margin-right:16px;"><span id = "column_selector_count"></span> Columns</a>
+    <div class="tables" style="width: 98%; margin: 10px;">
+      <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+        <thead class="thead">
+          <tr>
+            <th width="116px" class="created">Created</th>
+            <th width="151px" class="client_name">Customer Name</th>
+            <th width="186px" class="description">Description</th>
+            <th width="166px" class="contract_start">Contract Start</th>
+            <th width="169px" class="closed">Closed</th>
+            <th width="169px" class="completed_visits">Completed Visits</th>
+            <th width="169px" class="job">job #</th>
+            <th width="180px" class="visits_assigned_to">Visits Assigned To</th>
+            <th width="169px" class="billing_type">Billing Type</th>
+            <th width="169px" class="doller">$</th>
+            <th width="89px" class="invoices">Invoices</th>
+            <th width="169px" class="line_items">Line Items</th>
+            <th width="42px" class="open">Open</th>
+          </tr>
+        </thead>
+        <% unless @contracts_summary.blank?%>
+        	<% @contracts_summary.each do |job| %>
+          	<tr> 
+          		<td class="created"><%= job.created_at.strftime("%d-%m-%Y")%></td>
+          		<td class="client_name"><%= job.property.client.first_name %> &nbsp;<%= job.property.client.last_name %></td>
+              <td class="description"><%= job.description%></td>
+              <td class="contract_start"><%= job.start_date%></td>
+              <td class="closed"><%= job.complete_on  %></td>
+              <td class="completed_visits"></td>
+              <td class="job"><%= job.id%></td>
+              <td class="visits_assigned_to"><%= get_crew(job.crew) %></td>
+              <td class="billing_type"><%= job.invoicing %></td>
+              <td class="doller"><%= get_one_off_total(job)%></td>
+              <td class="invoices"><%= get_recurring_invoice(job)%></td>
+              <td class="line_items"><%= get_line_item(job.job_works.pluck(:name))%></td>
+
+              <td class="open"><a target="_blank" href="/jobs/<%=job.id%>" class="open ui-icon ui-icon-newwin">open</a></td>
+            </tr>  
+        	<% end %>
+        <%end%> 
+      </table>
+    </div>
+  </div>
+</div>
+<%= render "services_and_work_reports_column_edit"%>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

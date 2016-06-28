@@ -1,0 +1,44 @@
+<div class="row_holder extend_to_footer " >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @quotes_all.blank? %>  
+        <% @quotes_all.each_with_index do |quote,index| %>
+          <tr data-link="/quotes/<%=quote.id%>" class="propert" > 
+            <td>Quote #<%=index+1%> <br> 
+              <span class="status draft"> 
+                <%if ((quote.sent==false) && (quote.archive==false))%>
+                  <span style="color:white; background-color:#888888;" class="status"> Draft</span>
+                <%elsif ((quote.sent==true) &&(quote.archive==false)) %>
+                  <span  style="" class="status send"> Sent</span>
+                <%else%>
+                  <span style="" class="status send">Sent</span>
+                <%end%> 
+              </span> 
+            </td>
+            <td><small>Estimate At</small><br/>
+             <%= quote.created_at.strftime("%m/%d/%Y")%>
+            </td>
+            <td>
+              <span class="summary" style="margin-left: 42%; font-weight: bold;">
+                <%@total= total_amount(quote)%>$<%=@total%>
+              </span><br/>
+              <div class="rating">
+                <span data-tooltip="Unlikely" style="margin-left: 30%;" ><span id="show_rating_<%=quote.id%>" value="<%=quote.raty_score %>" >
+                  </span>
+                  <script>
+                  $('#show_rating_<%=quote.id%>').raty({
+                    readOnly   : true,
+                   score: "<%= quote.raty_score%>"});
+                  </script>
+                </span>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+      No Estimate Found
+      <% end %>  
+    </table>
+  </div>
+</div>   
+

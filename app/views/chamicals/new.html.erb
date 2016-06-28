@@ -1,0 +1,15 @@
+<div class="client_index">
+<div class="main_container">
+  <div style="height: auto;">
+    <div id="head">
+      <div class="breadcrumbs hide_for_print">Back to: <%= link_to 'Chemical Tracking', chamicals_path %> &gt; </div>
+      <h1>New Chemical Treatment</h1>
+    </div>
+    <%= render "form" %>
+  </div>
+</div>
+</div>
+<script>
+  $( "#chamical_date" ).datepicker({dateFormat: 'yy-mm-dd'});
+  $(".time").timepicker()
+</script>

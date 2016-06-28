@@ -1,0 +1,59 @@
+<div class="client_index">
+  <div class="main_container">
+    <div id="" style="height: auto;">
+      <div class="">
+        <div id="head">
+          <div class="breadcrumbs hide_for_print">Back to: <%= link_to "properties",properties_path%> > <%= link_to "#{@property.street}","/properties/#{@property.id}?client_id=#{@property.client.id}"%>
+          </div>
+        </div>  
+        <div id="manually_geocode">
+          <div id="instructions">
+            Proper map coordinates let CopperService help you put together the best possible schedule, and get your teams to the right address.
+            <ol>
+              <li>Move the pin on the map.</li>
+              <li>Set the coordinates manually on the right.</li>
+              <li style="" id="current_location_button">
+                or <a onclick="; return false;" href="#" class="button">Use Your Current Location</a>
+              </li>
+            </ol>
+          </div>
+          <br style="clear:both">
+          <div id="mapCanvas" style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden;"></div>
+          <%= form_tag location_update_properties_path ,:class=>"edit_property" do %>
+            <h3>Mailing Address on Property:</h3>
+            <p id="street_address">
+              <%= @property.try(:street) rescue "" %><br> <%= @property.try(:street2) rescue "" %>
+              <br><%= @property.try(:city) rescue "" %>,<%= @property.try(:state) rescue "" %>  <%= @property.try(:zipcode) rescue "" %>
+            </p>
+            <br><br>
+            <h3>Coordinates on Map:</h3>
+            <p>
+              <label for="property_latitude">Latitude</label>
+              <%= text_field_tag "property[latitude]",nil, :id=>"latitude",:value=>@property.try(:latitude) rescue "" %>
+            </p>
+            <p>
+              <label for="property_longitude">Longitude</label>
+              <%= text_field_tag "property[longitude]",nil, :id=>"longitude",:value=>@property.try(:longitude) rescue ""%>
+            </p>
+            <br><br>
+            <%= hidden_field_tag "job_id", @job %>
+            <%= hidden_field_tag "property_id", @property.id %>
+            <%= hidden_field_tag "client_id", @client.gsub("?reload","") rescue ""%>
+            <p>
+              <%= submit_tag "Update Coordinates",:class=>"update_button_setting save-new-btn1",:style=>"float: right; margin-top: 2px; height: 36px;"%>
+              <a href="/properties/<%= @property.id%>?client_id=<%= @property.client.id%>" class="model_cancel_button pull-right">cancel</a>
+            </p>
+          <%end%>
+          <div id="mapdetails" style="display:none">
+            <b>Marker status:</b>
+            <div id="markerStatus"><i>Click and drag the marker.</i></div>
+            <div id="address"></div>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+manullyGecode()
+</script>

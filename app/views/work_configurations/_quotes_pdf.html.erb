@@ -1,0 +1,97 @@
+<div class="textLayer" style="width: 1019px; height: 1319px; margin:0 auto;">
+  <div style="font-size: 16.6667px; font-family: sans-serif;">
+    <div style="overflow-y:auto;">
+      <div style="width:600px; float:left;">
+        <div style="font-size: 25px; font-family: sans-serif; margin-bottom:10px;">Wipro</div>
+        <div style="font-size: 16.6667px; font-family: sans-serif;margin-bottom:5px;">Bob Guy</div>
+        <div style="font-size: 15px; font-family: sans-serif;margin-bottom:5px;">#8142 2nd St.</div>
+        <div style="font-size: 15px; font-family: sans-serif;margin-bottom:5px;">Anytown, California</div>
+      </div>
+      <div style="width:300px; float:right;">
+        <%if @pdf_setting.change_quote_to_estimate%>
+          <div style="font-size: 20px; font-family: sans-serif;">Estimate #1</div>
+        <%else%>
+          <div style="font-size: 20px; font-family: sans-serif;">Estimate #1</div>
+        <%end%>
+        <div style="font-size: 20px; font-family: sans-serif; width:265px; float:right; margin:10px 0px;">
+          <table width="100%" border="0" cellpadding="3"  cellspacing="0" style="font-size: 15px; font-family: sans-serif;">
+            <tr>
+              <td>From</td>
+              <td><%=current_user.company_name%></td>
+            </tr>
+            <tr>
+              <td>Bill To</td>
+              <td>#123 Main St</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>Springfield, California, 90210</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:30px; margin-bottom:30px;">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Service / Product</th>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Description</th>
+
+          <%if @pdf_setting.quote_show_line_item_qty%>
+            <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Qty</th>
+          <%end%>
+         
+          <%if @pdf_setting.quote_show_line_item_unit_costs%>
+            <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Unit Cost</th>
+          <%end%>
+
+          <%if @pdf_setting.quote_show_line_item_total_costs%>
+            <th style="background-color:#333;border:1px solid #666l;color:#fff;">Total</th>
+          <%end%>
+        </tr>
+
+        <tr>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Clean Pool</td>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Go and do lot's of good stuff</td>
+          <% if @pdf_setting.quote_show_line_item_qty%>
+            <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">1</td>
+          <% end %>
+          <% if @pdf_setting.quote_show_line_item_unit_costs%>
+            <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">$50</td>
+          <% end %>
+          <% if @pdf_setting.quote_show_line_item_total_costs%>
+            <td style="color:#000; padding:5px;border-bottom:1px solid #DDDDDD;">$50</td>
+          <% end %>
+        </tr>
+
+        <tr>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Mow Lawn</td>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">More good stuff</td>
+          <% if @pdf_setting.quote_show_line_item_qty%>
+            <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">2</td>
+          <% end %>
+          <% if @pdf_setting.quote_show_line_item_unit_costs%>
+            <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">$50</td>
+          <% end %>
+          <% if @pdf_setting.quote_show_line_item_total_costs%>
+            <td style="color:#000; padding:5px;border-bottom:1px solid #DDDDDD;">$50</td>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div style="font-size: 16.6667px; font-family: sans-serif; text-align:center;">A deposit of $5.00 will be required to begin.</div>
+  <div style="overflow-y:auto;margin-top:780px;">
+    <div style="font-size: 15px; font-family: sans-serif; float:left; width:800px;">
+      This quote is valid for the next 30 days, after which values may be subject to<br />change.
+    </div>
+    <% if @pdf_setting.quote_show_totals%>
+      <div style="font-size: 15px; font-family: sans-serif; float:left; width:100px;">Total</div>
+      <div style="font-size: 18.3333px; font-family: sans-serif;">$150.00</div>
+    <%end%>  
+  </div>
+   
+  <% if @pdf_setting.quote_client_signature%>
+    <div style="position: absolute;top: 1126.63px; font-size: 16.6667px; font-family: sans-serif;">Signature: _____________________      Date: _____________</div>
+  <%end%>   
+</div>

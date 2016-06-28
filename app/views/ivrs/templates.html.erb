@@ -1,0 +1,66 @@
+
+<div class="client_index">
+  <div class="main_container">
+<div class="large-9 columns end">
+  <ul class="large-block-grid-2">
+    <% @templates.each do |template| %>
+        <% if template.template_code == "pizza" %>
+            <li>
+              <div class="panel white-panel">
+                <%= image_tag "pizza.png" %>
+                <div class="panel">
+                  <h4 class="text-center">Joe's Pizza</h4>
+
+                  <p> Welcome to Joe's Pizza. Press 1 for today's offers. Press 2 for pizza menu. Press 3 for placing
+                    your order</p>
+                  <ol>
+                    <li>Buy a large pizza and get a medium size pizza absolutely free. Hurry offer is valid only this
+                      week
+                    </li>
+                    <li>Press 1 for Non Vegetarian pizza menu. Press 2 for Vegetarian pizza menu . Press 3 to go back to
+                      previous menu and place your order
+                      <ol>
+                        <li>We have Chicken Tikka Pizza with pieces of spicy chicken tikka , Pepperoni pizza with pork
+                          pepperoni slices, Chicken Fiesta with chunky chicken bits
+                        </li>
+                        <li>We have Hawaiian Delight with pineapple and capsicum , Country house with corn and onion
+                        </li>
+                      </ol>
+                    </li>
+                    <li>
+                      (Transfer call to store attendant)
+                    </li>
+                  </ol>
+                  <br>
+                  <a href="<%= apply_template_ivr_path(@ivr.uuid)+"?template_id=#{template.id}" %>" class="button success radius expand">
+                    Try this recipe</a>
+                </div>
+              </div>
+            </li>
+
+        <% elsif template.template_code == "voice_mail" %>
+            <li>
+              <div class="panel white-panel">
+                <%= image_tag "vm.png" %>
+                <div class="panel">
+                  <h4 class="text-center">Andy's Voicemail</h4>
+
+                  <p> Hi this is Andy. I am away right now. Press 1 to leave a voice mail. Thank you</p>
+                  <ol>
+                    <li>Please leave a message after the beep. Press the star key when finished.</li>
+                  </ol>
+                  <br>
+                  <a href="<%= apply_template_ivr_path(@ivr.uuid)+"?template_id=#{template.id}" %>" class="button success radius expand">
+                    Try this recipe</a>
+                </div>
+              </div>
+            </li>
+
+        <% end %>
+    <% end %>
+
+  </ul>
+
+</div>
+</div>
+</div>

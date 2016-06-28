@@ -1,0 +1,75 @@
+<script type="text/javascript">
+
+$("#genrate_pdf").click(function(){
+  $("#lead-message").modal('hide')
+})
+
+</script>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Lead Message</h4>
+    </div>
+    <div class="modal-body">
+      <div style="width:100%;">
+        <div style="width:75%; float:left;">
+          <%= form_tag lead_message_pdf_properties_path do %>
+            <%= cktext_area_tag "content", nil,:class => 'ckeditor',:toolbar => 'Full'%>
+            </br>
+            <%if !params[:properties].blank?%>
+            <% params[:properties].each do |key,value| %>
+              <%= hidden_field_tag "filters[#{key}]",value %> 
+            <% end %>
+            <% end %>
+            <%= hidden_field_tag "pool_activity_type",nil,:value=>"lead_message"%>
+            <% if @templates.count <= 4 %>
+              <%= check_box_tag 'save_as_templates'%> Save As Templates
+            <% end %>
+            <%= submit_tag "generate pdf",:id=>"genrate_pdf"%>
+          <%end%>
+        </div>
+        <div style="width:20%; float:right;">
+          <b>Personalization</b>
+          <div class="personalizate">
+            <p>{{Client_Email}}</p>
+            <p>{{Client_First_Name}}</p>
+            <p>{{Client_Last_Name}}</p>
+            <p>{{Pool_Street}}</p>
+            <p>{{Pool_City}}</p>
+            <p>{{Pool_State}}</p>
+            <p>{{Company_Name}}</p>
+            <%@company=  current_user.company%>
+            <%if !@company.blank?%> 
+                <p>{{Company_Street}}</p>
+                <p>{{Company_City}}</p>
+                <p>{{Company_State}}</p>
+            <%end%>  
+          </div>
+          <br/>
+          <b>Templates</b>
+          <%if !@templates.blank?%>
+            <div class="templates-lead">
+              <%@templates.each_with_index do |temp,index|%>
+                <p id="<%=temp.id%>"><%= "templates_#{index+1}"%></p>
+              <%end%>
+            </div>
+          <%end%>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(".personalizate p").click(function(){
+  $(".ckeditor").val($(".ckeditor").val()+$(this).html());
+})
+
+$(".templates-lead p").click(function(){
+   $.ajax({
+          type: "POST",
+          url: "/properties/templates_display",
+          data: {template_id: this.id}
+         });
+})
+</script>

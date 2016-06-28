@@ -1,0 +1,25 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+
+     <div class="classified_address">
+      <%= @classified.street %>,
+      <%= @classified.city %>
+      <%= @classified.state %>
+      <%= @classified.zipcode %>
+    </div> 
+    
+    <%= form_for @classified, :url => {:controller => "classifieds", :action => "media_save"}  do |f|%>
+
+    	<div class="row">
+        <div id='file_browse_wrapper'>
+    		  <%= f.file_field :image %>
+        </div>
+    	</div>
+    
+    	<div class="">
+    		<%= f.submit "Create Media Classified",:class=>"button_new_create save-new-btn1"%>
+    	</div>	
+    <%end%>
+  </div>
+</div>

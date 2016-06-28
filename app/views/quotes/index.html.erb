@@ -1,0 +1,72 @@
+<div class="client_index">
+  <div class="main_container">
+    <div> 
+        <%= render "clients/error_message_and_flash" %>
+      <div class="show_view_button">
+        <%= link_to "Blank Estimate",blank_quote_path, target: "_blank",:style=>"margin-right: 3px;",:class=>"button_new_index save-new-btn1" %>
+        <%if current_user.user_type=="admin"%>
+          <button class="button_new_index save-new-btn1" data-toggle="modal" data-target="#newqoute" >
+          New Estimate
+          </button>
+        <%else%>
+          <% if set_view_permission_readwritedelete(@team_member.permission.permission_quotes)!="read"%>
+            <button class="button_new_index save-new-btn1" data-toggle="modal" data-target="#newqoute" >
+              New Estimate
+            </button>
+          <%end%>
+        <%end%>
+      </div>  
+      <div id="content" style="height: auto;">
+        <div class="">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <ul class="quotes_filters">
+
+            <li class="search_quotes">
+              Estimates <%= text_field_tag :search, nil, :class=>"form-control search_all_quote",:placeholder=>"Search Estimate Numbers...",:require=>true,:id=>"search_element_number",:onkeyup => "searchQuoteIndex($(this).val())"%>
+            </li>
+            <li class="type_filter">
+              Type: <%= select_tag("time_frame_filter", options_for_select([["All","all"],["Draft","draft"],["Sent","sent"],["Archived","archived"]],:selected=>params[:type_filter]),:id=>"type_filter",:onchange=>"sortByDraftArchive($(this).val())")%>
+            </li>
+
+            <li class="time_period_filter">
+              Time Period:<%= select_tag("time_frame_filter", options_for_select([["All","all"],["This Month","this_month"],["Last Month","last_month"],["This Year","this_year"]]),:onchange=>"sortByQuoteTime($(this).val())" ,:id=>"time_frame_filter")%>
+            </li>
+
+            <li class="order_by">
+              Sort by <%= select_tag("quote_per_page", options_for_select([["Status","Status"],["Quote Number","quote_number"],["First Name","first_name"],["Last Name","last_name"],["Star Rating","star_rating"]]),:class=>"form-control input-sm sort_select_jobs",:id=>"sort_select_invoices_number",:onchange=>"sortByQuoteFirstLast($(this).val())") %></li>
+            <li style="float: right;"><%=@quotes.count%>Estimates</li>
+          </ul>  
+        </div>
+      </div>
+
+      <div data-thicklist="true" data-thicklist-remote="true" data-thicklist-headers="true" class="thicklist index_thicklist index_quote quotes_sort">
+        <div class="row_holder extend_to_footer " style="overflow: auto;">
+        <h3 class="section_header draft title1-font">Estimate</h3>
+        <div id="quote_sort_time">
+          <%= render "quote_search"%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%= render "client_select_model"%>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  actionReload()
+  var value="<%=request.referrer.include?'work' if !request.referrer.nil?%>"
+  if (value=='true'){ 
+  sortByDraftArchive("<%= params[:type_filter]%>")}
+})
+</script>
+<style type="text/css">
+.show_view_button {
+  margin-top: 35px;
+}
+.button_new_index{
+  margin-right: 17px;
+}
+</style>

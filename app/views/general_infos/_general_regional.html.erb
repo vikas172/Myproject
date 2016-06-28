@@ -1,0 +1,91 @@
+<div class="modal fade" id="regional_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header new-modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Regional Info</h4>
+			</div>
+			<div class="modal-body">
+				<%= form_for @general_account,:url=>"general_account_update" do |f|%>
+					<h4 class="title2-font">Regional</h4>
+					<div class="row">
+						<div class="span2">
+							Language
+						</div>
+						<div class="span3">
+							<%= f.select :language, options_from_collection_for_select(LanguageList::COMMON_LANGUAGES, "iso_639_1", "name",:selected=>@general_info.blank? ? "en" : @general_info.try(:language)) %>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							Workday Start
+						</div>
+						<div class="span3">
+							<span class="input-append">
+								<%= f.text_field :work_start_day ,:id=>"timepicker",:style=>"width: 206px;"%> 
+							</span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							Workday End
+						</div>
+						<div class="span3">
+							<span class="input-append">
+								<%= f.text_field :work_end_day ,:id=>"timepicker1",:style=>"width: 206px;"%>
+							</span>
+						</div>
+					</div>
+
+          <div class="row">
+						<div class="span2">
+							Working days
+						</div>
+						<div class="span3">
+		       		<% Date::DAYNAMES.each_with_index do |day,index| %>
+		       			<%day_present=(index+1).to_s%>
+		       			<%if !@general_info.blank?%>
+				       		<%if !@general_info.week_day.blank?%>
+				       		  <%if @general_info.week_day.include?day_present%>
+					          	<%= check_box_tag "week_day[]", index+1 ,:checked=>true%>
+					          <%else%>
+					          	<%= check_box_tag "week_day[]", index+1 %>
+					          <%end%>	
+					          <%= day[0] %> 
+					        <%else%>
+					          <%= check_box_tag "week_day[]", index+1 %>
+					          <%= day[0] %>
+					        <%end%>
+					      <%else%>
+					      	 <%= check_box_tag "week_day[]", index+1 %>
+					          <%= day[0] %>
+					      <%end%>    
+				      <% end %>
+		      	</div>
+		      </div> 
+
+		      <br/>
+					<div class="row">	
+						<div class="span2">
+							Currency
+						</div>	
+						<div class="span3">
+							<%= select_tag "general_info[currency]",options_for_select(all_currencies(Money::Currency.table),:selected=> @general_info.blank? ? "USD" : @general_info.try(:currency))%>
+						</div>
+					</div>
+
+					<br>
+					<%=f.hidden_field :user_id, :value => current_user.id%>
+					<br><br>
+					<div class="row text-right">
+						<%=f.submit "Update",:class=>"model_save_button pull-righ save-new-btn1"%>
+						<button type="button" class="model_cancel_button pull-righ" data-dismiss="modal">CANCEL</button>
+					</div>
+				<%end%>	
+			</div>
+		</div>
+	</div>
+</div>
+	

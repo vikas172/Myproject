@@ -1,0 +1,122 @@
+<div class="client_index">
+  <div class="main_container">
+<br/>
+<div id="page-layout">
+  <br/>
+
+  <!--Notifications start-->
+  <% if @payment  %>
+  <div class="row">
+    <div class="columns large-9 large-centered">
+      <% if @payment == "success"  %>
+      <div data-alert class="alert-box success radius">
+        Payment received successfully !
+        <a href="#" class="close">&times;</a>
+      </div>
+      <% elsif @payment == "failure"%>
+          <div data-alert class="alert-box alert radius">
+            Payment cancelled or failed
+            <a href="#" class="close">&times;</a>
+          </div>
+      <% end  %>
+    </div>
+  </div>
+  <% end  %>
+
+  <% if @purchase_status  %>
+      <div class="row">
+        <div class="columns large-9 large-centered">
+          <% if @purchase_status == "success"  %>
+              <div data-alert class="alert-box success radius">
+                Payment received successfully. Please charge your IVR with one of our call packs starting at $2.99 !
+                <a href="#" class="close">&times;</a>
+              </div>
+          <% elsif @purchase_status == "failure"%>
+              <div data-alert class="alert-box alert radius">
+                Payment cancelled or failed
+                <a href="#" class="close">&times;</a>
+              </div>
+          <% end  %>
+        </div>
+      </div>
+  <% end  %>
+  <!--Notifications end-->
+
+
+  <panel id="welcome-note" class="alert-box secondary">
+
+    <div class="inner-border">
+      <h5 class="row-title text-center">Simple steps to own your own IVR</h5>
+      <br>
+      <p>
+        <ol>
+          <li>
+            Choose your own phone number and <a href="#" data-reveal-id="buy_number_modal" >Buy an IVR </a> at just $5.99 / month
+          </li>
+          <li>
+            The purchased IVR will appear in the dashboard. Activate the IVR with one of our call packs starting at $2.99
+          </li>
+          <li>
+            The IVR becomes live immediately. Configure away the IVR.
+          </li>
+        </ol>
+
+      </p>
+    </div>
+  </panel>
+  <br/>
+  <div class="row page-layout">
+    <h5 class="row-title text-center">Your IVRs</h5>
+    <div class="large-9 large-centered columns panel white-panel">
+
+      <table id="ivrs_table" style="width: 100%">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Country</th>
+          <th>Phone</th>
+          <th>Call Balance</th>
+          <th>Recharge</th>
+          <th>State</th>
+          <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @ivrs.each do |ivr| %>
+            <tr>
+              <td><%= ivr.name %></td>
+              <td><%= ivr.region %></td>
+              <td><%= number_to_phone(ivr.phone , :area_code => true)%></td>
+              <td><%= ivr.call_balance %></td>
+              <td><a href="#" data-reveal-id="buy_call_pack_modal_<%= ivr.id %>" class="">Recharge </a></td>
+              <td> <%= ivr_state(ivr) %></td>
+              <td><%= link_to 'Configure', edit_ivr_path(ivr.uuid) %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+</div>
+
+<!--Partials for modals-->
+
+<% @ivrs.each do |ivr| %>
+    <%= render 'home/buy_call_pack', :@attendant => ivr %>
+<% end %>
+
+<%= render :partial => 'home/buy_number' %>
+
+</div></div>
+<br>
+<br>
+<br>
+<br>

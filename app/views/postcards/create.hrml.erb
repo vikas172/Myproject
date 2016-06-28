@@ -1,0 +1,5 @@
+<h1>Congrats on sending your customized Postcard</h1>  
+<p>You can view the postcard from the dashboard:</p>  
+<% if @results %>  
+<a href="https://dashboard.lob.com/#/postcards/<%= @results['id'] %>" target="_blank">https://dashboard.lob.com/#/postcards/<%= @results['id'] %></a>  
+<% end %>  

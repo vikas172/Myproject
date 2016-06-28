@@ -1,0 +1,128 @@
+<div id="print_override" class="work_area quote">
+  <div class="top clearfix">
+    <table class="right">
+      <tbody>
+        <tr>
+          <td class="label">Invoice</td>
+          <td>#<%= @invoice.id %></td>
+        </tr>
+        <tr>
+          <td class="label">From</td>
+          <td><%= @invoice.client.company_name%></td>
+        </tr>
+        <tr>
+          <td class="label">Issued<td>
+          <td><%if @invoice.mark_sent ==false%>Not Sent Yet<%else%><%=@invoice.created_at.strftime("%m/%d/%Y")%><%end%><td>
+        </tr>
+        <tr>
+          <td class="label">Due</td>
+          <td><%= (@invoice.created_at+1.month).strftime("%m/%d/%Y")%></td>
+        </tr>
+        <%if !@invoice.discount_amount.blank? && @invoice.discount_amount != 0.00%>
+          <tr>
+            <td class="label">Discount</td>
+            <td>$<%= @invoice.discount_amount%> </td>
+          </tr>
+        <%end%>
+        <%if !@invoice.deposite_amount.blank? && @invoice.deposite_amount != 0.00%>
+          <tr>
+            <td class="label">Deposit</td>
+            <td>$<%= @invoice.deposite_amount %></td>
+          </tr>
+        <%end%>
+      </tbody>
+    </table>  
+
+    <div class="left">
+      <%= @invoice.client.company_name%>
+      <h3>
+        <%=client_detail(@invoice) %>
+      </h3>
+      <h3 style="font-weight:bold; clear:both;"><%= @invoice.subject%></h3>
+    </div>
+  </div> <!-- end of top -->
+
+  <div id="line_items">
+    <div id="line_items_head">
+      <span class="name">Service / Product</span>
+      <span class="description short">Description</span>
+
+      <div style="float: right;">
+        <span class="centered hours_column">Qty.</span>
+        <span class="centered cost_column">Unit Cost</span>
+        <span class="centered cost_column">Total</span>
+      </div>
+    </div>
+
+    <div id="line_items_body">
+      <%@total_value=0%>
+      <%@invoice.invoice_works.first.name.each_with_index do |value,index|%>
+        <div class="line_item">  
+          <span class="name">
+            <%= @invoice.invoice_works.first.name[index]%>
+          </span>
+          <span class="description short">
+            <%= @invoice.invoice_works.first.description[index]%>
+          </span>
+          <div class="right_items">
+            <span class="hours_column ">
+              <%= @invoice.invoice_works.first.quantity[index].to_f%>
+            </span>
+            <span class="cost_column ">
+              $<%= @invoice.invoice_works.first.unit_cost[index].to_f%>
+            </span>
+            <span class="cost_column ">
+              $<%= @invoice.invoice_works.first.total[index]%>
+            </span>
+            <%@total_value= @invoice.invoice_works.first.total[index].to_i+ @total_value%>
+          </div>
+        </div>
+      <%end%>    
+    </div>
+  </div>
+
+  <div class="page_breaker" style="margin-top:10%;"></div>
+  <div class="clearfix" id="bottom">
+    <div class="" id="totals">
+      <div id="total_value_invoice">     
+        <span>Invoice Total:</span>
+        <%if !@tax.nil?%>
+          <span class="cost_column very_important">$<%=@tax_calculate+@tax%></span>
+        <%elsif @tax_calculate.nil?%>
+          <%if !@total_value.nil?%>
+            <%if @invoice.discount_amount.blank?%>
+              <span class="cost_column very_important">$ <%= @total_value%></span>
+            <%else%>
+              <span class="cost_column very_important">$ <%= @total_value - @invoice.discount_amount%></span>
+            <%end%>
+          <%else%>
+            <span class="cost_column very_important">$ 0.00</span>
+          <%end%>
+        <%else%>
+          <span class="cost_column very_important">$<%=@tax_calculate%></span>
+        <%end%>
+      </div>
+
+      <div>
+        <span>Due</span>
+        <span style="font-weight:normal" class="cost_column"><%if @invoice.payment=="Custom"%>
+          <%= @invoice.due_date%>
+          <%else%>
+          <%= @invoice.payment%>
+          <%end%></span>
+      </div>
+    </div>
+
+    <div style="margin-top:40%; width:30%;"> 
+      Customer Signature
+        <img src='<%=Rails.root.join("public/signature/#{current_user.id}.png")%>' alt="Smiley face" ><hr><br/>
+        Date: <%= format_date %>
+        <br>  
+    </div>
+
+    <div id="message">
+      <%=@invoice.client_message%><br>
+      Thank you for your business. Please contact us with any questions regarding this invoice
+    </div>
+  </div>
+</div>

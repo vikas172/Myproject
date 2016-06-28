@@ -1,0 +1,109 @@
+<div class="client_index">
+  <div class="main_container">
+    <div class="verification-content">
+    <div id="status-box" class="alert alert-success">
+       <p id="status-message">Status: Haven’t done anything yet</p>
+    </div>
+
+
+
+
+<div id="verify-pin">
+  <%= form_tag phone_numbers_verify_path, remote: true do |f| %>
+    <%= hidden_field_tag 'hidden_phone_number', '' %>
+    <div class="name-email">
+      <div style="  text-transform: capitalize;">
+  <%= current_user.first_name %> <%= current_user.last_name %></div>
+  <div class="clearfix"></div>
+  <%= current_user.email %>
+    </div>
+    <div class="form-group">
+      <%= text_field_tag :pin ,nil,:placeholder => "XXXX"%>
+    </div>
+    <div class="received-code">Enter the code you received at <%= current_user.mobile_number%></div>
+
+    <%= submit_tag "Verify PIN", class: "button_new_create btn-block" %>
+    <% end %>
+    <p class="resend-btn">
+      <%= link_to "Resend code",resend_code_path,:remote=>true%>
+      <%= link_to "Change number","#",:id=>"change-mob",:style=>"cusor:pointer;", remote: true%>
+    </p>
+  </div>
+
+<div id="send-pin">
+  <h3>Please Change mobile number</h3>
+  <%= form_for @phone_number, remote: true do |f| %>
+    <div class="form-group">
+      <%= f.text_field :phone_number,:value=>current_user.mobile_number %>
+    </div>
+    <%= f.submit "Resend PIN", class: "button_new_create btn-block", id: 'send-pin-link' %>
+</div>
+ 
+</div>
+
+</div>
+</div>
+<%end%>
+<style type="text/css">
+.name-email{
+    padding: 15px;
+  margin-left: 60px;
+  font-weight: bold;
+  font-size: 16px;
+}
+#send-pin, #status-box {
+  display: none;
+}
+.received-code {
+  padding: 10px;
+  text-align: center;}
+.verification-content{
+  width: 500px;
+  margin: 0 auto;
+  overflow-y:auto;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+.verification-content h3{
+  font-size: 20px;
+  color: #666;
+  text-align: center;
+}
+.verification-content .form-group{
+  text-align: center;
+}
+.verification-content .button_new_create{
+  margin: 0 auto;
+  float: none;
+  text-align: center;
+  max-width: 50%;
+  font-size: 18px;
+  padding: 8px 0px !important;
+}
+.verification-content .form-group input[type="text"]{
+  height: 35px;
+  width: 68%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.resend-btn a {
+  color: #1f518b;
+  font-size: 16px;
+}
+.resend-btn {
+  text-align: right;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+
+$("#change-mob").click(function(){
+$("#send-pin").css("display","block");
+})
+
+  <%if $validate_phone == false%>
+    $("#new_phone_number").submit();
+    <% $validate_phone = true%>
+  <%end%>
+})
+</script>

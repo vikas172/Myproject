@@ -1,0 +1,31 @@
+<div class="main_container">
+  <div id="content" style="height: auto;">
+    <div class="padding">
+      <div id="head">
+        <h1>New Work Order</h1>
+      </div>
+      <p class="description"> Which property would you like to use for this Work Order?</p>
+      <h2>Properties belonging to <%= @client.try(:initial)%><%= @client.try(:first_name)%><%= @client.try(:last_name)%></h2> or
+      <%= link_to "create a new property", {:controller => "properties", :action => "new", :client_id => @client.id, :job_prop => "job" }%>
+      <div id="select_property_list">
+        <br><br>
+        <h3>Choose a property:</h3>
+        <% @client_properties.reverse.each do |property|%>
+          <ul style="overflow:visible" class="thicklist chemical_property_select">
+            <li>
+               <%if params[:work]=="work"%>
+                <a class="row clearfix" href="/chamicals/new?property_id=<%= property.id%>&work=work">
+                  <span><%= property.street %> <%= property.street2 %> <%= property.city %>,<%= property.state %></span>
+                </a>
+              <% else %>
+                <a class="row clearfix" href="/chamicals/new?property_id=<%= property.id%>">
+                  <span><%= property.street %> <%= property.street2 %> <%= property.city %>,<%= property.state %></span>
+                </a>
+              <% end %>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+    </div>       
+  </div>
+</div>

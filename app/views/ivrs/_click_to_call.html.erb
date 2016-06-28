@@ -1,0 +1,57 @@
+<% if notice %>
+    <div data-alert class="alert-box rounded success">
+      <a href="#" class="close">&times;</a>
+      <%= notice %>
+    </div>
+<% end %>
+<div class="panel white-panel">
+  <div class="row">
+    <div class="large-9 columns large-centered">
+    Attached to - <span > <%#= display_ivr_number(@ivr) %></span>
+      <%= form_for (@ivr.number || Number.new), :url => update_ivr_number_numbers_path , :method => :post do |f| %>
+          <%= f.hidden_field :ivr_id , :value => @ivr.id %>
+              <h1>
+                <span class="bigtext">
+                <%= f.select :id , Number.where(:ivr_id => [nil,@ivr.id]).pluck(:phone_number,:id) , :prompt => "Select a number" %>
+              </span>
+              </h1>
+
+          <div class="field">
+            <%= f.submit :class => "button success radius tiny" , :value => "Assign" %>
+          </div>
+      <% end %>
+
+      <!--click to call-->
+      <%# if @ivr.application_id %>
+<!--           <i class="fi-info size-24 " id="call-tooltip" data-tooltip aria-haspopup="true" class="has-tip [tip-top]" title="Click to call the phone number. This works via WebRTC from your browser. Alternatively you can dial from your mobile as well"></i>
+          <input type="button" data-toggle="modal" data-target="#dialModal" class="button success radius" value="Call <%#= number_to_phone(@ivr.phone, :area_code => true) %>" onclick="call()"/>
+
+
+          <input type="button" class="button alert radius" value="Hangup" onclick="hangup()"/>
+          <!-<div data-alert class="alert-box info radius">-->
+          <!--&lt;!&ndash;<a href="#" class="close">&times;</a>&ndash;&gt;-->
+          <!--Alternatively, you can use your phone to dial the number.-->
+          <!--</div>-->
+         <!--  <br>
+          <span style="font-size: 10px"><i>If you are experiencing call connectivity issues, try calling from your
+            mobile or a VOIP account</i></span>  -->
+      <%# end %>
+      <!--<a href="#" data-reveal-id="dialModal">Click Me For A Modal</a>-->
+
+    </div>
+  </div>
+
+</div>
+
+<style type="text/css">
+
+.panel {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d8d8d8;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+  background: #f2f2f2;
+}
+
+</style>

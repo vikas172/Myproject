@@ -1,0 +1,76 @@
+<%if !@custom_field.blank?%>
+  <%@custom_field.each_with_index do |custom_field,index|%>
+    <div class="span2">
+    <label for="custom_field_info_options_default_text_value"><%= custom_field.name%></label>
+    </div>
+    <div class="span7">
+      <%if custom_field[:value_type][0]=="select"%>
+        <%if !@custom_field_data.blank?%>
+          <%if !@custom_field_data["select"].blank?%>
+            <%= select_tag("custom_field[select][#{index}]", options_for_select(custom_field_select(custom_field),:selected=> @custom_field_data["select"]["#{index}"]))%>  
+          <%end%> 
+        <%else%>
+          <%= select_tag("custom_field[select][#{index}]", options_for_select(custom_field_select(custom_field)))%>
+        <%end%> 
+      <%elsif custom_field[:value_type][0]=="text"%>
+        <%if !@custom_field_data.blank?%>
+          <%if !@custom_field_data["text"].blank?%>
+            <%= text_field_tag  "custom_field[text][#{index}]",nil,:value=>@custom_field_data["text"]["#{index}"]%>
+          <%end%> 
+        <%else%>
+          <%= text_field_tag  "custom_field[text][#{index}]",nil,:value=>custom_field[:value_type][1]%>
+        <%end%> 
+      <%elsif custom_field[:value_type][0]=="area"%>
+        <%if !@custom_field_data.blank?%>
+          <%if !@custom_field_data["length"].blank?%>
+            <%= text_field_tag  "custom_field[length][#{index}]",nil,:value=>@custom_field_data["length"]["#{index}"],:style=>"width:10%;"%>X
+            <%= text_field_tag  "custom_field[length][#{index+1}]",nil,:value=>@custom_field_data["length"]["#{index+1}"] ,:style=>"width:10%;"%>
+            <%= custom_field[:value_type][3]%>
+          <%else%>
+            <%= text_field_tag  "custom_field[length][#{index}]",nil,:value=> custom_field[:value_type][1],:style=>"width:10%;"%>X
+            <%= text_field_tag  "custom_field[length][#{index+1}]",nil,:value=> custom_field[:value_type][2] ,:style=>"width:10%;"%>
+            <%= custom_field[:value_type][3]%>
+          <%end%> 
+        <%else%>
+          <%= text_field_tag  "custom_field[length][#{index}]",nil,:value=> custom_field[:value_type][1],:style=>"width:10%;"%>X
+          <%= text_field_tag  "custom_field[length][#{index+1}]",nil,:value=> custom_field[:value_type][2] ,:style=>"width:10%;"%>
+          <%= custom_field[:value_type][3]%>
+        <%end%>  
+      <%elsif custom_field[:value_type][0]=="integer"%>
+        <%if !@custom_field_data.blank?%>
+          <%if !@custom_field_data["numeric"].blank?%>
+            <%= text_field_tag  "custom_field[numeric][#{index}]",nil,:value=>@custom_field_data["numeric"]["#{index}"] ,:style=>"width:10%;"%>
+            <%= custom_field[:value_type][2]%>
+          <%end%> 
+        <%else%>
+          <%= text_field_tag  "custom_field[numeric][#{index}]",nil,:value=>custom_field[:value_type][1] ,:style=>"width:10%;"%>
+          <%= custom_field[:value_type][2]%>
+        <%end%>
+      <%elsif custom_field[:value_type][0]=="boolean"%>
+        <%if !@custom_field_data.blank?%>
+          <%if !@custom_field_data["boolean"].blank?%>
+            <%if @custom_field_data["boolean"]["#{index}"]== "true"%>
+              <%=hidden_field_tag "custom_field[boolean][#{index}]",nil, :id=>"custom_field_value_type_check_value",:value=>"true"%>
+              <input type="checkbox"  id="custom_field_value_type_check" checked="checked" value="true">
+            <%end%> 
+          <%else%>
+            <%=hidden_field_tag "custom_field[boolean][#{index}]",nil, :id=>"custom_field_value_type_check_value",:value=>"false"%>
+            <input type="checkbox"  id="custom_field_value_type_check" value="false">
+          <%end%> 
+        <%else%>
+          <%if custom_field[:value_type][1]=="true"%>
+            <%=hidden_field_tag "custom_field[boolean][#{index}]",nil, :id=>"custom_field_value_type_check_value",:value=>'true'%>
+            <input type="checkbox"  id="custom_field_value_type_check" checked="checked "value="true">
+          <%else%>
+            <%=hidden_field_tag "custom_field[boolean][#{index}]",nil, :id=>"custom_field_value_type_check_value",:value=>'false'%>
+            <input type="checkbox"  id="custom_field_value_type_check" checked="checked "value="false">
+          <%end%>
+        <%end%>
+      <%end%>
+    </div>   
+    <%end%>
+<%end%>
+
+<script>
+checkCustomBox()
+</script>

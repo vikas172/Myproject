@@ -1,0 +1,2 @@
+$("#assigned_visit_modal").modal('hide');
+$("#to_do_content").html("<%= escape_javascript(  render :partial => 'job_complete',  :locals => {:@job => @job ,:@visit_jobs=> @visit_jobs} ) %> ")

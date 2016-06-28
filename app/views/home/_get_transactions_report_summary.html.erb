@@ -1,0 +1,53 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="189px" class="client_name">Customer Name</th>
+        <th width="257px" class="date">Date</th>
+        <th width="169px" class="type">Type</th>
+        <th width="169px" class="doller">$</th>
+        <th width="225px" class="note">Note</th>
+        <th width="92px" class="cheque">Cheque #</th>
+        <th width="92px" class="invoice_id">Invoice #</th>
+        <th width="92px" class="method">Method</th>
+        <th width="42px" class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @transactions_summary.blank?%>
+      <% @transactions_summary.each_with_index do |transaction,i| %>
+        <tr>
+          <td class="client_name"><%= transaction.client.first_name rescue ""%> <%= transaction.client.last_name rescue ""%></td>
+          <td class="date"><%= transaction.created_at.strftime("%m/%d/%Y") %></td>
+          <td class="type"><%= transaction.transaction_type %></td>
+          <td class="doller"><%= get_transaction_type_balance(transaction, transaction.transaction_type) %></td>
+          <td class="note"><%= transaction.additional_note %></td>
+          <td class="cheque"><%= transaction.cheque_number %></td>
+          <td class="invoice_id"><%= transaction.invoice_id%></td>
+          <td class="method"><%= transaction.pay_method %></td>
+          <td class="open"><a target="_blank" href="/invoices/<%=transaction.id%>" class="open ui-icon ui-icon-newwin">open</a></td>
+        </tr>
+      <% end %>
+    <%end%>
+    <% unless params[:any] == "income"%>
+      <% unless @invoices.blank?%>
+        <% @invoices.each_with_index do |invoice,i| %>
+          <tr>
+            <td class="client_name"><%= invoice.client.first_name rescue ""%> <%= invoice.client.last_name rescue ""%></td>
+            <td class="date"><%= invoice.created_at.strftime("%m/%d/%Y") %></td>
+            <td class="type"><%= "invoice" %></td>
+            <td class="doller"><%= get_client_total_invoice(invoice) %></td>
+            <td class="note"><%= invoice.additional_note %></td>
+            <td class="cheque"><%=  %></td>
+            <td class="invoice_id"><%= invoice.id%></td>
+            <td class="method"><%= invoice.payment_method  %></td>
+            <td class="open"><a target="_blank" href="/jobs/<%=invoice.id%>" class="open ui-icon ui-icon-newwin">open</a></td>
+          </tr>
+        <% end %>
+      <%end%>
+    <% end %>
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

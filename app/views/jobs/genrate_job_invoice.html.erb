@@ -1,0 +1,60 @@
+<div class="client_index1">
+<div class="main_container">
+  <div class="padding">
+    <div id="head">
+      <h1>New Invoice for CopperService</h1>
+    </div>       
+    <%= form_tag new_invoice_path(:job_id=>params[:job_id]),:method=>"get" do %>
+      <%= hidden_field_tag "client_id" , @client.id %>
+      <div id="invoice_generator_work_orders">
+        <div style="display:none" class="warning flash" id="flash_warning">
+          <b>Note:</b> Total of all discounts will be added to the Invoice.
+        </div>
+        <h4><%= @client.first_name %>&nbsp;<%=  @client.last_name %> has several active jobs. Check all you wish to invoice:</h4>
+        <%if !@jobs.blank? %>
+          <% @jobs.each do |job|%>
+            <div class="list">
+              <div data-visit-based-billing="false" data-total="0.0" data-one-off="true" data-line-item-count="0" data-discounted-quote="null" data-contract="false" data-completed="true" class="work_order_with_visits">
+                <div class="row work_order work_type no_hover">
+                  <div class="work_ref">
+                    <h3 class="type_label">
+                      <%if params[:job_id].to_i==job.id%>
+                        <%= check_box_tag 'job_ids[]', job.id, true-%>
+                      <%else%>
+                        <%= check_box_tag 'job_ids[]', job.id, false -%>
+                     <%end%>
+                      #<%= job.id%> <%= job.job_type %>
+                    </h3>
+                    <span class="status requires_invoicing">
+                      Requires Invoicing
+                    </span>
+                  </div>
+                  <div class="property"><%= job.property.try(:street)%>,<%= job.property.try(:street2)%><br><%= job.property.try(:city)%>, <%= job.property.try(:state)%><%= job.property.try(:zipcode)%>
+                  </div>
+                  <div class="right">
+                    <span class="cost">
+                      <%if !job.job_works.blank?%>
+                        <%@cost=0%>
+                        <%job.job_works.each do |work|%>
+                        <%@cost=@cost+work.total%>
+                        <%end%>
+                        $ <%= @cost%>.00
+                      <%else%>
+                        $ 0.00
+                      <%end%>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>   
+          <%end%>   
+        <%end%>   
+        <div class="continue_holder" style="margin-top:20px;">
+          <%= submit_tag "Next Step ▶" ,:class=>"model_save_button save-new-btn1"%>
+          <%= link_to "Cancel",:back,:class=>"model_cancel_button pull-right"%>
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>
+</div>

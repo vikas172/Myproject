@@ -1,0 +1,24 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: field_service
+  username: postgres
+  password: timevy2014_db
+  host: localhost
+
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: field_service
+  username: postgres
+  password: timevy2014_db
+  host: localhost
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: field_service
+  username: postgres
+  password: timevy2014_db
+  host: localhost
+

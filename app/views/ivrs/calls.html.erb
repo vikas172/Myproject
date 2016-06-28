@@ -1,0 +1,55 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "ivrs/top_header"%>
+    <div class="large-12 columns end">
+      <%= render :partial => 'click_to_call' %>
+      <hr>
+      <div class="panel white-panel">
+        <table id="call_logs_table">
+          <thead>
+            <tr style="line-height: 30px;">
+              <th>Id</th>
+              <th>Caller</th>
+              <th>Recording</th>
+              <th>Caller Location</th>
+              <th>Date and Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @calls.blank? %>
+              <% @calls.each do |call| %>
+                <tr>
+                  <td><%= call.id %></td>
+                  <td><span class="success label"><%= number_to_phone(call.caller_number , :area_code => true) rescue ""%></span></td>
+                  <td>
+                    <% call.transactions.each do |t| %>
+                        <% if !t.recording.blank? %>
+                            <%= link_to "Listen" , t.recording.url  rescue ""%>
+                            <br>
+                        <% end  %>
+                    <% end %>
+                  </td>
+                  <td><%= (call.caller_city + " " + call.caller_state) rescue "" %></td>
+                  <td><%= call.created_at %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        <%= will_paginate @calls %>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+
+#call_logs_table{
+  width: 100%;
+}
+.side-nav li a:not(.button) {
+  display: block;
+  color: #fff;
+  margin:0;
+  padding: 0.4375rem 0.875rem;
+}
+</style>

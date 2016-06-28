@@ -1,0 +1,63 @@
+<div class="client_index">
+  <div class="main_container">
+  	<div class="multibutton">
+      <a class="button side_arrow" href=<%= prev_payroll_timesheets_path(:day=> get_previous_week(current_user))%>>◀</a>
+        <span class="button current no_hover"> <%= link_to "Current Week",payroll_timesheets_path %></span>
+      <a class="button side_arrow" href=<%= next_payroll_timesheets_path(:day=>get_next_week(current_user))%>>▶</a>
+    </div>
+  	<h2 class="title1-font"> User's Weekly Timesheet List</h2>
+	  	<%if current_user.company.blank?%>
+	  		<% date= Date.today.beginning_of_week(start_day = :monday)%>
+			<%else%>
+	  		<% date= Date.today.beginning_of_week(start_day = (current_user.company.start_week_on).to_sym)%>
+			<%end%>
+		<h2 class="title2-font"> Week Interval  <%= date%> - <%= date+6%></h2>
+  </br>
+  	<table class="table">
+  		<thead>
+				<tr>
+					<th>User Name</th>
+					<th>Total time</th>
+					<th>Regular Time</th>
+					<th>Over Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+					<%@users.each do |user|%>
+					<tr>
+						<td>
+							<%= user.full_name%>
+						</td>
+
+							<%@mins=[]%>
+							<%@hours=[]%>
+              <% @timesheets = get_timesheet(user)%>
+						<%if !@timesheets.blank?%>
+							<%!@timesheets.each do |timesheet|%>
+								<% @mins << timesheet.duration.strftime("%M").to_i rescue 0%>
+								<% @hours << timesheet.duration.strftime("%H").to_i rescue 0%>
+							<%end%>
+						<%end%>
+
+						<%@total= get_minutes_hours(@mins.sum,@hours.sum) rescue "0:0"%>
+
+						<td><%= get_minutes_hours(@mins.sum,@hours.sum) rescue "0:0"%> Hours</td>
+
+						<%if (@hours.sum > 40 )%>
+							<% reqular = "40:00"%>
+							<td><%= reqular %> Hours</td>
+
+							<td><%= duration_hour_over(@total)%> Hours</td>
+						<%else%>
+							<td><%= get_minutes_hours(@mins.sum,@hours.sum) rescue "0:0" %> Hours</td>
+							<td><%= "0:0"%> Hours</td>
+						<%end%>	
+						
+						</tr>
+					<%end%>
+				
+			</tbody>
+  	</table> 
+  </div>
+</div>

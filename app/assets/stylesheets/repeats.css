@@ -1,0 +1,50 @@
+.day_holder a {
+display: block;
+padding: 5px 7px;
+font-size: 14px;
+border-style: solid;
+border-color: #ccc;
+border-width: 1px 1px 1px 0px;
+float: left;
+text-decoration: none;
+font-weight: bold;
+}
+.rs_calendar_day{
+width: 155px;
+}
+.rs_calendar_day a {
+display: inline-block;
+text-align: center;
+width: 15px;
+padding: 5px 3px;
+font-size: 12px;
+border-style: solid;
+border-color: #ccc;
+border-width: 1px 1px 1px 1px;
+margin: -1px 0 0 -1px;
+line-height: 10px;
+font-weight: bold;
+}
+.rs_calendar_week a {
+display: inline-block;
+text-align: center;
+width: 15px;
+padding: 5px 3px;
+font-size: 12px;
+border-style: solid;
+border-color: #ccc;
+border-width: 1px 1px 1px 1px;
+margin: -1px 0 0 -1px;
+line-height: 10px;
+background-color: #fff;
+font-weight: bold;
+}
+.end_of_month{
+	width: 60px !important;
+}
+.rs_daily_interval, .rs_weekly_interval, .rs_monthly_interval, .rs_yearly_interval{
+	width: 80px;
+}
+#repeat_frequency{
+	width: 80px;
+}

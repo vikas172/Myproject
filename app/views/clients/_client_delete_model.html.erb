@@ -1,0 +1,74 @@
+<div class="modal fade" id="delete_model_client" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title new-body" id="myModalLabel">Confirm Customer Deletion</h4>
+      </div>
+      <div class="modal-body">  
+        <div class="confirm_delete_client">
+          <h3 class="title1-font">Confirm Customer Deletion</h3>
+          <h4  class="title2-font">Are you absolutely sure you want to delete this Customer?</h4>
+
+          <%if ((!@client.properties.blank?) || (!@client.invoices.blank?))%>
+            <p>By deleting this Client, you will also be deleting:</p>
+            <br>
+            <ul>
+              <li>
+              <label for="confirm">
+                <span>
+                  <input type="checkbox" unchecked="" name="mytr0">
+                  <span id="client_property_number_total" class="client_delete_number"><%= @client.properties.count rescue 0  %></span> property
+                </span> and the associated information.</label>
+              </li>
+
+              <li>
+
+              <label for="confirm">
+                <span>
+                  <input type="checkbox" unchecked="" name="mytr0" >
+                  <span id="client_job_number_total"  class="client_delete_number"><%= job_total_number(@client) rescue "" %></span> Jobs
+                </span>
+              </li>
+
+              <li>
+              <label for="confirm">
+                <span>
+                  <input type="checkbox" unchecked="" name="mytr0" >
+                   <span id="client_quote_number_total"  class="client_delete_number"><%= quote_total_number(@client) rescue ""%></span>Quote</span> 
+                  and their associated prices
+                </label>
+              </li>
+
+              <li>
+              <label for="confirm">
+                <span>
+                  <input type="checkbox" unchecked="" name="mytr0" value="no">
+                   <span id="client_invoice_number_total"  class="client_delete_number"><%= @client.invoices.count rescue ""%></span> Invoice
+                </span>
+              </label>
+              </li>
+            </ul>
+            <%= link_to 'Delete', delete_client_path(:client_id=>@client.id),:class=>"hide remove button",:id=>"btn2"%> 
+          <%else%> 
+          <%= link_to 'Destroy', delete_client_path(:client_id=>@client.id),:class=>" button"%>
+          <%end%>  
+         <%= link_to 'Cancel', "#",'data-dismiss'=>"modal",:class=>" button save-new-btn1 pull-right"%>
+          
+        </div>    
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $(".client_delete_number").each(function(){
+      if (parseInt($(this).html()) > 0){
+      }
+      else
+      {
+        $(this).parents('label').hide();
+      }
+    })
+  })
+</script>

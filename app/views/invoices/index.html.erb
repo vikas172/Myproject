@@ -1,0 +1,85 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <div class="show_view_button">
+      <%if current_user.user_type=="admin"%>
+         <button class="button_new_index save-new-btn1" data-toggle="modal" data-target="#myModal2" >New Invoice</button>
+      <%else%>
+        <% if set_view_permission_readwritedelete(@team_member.permission.permission_invoices)!="read"%>
+          <button class="button_new_index save-new-btn1" data-toggle="modal" data-target="#myModal2">New Invoice</button>
+        <%end%>
+      <%end%>
+    </div>
+    <div id="content" style="height: auto;">
+      <ul class="invoice_filters">
+        <li class="type_search">
+        <%= text_field_tag :search, nil, :class=>"form-control search_all",:placeholder=>"Search Invoices Numbers...",:require=>true,:id=>"search_element",:onkeyup => "searchInvoiceIndex($(this).val())"%>
+        </li>
+        <li class="type_filter">
+          Type: <%= select_tag("time_frame_filter", options_for_select([["All","all"],["Outstanding","outstanding"],["Paid Only","paid"],["Past Due Only","past_due"],["Drafts Only","draft"],["Bad Debt","bad_debt"]] ,:selected=>params[:type_filter]),:onchange=>"sortByOutstanding($(this).val())",:id=>"type_filter")%>
+        </li>
+        <li class="time_period_filter">
+          Due Date:<%= select_tag("time_frame_filter", options_for_select([["All","all"],["This Month","this_month"],["Last Month","last_month"],["This Year","this_year"]]),:onchange=>"sortByInvoiceTime($(this).val())" ,:id=>"time_frame_filter")%>
+        </li>
+        <li class="order_by">
+          Sort by <%= select_tag("jobs_per_page", options_for_select([["Status","Status"],["Due Date","due_date"],["Invoice Number","invoice_number"],["First Name","first_name"],["Last Name","last_name"]]),:class=>"form-control input-sm sort_select_jobs",:id=>"sort_select_invoices_number",:onchange=>"sortByInvoiceFirstLast($(this).val())") %>
+        </li>
+        <span class="count"><%=@invoices.count%>Invoices</span>
+      </ul>   
+    </div>
+
+    <div data-thicklist="true" data-thicklist-remote="true" data-thicklist-headers="true" class="thicklist index_thicklist index_quote">
+      <div class="row_holder extend_to_footer" style="overflow: auto;">
+        <h3 class="section_header draft title1-font">Invoices</h3>
+        <div id="invoice_sort_time">
+          <%= render "invoice_search"%>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header new-modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">New Invoice</h4>
+          </div>
+          <div class="modal-body">
+            <div id="client_selector">
+              <p>Which Customer would you like to use for this Invoice?</p> 
+              <br/>
+              <div class ="search-div row">
+                <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Customers...",:require=>true,:id=>"search_input_job_client_model",:style=>"width: 48%;",:onkeyup => "searchClientInvoiceModel($(this).val())" %>
+                 <span class="or">or</span>
+                
+                <%= link_to 'Create New Customer', new_client_path(:id=>"invoice"),:style=> "float: right;" ,:class=>"button_new_create save-new-btn1"%>
+              </div>
+              <br/><br/>
+              <h4 class="title1-font">Some Recently Used Customers:</h4><br/>
+              <ul class="thicklist invoice_client " id="client_list_display"> 
+                <%= render "search_client_invoice"%>
+              </ul>
+            </div>  
+          </div>
+          <!-- <div class="modal-footer">
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+   actionReload()
+    var value="<%=request.referrer.include?'work' if !request.referrer.nil?%>"
+    if (value=='true'){ 
+    sortByOutstanding("<%= params[:type_filter]%>")}
+  })
+</script>
+
+<style type="text/css">
+.show_view_button {
+  margin-top: 35px;
+}
+</style>

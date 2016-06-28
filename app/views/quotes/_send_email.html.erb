@@ -1,0 +1,119 @@
+<!-- Modal -->
+<div class="modal fade" id="send_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <%if params[:controller]=="invoices"%>
+          <h4 class="modal-title" id="myModalLabel">Sending Invoice to Sample Client</h4>
+        <%else%>
+          <h4 class="modal-title" id="myModalLabel">Sending Estimate to Sample Client</h4>
+        <%end%>  
+      </div>
+      <div class="modal-body">
+        <div class="content send_to_client_dialog">
+          <%= form_for @communication, url: mail_to_client_path(params[:id]) do |f| %>
+            <%= f.hidden_field :client_id, value: @mail_value.client.id %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <%= f.hidden_field :sent_date, value: Date.today %>
+            <%= f.hidden_field :sent_time, value: Time.now %>
+            
+            <span class="popover-markup" style="float:right;margin-right:10px;">
+              <a class="popoverThis trigger clickMeShow" data-toggle="popover">
+                Add Attachment
+              </a> 
+              <%= render "quotes/email_attachment"%>
+            </span>
+            <p style="float: right;" id="attach_select_user">
+
+            </p>
+            <p class="description" id="sent_to">
+              This document will be sent to:
+              <span class="default_emails">
+                <a data-onclick-hide=".default_emails" data-onclick-show="#email_holder" href="<%= @mail_value.client.email rescue "" %>"><%= @mail_value.client.emails.first.email.first rescue "" %></a>
+              </span>
+              <br>
+            </p>
+            <div id="email_holder" style="display:none;">
+              <%unless @mail_value.client.emails.first.blank? %>
+                <% @mail_value.client.emails.first.email.each_with_index do |email, index| %>
+                  <p>
+                    <label>
+                      <input checked="checked" id="check_to_<%= index %>" name="to[]" type="checkbox" onclick = "$(this).is(':checked') ? $('#field_to_<%= index %>').val('<%= email %>') : $('#field_to_<%= index %>').val('')">
+                      <%= hidden_field_tag "communication[to][]", nil, value: "#{email}", id: "field_to_#{index}" %>
+                      <%= email %>
+                    </label>
+                  </p>
+                <% end %>
+              <% end %>
+            </div>
+            <div id="add_client_email" style="display:none;">
+              <label for="new_client_email">Add:</label>
+              <%= text_field_tag "communication[to][]", nil, class: "large large_input123", size: "40" ,:required=>true%>
+              <span class="description">(New E-mail...)</span>
+              <p>
+              <span class="description">NOTE: This address will be added to your client's emails.</span><p>
+            </div>
+
+            <div id="additional" style="display:none;">
+              <label for="cc_emails">CCs:</label>
+              <%= f.text_field :cc, class: 'description large_input123', size: 40 %>
+              <span class="description">(separate emails with commas...)</span>
+            </div>
+
+            <p id="send_copy_check" style="display:none">
+              <%= f.check_box :send_copy, value: 1, checked: true %>
+              <label for="send_copy">Send me a copy of this Document?</label> <span style="font-size: 12px; color: #777;">(<%= current_user.email %>)</span>
+            </p>
+            <div class="rounded">
+            <% unless @mail_value.client.emails.first.blank? %>
+              <span class="default_emails">
+                <a class="button" onclick="$(this).hide(); $('.default_emails').hide(); $('#email_holder').show();" >Select Client Emails</a>
+              </span>
+            <% end %>
+              <span>
+                <a class="button" onclick="$(this).hide(); $('#add_client_email').show();">Add Client Email</a>
+              </span>
+              </br>
+              <span>
+                <a class="button" onclick="$(this).hide(); $('#additional').show();">CC Other Addresses</a>
+              </span>
+              <a class="button" onclick="$(this).hide(); $('#send_copy_check').show(); $('#send_copy').prop('checked', true);">Send Me A Copy</a>
+            </div>
+            <p></p>
+            <p><% @email_info = @quote if params[:controller] == 'quotes'%>
+              <% @email_info = @invoice if params[:controller] == 'invoices'%>
+              <%= f.text_field :subject, value:  mail_sub(@email_info) , :style=>"width:400px;", placeholder: "Subject"%>
+              <%= f.text_area :message, value: mail_message(@email_info) , :style=>"width:400px;", rows: "10", style: "width:97%;"%>
+            </p>
+
+            <p style="text-align:right">
+              <input id="files" name="files" type="hidden" value="[]">
+              <%= f.submit "Confirm Send", class: "button save spin_on_click save-new-btn1"  %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+
+.modal.fade.in {
+    margin-left: -31% !important;
+    margin-right: 7% !important;
+    width: 700px !important;
+}
+</style>
+
+<script type="text/javascript">
+popover_show()
+    $('body').on('click', function (e) {
+     $('[data-toggle=popover]').each(function () {
+       // hide any open popovers when the anywhere else in the body is clicked
+       if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+           $(this).popover('hide');
+       }
+     });
+   });
+</script>

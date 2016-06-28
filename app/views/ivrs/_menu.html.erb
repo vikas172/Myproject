@@ -1,0 +1,60 @@
+<% @ivr.keys.each do |key| %>
+    <%= f.simple_fields_for :keys, key do |key_form| %>
+        <div class="row collapse">
+          <div class="span2">
+            <%= key_form.hidden_field :digit %>
+            
+            <% if key.digit != "10" %>
+                <span class="prefix blue" id="key_span"><%= "Key " + key.digit%></span>
+            <% else %>
+                <!--Announcement on entering Attendant-->
+                <span class="prefix" id="announcement_span">Announcement</span>
+            <% end %>
+          </div>
+          <div class="span7" id="key_action_div">
+            <% actual_key = actual_key(key,@parent_key)  %>
+            <% if key.digit != "10" %>
+                <%= key_form.association :action_type, collection: filter_options_if_sub_menu(@ivr), value_method: :id, include_blank: false, :label => false, :input_html => {:class => "radius" , :onchange => "changeAction(this,'#{key_action_wrapper_id(key,@parent_key) }', '#{key.digit.to_i + 1}' , '#{@ivr.is_sub_menu ? "ivr[keys_attributes][#{actual_key.digit.to_i + 1}][key_actions_attributes][0][sub_menus_attributes][0]" : "ivr" }'
+                        )"} %>
+            <% else %>
+                <%= key_form.association :action_type, collection: ActionType.where(:announcement_action => true), value_method: :id, include_blank: false, :label => false, :input_html => {:class => "radius" , :onchange => "changeAction(this, #{key_action_wrapper_id(key,@parent_key) } ,'#{"0"}' , '#{@ivr.is_sub_menu ? "ivr[keys_attributes][#{"0"}][key_actions_attributes][0][sub_menus_attributes][0]" : "ivr" }'
+                        )"} %>
+            <% end %>
+            <div id="key_<%= key_action_wrapper_id(key,@parent_key) %>_action_wrapper">
+              <% key.key_actions.each do |key_action| %>
+                  <%= key_form.fields_for :key_actions, key_action do |key_actions_form| %>
+
+                      <% if key.action_type and ["PT" , "PTTN" , "PTRC" , "PTRM"].include? key.action_type.code %>
+                          <%= key_actions_form.text_area :say, :placeholder => "Text to play" , :class => "radius sales" %>
+                      <% end %>
+
+                 
+
+                      <% if key.action_type and ["TN" , "PTTN"].include? key.action_type.code %>
+                          <%= key_actions_form.text_field :dial, :value => number_to_phone(key_action.dial , :area_code => true),  :placeholder => "Phone number. Example: +12053901762" ,  :class => "radius sales" %>
+                      <% end %>
+
+                      <% if key.action_type and ["SMS"].include? key.action_type.code %>
+                          <%= key_actions_form.text_area :sms, :placeholder => "Text to send" , :class => "radius" %>
+                      <% end %>
+
+                      <% if key.action_type and ["TSB"].include? key.action_type.code %>
+                          <% temp_ivr = @ivr  %>
+                          <% key_action.sub_menus.each do |menu| %>
+                              <%= key_actions_form.simple_fields_for :sub_menus, menu do |menu_form| %>
+                                  <% @ivr =  menu %>
+                                  <% @parent_key = key %>
+                                  <%= render 'menu' , :f => menu_form %>
+                              <% end %>
+                          <% end %>
+                          <% @parent_key = nil  %>
+                          <%  @ivr = temp_ivr  %>
+                      <% end %>
+
+                  <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<% end %>

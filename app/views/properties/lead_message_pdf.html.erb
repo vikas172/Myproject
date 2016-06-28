@@ -1,0 +1,28 @@
+<div class="client_index">
+	<div class="main_container">
+		<% unless @property.blank?%>
+			<ol style="list-style-type: decimal-leading-zero;">
+				<% @property.each do |property| %>
+					<li style="border:2px solid #ccc; padding:10px; margin-bottom:5px;">
+						<b style="font-size:16px;"><%=  property.client.try(:initial) rescue "" %> &nbsp;<%= property.client.try(:first_name) rescue "" %>&nbsp; <%= property.client.try(:last_name) rescue "" %></b>
+						</br>
+						<%= property.try(:street) rescue "" %></br><%=property.try(:street2) rescue "" %>
+						<%= property.try(:city) rescue "" %>
+						<%= property.state rescue "" %>
+						<% if !property.country.blank? %>
+							<%= get_carmen_country_code(property.country).name rescue "" %>
+						<% else %>
+							<%= property.country rescue "" %>
+						<% end %> 
+						<%= property.zipcode rescue "" %>
+						<p>
+	
+						<% @message=raw get_marketing_content(params[:content],property)%>
+						<%=@message.gsub("/ckeditor_assets","http://#{request.host}:#{request.port}/ckeditor_assets") %>
+						</p>
+					</li>
+				<% end %>
+			</ol> 
+		<% end %>
+	</div>
+</div>

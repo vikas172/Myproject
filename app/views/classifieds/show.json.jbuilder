@@ -1,0 +1,1 @@
+json.extract! @classified, :id, :privacy, :contact_phone, :contact_text, :phone_number, :contact_name, :posting_title, :specific_location, :postal_code, :posting_body, :show_on_map, :street, :city, :state, :zipcode, :contact_ok, :created_at, :updated_at

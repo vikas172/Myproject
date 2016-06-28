@@ -1,0 +1,20 @@
+<%if !@custom_field.blank?%>
+	<%@custom_field.each_with_index do |custom_field,index|%>
+		<div class="col-md-2"><b>
+	  	<%= custom_field.name %></b>
+		</div>
+	  <div class="col-md-4">
+  		<%if custom_field[:value_type][0]=="select"%>
+  			<%=@custom_field_data["select"]["#{index}"] rescue ""%>
+  		<%elsif custom_field[:value_type][0]=="text"%>
+  			<%=@custom_field_data["text"]["#{index}"] rescue ""%>
+  		<%elsif custom_field[:value_type][0]=="area"%>
+  			<%=@custom_field_data["length"]["#{index}"] rescue ""%>x<%=@custom_field_data["length"]["#{index}"] rescue ""%><%=custom_field["value_type"][3] rescue ""%>
+  		<%elsif custom_field[:value_type][0]=="integer"%>
+  			<%=@custom_field_data["numeric"]["#{index}"] rescue ""%>
+  		<%elsif custom_field[:value_type][0]=="boolean"%>
+  			<%=@custom_field_data["boolean"]["#{index}"] rescue ""%>
+  		<%end%>
+  	</div>	
+	<%end%>
+<%end%>

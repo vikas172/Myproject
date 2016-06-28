@@ -1,0 +1,34 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="145px" class="name">Name</th>
+        <th width="189px" class="balance">Balance</th>
+        <th width="257px" class="paid_to_date">Paid to Date</th>
+        <th width="169px" class="invoiced">Invoiced</th>
+        <th width="169px" class="phone">Phone</th>
+        <th width="169px" class="e_mail">E-mail</th>
+        <th width="42px" class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @client_balance_summary.blank? %>
+      <% @client_balance_summary.each_with_index do |client,i| %>
+        <% if params[:any] == "credit" %>
+          <% if dashboard_current_client_balance(client) < 0 %>
+            <%= render partial: "client_balance_table_data", :locals => {:client => client} %>
+          <% end %>
+        <% elsif params[:any] == "pending" %>
+          <% if dashboard_current_client_balance(client) > 0 %>
+            <%= render partial: "client_balance_table_data", :locals => {:client => client}%>
+          <% end %>
+        <% else %>
+            <%= render partial: "client_balance_table_data", :locals => {:client => client} %>
+        <% end -%>
+      <% end %>
+    <% end %>
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function();
+  table_column_select();
+</script>

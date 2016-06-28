@@ -1,0 +1,274 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <p style="padding-top: 15px;"></p>
+    <div class="show_property_button">
+      <%= render "property_action"%>
+      <%if set_view_permission_client_property_view(@team_member)%>
+        <%= link_to 'Edit', edit_property_path(id: @property,client_id: params[:client_id]) ,:class=>"button_new_index icon-pencil save-new-btn1",:style=>"margin-right:5px;"%>
+      <%end%>
+      <%if ((!@service_builder.blank?) && (!@plan_builder.blank?))%>
+        <%= link_to "Service Items",service_items_pool_services_path(:property_id=>@property.id),:class=>"button_new_index save-new-btn1",data: {toggle: "modal", target: '#service-items'},:remote=>true %> 
+      <%end%>
+      <%if !@check_used.blank?%>
+        <%= link_to "Chemical Used",chemical_used_pool_services_path(:property_id=>@property.id),:class=>"button_new_index save-new-btn1",data: {toggle: "modal", target: '#chemical-used'},:remote=>true ,:style=>"margin-right:5px;"%>   
+      <%end%> 
+      <%= link_to "Test Result",pool_chemical_test_pool_services_path(:property_id=>@property.id),:class=>"button_new_index save-new-btn1",data: {toggle: "modal", target: '#enter-test-result'},:remote=>true ,:style=>"margin-right:5px;"%>
+      <%if @property.lead== true%>
+        <%= link_to "Convert",convert_client_properties_path(:property_id =>@property.id),:class=>"button_new_index save-new-btn1",data: {toggle: "modal", target: '#convert-client'},:remote=>true ,:style=>"margin-right:5px;"%>
+      <%end%>
+    </div>
+    
+    <div class="sidebar empty_property_display cols-4" style="width:100% !important">
+      <div class="with_padding new-content1">
+        <div id="property" class="fieldset" >
+          <h2 class="title1-font"> Pool Summary</h2>
+          <div style="width:100%;">
+            <div  style="margin-top: 5px; float:left; width:45%;">
+              <strong style="font-size: 14px;">Owner:</strong>
+              <a href="/clients/<%=@property.client.id rescue "" %>?value=client_show&prop=<%=@property.id rescue "" %>" style=" color: #1f518b;"><%= @property.client.initial%><%= @property.client.first_name rescue "" %> &nbsp;<%= @property.client.last_name rescue "" %> 
+              </a>
+              <br/>
+              <%= @property.street rescue "" %><br/><%= @property.street2 rescue "" %> <%= @property.city rescue "" %>,&nbsp; <%= @property.state rescue "" %>&nbsp;&nbsp;
+              <%= @property.zipcode rescue "" %>
+            </div>
+          <table class="single_client_custom">
+            <%= render "clients/custom_field_show"%>
+          </table>
+          <div style="float:right; width:50%; margin-top: 5px;">
+            <%if @property.latitude.blank?%>
+              <a href="/properties/<%= @property.id rescue "" %>/manually_geocode" class="button_new_index spin_on_click save-new-btn1" style="margin-right: 23px;">Map pin not found. Set Now!</a>
+            <%else%>
+              <a target="_map" href="/maps/map_show?property_id=<%= @property.id%>" class="button_new_index save-new-btn1"><span style="color: #fff;"><i class="fa fa-map-marker"></i></span> Measure Pool</a>
+                <a target="_map" href="http://maps.google.com?q=<%= @property.latitude%>,<%= @property.longitude%>" style="margin-right:5px;" class="button_new_index save-new-btn1"><span style="color: #fff;"><i class="fa fa-map-marker"></i></span> Show On Map</a>
+            <%end%>
+            <div class="spa-pool-links" style="float:right; margin-top:5px;">
+              <%if @property.spa_data.blank?%>
+                <%= link_to "spa data",spa_data_spa_pooles_path(:property_id=>@property.id),data: {toggle: "modal", target: '#property-spa-data'},:remote=>true ,:class=>"button_new_index save-new-btn1"%>
+              <%else%>
+                <%= link_to "spa data",spa_data_edit_spa_pooles_path(:property_id=>@property.id),data: {toggle: "modal", target: '#property-spa-data'},:remote=>true ,:class=>"button_new_index save-new-btn1"%>
+              <%end%>
+              <%if @property.pool_data.blank?%>
+                <%= link_to "pool data",property_pool_data_spa_pooles_path(:property_id=>@property.id),data: {toggle: "modal", target: '#property-pool-data'},:remote=>true ,:class=>"button_new_index save-new-btn1" ,:style=>"margin-right: 10px;"%>
+              <%else%>
+                <%= link_to "pool data",pool_data_edit_spa_pooles_path(:property_id=>@property.id),data: {toggle: "modal", target: '#property-pool-data'},:remote=>true ,:class=>"button_new_index save-new-btn1" ,:style=>"margin-right: 10px;"%>
+              <%end%>
+            </div> 
+          </div>
+          </div>  
+         
+          <div class="clearfix"></div>
+          <br/> 
+          <div class="property_tags">
+            <div id="tag_list">
+              <%@property.tags.each do |tag|%>               
+                <span class="removable_tag" tag_label="<%= tag.name%>">
+                  <%= tag.name%>
+                   <a value="<%=tag.name%>" class= "tags_pointer remove_tag" onclick='deletePropertyTag("<%=tag.name%>","<%=@property.id%>");'>x</a>
+                </span>
+              <%end%>
+            </div>
+          </div>
+
+          <%= form_tag property_tag_properties_path,:method=>"post" ,:remote=>true do %>
+            <div class="form-group">
+              <div class="icon-addon ">
+                <%= text_field_tag :pool_tag, nil, :class=>"form-control",:placeholder=>"New Tag",:require=>true,:style=>"width:52%;" %>
+                <%= hidden_field_tag "property_id",@property.id%>
+                <%= submit_tag "Save Tag",:class=>"button_new_index save-new-btn1"%>
+              </div>
+            </div>
+          <% end %>
+          <div class="clearfix"></div>
+
+          <div class="pool-data">
+            <%= form_tag pool_update_active_properties_path(:property_id=>@property.id) do %>
+              <div class="row">
+                <p class="span2 label"> Pool Name</p>
+                <p class="span2"><%=@property.try(:pool_name)%></p>
+                 </div>
+                 <div class="row">
+                <p class="span2 label">Status</p>
+                <%if ((@property.pool_activity =="lead") || (@property.pool_activity == "followup"))%>
+                  <p class="span2"><%= select_tag "pool_activity",options_for_select([["Active", "active"], ["Inactive", "inactive"],["Lead", "lead"],["FollowUp", "followup"]],:selected=>@property.try(:pool_activity))%></p>
+                <%else%>
+                  <p class="span2"><%= select_tag "pool_activity",options_for_select([["Active", "active"], ["Inactive", "inactive"]],:selected=>@property.try(:pool_activity))%></p>
+                <%end%>  
+              </div>
+              <div class="row">
+                <p class="span2 label"> Pool Type</p>
+                <p class="span2"><%=@property.try(:pool_type)%></p>
+              </div>
+              <div class="row">
+                <p class="span2 label"> Pool Volume</p>
+                <p class="span2"><%=@property.try(:pool_volume)%></p>
+              </div>
+              <div class="row">
+                <p class="span2 label"> Pool Volume2</p>
+                <p class="span2"><%=@property.try(:pool_volume2)%></p>
+              </div>
+              <div class="row">
+                <p class="span2 label"> Pool Gate Code</p>
+                <p class="span2"><%=@property.try(:pool_gate_code)%></p>
+              </div>
+              <div class="row">
+                <p class="span2 label"> Market Source</p>
+                <p class="span2"><%=market_source_name(@property)%></p>
+              </div>
+              <div class="row">
+                <p class="span2 label"> Pool Life Guards</p>
+                <p class="span2"><%=@property.try(:pool_lifeguards)%></p>
+              </div> 
+              <div class="row">
+                <p class="span2 label">Source</p>
+                <p class="span2"><%= @property.try(:source)%></p>
+              </div>
+              <div class="row">
+                <p class="span2 label"> Pool Notes</p>
+                <p class="span2"><%=text_area_tag "pool_notes",@property.try(:pool_notes)%></p>
+              </div> 
+              <div class="row">
+                <p class="span2 label">Pool Convert</p>
+                <p class="span2"><%= @property.try(:converted_date)%></p>
+              </div>
+              <%if !@property.estimate_map.blank?%>
+                <p class= "span2 label"> Estimate pool Volume</p>
+                <p class="span2"><%= @property.try(:estimate_map)%></p>
+              <%end%>
+              <div class="clearfix"></div>
+              <%= submit_tag "Pool Update",:class=>"button_new_index save-new-btn1"%>
+            <%end%>  
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <div class="with_padding new-content2">
+        <%= render "properties/property_note_attachment"%>
+        <%= render "properties/display_note"%>
+      </div> 
+    </div>
+
+    <div class="cols-8 " style="clear: both;">
+      <div id="to_dos" class="fieldset">
+        <h2 class="title1-font">Pool Service Plan</h2>
+        <div class="content">
+          <div class="col-4">
+            <%if !@service_builder.blank?%>
+              <%= form_tag  property_service_plan_properties_path do%>
+                <label> Service Plan</label>
+                <%= select_tag "service_plan", options_from_collection_for_select(@service_plan, "id", "name",:selected=>@property.try(:server_plan_id)) , {:prompt => "No Plan Selected..."}%>
+                <%= hidden_field_tag "property_id",nil,:value=>@property.id%>
+                <%if @property_service.blank?%>
+                  <%= submit_tag "Submit",:class=>"update_button_setting save-new-btn1"%>
+                <%else%>
+                  <%= submit_tag "Update",:class=>"update_button_setting save-new-btn1"%>
+                <%end%>
+              <%end%>
+            <%end%>
+          </div>
+
+          <div class="col-6">
+            <%if !@property_service.blank?%>
+              <table border="0">
+                <tr>
+                  <td><label><b>Name</b></label></td>
+                  <td><%= @property_service.try(:name)%></td>
+                </tr>
+
+                <tr>
+                  <td><label><b>Description</b></label></td>
+                  <td><%= @property_service.try(:description)%></td>
+                </tr>
+
+                <tr>
+                  <td><label><b>Unit Cost</b></label></td>
+                  <td><%= @property_service.try(:unit_cost)%></td>
+                </tr>
+              </table>
+            <%end%>
+          </div>
+
+          <div class="col-2">
+            <div style="padding:15px 0px;">
+              <%= link_to "Scheduled Tasks",new_job_path(:scheduled_task=>"recurring",:property_id=>@property.id),:class=>"update_button_setting save-new-btn1"%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <br><br>
+    <div class="fieldset" style=" margin-bottom:10px;">
+      <%if set_view_permission_client_property_view(@team_member)%>
+        <%if set_view_permission_client_property_view_work(@team_member)%>
+          <%= render "work_tab"%>
+        <%end%>
+      <%end%>
+    </div>
+
+    <div class="cols-8 " style="clear: both;">
+      <div id="to_dos" class="fieldset">
+        <h2 class="title1-font">Pool Photos</h2>
+        <div class="content">
+          <%if !@property.pools.blank?%>
+            <ul class="default-display">
+              <%@property.pools.each do |photo|%>
+                <li style="margin-bottom:10px;">
+                  <%= image_tag photo.photo.url(:medium),:style=>"height:180px; width:180px"%>
+                </li>
+              <%end%>
+            </ul>
+          <%else%>
+            <ul class="default-display">
+              <%3.times do |n|%>
+                <li >
+                  <img src="../assets/sign_ban.png" alt="Smiley face" height="180" width="180">
+                  <br>
+                  <b style="padding: 18px;"> No Image Upload </b>
+                </li>  
+              <%end%>  
+            </ul>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="propertytaskmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<div class="modal fade" id="enter-test-result" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<div class="modal fade" id="chemical_used" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<div class="modal fade" id="service-items" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<div class="modal fade" id="property-pool-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<div class="modal fade" id="property-spa-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<div class="modal fade" id="convert-client" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<%= render "property_delete_model"%>
+<script type="text/javascript">
+workProperty()
+</script>
+
+<style type="text/css">
+  .spa-pool-links {
+    float: left;
+  }
+  .property-attachment{
+    border: 1px solid #dadada;
+    padding: 5px;
+    min-height: 180px;
+  }
+  form#client_note_attachment_create {
+  margin-bottom: 0px;
+  }
+  .display-smen{
+    padding: 10px;
+    border: 1px solid #dadada;
+  }
+  .main_container{
+    padding: 0px 20px 30px !important;
+  }
+  input#email_notification_subject {
+  width: 97%;
+}
+input#email_notification_bcc {
+  width: 90%;
+}
+</style>

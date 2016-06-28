@@ -1,0 +1,4 @@
+<%user = @schedule_reminder.subscribed_user%>
+Hello <%=name =  User.find(user).collect(&:username).first%>
+Your next service date is <%=(@schedule_reminder.created_at).strftime("%b %d,%Y")%>
+Please visit to neareast Garage.  

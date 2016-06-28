@@ -1,0 +1,14 @@
+<%if !@number.blank?%>
+	<div class="flash_team_member flash_notice_team_member"  style="margin: 10px;"><b>Success!</b> You now own the number  <%=@number.phone_number%>  </b></div>
+		<%if !@general_info.blank?%>
+		<%if !@general_info.area_code.blank?%>	
+			<div style="float: left; margin-left: 20px;" class="service_phone_number">
+				<b>Area Code:-</b> &nbsp;&nbsp;&nbsp;<%= @general_info.area_code %><br>
+				<b>Service Phone Number:-</b> &nbsp;&nbsp;<%=@general_info.service_number %>
+			</div>
+		<%end%>
+	<%end%>
+	
+<%else%>
+	<div class="error_messages_team_member" style="margin: 10px;">&nbsp;<%= @message %><div>
+<%end%>

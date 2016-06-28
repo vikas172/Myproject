@@ -1,0 +1,260 @@
+<style type="text/css">
+.sales{width: 98%;
+  border-radius: 1px;
+  box-shadow: none;}
+
+.span2{
+  margin: 0px;
+}
+.span7{
+   margin: 0px;
+
+}
+.white-panel {
+  background-color: #fff;
+  box-shadow: none;
+}
+.panel {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d8d8d8;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+  background: #f2f2f2;
+}
+.size-12 {
+  font-size: 12px;
+}
+.row .row.collapse {
+  width: auto;
+  margin: 0;
+  max-width: none;
+}
+span.prefix, label.prefix {
+  background: #107dac;
+  border-right: none;
+  color: white;
+  border-color: #cccccc;
+}
+.prefix, .postfix {
+  display: block;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-style: solid;
+  border-width: 1px;
+  overflow: hidden;
+  font-size: 0.875rem;
+  height: 2.3125rem;
+  line-height: 2.3125rem;
+}
+select.radius {
+  border-radius: 3px;
+}
+option {
+  font-weight: normal;
+  display: block;
+  padding: 0px 2px 1px;
+  white-space: pre;
+  min-height: 1.2em;
+}
+textarea#ivr_keys_attributes_0_key_actions_attributes_0_say {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  background-color: white;
+  font-family: inherit;
+  border: 1px solid #cccccc;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.75);
+  display: block;
+  font-size: 0.875rem;
+  margin: 0 0 1rem 0;
+  padding: 0.5rem;
+  height: 2.3125rem;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: box-shadow 0.45s, border-color 0.45s ease-in-out;
+}
+textarea {
+  
+  min-height: 50px;
+}
+button.radius {
+  border-radius: 3px;
+}
+.collapse{
+  height: auto !important;
+}
+.prefix, .postfix {
+  display: block;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-style: solid;
+  border-width: 1px;
+  overflow: hidden;
+  font-size: 0.875rem;
+  height: 2.3125rem;
+  line-height: 2.3125rem;
+}
+.row .row.collapse {
+  width: auto;
+  margin: 0;
+  max-width: none;
+}
+
+span.prefix, label.prefix {
+  background: #1f518b;
+  border-right: none;
+  color: white;
+  border-color: #cccccc;
+}.prefix, .postfix {
+  display: block;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-style: solid;
+  border-width: 1px;
+  overflow: hidden;
+  font-size: 0.875rem;
+  height: 2.3125rem;
+  line-height: 2.3125rem;
+}
+.columns {
+  position: relative;
+  /*padding-left: 0.9375rem;*/
+  padding-right: 0.9375rem;
+  float: left;
+  width: 100%;
+}
+.row {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  /*max-width: 62.5rem;*/
+}
+.side-nav li a:not(.button) {
+  display: block;
+  color: #fff;
+  margin: 0;
+  padding: 0.4375rem 0.875rem;
+}
+@media only screen and (min-width: 64.063em)
+.column, .columns {
+  position: relative;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  float: left;
+}
+@media only screen and (min-width: 40.063em)
+button, .button {
+  display: inline-block;
+}
+@media only screen and (min-width: 64.063em)
+.large-4 {
+  width: 33.33333%;
+}
+@media only screen and (min-width: 64.063em)
+.large-3 {
+  width: 25%;
+}
+@media only screen and (min-width: 64.063em)
+.large-9 {
+  width: 75%;
+}
+</style>
+
+<%= render "ivrs/top_header"%>
+
+<div class="large-12 columns end">
+  <%= render :partial => 'click_to_call' %>
+  <hr>
+
+  <div class="panel white-panel">
+    <% if !@ivr.new_record? %>
+        <%= link_to  release_ivr_path ,:class => "button radius tiny warning" , :title => "Reset settings and release auto attendant" , data: { confirm: 'Releasing the auto attendant will reset the configuration of all the keys. Proceed ?' } do %>
+        Reset
+        <% end  %>
+    <% end  %>
+  
+    <%= simple_form_for @ivr , :html => { :multipart => true } do |f| %>
+        <%= render 'menu' , :f => f %>
+        <div style="float:right;"> 
+        <a href="<%= @ivr.new_record? ? new_ivr_url : edit_ivr_url(@ivr.uuid) %>" class="button success tiny  radius">Cancel</a>
+        <button value="Save" class="button success tiny save-new-btn1 radius">Save</button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  function changeAction(ele, key , digit , ivr) {
+
+      if(ele.value == "<%= ActionType.find_by_code("TSB").id %>") {
+          $.ajax({
+              url: '<%= add_sub_menu_ivrs_path %>',
+              type: 'POST',
+              data: {key : key, digit : digit }
+          });
+      }
+      else if (ele.value == "<%= ActionType.find_by_code("PT").id %>" || ele.value == "<%= ActionType.find_by_code("PTRM").id %>") {
+          $('#key_' + key + '_action_wrapper').html('<textarea placeholder="Text to play" class="radius sales" name="'+ ivr +'[keys_attributes][' + digit + '][key_actions_attributes][0][say]" >');
+
+      }
+
+      else if (ele.value == "<%= ActionType.find_by_code("PM").id %>" || ele.value == "<%= ActionType.find_by_code("PMRM").id %>") {
+          $('#key_' + key + '_action_wrapper').html('<input type="file" value="Choose your file" name="'+ ivr +'[keys_attributes][' + digit + '][key_actions_attributes][0][play]" ><small>Supported file formats : wav, mp3, aiff </small>');
+
+      }
+      else if (ele.value == "<%= ActionType.find_by_code("TN").id %>") {
+          $('#key_' + key + '_action_wrapper').html('<input type="text" class="radius sales" placeholder="Phone number. Example: +12053901762" name="'+ ivr +'[keys_attributes][' + digit + '][key_actions_attributes][0][dial]" >');
+
+      }
+      else if (ele.value == "<%= ActionType.find_by_code("PTTN").id %>") {
+          $('#key_' + key + '_action_wrapper').html('<textarea type="text" class="radius sales" placeholder="Text to play" name="'+ ivr +'[keys_attributes][' + digit + '][key_actions_attributes][0][say]" >');
+          $('#key_' + key + '_action_wrapper').append('<input type="text" class="radius sales" placeholder="Phone number. Example: +12053901762"" name="'+ ivr +'[keys_attributes][' + digit + '][key_actions_attributes][0][dial]" >');
+
+      }
+      else if (ele.value == "<%= ActionType.find_by_code("PTRC").id %>") {
+          $('#key_' + key + '_action_wrapper').html('<textarea type="text" class="radius sales" placeholder="Text to play" name="'+ ivr +'[keys_attributes][' + digit + '][key_actions_attributes][0][record]" >');
+
+      }
+      else if (ele.value == "<%= ActionType.find_by_code("SMS").id %>") {
+          $('#key_' + key + '_action_wrapper').html('<textarea type="text" class="radius sales" placeholder="Text to send" name="'+ ivr +'[keys_attributes][' + digit + '][key_actions_attributes][0][sms]" >');
+
+      }
+      else if (ele.value == "<%= ActionType.find_by_code("E").id %>" ||  ele.value == "<%= ActionType.find_by_code("TSB").id %>"  || ele.value == "<%= ActionType.find_by_code("RM").id %>"  || ele.value == "<%= ActionType.find_by_code("NA").id %>" ) {
+          $('#key_' + key + '_action_wrapper').html('');
+
+      }
+
+  }
+
+  function take_tour()
+  {
+      $(document).foundation().foundation('joyride', 'start');
+  }
+
+  function call() {
+      Twilio.Device.disconnectAll();
+      Twilio.Device.setup("<%= @token %>");
+      connection = Twilio.Device.connect();
+
+  }
+
+</script>
+

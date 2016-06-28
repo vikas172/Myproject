@@ -1,0 +1,51 @@
+<div class="border_contain">
+  <% if params[:value]=="client_show" %>
+    <%if set_view_permission_client_property_view(@team_member)%>
+      <h2 >
+        <%= link_to "New Property",new_property_path(:client_id=>@client.id),:class=>"button_new_index save-new-btn1" ,:style=>"margin-right:5px;"%>
+      </h2>
+    <%end%>
+  <% elsif params[:invoice_id].blank? %>
+    <%if set_view_permission_client_property_view(@team_member)%>
+      <h2 >
+        <%= link_to "New Property",new_property_path(:client_id=>@client.id,:quote_id=>params[:quote_id] ),:class=>"button_new_index save-new-btn1",:style=>"float: right;"%>
+      </h2>
+    <%end%>  
+  <%else%>
+    <%if set_view_permission_client_property_view(@team_member)%>
+      <h2 >
+        <%= link_to "New Property",new_property_path(:client_id=>@client.id,:invoice_id=>params[:invoice_id] ),:class=>"button_new_index save-new-btn1",:style=>"float: right;"%>
+      </h2> 
+    <%end%>
+  <% end %>
+  <% @client.properties.each do |property| %>
+    <tr><b style="text-transform:capitalize;">
+      <td>
+        <%=property.street rescue "" %><br/>
+        <%= property.street2 rescue "" %>
+      </td><br/>
+      <td>
+        <%=property.city rescue "" %>
+      </td>
+      <td>
+        <%= property.state rescue "" %>
+      </td>
+      <td>
+        <%if !property.country.blank?%>
+          <%=  get_carmen_country_code(property.country).name rescue "" %>
+        <%else%>
+          <%=property.country rescue "" %>
+        <%end%>
+      </td>
+      <td>
+        <%= property.zipcode rescue "" %>
+      </td>
+      </b>
+      <%if property.latitude.blank?%>
+      <td><p class="not_on_map"> Could not find on map. </p><td>
+      <a href="/properties/<%= property.id rescue "" %>/manually_geocode?client=<%= property.client.id %>" class="button_new_create">Set Manually Now!</a>
+      </tr>
+    <% end %>
+  <% end %>
+</div>
+</br>

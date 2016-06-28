@@ -1,0 +1,210 @@
+<% if params[:controller] == "home" %>
+	<div id="column_selector_model" class=" modal fade column_selector_model click_focus" tabindex="-1" role="tool-tip" aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
+		<% if params[:action] == "transactions" %>
+			<label>
+				<input type="checkbox" checked="checked" name="client_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="date"> Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="type"> type
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="note"> Note
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="cheque"> Cheque
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="invoice_id"> Invoice #
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="method"> Method
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "invoice_list" %>
+			<label>
+				<input type="checkbox" checked="checked" name="client_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="job"> Work Order
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="create_date"> Create Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="issue_date"> Issue Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name=""> 
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="due_date"> Due Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="hash">#
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="status"> Status
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="tax"> Tax
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="deposit"> Deposit
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="discount"> Discount
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="tax_amount"> Tax Amountax
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="billing_city"> Billing City
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="billing_state"> Billing State
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="billing_state"> Sync Status
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "taxation" %>
+			<label>
+				<input type="checkbox" checked="checked" name="client_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="date"> Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="type"> type
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="note"> Note
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="cheque"> Cheque
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="invoice_id"> Invoice #
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="method"> Method
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "aged_receivables" %>
+			<label>
+				<input type="checkbox" checked="checked" name="name"> Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> Doller
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="issue_date"> Issue Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="due_date"> Due Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="late_by"> Late By
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="contact"> Contact
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "projected_income" %>
+			<label>
+				<input type="checkbox" checked="checked" name="name"> Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> Doller
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="due_date"> Due Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="issue_date"> Issue Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="contact"> Contact
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "bad_debt" %>
+			<label>
+				<input type="checkbox" checked="checked" name="client_name"> Customer Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="date"> Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="type"> type
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="note"> Note
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="cheque"> Cheque
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="invoice_id"> Invoice #
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="doller"> $
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="method"> Method
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% elsif params[:action] == "client_balance" %>
+			<label>
+				<input type="checkbox" checked="checked" name="name"> Name
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="balance"> Balance
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="paid_to_date"> Paid to Date
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="invoiced"> Invoiced
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="phone"> Phone
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="email"> E-mail
+			</label>
+			<label>
+				<input type="checkbox" checked="checked" name="open"> Open
+			</label>
+		<% end %>
+	</div>
+<% end %>

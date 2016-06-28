@@ -1,0 +1,241 @@
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <div id="content" style="height: auto;">
+        <div class="padding">
+          <%=render "home/work_item_side_bar" %>
+          <div id="settings_area">
+          	<%=form_tag service_plan_update_pool_services_path  do |f|%>
+
+          		<div class="row">
+								<div class="span3">
+									<label><%= @plan_label.filter_cleaned.blank? ? "Filter Cleaned" : @plan_label.filter_cleaned%></label>
+								</div>
+
+								<div class="span2">
+									<%#= check_box_tag "service_plan[filter_cleaned]",@service_plan.try(:filter_cleaned)%>
+									<input type='hidden' value='0' name='service_plan[filter_cleaned]'>
+									<input type="checkbox" name="service_plan[filter_cleaned]" value=<%=@service_plan.try(:filter_cleaned)%> <%= @service_plan.try(:filter_cleaned) == true ? "checked" : "false"%>>
+								</div>
+								<div class="span3">
+									<label><%= @plan_label.backwash.blank? ? "Backwash (sand filter)" : @plan_label.backwash %></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[backwash]'>
+									<input type="checkbox" name="service_plan[backwash]" value=<%=@service_plan.try(:backwash)%> <%= @service_plan.try(:backwash) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[backwash]",@service_plan.try(:backwash)%>
+								</div>
+								<br/>
+
+								<div class="span3">
+									<label><%= @plan_label.brushed_walls_steps.blank? ? "Brushing walls" : @plan_label.brushed_walls_steps %></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[brushed_walls_steps]'>
+									<input type="checkbox" name="service_plan[brushed_walls_steps]"  <%= @service_plan.try(:brushed_walls_steps) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[brushed_walls_steps]",@service_plan.try(:brushed_walls_steps)%>
+								</div>
+								<div class="span3">
+									<label><%= @plan_label.skimming_surface.blank? ? "Skimming Surface" : @plan_label.skimming_surface%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[skimming_surface]'>
+									<input type="checkbox" name="service_plan[skimming_surface]"  <%= @service_plan.try(:skimming_surface) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[skimming_surface]",@service_plan.try(:skimming_surface)%>
+								</div>
+								<br/>
+
+								<div class="span3">
+									<label><%= @plan_label.waterline_tiles_cleaned.blank? ? "Waterline tiles cleaned" : @plan_label.waterline_tiles_cleaned %></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[waterline_tiles_cleaned]'>
+									<input type="checkbox" name="service_plan[waterline_tiles_cleaned]"  <%= @service_plan.try(:waterline_tiles_cleaned) == true ? "checked" : "false"%>>
+										<%#= check_box_tag "service_plan[waterline_tiles_cleaned]",@service_plan.try(:waterline_tiles_cleaned)%>
+								</div>
+								<div class="span3">
+									<label><%=@plan_label.cleaned_skimmer_baskets.blank? ? "Cleaned Skimmer Baskets" : @plan_label.cleaned_skimmer_baskets%></label>
+								</div>
+								<div class="span2" >
+									<input type='hidden' value='0' name='service_plan[cleaned_skimmer_baskets]'>
+									<input type="checkbox" name="service_plan[cleaned_skimmer_baskets]"  <%= @service_plan.try(:cleaned_skimmer_baskets) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[cleaned_skimmer_baskets]"%>
+								</div>
+								<br/>
+
+								<div class="span3">
+									<label><%=@plan_label.netted_surface_debris.blank? ? "Netted Surface Debris" : @plan_label.netted_surface_debris%></label>
+								</div>
+								<div class="span2" >
+									<input type='hidden' value='0' name='service_plan[netted_surface_debris]'>
+									<input type="checkbox" name="service_plan[netted_surface_debris]"  <%= @service_plan.try(:netted_surface_debris) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[netted_surface_debris]"%>
+								</div>
+
+								<div class="span3">
+									<label><%=@plan_label.floor_vacuumed.blank? ? "Floor vacuumed" : @plan_label.floor_vacuumed%></label>
+								</div>
+
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[floor_vacuumed]'>
+									<input type="checkbox" name="service_plan[floor_vacuumed]"  <%= @service_plan.try(:floor_vacuumed) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[floor_vacuumed]"%>
+							  </div>
+							  <br/>
+
+								<div class="span3">
+									<label><%=@plan_label.pump_strainer_baskets.blank? ? "Pump strainer baskets" : @plan_label.pump_strainer_baskets%></label>
+								</div>
+
+								<div class="span2">
+									<%#= check_box_tag "service_plan[pump_strainer_baskets]"%>
+									<input type='hidden' value='0' name='service_plan[pump_strainer_baskets]'>
+									<input type="checkbox" name="service_plan[pump_strainer_baskets]"  <%= @service_plan.try(:pump_strainer_baskets) == true ? "checked" : "false"%>>
+								</div>
+								
+								<div class="span3">
+									<label><%=@plan_label.cleaned_pump_basket.blank? ? "Cleaned Pump Basket" : @plan_label.cleaned_pump_basket%></label>		
+								</div>
+
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[cleaned_pump_basket]'>
+									<input type="checkbox" name="service_plan[cleaned_pump_basket]"  <%= @service_plan.try(:cleaned_pump_basket) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[cleaned_pump_basket]"%>
+								</div>
+								<br/>
+
+								<div class="span3">
+									<label><%=@plan_label.vacuumed_pool.blank? ? "Vacuumed Pool" : @plan_label.vacuumed_pool%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[vacuumed_pool]'>
+									<input type="checkbox" name="service_plan[vacuumed_pool]"  <%= @service_plan.try(:vacuumed_pool) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[vacuumed_pool]"%>
+								</div>
+
+								<div class="span3">
+									<label><%=@plan_label.checked_water_level.blank? ? "Checked Water Level" : @plan_label.checked_water_level%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[checked_water_level]'>
+									<input type="checkbox" name="service_plan[checked_water_level]"  <%= @service_plan.try(:checked_water_level) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[checked_water_level]"%>
+								</div>
+								<br/>
+
+								<div class="span3">
+									<label><%=@plan_label.inspected_pump.blank? ? "Inspected Pump" : @plan_label.inspected_pump%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[inspected_pump]'>
+									<input type="checkbox" name="service_plan[inspected_pump]"  <%= @service_plan.try(:inspected_pump) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[inspected_pump]"%>
+								</div>
+								<div class="span3">
+									<label><%=@plan_label.pool_sweep_cleaner.blank? ? "Pool Sweep / Cleaner" : @plan_label.pool_sweep_cleaner%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[pool_sweep_cleaner]'>
+									<input type="checkbox" name="service_plan[pool_sweep_cleaner]"  <%= @service_plan.try(:pool_sweep_cleaner) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[pool_sweep_cleaner]"%>
+								</div>
+								<br/>
+
+								<div class="span3">
+									<label><%=@plan_label.net_surface_bottom.blank? ? "NET surface & bottom" : @plan_label.net_surface_bottom%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[net_surface_bottom]'>
+									<input type="checkbox" name="service_plan[net_surface_bottom]" <%= @service_plan.try(:net_surface_bottom) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[net_surface_bottom]"%>
+								</div>
+								<div class="span3">
+									<label><%=@plan_label.inspect_pool_spa_eqip.blank? ? "Inspect Pool & Spa Equipment" : @plan_label.inspect_pool_spa_eqip%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[inspect_pool_spa_eqip]'>
+									<input type="checkbox" name="service_plan[inspect_pool_spa_eqip]" <%= @service_plan.try(:inspect_pool_spa_eqip) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[inspect_pool_spa_eqip]"%>
+								</div>
+								<br/>	
+
+								<div class="span3">
+									<label><%=@plan_label.wipe_ladder_handrails.blank? ? "Wipe ladder and handrails" : @plan_label.wipe_ladder_handrails%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[wipe_ladder_handrails]'>
+									<input type="checkbox" name="service_plan[wipe_ladder_handrails]" <%= @service_plan.try(:wipe_ladder_handrails) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[wipe_ladder_handrails]"%>
+								</div>
+								<div class="span3">
+									<label><%=@plan_label.adjust_timeclock.blank? ? "Adjust TimeClock as needed" : @plan_label.adjust_timeclock%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[adjust_timeclock]'>
+									<input type="checkbox" name="service_plan[adjust_timeclock]" value=<%=@service_plan.try(:adjust_timeclock)%> <%= @service_plan.try(:adjust_timeclock) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[adjust_timeclock]"%>
+								</div>
+								<br/>
+
+								<div class="span3">
+									<label><%=@plan_label.add_water_needed.blank? ? "ADD water  as needed" : @plan_label.add_water_needed%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[add_water_needed]'>
+									<input type="checkbox" name="service_plan[add_water_needed]" value=<%=@service_plan.try(:add_water_needed)%> <%= @service_plan.try(:add_water_needed) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[add_water_needed]"%>
+								</div>
+								<div class="span3">
+									<label><%=@plan_label.filter_pressure_monitor.blank? ? "Filter Pressure Monitor" : @plan_label.filter_pressure_monitor%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[filter_pressure_monitor]'>
+									<input type="checkbox" name="service_plan[filter_pressure_monitor]" <%= @service_plan.try(:filter_pressure_monitor) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[filter_pressure_monitor]"%>
+								</div>
+								<br/>
+
+								<div class="span3">
+									<label><%=@plan_label.notes_to_customer.blank? ? "Customer Note" : @plan_label.notes_to_customer%></label>
+								</div>
+								<div class="span2">
+									<input type='hidden' value='0' name='service_plan[notes_to_customer]'>
+									<input type="checkbox" name="service_plan[notes_to_customer]" <%= @service_plan.try(:notes_to_customer) == true ? "checked" : "false"%>>
+									<%#= check_box_tag "service_plan[notes_to_customer]"%>
+								</div>
+							</div>
+
+							<div class="row">
+								<%= label_tag :name%>
+								<%= text_field_tag "service_plan[name]",nil,:value=>@service_plan.try(:name)%>
+							</div>
+							<div class="row">
+								<%= label_tag :description%>
+								<%= text_area_tag "service_plan[description]",@service_plan.try(:description)%>
+							</div>
+							<div class="row">
+								<%= label_tag :unit_cost%>
+								<%=text_field_tag "service_plan[unit_cost]",nil,:value=>@service_plan.try(:unit_cost)%>
+							</div>
+
+							<%= hidden_field_tag "id",nil,value: params[:id]%>
+							<div class="row">
+								<%= submit_tag "submit",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+							</div>
+						<%end%>
+  	      </div>
+	      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+
+.span3 {
+  margin-left: 0px !important;
+}
+label{
+	  text-align: left !important;
+}
+</style>

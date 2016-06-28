@@ -1,0 +1,299 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Spa Edit Data</h4>
+    </div>
+    <div class="modal-body">
+      <%=form_tag(spa_data_update_spa_pooles_path ,:id=>"spa-data-edit") do %>
+      <div class="row">
+        <div class="span5 no-margin">
+          <h6>Type:</h6>
+          <input type="radio" name="spa_data[spa_type]" value="inground" <%= @spa_data.try(:spa_type) == "inground" ? "checked" : "false"%>>
+          InGround
+          <input type="radio" name="spa_data[spa_type]" value="part_of_pool" <%= @spa_data.try(:spa_type) == "part_of_pool" ? "checked" : "false"%>>
+          Part of a pool
+          <input type="radio" name="spa_data[spa_type]" value="portable_contained" <%= @spa_data.try(:spa_type) == "portable_contained" ? "checked" : "false"%>>
+          Portable / Self Contained
+        </div>
+        <div class="">
+          <label>Manufacturer:</label>
+          <%= text_field_tag "spa_data[type_manufacturer]",nil,:value=>@spa_data.try(:type_manufacturer)%>
+        </div>
+        <div class="">
+          <label>Model:</label>
+          <%= text_field_tag "spa_data[type_model]",nil,:value=>@spa_data.try(:type_model)%>
+        </div>
+      </div>
+      
+      <div class="row">
+        <label>Serial number:</label>
+        <%= text_field_tag "spa_data[type_serial_number]",nil,:value=>@spa_data.try(:type_serial_number)%>
+        <label>Color:</label>
+        <%= text_field_tag "spa_data[type_color]",nil,:value=>@spa_data.try(:type_color)%>
+        <label>Voltage:</label>
+        <%= text_field_tag "spa_data[type_voltage]",nil,:value=>@spa_data.try(:type_voltage)%>
+      </div>
+
+      <div class="row">
+        <div class="span5 no-margin">
+          <h6>Shape:</h6>
+          <input type="radio" name="spa_data[spa_shape]" id="spa-edit-rect" value="rectangular" <%= @spa_data.try(:spa_shape) == "rectangular" ? "checked" : "false"%>>
+          Rectangular
+          <input type="radio" name="spa_data[spa_shape]" id="spa-edit-round" value="round" <%= @spa_data.try(:spa_shape) == "round" ? "checked" : "false"%>>
+          Round
+          <input type="radio" name="spa_data[spa_shape]" id="spa-edit-oval" value="oval" <%= @spa_data.try(:spa_shape) == "oval" ? "checked" : "false"%>>
+          Oval
+          <input type="radio" name="spa_data[spa_shape]" id="spa-edit-kidney" value="kidney" <%= @spa_data.try(:spa_shape) == "kidney" ? "checked" : "false"%>>
+          Kidney
+        </div> 
+      </div>
+      
+      <div class="row spa-edit-volume spa-data-edit-volume">
+        <h6>Size </h6>
+        <div class="depth">
+          <label>Depth1</label>
+          <%= text_field_tag "spa_data[depth]",nil,:value=>@spa_data.try(:depth)%>
+        </div>
+
+        <div class="depth2">
+          <label>Depth2</label>
+          <%= text_field_tag "spa_data[depth2]",nil,:value=>@spa_data.try(:depth2)%>
+        </div>
+
+        <%if @spa_data.try(:spa_shape) != "round"%>
+          <div class="length">
+            <label>Length</label>
+            <%= text_field_tag "spa_data[length]",nil,:value=>@spa_data.try(:length)%>
+          </div>
+
+          <div class="width">
+            <label>Width</label>
+            <%= text_field_tag "spa_data[width]",nil,:value=>@spa_data.try(:width)%>
+          </div>
+          <%if @spa_data.try(:spa_shape) == "kidney"%>
+            <div class="width2">
+              <label>Width2</label>
+              <%= text_field_tag "spa_data[width2]",nil,:value=>@spa_data.try(:width2)%>
+            </div>
+          <%end%>  
+        <%else%>
+          <div class="diameter">
+            <label>Diameter</label>
+            <%= text_field_tag "spa_data[diameter]",nil,:value=>@spa_data.try(:diameter)%>
+          </div>
+        <%end%>
+        <label>Gallonage:</label>
+        <%= text_field_tag "spa_data[spa_gallonage]",nil,:value=>@spa_data.try(:spa_gallonage)%>
+      </div>
+      <div class="row">
+        <h6>Surface Material</h6>
+        <input type="radio" name="spa_data[surface_material]" value="plaster" <%= @spa_data.try(:surface_material) == "plaster" ? "checked" : "false"%>>
+        Plaster
+        <input type="radio" name="spa_data[surface_material]" value="acrylic" <%= @spa_data.try(:surface_material) == "acrylic" ? "checked" : "false"%>>
+        Acrylic
+        <input type="radio" name="spa_data[surface_material]" value="thermoplastic" <%= @spa_data.try(:surface_material) == "thermoplastic" ? "checked" : "false"%>>
+        Thermoplastic
+        <input type="radio" name="spa_data[surface_material]" value="gelcoat" <%= @spa_data.try(:surface_material) == "gelcoat" ? "checked" : "false"%>>
+        Gelcoat
+        <input type="radio" name="spa_data[surface_material]" value="paint" <%= @spa_data.try(:surface_material) == "paint" ? "checked" : "false"%>>
+        Paint
+        <input type="radio" name="spa_data[surface_material]" value="tile" <%= @spa_data.try(:surface_material) == "tile" ? "checked" : "false"%>>
+        Tile
+        <input type="radio" name="spa_data[surface_material]" value="stainless_steel" <%= @spa_data.try(:surface_material) == "stainless_steel" ? "checked" : "false"%>>
+        Stainless Steel
+        <input type="radio" name="spa_data[surface_material]" value="vinyl" <%= @spa_data.try(:surface_material) == "vinyl" ? "checked" : "false"%>>
+        Vinyl
+        <input type="radio" name="spa_data[surface_material]" value="wood" <%= @spa_data.try(:surface_material) == "wood" ? "checked" : "false"%>>
+        Wood
+      </div>
+
+      <div class="row equip-pump-brand">
+        <h6>Equipment </h6><h6>pump/pumps</h6> <label>Brand:</label>
+        <%= text_field_tag "spa_data[equip_pump_brand]",nil,:value=>@spa_data.try(:equip_pump_brand)%>
+        <label>Model:</label>
+        <%= text_field_tag "spa_data[equip_model]",nil,:value=>@spa_data.try(:equip_model)%>
+      </div>
+
+      <div class="row">
+        <label>Horsepower:</label>
+        <%= text_field_tag "spa_data[equip_horsepower]",nil,:value=>@spa_data.try(:equip_horsepower)%>
+        <label>Service Factor:</label>
+        <%= text_field_tag "spa_data[equip_service_factor]",nil,:value=>@spa_data.try(:equip_service_factor)%>
+        <label>Voltage/Amperage</label>
+        <%= text_field_tag "spa_data[equip_voltage]",nil,:value=>@spa_data.try(:equip_voltage)%>
+      </div>
+
+      <div class="row">
+        <h6>Filter</h6>
+        <label>Brand:</label>
+        <%= text_field_tag "spa_data[filter_brand]",nil,:value=>@spa_data.try(:filter_brand)%>
+        <label>Model:</label>
+        <%= text_field_tag "spa_data[filter_model]",nil,:value=>@spa_data.try(:filter_model)%>
+        <label>Type:</label>
+        <input type="radio" name="spa_data[filter_type]" value="cartridge" <%= @spa_data.try(:filter_type) == "cartridge" ? "checked" : "false"%>>
+        Cartridge
+        <input type="radio" name="spa_data[filter_type]" value="sand" <%= @spa_data.try(:filter_type) == "sand" ? "checked" : "false"%>>
+        Sand
+        <input type="radio" name="spa_data[filter_type]" value="de" <%= @spa_data.try(:filter_type) == "de" ? "checked" : "false"%>>
+        DE
+      </div>
+
+      <div class="row cart-size">
+        <h6>Filter Cartridge:</h6>
+        <label>size</label>
+        <%= text_field_tag "spa_data[cartridge_size]",nil,:value=>@spa_data.try(:cartridge_size)%>
+        <label>Replacement cartridge part #:</label>
+        <%= text_field_tag "spa_data[cartridge_part]",nil,:value=>@spa_data.try(:cartridge_part)%>
+        <label>Date replaced:</label>
+        <%= text_field_tag "spa_data[cartridge_date]",nil,:value=>@spa_data.try(:cartridge_date)%>
+      </div>
+
+      <div class="row filter-sand">
+        <h6> Filter-Sand</h6>
+        <label>Backwash Valve Model:</label>
+        <%= text_field_tag "spa_data[filter_sand_model]",nil,:value=>@spa_data.try(:filter_sand_model)%>
+        <label>Backwash Valve Size:</label>
+        <%= text_field_tag "spa_data[filter_sand_size]",nil,:value=>@spa_data.try(:filter_sand_size)%>
+      </div>
+
+      <div class="row filter-grid-de">
+       <h6>Filter DE:</h6> <label>Replacement Grid part #:</label>
+        <%= text_field_tag "spa_data[filter_de]",nil,:value=>@spa_data.try(:filter_de)%>
+      </div>
+
+      <div class="row">
+        <h6>Heater:</h6>
+        <label>Brand:</label>
+        <%= text_field_tag "spa_data[heater_brand]",nil,:value=>@spa_data.try(:heater_brand)%>
+        <label>Model:</label>
+        <%= text_field_tag "spa_data[heater_model]",nil,:value=>@spa_data.try(:heater_model)%>
+      </div>
+
+      <div class="row heater-type">
+        <label>Type:</label>
+        <input type="radio" name="spa_data[heater_type]" value="electrical" <%= @spa_data.try(:heater_type) == "electrical" ? "checked" : "false"%>>
+        Electrical: Voltage/Amperage:
+        <input type="radio" name="spa_data[heater_type]" value="natural_gas" <%= @spa_data.try(:heater_type) == "natural_gas" ? "checked" : "false"%>>
+        Natural Gas: BTU Rating:
+        <input type="radio" name="spa_data[heater_type]" value="oil" <%= @spa_data.try(:heater_type) == "oil" ? "checked" : "false"%>>
+        Oil: BTU Rating:
+        <input type="radio" name="spa_data[heater_type]" value="solar" <%= @spa_data.try(:heater_type) == "solar" ? "checked" : "false"%>>
+        Solar
+      </div>
+
+      <div class="row time-spa">
+        <h6>Time Clock:</h6>
+        <label>Brand:</label>
+        <%= text_field_tag "spa_data[time_clock_brand]",nil,:value=>@spa_data.try(:time_clock_brand)%>
+        <label>Model:</label>
+        <%= text_field_tag "spa_data[time_clock_model]",nil,:value=>@spa_data.try(:time_clock_model)%>
+        <label>Voltage:</label>
+        <%= text_field_tag "spa_data[time_clock_voltage]",nil,:value=>@spa_data.try(:time_clock_voltage)%>
+      </div>
+      <%= hidden_field_tag :property_id ,nil,:value=>@spa_data.property_id%>
+      <%= hidden_field_tag :spa_id ,nil,:value=>@spa_data.id%>
+      <%= submit_tag "submit",:class=>"update_button_setting",:style=>"float:right;"%>
+      <button type="button" class="model_cancel_button" data-dismiss="modal">Close</button>
+      <%end%>
+    </div>
+    <div class="modal-footer">
+      
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+  div#property-spa-data {
+    width: 88%;
+    left: 27%;
+  }
+  #property-spa-data  h6{
+    width: auto;
+    float: left;
+    font-weight: bold !important;
+    margin: 0px;
+    font-size: 14px;
+    margin-top: 2px;
+    margin-right: 8px;
+  }
+  .heater-type input[type="radio"]{
+    margin-left: 66px !important;
+  }
+  #property-spa-data  input[type="radio"]{
+    vertical-align: -2px;
+    margin-left: 5px;
+  }
+  .dim_gallon input[type="text"]{
+    width: 12%;
+  }
+  .cart-size input[type="text"]{
+    width:15.4%;
+  }
+  #property-spa-data  .row{
+    margin-bottom: 15px;
+  }
+  #property-spa-data  label {
+    display: block;
+    margin-bottom: 5px;
+    width: auto;
+    float: left;
+    margin-top: 3px;
+  }
+  #property-spa-data  .no-margin{
+    margin-left: 0px;
+  }
+  #property-spa-data  input[type="text"]{
+   float: left;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: -4px;
+  }
+  .filter-grid-de input[type="text"]{
+    width: 69%
+  }
+  .filter-sand input[type="text"]{
+    width: 26.4%;
+  }
+  .equip-pump-brand input[type="text"]{
+    width: 31.8%
+  }
+
+  .edit-spa-shape input[type="text"]{
+    width: 5% !important;
+  }
+  .spa-edit-volume input[type="text"]{
+    width: 5% !important;
+  }
+</style>        
+
+
+<script type="text/javascript">
+
+  $("body").on("submit","#spa-data-edit",function(){
+    var depth   = $("#spa_data_depth").val();
+    var depth2  = $("#spa_data_depth2").val();
+    var length  = $("#spa_data_length").val();
+    var width   = $("#spa_data_width").val();
+    var width2  = $("#spa_data_width2").val();
+    var diameter= $("#spa_data_diameter").val();
+    var spa_shape   = $("input[name='spa_data[spa_shape]']:checked").val();
+    var property_id = $("#property_id").val();
+    var param = 'depth=' + depth + '&depth2=' + depth2+ '&length=' + length+ '&width=' + width+ '&width2=' + width2+ '&diameter=' + diameter +'&property_id=' + property_id + '&spa_shape=' + spa_shape;
+    $.ajax({
+          type: "POST",
+        url: "/spa_pooles/calculate_spa_volume",
+        data: param
+      })
+  })
+
+  $("body").on("change","#spa-edit-rect,#spa-edit-round,#spa-edit-oval,#spa-edit-kidney",function(){
+    var param = 'shape=' + $("input[name='spa_data[spa_shape]']:checked").val();
+      $.ajax({
+        type: "POST",
+      url: "/spa_pooles/spa_shape_change",
+      data: param
+    })
+  })
+
+</script>

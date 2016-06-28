@@ -1,0 +1,128 @@
+<div id="app_wrapper">
+	<div class="client_index">
+		<div class="main_container">
+			<script>
+				var map;
+				var infowindow;
+
+				function initMap() {
+					var pyrmont = {lat: <%= @lat%>, lng: <%= @lng%>};
+
+					map = new google.maps.Map(document.getElementById('map'), {
+						center: pyrmont,
+						scrollwheel: false,
+						zoom: 11
+					});
+
+					infowindow = new google.maps.InfoWindow();
+
+					var service = new google.maps.places.PlacesService(map);
+					service.nearbySearch({
+						location: pyrmont,
+						radius: <%= @radius%>,
+						types: ['store']
+					}, callback);
+				}
+                function callback(results, status) {
+					<%if ((!@vendor.blank?) && (@vendor.vendor_type  == "enable"))%>
+						var  address = <%=raw @address.to_json%>;
+					<%else%>
+						var address ="";
+					<%end%>
+					for (var i = 0; i < address.length; i++) {
+						createMarker(address[i]);
+					}
+				}
+				
+				function createMarker(place) {
+					var newLatLng = new google.maps.LatLng(place.latitude, place.longitude);
+					var marker = new google.maps.Marker({
+						map: map,
+						position: newLatLng,
+						icon: 'http://maps.google.com/mapfiles/ms/icons/<%= @icons%>'
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.setContent(place.name);
+					infowindow.open(map, this);
+				});
+				}
+
+				
+			</script>
+
+			<div class="clearfix"></div>
+
+			<div id="map" class="new-map"></div>
+			<!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.6&sensor=false&libraries=places&callback=initMap"></script> -->
+ 			<script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhj6UD4wv9nr9wlyaf3wmHjKPsfyJNkHs&libraries=places&callback=initMap">
+            </script>
+
+			<div class="clearfix"></div>
+			<br>
+			<br>
+			<%#= render "vendors/system_vendors"%>
+			<div class="row">
+				<div class="col-md-4 no-padding">
+					<div class="location">
+					  <%=image_tag "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png"%>
+					   <h3>Preferred Vendors</h3></div>
+					</div>
+				<div class="col-md-4 no-padding"> 
+					<div class="location"><%=image_tag "http://maps.google.com/mapfiles/kml/paddle/red-circle.png"%></i><h3>User Location</h3></div>
+				</div>
+				<div class="col-md-4 no-padding">
+					<div class="location"><%=image_tag "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png"%></i><h3>All Vendors Miles</h3></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style type="text/css">
+	#miles{
+		width: 100px;
+		height: 30px;
+	}
+	#map {
+		width:100%; 
+		height:550px;
+	}
+	.select2-container {
+		width: 315px !important;
+	}
+	.col-md-6 ul{
+		list-style: none;
+		padding: 10px;
+	}
+
+	.gm-style-iw a {
+    clear: both;
+    color: #333;
+    padding: 5px;
+    display: block;
+    font-weight: bold;
+    text-decoration: underline;
+    }
+    .new-map{
+      margin-top: 25px;
+    }
+    .location .fa{
+    	float: left;
+    font-size: 35px;
+    margin-right: 6px; 
+
+    }
+    .location h3{
+    	font-size: 17px;
+    	vertical-align: middle;
+
+    }
+    .no-padding{
+    	padding: 0px;
+    }
+    .location > img {
+    float: left;
+    width: 32px;
+    }
+</style>

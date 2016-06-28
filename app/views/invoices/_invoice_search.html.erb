@@ -1,0 +1,206 @@
+               <script src="https://checkout.stripe.com/checkout.js"></script>
+
+<div class="row_holder extend_to_footer invoice_search" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <tr class="propert">
+        <td>Name</td>
+        <td>Due date</td>
+        <td>Purpose</td>
+        <td>Amount</td>
+        <td>Status</td>
+        <td>Action</td>
+      </tr>
+      <% unless @invoices.blank? %> 
+      <div id="output"></div> 
+        <% @invoices.each_with_index do |invoice,index| %>
+          <tr class="propert" > 
+            <td  data-link="/invoices/<%=invoice.id%>">#<%=index+1%> :
+              <%if params[:sort_by]=="last_name"%>
+                <%=invoice_client_lname(invoice)%>
+              <%else%>
+                <%= invoice_client_name(invoice) rescue nil%>
+              <%end%>
+               <b></b><br/>
+              <span class="status">     
+                <%if invoice.mark_sent == false%>
+                  <span style="padding: 2px 6px;  background-color:#888888; color:#FFFFFF; border-radius:2px 2px 2px 2px;">Draft</span>
+                <%elsif invoice.invoice_bad_debt== false%>
+                    <%if invoice.invoice_paid==false%>
+                      <%if invoice.past_due==false%>
+                        <span style="padding: 2px 6px; border-radius:2px 2px 2px 2px;", class="send">Outstanding</span>
+                      <%else%>
+                        <span style="color: #FFFFFF; padding: 2px 6px; border-radius:2px 2px 2px 2px; background-color:#B22F23;">Past Due</span>
+                      <%end%>
+                      <%else%>
+                      <span style=" background-color: #1f518b; color: #FFFFFF; padding: 2px 6px; border-radius:2px 2px 2px 2px;">Paid</span>
+                      <%end%>
+                <%else%>
+                  <span style="color: #FFFFFF; padding: 2px 6px; background-color:#B22F23; border-radius:2px 2px 2px 2px;">Bad Debt</span>
+                <%end%>
+              </span> 
+            </td>
+          
+            <td><small>Due</small><br/>
+              <%if invoice.payment=="Custom"%>
+                <%= invoice.due_date%>
+              <%else%>
+                <%= invoice.payment%>
+              <%end%>  
+            </td>
+
+            <td><%= invoice.subject%></td>
+            <td><span class="summary" style="margin-left: 42%; font-weight: bold;"><%@total= total_amount_invoice(invoice)%>$<%=number_with_precision(@total, :precision => 2)%></span><br/>
+           </td>
+            <%if invoice.mark_sent==true && invoice.invoice_paid == false %>
+              <td><i class="fa fa-envelope-o"></i>
+                <%= link_to "Mark As Paid","#" ,:id=>"mark_received",:class=>"has_icon",:'data-toggle'=>"modal" ,:'data-target'=>"#payment_record"%>
+                  <div class="modal fade" id="payment_record" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header new-modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Create Payment Record</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="content_invoice balance_adjustment">
+                          <%= form_for @payment_invoice, url: {:action=>"invoice_payment_create" ,:controller=>"invoices"},:html => {:class=>"compressed_form payment_form" } do |f| %>
+                            <%= f.hidden_field :transaction_type, :value=>"payment" %>
+                            <%= f.hidden_field :client_id, :value=>"#{invoice.client_id}" %>
+                            <%@total= total_amount_invoice(invoice) rescue 0%>
+                            <p>
+                              <label>Current Balance</label>
+                              <% amount =invoice.payment_invoices.collect(&:pay_amount).sum rescue 0%>
+                              <strong>$ <%= @total- amount %></strong>
+                            </p>
+
+                            <p style="display:none;" id="initial_balance_warning">
+                              <strong>Note:</strong> This refers to the clients initial outstanding receivables when added to CopperService. Not for recording ongoing transactions.
+                            </p>
+
+                            <p class="strong">
+                              <label style="font-size:14px; margin-top:3px" for="balance_adjustment_clean_amount">Payment Amount $</label>
+                            
+                              <%= f.text_field :pay_amount,:value=>number_with_precision(@total, :precision => 2),:id=>"payment_amount"%>
+                            </p>
+
+                            <p class="ba_entry_date">
+                              <label for="balance_adjustment_clean_entry_date">Entry Date</label>
+                              <%= f.text_field :entry_date,:value=>invoice.created_at.strftime("%m/%d/%Y"),:class=>"datepicker"%>
+                            </p>
+
+                            <p id="payment_type">
+                              <label for="balance_adjustment_payment_type">Payment Method</label>
+                            
+                              <%= f.select :pay_method, options_for_select([["Cash","cash"],["Cheque","cheque"],["Credit Card","credit_card"],["Bank Transfer","bank_transfer"],["Money Order","money_order"],["Other","other"]]),:class=>"invoice_payment_method"%>
+                            </p>
+
+                            <p style="display:none;" id="cheque_number">
+                              <label for="balance_adjustment_cheque_number">Cheque #</label>
+                             <%= f.text_field :cheque_number ,:id=>"cheque_number_text"%>
+                            </p>
+
+                            <p style="display:none;" id="cc_transaction_number">
+                              <label for="balance_adjustment_cc_transaction_number">Transaction #</label>
+                              <%= f.text_field :transaction_number ,:id=>"transaction_number_text"%>
+                            </p>
+
+                            <p style="display:none;" id="confirmation_number">
+                              <label for="balance_adjustment_confirmation_number">Confirmation #</label>
+                             <%= f.text_field :confirmation_number,:id=>"confirmation_number_text"%>
+                            </p>
+
+                            <p>
+                              <label for="balance_adjustment_note">Additional Note</label>
+                             <%=f.text_area :additional_note,:value=>"Payment of Invoice # #{invoice.id}" %>
+                            </p>
+
+                            <p></p>
+
+                            <%= hidden_field_tag "invoice_id",invoice.id%>
+                            <p></p>
+                            <%= f.submit "save",:class=>"model_save_button save-new-btn1" %>
+                            <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>
+                          <%end%>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td> 
+                 <%= form_tag payment_done_path, id: 'stripeForm' do -%>
+
+                  <%#= link_to "Pay Now" , "#",:id=>"invoice_payment_#{@total}",:style=>"background-color: #72c475;border: 0 none;color: white;display: block;font-size: 1.2em;font-weight: 400;margin:-1px;padding: 0.8em 0;text-align: center;width: 150px;",:class=>"invoice_payment"%>
+                  <%=hidden_field_tag :id,invoice.id %>
+                  <%=hidden_field_tag :amount,@total %>
+                  <%=hidden_field_tag :invoice_data,'static' %>
+                   <script
+                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                     data-key="pk_test_lyYYz5ObfjV7rWasjyxGjIHm"
+                     data-image="/assets/pool1236.png"
+                     data-name="Copperservice"
+                     data-description=""
+                     data-amount="<%= (@total)*100%>"
+                     data-currency="usd"
+                     data-bitcoin="false">
+                  </script>
+              <%end%>
+              </td>
+            <%elsif invoice.mark_sent == false%>
+              <td>UnPaid</td>
+               <td> 
+                 <%= form_tag payment_done_path, id: 'stripeForm' do -%>
+                  <%=hidden_field_tag :id,invoice.id %>
+                  <%=hidden_field_tag :amount,@total %>
+                  <%=hidden_field_tag :invoice_data,'static' %>
+                   <script
+                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                     data-key="pk_test_lyYYz5ObfjV7rWasjyxGjIHm"
+                     data-image="/assets/pool1236.png"
+                     data-name="Copperservice"
+                     data-description=""
+                     data-amount="<%= (@total)*100%>"
+                     data-currency="usd"
+                     data-bitcoin="false">
+                  </script>
+              <%end%>
+              </td>
+            <%else%>
+              <td>Paid</td>
+           <%end%>
+  
+        </tr>
+        <% end %>
+      <% else %>
+      <b>No matches found</b>
+      <% end %>  
+    </table>
+  </div>
+</div>   
+<script>
+  $(function($) {
+  $("td[data-link]").click(function() {
+  window.location = this.dataset.link
+  });
+  })
+</script>
+<style type="text/css">
+.stripe-button-el{
+  background-color: #1f518b;
+    background-image: none;
+    border: 0 none;
+    color: white;
+    display: block;
+    font-size: 1.2em;
+    font-weight: 400;
+    margin: 0 auto;
+    padding: 0.4em 0;
+    text-align: center;
+    width: 130px;
+  }
+  .stripe-button-el span{
+    box-shadow: none;
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  }
+</style>

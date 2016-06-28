@@ -1,0 +1,59 @@
+<div class='row box'>
+  <div class='box-header'>
+    <div class='title'>
+      <i class='icon-inbox'></i>
+      Recommended Actions
+    </div>
+  </div>
+  <div class='box-content pull_content'>
+    <div id='stats-chart1'>
+      <ul class="recommend_actions" style="list-style: none">
+        <a href="#">
+          <li><strong>Complete your Tasks - </strong>You have <strong><span class="red-text"><%= @job_overdue.count rescue ""%> overdue</span></strong> from previous days.</li>
+          </a>
+          <a href="#">
+          <li><strong>Schedule Visits - </strong>You have <strong><span class="red-text"><%= @job_schedules.count rescue 0 %>  visits</span></strong> left to schedule today.</li>
+          </a>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class='row box'>
+  <div class='box-header'>
+    <div class='title'>
+      <i class='icon-group'></i>
+      Outstanding Balances
+    </div>
+  </div>
+  <div class='box-content pull_content'>
+    <div id='stats-chart2'>
+      <%if current_user.user_type=="user"%>
+        <%if @team_member.permission.permission_reports%>
+          <%= render "dashboards/dashboard_outstanding_balance"%>
+        <%end%>
+      <%else%> 
+        <%= render "dashboards/dashboard_outstanding_balance"%>  
+      <%end%>
+    </div>
+  </div>
+</div>
+
+<div class="row box">
+  <div class="box-header">
+    <div class="title">
+      <i class="icon-edit"></i>
+      Invoices Awaiting Payments
+    </div>
+  </div>
+  <div class="box-content pull_content">
+    <div id="stats-chart2">
+      <%if current_user.user_type=="user"%>
+        <%if @team_member.permission.permission_invoices.count==2%>
+          <%= render "dashboards/dashboard_invoice_awaiting"%> 
+        <%end%>
+      <%else%>
+        <%= render "dashboards/dashboard_invoice_awaiting"%>
+      <%end%>
+    </div>
+  </div>
+</div>

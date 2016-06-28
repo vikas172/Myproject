@@ -1,0 +1,5 @@
+<%if request.referrer.include? "category_new" %>
+	$('.category-form').html("<%= escape_javascript(  render :partial => 'timesheets/category') %> ");
+<%else%>
+	$('.category-form').html("<%= escape_javascript(  render :partial => 'expenses/category') %> ");
+<%end%>

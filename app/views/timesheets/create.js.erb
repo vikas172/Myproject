@@ -1,0 +1,5 @@
+$('.row_holder .hours-day').last().attr('id', 'time_sheet_entry_<%= @timesheet.id %>')
+$('#time_sheet_entry_<%= @timesheet.id %>').last().html("<%= escape_javascript(  render :partial => 'add_timesheet',  :locals => {:@categories => @categories}) %> ")
+$("#duration_sum").html("<%= (@total_hours) %>")
+$("#<%=params[:timesheet][:day]%>").html("<%=get_total_hours(params[:timesheet][:day],current_user)%>")
+$(".day-view-week-nav-total").html("<%= (@total) %>")

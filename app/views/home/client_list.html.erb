@@ -1,0 +1,128 @@
+<div class="client_index">
+  <div class="main_container">
+    <div id="head">
+      <%if params[:display_method] == "properties"%>
+        <h1>Customers' Pools</h1>
+      <%else%>
+        <h1>Customers' Contact Info</h1>
+      <%end%>
+    </div>
+    <div id="reports_p_c" style="width: 16%;width: 98%; margin: 10px;">
+      <%= link_to "Client Info","/reports/client_list?display_method=",:class=>"btn current"%>
+      <%= link_to "Properties","/reports/client_list?display_method=properties",:class=>"btn"%>
+    </div>
+    <a class="button_new_create" id="column_selector" href="#column_selector_model" data-toggle="modal" style="float: right; z-index: 9; margin-right:16px;"><span id = "column_selector_count"></span> Columns</a>
+    <%if params[:display_method] == "properties"%>
+      <div class="tables" style="width: 98%; margin: 10px;">
+        <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+          <thead class="thead">
+            <tr>
+              <th width="204px" class="name">Name</th>
+              <th width="235px" class="street1">Street1</th>
+              <th width="109px" class="street2">Street2</th>
+              <th width="86px" class="city">City</th>
+              <th width="167px" class="state">State</th>
+              <th width="134px" class="country">Country</th>
+              <th width="121px" class="zip_code">Zip Code</th>
+              <th width="42px" class="open">Open</th>
+            </tr>
+          </thead>
+          <% unless @clients.blank?%>
+            <% @clients.each do |client| %>
+              <%if !client.properties.blank?%>
+                <%client.properties.each do |property|%>
+                  <tr> 
+                    <td class="name"><%=  property.client.try(:initial) %> &nbsp;<%= property.client.try(:first_name) %>&nbsp; <%= property.client.try(:last_name) %></td>
+                    <td class="street1"><%=  property.try(:street) %></td>
+                    <td class="street2"><%=property.try(:street2) %></td>
+                    <td class="city"><%=  property.try(:city) %></td>
+                    <td class="state"><%=  property.state %></td>     
+                    <td class="country">
+                       <%if !property.country.blank?%>
+                      <%=  get_carmen_country_code(property.country).name rescue "" %>
+                      <%else%>
+                      <%=property.country rescue "" %>
+                      <%end%>
+                    </td>
+                    <td class="zip_code"><%= property.zipcode rescue "" %></td>
+                    <td class="open"><a target="_blank" href="/properties/<%=property.id rescue "" %>?view=show&client_id=<%= client.id rescue "" %>" class="open ui-icon ui-icon-newwin">open</a></td>    
+                  </tr>
+                <% end %>
+              <% end %> 
+            <% end %>
+          <% end %>  
+        </table>
+      </div>
+    <%else%>
+      <div class="tables" style="width: 98%; margin: 10px;">
+        <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+          <thead class="thead">
+            <tr>
+              <th width="199px" class="contact">Contact</th>
+              <th width="122px" class="company">Company</th>
+              <th width="138px" class="phone">Phone</th>
+              <th width="228px" class="e-mail">E-mail</th>
+              <th width="409px" class="billing-address">Billing Address</th>
+              <th width="409px" class="created-date">Created Date</th>
+              <th width="42px" class="open">Open</th>
+            </tr>
+          </thead>
+          <% unless @clients.blank?%>
+            <% @clients.each do |client| %>
+              <tr> 
+                <td class="contact"><%=  client.try(:initial) rescue "" %> &nbsp;<%= client.try(:first_name) rescue "" %>&nbsp; <%= client.try(:last_name) rescue "" %></td>
+                <td class="company"><%=  client.try(:company_name) rescue "" %></td>
+                <td class="phone">
+                  <% unless client.phones.first.blank? %>
+                    <%if !client.phones.first.phone_number.blank? %>
+                      <%@count=0%>
+                      <% client.phones.first.phone_number.each_with_index do |phone,index|%>
+                        <% if client.phones.first.primary_phone[index]=="true"%>
+                          <%@count=@count+1%>
+                            <%= phone rescue "" %> 
+                        <%end%>
+                      <%end%>
+                      <%if @count == 0%>
+                       <%=client.phones.first.phone_number.first rescue "" %>
+                      <%end%>
+                    <%end%>
+                  <% end %>
+                </td>
+                <td class="e-mail">
+                  <% unless client.emails.first.blank? %>
+                    <%if !client.emails.first.email.blank?%>
+                      <%@count=0%>
+                      <%client.emails.first.email.each_with_index do |email,index|%>
+                        <% if client.emails.first.primary_email[index]=="true"%>
+                          <%@count=@count+1%>
+                            <%=email%> 
+                        <%end%>
+                      <%end%>
+                     
+                      <%if @count == 0%>
+                       <%=client.emails.first.email.first rescue "" %>
+                      <%end%>
+                    <%end%>
+                  <% end %>
+                </td>
+                <td class="billing-address">
+                  <%= client.try(:street1) rescue "" %>&nbsp;<%= client.try(:street2) rescue "" %>&nbsp;<%=client.try(:city) rescue "" %>&nbsp;<%=client.try(:state) rescue "" %><%=client.try(:zip_code) rescue "" %>
+                </td>
+                <td class="created-date">
+                  <%= client.try(:created_at).strftime("%d/%m/%Y") rescue ""%>
+                </td>
+                   
+                <td class="open"><a target="_blank" href="/clients/<%=client.id rescue "" %>?value=client_show" class="open ui-icon ui-icon-newwin">open</a></td>    
+              </tr>
+            <% end %>
+          <% end %>  
+        </table>
+      </div>
+    <%end%>  
+  </div>
+</div>
+<%= render "home/managment_column_client_popup"%>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

@@ -1,0 +1,6 @@
+<%@client.tags.each do |tag|%>
+	<span class="removable_tag" tag_label="<%= tag.name%>">
+	<%= tag.name%>
+	 	<a value="<%=tag.name%>" class= "tags_pointer remove_tag" onclick='deleteTag("<%=tag.name%>","<%=@client.id%>");'>x</a>
+	</span>
+<%end%>

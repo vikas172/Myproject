@@ -1,0 +1,126 @@
+<style type="text/css">
+
+.columns {
+  position: relative;
+  padding-right: 0.9375rem;
+  float: left;
+  width: 100%;
+}
+.row {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 62.5rem;
+}
+.panel {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d8d8d8;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+  background: #f2f2f2;
+}
+
+.side-nav li a:not(.button) {
+  display: block;
+  color: #fff;
+  margin: 0;
+  padding: 0.4375rem 0.875rem;
+}
+@media only screen and (min-width: 64.063em)
+.column, .columns {
+  position: relative;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  float: left;
+}
+@media only screen and (min-width: 40.063em)
+button, .button {
+  display: inline-block;
+}
+@media only screen and (min-width: 64.063em)
+.large-4 {
+  width: 33.33333%;
+}
+@media only screen and (min-width: 64.063em)
+.large-3 {
+  width: 25%;
+}
+@media only screen and (min-width: 64.063em)
+.large-9 {
+  width: 75%;
+}
+</style>
+
+
+<div class="client_index">
+  <div class="main_container">
+    <%= render "ivrs/top_header"%>
+    <% if @notice %>
+      <div data-alert class="alert-box rounded <%= @notice[:status] == "success" ? "success" : "alert" %>">
+        <a href="#" class="close">&times;</a>
+        <%= @notice[:message] %>
+      </div>
+    <% end %>
+    <br>
+      <h2 class="text-center">Numbers</h2>
+
+    <div class="large-9 large-centered columns end">
+      <% @numbers.each do |number| %>
+        <div class="panel white-panel">
+          <div class="row">
+            <div class="large-9 columns large-centered panel">
+              <h1><span class="bigtext"><%= number_to_phone(number.phone_number , :area_code => true) %></span></h1>
+              <br>
+             <!--  Account Sid - <%#= number.account_sid %><br>
+              Auth Token - <%#= number.auth_token %> <br>
+              Phone Sid - <%#= number.phone_sid %> <br>
+              Voice - <%#= number.voice %> <br> -->
+              <!--Sms - <%#= number.sms %> <br>-->
+              <br>
+              <%= link_to 'Edit', edit_number_path(number) , :class => "button radius success tiny" %>
+              <%= link_to 'Destroy', number , :method => :delete , data: { confirm: 'Are you sure?' }, :class => "button radius alert     tiny" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <a href="#" data-toggle="modal" data-target="#buy_number_modal"  class="button radius success""">Buy Number</a>
+      <%= link_to 'Add Number', new_number_path , :class => "button radius success" %>
+    </div>
+ 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="modal fade" id="buy_number_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display:none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <h4 class="text-center">Enter Area code </h4>
+            <br>
+            <br>
+            <%= simple_form_for Number.new , :url => search_numbers_path  do |f| %>
+              <div class="row">
+                <div class="large-4 columns">
+                  <%= f.text_field :prefix , label: false, :placeholder => "Number starting with (optional)"%>
+                </div>
+                <div class="large-4 columns">
+                  <%= f.submit :class => "button tiny radius success" , :value => "Search & Buy"%>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>      
+  </div>
+</div>

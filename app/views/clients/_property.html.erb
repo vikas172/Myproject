@@ -1,0 +1,66 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<h3 class="title1-font" style="padding-top: 10px; border-top: 1px solid #ccc;">First Pool</h3>
+  <div class="row">
+    <div class="span2">
+      <%= f.label :street %>
+    </div>
+    <div class="span7">
+      <%= f.text_field :street ,:placeholder=> "Street1",:value=>@client.properties.first.try(:street)%>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span2">
+      <%= f.label :street2 %>
+    </div>
+    <div class="span7">
+      <%= f.text_field :street2 ,:placeholder=> "Street2",:value=>@client.properties.first.try(:street2)%>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <%= f.label :city %>
+    </div>
+    <div class="span7">  
+      <%= f.text_field :city ,:placeholder=> "City" ,:value=>@client.properties.first.try(:city)%>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <%= f.label :state %>
+    </div>
+    <div class="span7">
+      <%= f.text_field :state ,:placeholder=> "State",:value=>@client.properties.first.try(:state)%>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <%= f.label :zipcode %>
+    </div>
+    <div class="span7">
+      <%= f.text_field :zipcode,:placeholder=> "Zip Code",:value=>@client.properties.first.try(:zipcode) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <%= label_tag :country %>
+    </div>
+    <div class="span7">
+      <%= f.country_select :country, {priority: %w(US CA), prompt:@client.properties.try(:country),:class=>"billing_country"} %>
+    </div>
+  </div>
+  <script>
+    $("#pool_data").change(function () {
+        var street1 = $("#client_street1").val();
+        var street2 = $("#client_street2").val();
+        var city = $("#client_city").val();
+        var state = $(this).val()
+        $('#client_properties_street').val(street1)
+        $('#client_properties_street2').val(street2)
+        $('#client_properties_city').val(city)
+        $('#client_properties_state').val(state)
+    });
+  </script>

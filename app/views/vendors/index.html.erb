@@ -1,0 +1,40 @@
+<div class="client_index">
+	<div class="main_container">
+		<%= link_to "Back",vendor_setting_vendors_path,:class=>"button_new_create",:style=>"float:right; padding: 5px 30px !important;"%>
+		<%if !@vendors.blank?%>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Name</th>
+						<th>Location Name</th>
+						<th>Address</th>
+						<th>City</th>
+						<th>State</th>
+						<th>Zip</th>
+						<th>Phone</th>
+						<th>Source</th>
+						<th colspan="2"> Action</th>
+					</tr>
+				</thead>
+				<% @vendors.each do |vendor|%>
+					<tr>
+						<td><%= vendor.vendor_type%></td>
+						<td><%= vendor.name%></td>
+						<td><%= vendor.location_name%></td>
+						<td><%= vendor.street%></td>
+						<td><%= vendor.city%></td>
+						<td><%= vendor.state%></td>
+						<td><%= vendor.zipcode%></td>
+						<td><%= vendor.phone%></td>
+						<td><%= vendor.source%></td>
+						<td><%= link_to "Edit",edit_vendor_path(vendor) %></td>
+						<td><%= link_to 'Delete',url_for(action: :destroy,id: vendor.id),method: :delete, data: {confirm: "Are you sure?"} %></td>
+					</tr>
+				<%end%>
+			</table>
+		<%else%>
+				<h4> No Vendors Present.</h4>
+		<%end%>
+	</div>
+</div>

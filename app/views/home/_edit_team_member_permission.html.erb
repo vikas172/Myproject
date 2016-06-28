@@ -1,0 +1,96 @@
+<fieldset style="margin-top: 10%;" class="basick_remin">
+  <div class="permission">
+    <div class="parent">
+      <input type="checkbox" disabled="disabled" checked="checked">
+      <label>Tasks</label>
+      <div class="description">Applies to basic tasks, reminders,<br>
+    events and visits.</div>
+    </div>
+    <div class="detail view-detail">
+      <ul class="vertical">
+        <li>
+          <input id="permission_to_dos_" name="permission[to_dos]" type="radio" value="view_complete" <%= "checked" if @team_member.permission.to_dos =="view_complete" %>>
+          <label for="user_permissions_to_dos_1">View and Complete Their Tasks</label>
+        </li>
+        <li>
+        <input id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit" <%= "checked" if @team_member.permission.to_dos =="edit" %>><label for="user_permissions_to_dos_2">Edit Their Tasks</label>
+        </li>
+        <li>
+          <input id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit_all" <%= "checked" if @team_member.permission.to_dos =="edit_all" %>><label for="user_permissions_to_dos_6">Edit All Tasks</label>
+        </li>
+        <li>
+          <input  id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit_delete_all" <%= "checked" if @team_member.permission.to_dos =="edit_delete_all" %>><label for="user_permissions_to_dos_8">Edit &amp; Delete All Tasks</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</fieldset>
+<fieldset>
+  <div class="permission">
+    <div class="parent">
+      <%if @permission.permission_show_pricing==false%>
+        <input type="checkbox" id="user_permissions_pricing" class="has_details" name="permission[permission_show_pricing]">
+      <%else%>
+        <input type="checkbox" id="user_permissions_pricing" class="has_details" name="permission[permission_show_pricing]" checked value="on">
+      <%end%> 
+      <label for="user_permissions_pricing">Show Pricing</label>
+      <div class="description">Required to edit quotes, invoices and line items on Work Orders.</div>
+    </div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <%= render "client_and_property_permission"%>
+  <%= render "quote_permission"%>
+  <%= render "invoice_permission"%>
+  <%= render "job_permission"%>
+  <%= render "note_attachment_permission"%>
+
+  <div class="permission indent pad-top">
+    <%if @permission.permission_client_properties.count==1%>
+      <%if set_client_property_check_box_permission(@permission)%>
+        <%if @permission.permission_reports==true%>
+          <input type="checkbox"  class="require_clients check_box_unselect" name="permission[permission_reports]" checked  style="float: left; margin-right: 10px;">  <label for="user_permissions_reports" style="width: auto; float: left;" >Reports</label>
+        <%else%>
+          <input type="checkbox"  class="require_clients check_box_unselect" name="permission[permission_reports]"  style="float: left; margin-right: 10px;">  <label for="user_permissions_reports" style="width: auto; float: left;" >Reports</label>
+        <%end%>
+      <%else%>
+        <input type="checkbox" disabled="disabled" class="require_clients check_box_unselect" name="permission[permission_reports]"  style="float: left; margin-right: 10px;">  <label for="user_permissions_reports" class="disabled" style="width: auto; float: left;">Reports</label>
+      <%end%>
+    <%else%>
+      <%if @permission.permission_reports==true%>
+        <input type="checkbox" class="require_clients check_box_unselect" name="permission[permission_reports]" checked>
+      <%else%>
+        <input type="checkbox" class="require_clients check_box_unselect" name="permission[permission_reports]" style="float: left; margin-right: 10px;">
+      <%end%>
+      <label for="user_permissions_reports" style="width: auto; float: left;">Reports</label>
+    <%end%>
+  </div>
+</fieldset>
+
+
+
+ <style type="text/css">
+#content .permission .parent{
+  width: 23% !important;
+  margin-right: 1%;
+}
+#content .permission .detail{
+  width: 75%;
+} 
+#content .permission ul.vertical li{
+  width: 24%;
+  margin: 0px;
+  float: left;
+
+}
+#detailed_permissions .permission ul.vertical li input{
+  float: left;
+  margin-right: 5px;
+}
+
+
+</style>         
+
+   
+  

@@ -1,0 +1,59 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel"><%= @client.first_name rescue "" + @client.last_name rescue "" %> - <%= @job.description rescue "" %></h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="span3" id="popover_left">
+          <label>
+            <%= check_box_tag "check", nil, @visit_complete, :onclick=>"CompleteJob(#{@visit.id},#{!@visit_complete}, '#{current_user.full_name}')"%> <b>Completed? </b><%= "("+ @visit.complete_on.strftime("%m/%d/%Y %H:%M ") +") by  " + @client.first_name rescue "" %>
+          </label>
+
+          <div class="">
+            Schedule: <b><%= @job.start_date.strftime("%m/%d/%Y") rescue "" %> Anytime</b>
+            </br>
+            Assign to:</br>
+            <%if @job.crew.blank?%>
+              <div class="assigned_to">
+                Not Assigned Yet
+              </div>
+            <%else%>
+              <%@users=[]%>
+              <% assigned_user_detail(@job.crew,@users) %>
+              <% if !@users.blank?%>
+                <%@users.each do |user|%>
+                  <%=user.full_name%></br>
+                <%end%>
+              <%else%> 
+            <%end%>  
+            <%end%>  
+          </div>
+        </div>
+
+        <div class="span2">
+          <div class="" style="text-align:right;margin-bottom:10px;">
+            <%= link_to edit_visit_event_events_path(@visit), class: "button edit spin_on_click save-new-btn1", data: {toggle: "modal", target: "#edit_visit_plan_modal"}, remote: true do %>
+               <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <a href="<%= destroy_visit_event_events_path(@job, @visit) %>" method='delete' data-confirm="are you sure?" class="button trash spin_on_click save-new-btn1" data-remote="true">
+            <i class="fa fa-minus-circle"></i> Delete
+            </a>
+          </div>
+          <div class="attachments_holder" style="float:right;">
+            <div class="description attachments">
+              <ul>
+                <li class="strong"><i class="fa fa-legal"></i> &nbsp;<%= link_to "Job ##{@job.id}", job_path(@job) %></li>
+                <li class="strong"><i class="fa fa-user fa-2"></i> &nbsp;<%= link_to "#{@client.first_name rescue ""} #{@cient.last_name rescue ""}", client_path(@client) %></li>
+                <li class="phone"><%= @client.phones.first[0] rescue "" %></li>
+                <li class="strong"><i class="fa fa-home"></i>&nbsp; <%= link_to "#{@property.street rescue ""} #{@property.street2 rescue ""} #{@property.city rescue ""} #{@property.state rescue ""}, #{@property.country rescue ""}", property_path(@property) %></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="edit_visit_plan_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false"></div>
+</div>

@@ -1,0 +1,6 @@
+class AddColumnPaidToAddOnStatus < ActiveRecord::Migration
+  def change
+  	add_column :add_on_statuses, :paid, :boolean,:default=>false
+  	add_column :add_on_statuses, :charge, :float,:default=>0
+  end
+end

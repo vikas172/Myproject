@@ -1,0 +1,28 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <div class="span12">
+      <h4>Edit Work Order</h4><br/>
+      <%if @job.job_type=="recurring_contract"%>
+        <p id="visit_removal_warning" class="flash flash_warning1" style="width:510px !important;">
+          <strong>Warning:</strong> Editing this schedule will clear all current Visits from the Work Order.
+        </p>
+      <%end%>
+      <div class="property_confirmation"><i class="icon-home"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= property_name_list(@job)%></div>
+      <%= render "form"%>
+    </div>  
+  </div>
+</div>
+
+<!--  -->
+<script>
+checkBoxCheked()
+function show(target){
+document.getElementById(target).style.display = 'block';
+document.getElementById("clickMeId").style.display = 'none';
+}
+function hide(target){
+document.getElementById(target).style.display = 'none';
+document.getElementById("clickMeId").style.display = 'block';
+}
+</script>

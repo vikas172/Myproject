@@ -1,0 +1,45 @@
+<div class="client_index">
+  <div class="main_container">
+    <div id="head">
+      <h1>Aged Receivables</h1>
+    </div>
+    <%= render "aged_receivables_summary"%>
+    <a class="button_new_create" id="column_selector" href="#column_selector_model" data-toggle="modal" style="float: right; z-index: 9; margin-right:16px;"><span id = "column_selector_count"></span> Columns</a>
+    <div id="client_balance_summary">
+  		<div class="tables" style="width: 98%; margin: 10px;">
+        <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+          <thead class="thead">
+            <tr>
+              <th width="145px" class="name">Name</th>
+              <th width="189px" class="doller">$</th>
+              <th width="257px" class="due_date">Due Date</th>
+              <th width="169px" class="issue_date">Issue Date</th>
+              <th width="169px" class="late_by">Late By</th>
+              <th width="169px" class="contact">Contact</th>
+              <th width="42px" class="open">Open</th>
+            </tr>
+          </thead>
+          <% unless @aged_receivables_summary.blank?%>
+          	<% @aged_receivables_summary.each_with_index do |invoice,i| %>
+              <tr> 
+                <% total = 0 %>
+                <td class="name"><%= invoice.client.first_name %> <%= invoice.client.first_name %></td>
+                <td class="doller"><%= get_due_invoice_income(invoice)%></td>
+                <td class="due_date"><%= invoice.due_date %></td>
+                <td class="issue_date"><%= invoice.issued_date %></td>
+                <td class="late_by"><%= invoice.issued_date %></td>
+                <td class="contact"><%= invoice.client.phone_initial%> <%= invoice.client.phone_number %></td>
+                <td class="open"><a target="_blank" href="/invoices/<%=invoice.id%>" class="open ui-icon ui-icon-newwin">open</a></td>
+              </tr>
+          	<% end %>
+          <%end%> 
+        </table>
+      </div>
+    </div>     
+  </div>
+</div>
+<%= render "money_reports_column_edit_popup"%>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

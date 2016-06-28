@@ -1,0 +1,3 @@
+$("#chatboxBody").html("<%= escape_javascript(render :partial => 'chat_popup_show',  :locals => {:@users=>@users}) %> ");
+$(".chatboxLink-not").css("display","block");
+$("#chatboxContainer").css("display","block");

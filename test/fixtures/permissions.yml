@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  show_pricing: false
+  client_properties: MyString
+  quotes: MyString
+  invoices: MyString
+  jobs: MyString
+  note_attachment: MyString
+  reports: false
+
+two:
+  show_pricing: false
+  client_properties: MyString
+  quotes: MyString
+  invoices: MyString
+  jobs: MyString
+  note_attachment: MyString
+  reports: false

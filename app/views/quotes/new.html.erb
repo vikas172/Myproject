@@ -1,0 +1,23 @@
+<div class="client_index invoice-index">
+	<div class="main_container">
+		<%= render "clients/error_message_and_flash" %>
+		<%#= render 'quote_head' %>
+		<p style="padding-top: 15px;">
+			<% if !@property_id.nil?%>
+	  		<h3 class="main_heading">Estimate For 
+	  			<%=property_client_quote(@property_id)%>
+	  		</h3>
+			<% elsif !params[:property_id].nil? %>
+				<h3 class="main_heading">Estimate For <%= property_quote_client(params)%></h3>
+			<%end%>
+		</p>	
+		<%= render 'form' %>
+		<% if !params[:property_id].nil? && !params[:client_id].nil? && params[:value]!="client_show" %>
+			<%= link_to 'Cancel', :back,:class=>"model_cancel_button"%>
+		<% elsif params[:value]=="client_show" %>
+			<%= link_to 'Cancel', client_path(:id=>params[:client_id],:value=>params[:value]),:class=>"model_cancel_button" %>
+		<% else %>
+			<%= link_to 'Cancel', quotes_path,:class=>"model_cancel_button" %>
+		<% end %>
+	</div>
+</div>

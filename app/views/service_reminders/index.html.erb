@@ -1,0 +1,43 @@
+<h1>Listing service_reminders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Vehicle name</th>
+      <th>Service task</th>
+      <th>Meter interval</th>
+      <th>Time interval</th>
+      <th>Time duration</th>
+      <th>Meter threshold</th>
+      <th>Time threshold</th>
+      <th>Threshold duration</th>
+      <th>Email notification</th>
+      <th>Subscribed user</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @service_reminders.each do |service_reminder| %>
+      <tr>
+        <td><%= service_reminder.vehicle_name %></td>
+        <td><%= service_reminder.service_task %></td>
+        <td><%= service_reminder.meter_interval %></td>
+        <td><%= service_reminder.time_interval %></td>
+        <td><%= service_reminder.time_duration %></td>
+        <td><%= service_reminder.meter_threshold %></td>
+        <td><%= service_reminder.time_threshold %></td>
+        <td><%= service_reminder.threshold_duration %></td>
+        <td><%= service_reminder.email_notification %></td>
+        <td><%= service_reminder.subscribed_user %></td>
+        <td><%= link_to 'Show', service_reminder %></td>
+        <td><%= link_to 'Edit', edit_service_reminder_path(service_reminder) %></td>
+        <td><%= link_to 'Destroy', service_reminder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Service reminder', new_service_reminder_path %>

@@ -1,0 +1,72 @@
+<div class="client_index">
+  <div class="main_container">
+    <div class="span12" style="margin:0 auto; float:none; overflow-y:auto; margin-top: 35px;">
+      <%= form_for :postcards do |f| %>  
+        <div class="from">
+          
+          <div class="row">
+            <div class="span2">From Name</div>
+            <div class="span7"><%= f.text_field :from_name %></div>
+          </div>
+          
+          <div class="row">
+            <div class="span2">From Address</div>
+            <div class="span7">
+              <%= f.text_field :from_street%>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span2">From City</div>
+            <div class="span7"><%= f.text_field :from_city%></div>
+          </div>
+          
+          <div class="row">
+            <div class="span2">From State</div>
+            <div class="span7"><%= f.text_field :from_state %></div>
+          </div>
+
+          <div class="row">
+            <div class="span2">From ZIp </div>
+            <div class="span7"><%= f.text_field :from_zip %></div>
+          </div>
+        </div>  
+
+        <div class="to">
+          <div class="row">
+            <div class="span2">To Name:</div>
+            <div class="span2"><%= f.text_field :to_name%></div>
+          </div>
+
+          <div class="row">
+            <div class="span2">To Address</div>
+            <div class="span7"><%= f.text_field :to_street %></div>
+          </div>
+
+          <div class="row">
+            <div class="span2">To City</div>
+            <div class="span7"><%= f.text_field :to_city %></div>
+          </div>
+
+          <div class="row">
+            <div class="span2">To State</div>
+            <div class="span7"><%= f.text_field :to_state%></div>
+          </div>
+
+          <div class="row">
+            <div class="span2">To Zip </div>
+            <div class="span7"><%= f.text_field :to_zip%></div>
+          </div>
+        </div>
+
+        <div class="message">
+          <div class="row">
+            <div class="span2">Message:</div>
+            <div class="span2"><%= f.text_area :message %></div>
+          </div>
+        </div>
+
+        <%= f.submit "Create",:class=>"button_new_create"%>
+      <% end %>
+    </div>  
+  </div>
+</div>

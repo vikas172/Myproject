@@ -1,0 +1,103 @@
+<div class="client_index">
+  <div class="main_container">
+	  <div style="height: auto;">
+	    <div>
+				<div id="head">
+				</div>
+				<%= form_for @add_on, url: {action: "addon_active"}, id: "addons_form" do |f| %>
+				  <section class="notice header">
+				    <h4 class="title2-font">Customize your CopperService account with these great Add-On features.</h4>
+				  </section>
+
+					<div id="addons-page-container">
+					 	<ul class="list_addon span12">
+							<li>
+								<span class="span2">Expenses</span>
+								<span class="span1">
+									<%= f.radio_button("status[:expenses]" ,true,:checked=>get_add_on_status(@user_add_on,"expenses"),:data=>{:price=>0,:value=>"expenses"}) %>Enable
+								</span>
+								
+								<span class="span1">
+									<%= f.radio_button("status[:expenses]" ,false,:checked=>!get_add_on_status(@user_add_on,"expenses"),:data=>{:price=>0,:value=>"expenses"})%>Disable
+								</span>
+							</li>
+
+							<li>
+								<span class="span2">Customer Reminders</span>
+								<span class="span1">
+									<%= f.radio_button("status[:client_reminders]",true,:checked=>get_add_on_status(@user_add_on,"client_reminders"), data: {price: "0", value: "client_reminders"})%>Enable
+								</span>
+								<span class="span1">
+									<%= f.radio_button("status[:client_reminders]",false,:checked=>!get_add_on_status(@user_add_on,"client_reminders"), data: {price: "0", value: "client_reminders"})%>Disable
+								</span>
+							</li>
+
+							<li>
+								<span class="span2">GPS Waypoints</span>
+								<span class="span1">
+									<%= f.radio_button("status[:gps_waypoints]",true, checked: get_add_on_status(@user_add_on,"gps_waypoints") ,data: {price: "9", value: "gps_waypoints"}) %>Enable
+								</span>
+								<span class="span1">
+									<%= f.radio_button("status[:gps_waypoints]",false, checked: !get_add_on_status(@user_add_on,"gps_waypoints"), data: {price: "9", value: "gps_waypoints"}) %>Disable
+								</span>
+							</li>
+
+							<li>
+								<span class="span2">ePayments</span>
+								<span class="span1">
+									<%= f.radio_button("status[:direct_chargers]",true, checked: get_add_on_status(@user_add_on,"direct_chargers"), data: {price: "5", value: "direct_chargers"}) %>Enable
+								</span>
+								<span class="span1">
+									<%= f.radio_button("status[:direct_chargers]",false, checked: !get_add_on_status(@user_add_on,"direct_chargers"), data: {price: "5", value: "direct_chargers"}) %>Disable
+								</span>
+							</li>
+
+							<li>
+								<span class="span2">Chemical Tracking</span>
+								<span  class="span1">
+									<%= f.radio_button("status[:chemical_treatments]",true ,checked: get_add_on_status(@user_add_on,"chemical_treatments"), data: {price: "3", value: "chemical_treatments"}) %>Enable
+								</span>
+								<span class="span1">
+									<%= f.radio_button("status[:chemical_treatments]",false ,checked: !get_add_on_status(@user_add_on,"chemical_treatments"), data: {price: "3", value: "chemical_treatments"})%>Disable
+								</span>
+							</li>
+
+							<li>
+								<span class="span2">QuickBooks Sync</span>
+								<span class="span1">
+									<%= f.radio_button("status[:quickbooks_ids]",true, checked: get_add_on_status(@user_add_on,"quickbooks_ids"), data: {price: "9", value: "quickbooks_ids"}) %>Enable
+								</span>
+								<span class="span1">
+									<%=  f.radio_button("status[:quickbooks_ids]",false, checked: !get_add_on_status(@user_add_on,"quickbooks_ids"), data: {price: "9", value: "quickbooks_ids"})  %>Disable
+								</span>
+							</li>
+
+							<li>
+								<span class="span2">Route Optimization</span>
+								<span  class="span1">
+									<%= f.radio_button("status[:routing]",true, checked: get_add_on_status(@user_add_on,"routing"), data: {price: "0", title: "Route Optimization", value: "routing"}) %>Enable
+								</span>
+								<span  class="span1">
+									<%=f.radio_button("status[:routing]",false, checked: !get_add_on_status(@user_add_on,"routing"), data: {price: "0", title: "Route Optimization", value: "routing"}) %>Disable
+								</span>
+							</li>
+					 	</ul>
+					</div><!-- end of addons-container -->
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$(function(){
+  $('input[type="radio"]').on('click', function(){
+  	var status = $(this).val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $(this).data('price'), 'value' : $(this).data('value')},
+    });
+  });
+});
+</script>

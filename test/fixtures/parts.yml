@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item_code: MyString
+  description: MyText
+  sales_price: 1.5
+  sales_code: MyString
+  purchase_price: 1.5
+  purchase_code: MyString
+  profit: 1.5
+  margin: MyString
+
+two:
+  item_code: MyString
+  description: MyText
+  sales_price: 1.5
+  sales_code: MyString
+  purchase_price: 1.5
+  purchase_code: MyString
+  profit: 1.5
+  margin: MyString

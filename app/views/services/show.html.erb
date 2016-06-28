@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @service.date %>
+</p>
+
+<p>
+  <strong>Vehicle:</strong>
+  <%= @service.vehicle_id %>
+</p>
+
+<p>
+  <strong>Odometer:</strong>
+  <%= @service.odometer %>
+</p>
+
+<p>
+  <strong>Mark as void:</strong>
+  <%= @service.mark_as_void %>
+</p>
+
+<p>
+  <strong>Services completed:</strong>
+  <%= @service.services_completed %>
+</p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @service.vendor %>
+</p>
+
+<p>
+  <strong>Reference:</strong>
+  <%= @service.reference %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @service.comment %>
+</p>
+
+<p>
+  <strong>Labor:</strong>
+  <%= @service.labor %>
+</p>
+
+<p>
+  <strong>Parts:</strong>
+  <%= @service.parts %>
+</p>
+
+<p>
+  <strong>Tax:</strong>
+  <%= @service.tax %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @service.total %>
+</p>
+
+<%= link_to 'Edit', edit_service_path(@service) %> |
+<%= link_to 'Back', services_path %>

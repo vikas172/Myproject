@@ -1,0 +1,6 @@
+<%if params[:basic_id].blank?%>
+	$("#propertytaskmodal").html("<%= escape_javascript(render 'property_event') %>");
+<%else%>
+	$("#propertytaskmodal").html("<%= escape_javascript(render 'property_basic_task') %>");
+<%end%>
+$("#propertytaskmodal").modal("show");

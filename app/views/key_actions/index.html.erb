@@ -1,0 +1,43 @@
+<h1>Listing key_actions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Action type</th>
+      <th>Sequence</th>
+      <th>Say</th>
+      <th>Play</th>
+      <th>Dial</th>
+      <th>Record</th>
+      <th>Gather</th>
+      <th>Sms</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @key_actions.each do |key_action| %>
+      <tr>
+        <td><%= key_action.key_id %></td>
+        <td><%= key_action.action_type_id %></td>
+        <td><%= key_action.sequence %></td>
+        <td><%= key_action.say %></td>
+        <td><%= key_action.play %></td>
+        <td><%= key_action.dial %></td>
+        <td><%= key_action.record %></td>
+        <td><%= key_action.gather %></td>
+        <td><%= key_action.sms %></td>
+        <td><%= link_to 'Show', key_action %></td>
+        <td><%= link_to 'Edit', edit_key_action_path(key_action) %></td>
+        <td><%= link_to 'Destroy', key_action, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Key action', new_key_action_path %>

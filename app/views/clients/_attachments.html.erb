@@ -1,0 +1,5 @@
+<% @note.attachments.each do |attach|%>
+	<%=attach.image_file_name%>
+	<%= link_to 'Destroy',attachment_destroy_path(id: attach,note_id: @note.id),id: attach.id, data: { confirm: 'Are you sure?',:remote=>:true } %>
+	<br>
+<%end%>

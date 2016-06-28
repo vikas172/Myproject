@@ -1,0 +1,11 @@
+<div class="container" style="margin-top:3%;">
+  <%if params[:type]=="quotes"%>
+    <%= render "quotes_pdf"%>
+  <%elsif params[:type]=="invoices"%>
+    <%= render "invoices_pdf"%>
+  <%elsif params[:type]=="jobs"%>
+    <%= render "jobs_pdf"%>
+  <%end%>  
+</div>
+
+

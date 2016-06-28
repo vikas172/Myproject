@@ -1,0 +1,29 @@
+<%if !@clients.blank?%>
+  <% @clients.each do |client| %>
+    <li>
+      <div class="popover_user">
+        <i class="fa fa-user fa-2"></i>
+      </div>
+      <div class="user_contain_search">
+        <%if params[:action]=="work" %>
+          <a href="/genrate_job_invoice?client_id=<%= client.id %>&work=work" class="row">
+        <%else%>
+          <a href="/genrate_job_invoice?client_id=<%= client.id %>" class="row">
+        <%end%>   
+        <h3 class="client_name individual">
+          <%= client.initial rescue "" %>
+          <%= client.first_name.titleize rescue "" %>
+          <%= client.last_name.titleize rescue "" %>&nbsp;(<%=client.company_name.titleize rescue "" %>)
+        </h3>
+        <span style="display:inline-block; width:120px;"><%= client.properties.count rescue "" %> Pool</span>
+        <span><%= client.phone_number rescue "" %></span>
+        <span class="last_active" style="float: right;">
+          Activity &nbsp;<%= time_ago_in_words(client.created_at, include_seconds: true) rescue "" %>&nbsp; ago
+        </span>
+      </a>
+    </div>
+    </li>
+  <% end %>
+<% else %>
+  No result found
+<%end%>

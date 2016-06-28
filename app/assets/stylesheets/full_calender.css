@@ -1,0 +1,330 @@
+.fc-header .fc-button-prev,.fc-button-next,.fc-button-month,.fc-button-agendaWeek,.fc-button-agendaDay{
+  display: none !important;
+}
+.header_date_picker{
+  position: absolute !important;
+  z-index: 999 !important;
+  margin-top: 13px !important;
+}
+#calendar .fc-header{
+  width: 85% !important;
+  float: right !important;
+  margin-top: 25px !important;
+}
+#calendar .fc-header .fc-header-left {
+    width: 8% !important;
+}
+#calendar .fc-day-header {
+    background-color: #1f518b !important;
+    padding: 5px !important;
+    text-align: center !important;
+}
+.fc-grid .fc-day-number {
+    float: none !important;
+    padding: 0 2px !important;
+}
+#calender_popover li .fa{
+  margin-right: 10px !important;
+}
+#calender_popover li .fa:hover{
+  color: #1f518b !important;
+}
+#calender_popover li{
+  margin-bottom: 5px !important;
+}
+#calender_popover li:hover{
+  color: #1f518b !important;
+}
+#calender_popover li a:hover{
+  color: #1f518b !important;
+}
+.add-member-team{
+  padding:0 5px !important;
+}
+#calendar thead td, .calendar #calendar_holder #full_calendar thead th {
+color: black;
+padding: 1px 0;
+}
+.fc table {
+  font-size: 15px !important;
+}
+.fc-border-separate tr.fc-last th, .fc-border-separate tr.fc-last td {
+border-bottom-width: 1px;
+}
+.fc-grid th {
+text-align: center !important;
+}
+.fc-border-separate th, .fc-border-separate td {
+border-width: 1px 0 0 1px;
+}
+.fc td, .fc th {
+padding: 0;
+vertical-align: top;
+}
+.fc-widget-header, .fc-widget-content {
+border: 1px solid #B9B9B9;
+}
+
+#calendar {
+  font-size: 15px !important;
+  color:#000000;
+  max-width: 100%;
+  margin: auto;
+}
+#calendar table thead td, table thead th, .thead td, .thead th {
+  border-bottom: 1px solid #a3a3a3;
+  line-height: 20px;
+}
+.fc-grid .fc-day-number {
+float: left !important;
+padding: 0 2px !important;
+font-size: 15px !important;
+}
+.header_date_picker div.rounded {
+background-color: #cecece !important;
+background-image: -webkit-linear-gradient(bottom, #cecece, #fff) !important;
+background-image: linear-gradient(to top, #cecece, #fff) !important;
+background: #E6E6E6 !important;
+border-radius: 2px !important;
+border: 1px solid #B8B8B8 !important;
+-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.15) !important;
+box-shadow: 0 1px 0 rgba(0,0,0,0.15) !important;
+color: #444 !important;
+font-size: 14px !important;
+overflow: hidden !important;
+padding: 0 !important;
+float: left !important;
+overflow: hidden !important;
+line-height: 30px !important;
+float: left !important;
+height: 35px !important;
+margin-right: 10px !important;
+}
+.header_date_picker div.rounded a:first-child, .header_date_picker div.rounded span:first-child {
+-moz-border-radius-bottomleft: 2px !important;
+-webkit-border-bottom-left-radius: 2px !important;
+border-bottom-left-radius: 2px !important;
+-moz-border-radius-topleft: 2px !important;
+-webkit-border-top-left-radius: 2px !important;
+border-top-left-radius: 2px !important;
+border-left: none !important;
+}
+.header_date_picker div.rounded a:last-child, .header_date_picker div.rounded span:last-child {
+-moz-border-radius-bottomright: 2px;
+-webkit-border-bottom-right-radius: 2px;
+border-bottom-right-radius: 2px;
+-moz-border-radius-topright: 2px;
+-webkit-border-top-right-radius: 2px;
+border-top-right-radius: 2px;
+}
+.left .rounded #current_date {
+margin-right:0px;
+width: 150px;
+text-align: center;
+}
+.header_date_picker div.rounded a.current, .header_date_picker div.rounded a:hover, .header_date_picker div.rounded span.current, .header_date_picker div.rounded span:hover {
+background-color: #f7f7f7;
+background-image: -webkit-linear-gradient(bottom, #f7f7f7, #fff);
+background-image: linear-gradient(to top, #f7f7f7, #fff);
+text-shadow: none;
+color: #000;
+}
+.header_date_picker div.rounded a, .header_date_picker div.rounded span {
+display: inline-block;
+padding: 2px 12px;
+float: left;
+border-left: 1px solid #B8B8B8;
+text-decoration: none;
+color: #333;
+font-weight: bold;
+}
+.header_date_picker div.rounded {
+background-color: #cecece;
+background-image: -webkit-linear-gradient(bottom, #cecece, #fff);
+background-image: linear-gradient(to top, #cecece, #fff);
+background: #E6E6E6;
+border-radius: 2px;
+border: 1px solid #B8B8B8;
+-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+color: #444;
+font-size: 14px;
+overflow: hidden;
+padding: 0;
+float: left;
+overflow: hidden;
+line-height: 30px;
+float: left;
+height: 35px;
+margin-right: 10px;
+}
+div.left.header_date_picker
+.header_date_picker {
+line-height: 30px;
+}
+.header_date_picker div.rounded {
+background-color: #cecece;
+background-image: -webkit-linear-gradient(bottom, #cecece, #fff);
+background-image: linear-gradient(to top, #cecece, #fff);
+background: #E6E6E6;
+border-radius: 2px;
+border: 1px solid #B8B8B8;
+-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+color: #444;
+font-size: 14px;
+overflow: hidden;
+padding: 0;
+float: left;
+overflow: hidden;
+line-height: 30px;
+float: left;
+height: 35px;
+margin-right: 10px;
+}
+.header_date_picker div.rounded a, .header_date_picker div.rounded span {
+display: inline-block;
+padding: 2px 12px;
+float: left;
+border-left: 1px solid #B8B8B8;
+text-decoration: none;
+color: #333;
+font-weight: bold;
+}.jobber-popup {
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+position: relative;
+background-color: #FFFFFF;
+box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+color: #333333;
+position: absolute;
+z-index: 40;
+}
+.jobber-popup .innerFrame {
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+position: relative;
+border: 1px solid #b9b9b9;
+overflow: hidden;
+position: relative;
+z-index: 40;
+}
+.jobber-popup {
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+position: relative;
+background-color: #FFFFFF;
+box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+color: #333333;
+position: absolute;
+z-index: 40;
+}
+.jobber-popup .innerFrame .header {
+color: #333333;
+font-size: 13px;
+font-weight: bold;
+padding: 2px 5px;
+position: relative;
+text-transform: capitalize;
+z-index: 41;
+}
+.calendar .jobber-popup.calender_details .dropdown_menu {
+position: relative;
+margin: -10px -10px;
+display: block;
+z-index: 11;
+top: 0px;
+left: 0px;
+-moz-box-shadow: none;
+-webkit-box-shadow: none;
+box-shadow: none;
+}
+
+.jobber-popup .arrow {
+-webkit-transform: rotate(45deg);
+-moz-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
+-o-transform: rotate(45deg);
+border: 0;
+border-right: 1px solid #b9b9b9;
+border-bottom: 1px solid #b9b9b9;
+left: 20px;
+bottom: -7px;
+}
+.jobber-popup .arrow {
+background-color: white;
+height: 12px;
+width: 12px;
+position: absolute;
+z-index: 42;
+}.dropdown_menu.icon_drop a {
+display: block;
+padding: 10px 30px;
+color: #111;
+font-size: 14px;
+line-height: 170%;
+text-shadow: none;
+text-decoration: none;
+}
+.dropdown_menu ul li a {
+padding: 5px 20px;
+}
+.dropdown_menu ul li a, .dropdown_menu ul li span {
+display: block;
+color: #111111;
+font-size: 14px;
+line-height: 170%;
+text-shadow: none;
+text-decoration: none;
+display: block;
+}
+.dropdown_menu ul li:last-child {
+border-bottom: none;
+}
+.dropdown_menu ul li {
+text-transform: capitalize;
+padding: 0px;
+min-width: 100px;
+}
+
+.calendar .jobber-popup.calender_details .dropdown_menu .new_list {
+list-style: none;
+padding: 0;
+}
+.dropdown_menu ul {
+margin: 0px;
+padding: 0px;
+list-style: none;
+text-align: left;
+}
+.dropdown_menu ul li.separator {
+border-top: 1px solid #DDDDDD;
+}
+.down_menu.icon_drop a.has_icon {
+background-repeat: no-repeat;
+background-position: 0px 13px;
+}
+.dropdown_menu ul li a:hover {
+text-decoration: none;
+color: #7ab034;
+}
+.jobber-popup .innerFrame .header .title {
+text-transform: capitalize;
+padding: 5px 5px 5px 5px;
+border-bottom: 1px solid #DDDDDD;
+}
+.jobber-popup .innerFrame .header {
+color: #333333;
+font-size: 13px;
+font-weight: bold;
+padding: 2px 5px;
+position: relative;
+text-transform: capitalize;
+z-index: 41;
+}
+.modal-body{overflow-y: auto !important;
+     max-height: 100% !important;}
+

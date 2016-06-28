@@ -1,0 +1,30 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+      <h4 class="modal-title" id="myModalLabel">New Conversation</h4>
+    </div>
+    <div class="modal-body">
+			<%= simple_form_for :conversation, url: :conversations do |f| %>
+				<div class="row">
+					<%= f.input :recipients, :collection => @users%>
+				</div>
+
+				<div class="row">
+					<%= f.input :subject ,:required=>true%>
+				</div>
+
+				<div class="row">
+					<%= f.input :body, as: :text ,:required=>true%>
+				</div>
+
+				<div class="form-actions">
+					<%= f.button :submit, class: 'button_new_create' %>
+				</div>
+			<% end %>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

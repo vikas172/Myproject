@@ -1,0 +1,152 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Pool Chemical Test</h4>
+    </div>
+    <div class="modal-body">
+    	<%= form_for(@pool_test,:url=>check_pool_test_pool_services_path) do |f|%>
+				<table width="50%" border="0" class="pool-test">
+					<tr>
+						<td colspan="2" align="center"><label>Free Chlorine</label></td>
+					</tr>
+					<tr>
+						<td class="icons">
+							<%if pool_test_chlorine(@pool_test,@pool_service) == "true"%>
+								<img src="../assets/test_ok.png" alt="pk">
+							<%elsif pool_test_chlorine(@pool_test,@pool_service) == "false"%>
+								<img src="../assets/test_cross.png" alt="cross">
+							<%end%>										
+						</td>
+						<td ><%= f.text_field :chlorine%></td>
+						<td class="icons">ppm</td>
+					</tr>
+					<tr>
+						<td class="range"><%= pool_range_chlorine(@pool_test,@pool_service) %></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><label>PH Value</label></td>
+					</tr>
+					<tr>
+						<td class="icons">
+							<%if pool_test_ph(@pool_test,@pool_service) == "true"%>
+								<img src="../assets/test_ok.png" alt="ok">
+							<%elsif  pool_test_ph(@pool_test,@pool_service) == "false"%>
+								<img src="../assets/test_cross.png" alt="cross">
+							<%end%>
+						</td>
+						<td ><%= f.text_field :ph_value%></td>
+						<td class="icons">ppm</td>
+					</tr>
+					<tr>
+						<td class="range"><%= pool_range_ph(@pool_test,@pool_service) %></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" align="center"><label>Salt Level</label></td>
+					</tr>
+					<tr>
+						<td class="icons">
+							<%if pool_test_salt(@pool_test,@pool_service) == "true"%>
+								<img src="../assets/test_ok.png" alt="ok">
+							<%elsif pool_test_salt(@pool_test,@pool_service) == "false"%>
+							<img src="../assets/test_cross.png" alt="cross">
+							<%end%>
+						</td>
+						<td ><%= f.text_field :salt_level%></td>
+						<td class="icons">ppm</td>
+					</tr>
+					<tr>
+						<td class="range"><%= pool_range_salt(@pool_test,@pool_service) %></td>
+					</tr>
+					
+					<tr>
+						<td colspan="2" align="center"><label>Total Alkalinity</label></td>
+					</tr>
+					<tr>
+						<td class="icons">
+							<%if pool_test_alkalinity(@pool_test,@pool_service) == "true"%>
+								<img src="../assets/test_ok.png" alt="ok">
+							<%elsif pool_test_alkalinity(@pool_test,@pool_service) =="false"%>
+								<img src="../assets/test_cross.png" alt="cross">
+							<%end%>
+						</td>
+						<td ><%= f.text_field :total_alkalinity%></td>
+						<td class="icons">ppm</td>
+					</tr>
+					<tr>
+						<td class="range"><%= pool_range_alkalinity(@pool_test,@pool_service) %></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><label>Calcium Hardness</label></td>
+					</tr>
+					<tr>
+						<td class="icons">
+							<%if pool_test_calcium(@pool_test,@pool_service) == "true"%>
+								<img src="../assets/test_ok.png" alt="ok">
+							<%elsif pool_test_calcium(@pool_test,@pool_service) == "false"%>
+							<img src="../assets/test_cross.png" alt="cross">
+							<%end%>
+						</td>
+						<td ><%= f.text_field :calcium_hardness%></td>
+						<td class="icons">ppm</td>
+					</tr>
+					<tr>
+						<td class="range"><%= pool_range_calcium(@pool_test,@pool_service) %></td>
+					</tr>
+				</table>
+				<%= f.hidden_field :user_id ,:value=>current_user.id%>
+				<%= f.hidden_field :property_id ,:value=>params[:property_id]%>
+				<%= f.hidden_field :source ,:value=>"Desktop"%>
+				<%= f.hidden_field :date ,:value=>Date.today%>
+				<%= hidden_field_tag "service_type" ,nil,:value=>"pool_test"%>
+				<div class="margin">
+					<%=f.submit "Submit",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+					<button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>
+			    </div>
+			<%end%>
+		</div>	
+      
+	</div>
+</div>
+<style type="text/css">
+
+.pool-test td{
+	display: inline-block;
+	width: auto;
+}
+.pool-test label{
+	text-align: center !important;
+	width: 153px;
+}
+.pool-test input{
+  min-height: 24px !important;
+  width: 50px !important;
+  margin-left: 8px;
+  margin-right: 8px;
+  text-align: center;
+}
+.range{
+	text-align: center;
+  width: auto !important;
+  min-width: 35%;
+}
+.pool-test tr{
+	margin-bottom: 20px;
+}
+.icons{
+	padding-top: 10px;
+
+}
+
+.icons img{
+  width: 25px;
+}
+
+form#new_pool_test {
+  text-align: center;
+}
+form.edit_pool_test{
+	text-align: center;
+}
+</style>

@@ -1,0 +1,283 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Spa Data</h4>
+    </div>
+    <div class="modal-body">
+      <%=form_for @spa_data, :url => {:action => "spa_data_create"} do |f|%>
+
+      <div class="row">
+        <div class="span5 no-margin">
+          <h6>Type:</h6>
+          <%= f.radio_button "spa_type" ,"inground"%> InGround
+          <%= f.radio_button "spa_type","part_of_pool"%> Part of a pool
+          <%= f.radio_button "spa_type","portable_contained"%> Portable / Self Contained
+        </div>
+        <div class="">
+          <label>Manufacturer:</label>
+          <%= f.text_field :type_manufacturer%>
+        </div>
+        <div class="">
+          <label>Model:</label>
+          <%= f.text_field :type_model%>
+        </div>
+      </div>
+      
+      <div class="row">
+        <label>Serial number:</label>
+        <%= f.text_field :type_serial_number%>
+        <label>Color:</label>
+        <%= f.text_field :type_color%>
+        <label>Voltage:</label>
+        <%= f.text_field :type_voltage%>
+      </div>
+
+      <div class="row">
+        <div class="span5 no-margin">
+          <h6>Shape:</h6>
+          <%= f.radio_button "spa_shape" ,"rectangular" ,:id=>"spa-rect"%> Rectangular
+          <%= f.radio_button "spa_shape" ,"round" ,:id=>"spa-round"%>       Round
+          <%= f.radio_button "spa_shape" ,"oval" ,:id=>"spa-oval"%>        Oval
+          <%= f.radio_button "spa_shape" ,"kidney" ,:id=>"spa-kidney"%>      Kidney
+          <%#= f.radio_button "spa_shape" ,"freeform"%>    <!-- Freeform -->
+        </div>
+      </div>
+
+      <div class="row calc-spa-volume" style="display:none;">
+        <h6>Size </h6>
+    
+        <div class="depth">
+          <label>Depth1</label>
+          <%= f.text_field :depth%>
+        </div>
+
+        <div class="depth2">
+          <label>Depth2</label>
+          <%= f.text_field :depth2%>
+        </div>
+
+        <div class="length">
+          <label>Length</label>
+          <%= f.text_field :length%>
+        </div>
+
+        <div class="width">
+          <label>Width</label>
+          <%= f.text_field :width%>
+        </div>
+
+        <div class="width2" style="display:none;">
+          <label>Width2</label>
+          <%= f.text_field :width2%>
+        </div>
+
+        <div class="diameter" style="display:none;">
+          <label>Diameter</label>
+          <%= f.text_field :diameter%>
+        </div>
+      
+      <!--   <label>Gallonage:</label> -->
+        <%#= f.text_field :spa_gallonage%>
+      </div>
+
+      <div class="row">
+        <h6>Surface Material</h6>
+        <%= f.radio_button "surface_material" ,"plaster"%> Plaster
+        <%= f.radio_button "surface_material" ,"acrylic"%> Acrylic
+        <%= f.radio_button "surface_material" ,"thermoplastic"%> Thermoplastic
+        <%= f.radio_button "surface_material" ,"gelcoat"%> Gelcoat
+        <%= f.radio_button "surface_material" ,"paint"%> Paint
+        <%= f.radio_button "surface_material" ,"tile"%> Tile
+        <%= f.radio_button "surface_material" ,"stainless_steel"%> Stainless Steel
+        <%= f.radio_button "surface_material" ,"vinyl"%> Vinyl
+        <%= f.radio_button "surface_material" ,"wood"%> Wood
+      </div>
+
+      <div class="row equip-pump-brand">
+        <h6>Equipment </h6><h6>pump/pumps</h6> <label>Brand:</label>
+        <%= f.text_field :equip_pump_brand%>
+        <label>Model:</label>
+        <%= f.text_field :equip_model%>
+      </div>
+
+      <div class="row">
+        <label>Horsepower:</label>
+        <%= f.text_field :equip_horsepower%>
+        <label>Service Factor:</label>
+        <%= f.text_field :equip_service_factor%>
+        <label>Voltage/Amperage</label>
+        <%= f.text_field :equip_voltage%>
+      </div>
+
+      <div class="row">
+        <h6>Filter</h6>
+        <label>Brand:</label>
+        <%= f.text_field :filter_brand%>
+        <label>Model:</label>
+        <%= f.text_field :filter_model%>
+        <label>Type:</label>
+          <%= f.radio_button :filter_type ,"cartridge"%>  Cartridge
+          <%= f.radio_button :filter_type ,"sand"%>       Sand
+          <%= f.radio_button :filter_type ,"de"%>         DE
+      </div>
+
+      <div class="row cart-size">
+        <h6>Filter Cartridge:</h6>
+        <label>size</label>
+        <%= f.text_field :cartridge_size%>
+        <label>Replacement cartridge part #:</label>
+        <%= f.text_field :cartridge_part%>
+        <label>Date replaced:</label>
+        <%= f.text_field :cartridge_date%>
+      </div>
+
+      <div class="row filter-sand">
+        <h6> Filter-Sand</h6>
+        <label>Backwash Valve Model:</label>
+        <%= f.text_field :filter_sand_model%>
+        <label>Backwash Valve Size:</label>
+        <%= f.text_field :filter_sand_size%>
+      </div>
+
+      <div class="row filter-grid-de">
+       <h6>Filter DE:</h6> <label>Replacement Grid part #:</label>
+        <%= f.text_field :filter_de%>
+      </div>
+
+      <div class="row">
+        <h6>Heater:</h6>
+        <label>Brand:</label>
+        <%= f.text_field :heater_brand%>
+        <label>Model:</label>
+        <%= f.text_field :heater_model%>
+      </div>
+
+      <div class="row heater-type">
+        <label>Type:</label>
+        <%= f.radio_button :heater_type ,"electrical"%>  Electrical: Voltage/Amperage:
+        <%= f.radio_button :heater_type ,"natural_gas"%> Natural Gas: BTU Rating:
+        <%= f.radio_button :heater_type ,"oil"%>         Oil: BTU Rating:
+        <%= f.radio_button :heater_type ,"solar"%>       Solar
+      </div>
+
+      <div class="row time-spa">
+        <h6>Time Clock:</h6>
+        <label>Brand:</label>
+        <%= f.text_field :time_clock_brand%>
+        <label>Model:</label>
+        <%= f.text_field :time_clock_model%>
+        <label>Voltage:</label>
+        <%= f.text_field :time_clock_voltage%>
+      </div>
+      <%= f.hidden_field :property_id ,:value=>params[:property_id]%>
+      <%= f.submit "submit",:class=>"update_button_setting save-new-btn1" ,:style=>"float:right;"%>
+      <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>
+      <%end%>
+    </div>
+    <!-- <div class="modal-footer">
+    </div> -->
+  </div>
+</div>
+
+<style type="text/css">
+  div#property-spa-data {
+    width: 88%;
+    left: 27%;
+  }
+  #property-spa-data  h6{
+    width: auto;
+    float: left;
+    font-weight: bold !important;
+    margin: 0px;
+    font-size: 14px;
+    margin-top: 2px;
+    margin-right: 8px;
+  }
+  .heater-type input[type="radio"]{
+    margin-left: 66px !important;
+  }
+  #property-spa-data  input[type="radio"]{
+    vertical-align: -2px;
+    margin-left: 5px;
+  }
+  .dim_gallon input[type="text"]{
+    width: 12%;
+  }
+  .cart-size input[type="text"]{
+    width:15.4%;
+  }
+  #property-spa-data  .row{
+    margin-bottom: 15px;
+  }
+  #property-spa-data  label {
+    display: block;
+    margin-bottom: 5px;
+    width: auto;
+    float: left;
+    margin-top: 3px;
+  }
+  #property-spa-data  .no-margin{
+    margin-left: 0px;
+  }
+  #property-spa-data  input[type="text"]{
+   float: left;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: -4px;
+  }
+  .filter-grid-de input[type="text"]{
+    width: 69%
+  }
+  .filter-sand input[type="text"]{
+    width: 26.4%;
+  }
+  .equip-pump-brand input[type="text"]{
+    width: 31.8%
+  }
+  .calc-spa-volume input[type="text"]{
+  width:5% !important;
+}
+</style>        
+
+<script type="text/javascript">
+
+$("body").on("change","#spa-rect ,#spa-oval",function(){
+    $(".calc-spa-volume").css("display","block");
+    $(".length").css("display","block");
+    $(".width").css("display","block");
+    $(".diameter").css("display","none");
+    $(".width2").css("display","none");
+ })
+
+  $("body").on("change","#spa-round",function(){
+    $(".calc-spa-volume").css("display","block");
+    $(".diameter").css("display","block");
+    $(".length").css("display","none");
+    $(".width").css("display","none");
+    $(".width2").css("display","none");
+  })
+  $("body").on("change","#spa-kidney",function(){
+    $(".calc-spa-volume").css("display","block");
+    $(".width2").css("display","block");
+    $(".diameter").css("display","none");
+  })
+
+
+  $("body").on("submit","#new_spa_data",function(){
+    var depth   = $("#spa_data_depth").val();
+    var depth2  = $("#spa_data_depth2").val();
+    var length  = $("#spa_data_length").val();
+    var width   = $("#spa_data_width").val();
+    var width2  = $("#spa_data_width2").val();
+    var diameter= $("#spa_data_diameter").val();
+    var spa_shape   = $("input[name='spa_data[spa_shape]']:checked").val();
+    var property_id = $("#spa_data_property_id").val();
+    var param = 'depth=' + depth + '&depth2=' + depth2+ '&length=' + length+ '&width=' + width+ '&width2=' + width2+ '&diameter=' + diameter +'&property_id=' + property_id + '&spa_shape=' + pool_shape;
+    $.ajax({
+        type: "POST",
+        url: "/spa_pooles/calculate_spa_volume",
+        data: param
+      })
+  })
+</script>

@@ -1,0 +1,131 @@
+<%= form_for @chamical, html: {:class => 'chemical_treatment compressed_form' } do |f| %>
+  <div class="chemical_header">
+    <% if params[:action] == "new" %>
+      <%= f.hidden_field :property_id, value: params[:property_id] %>
+    <% else %>
+      <%= f.hidden_field :property_id, value: @property.id %>
+    <% end %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <div class="property_confirmation">
+      <div class="chemical_image"><i class="fa fa-home"></i></div>
+      <div class="chemical_contain">
+        <strong><%= "#{@property.street rescue ""}" "#{@property.street2 rescue ""}" "#{@property.city rescue "" }" "#{@property.state rescue ""}" "#{@property.country rescue ""}" "#{@property.zipcode rescue ""}" %></strong>
+        <br>
+        <a href="/properties/select/<%= @client.id %>?force=true">Select a Different Address</a>
+      </div>
+    </div>
+
+    <div class="work_order_selector">
+       <div class="chemical_image"><i class="fa fa-legal"></i></div>
+      <div class="chemical_contain">
+        <strong>Work Order Information</strong><br>
+        <%#= f.select :work_order_id, options_for_select(get_job_work_by_job(@jobs)) %>
+      </div>
+    </div>
+
+    <div class="applicator_selector">
+     <div class="chemical_image"><i class="fa fa-user"></i></div>
+       <div class="chemical_contain">
+        <strong>Applicator Name</strong><br>
+        <%= f.select :applicator_id, options_for_select(get_applicator_name) %>
+      </div>
+    </div>
+
+    <div class="application_datetime">
+      <div class="chemical_image"><i class="fa fa-clock-o"></i></div>
+       <div class="chemical_contain">
+      <strong>Application Date &amp; Time</strong><br>
+      <label for="chemical_treatment_date">Date</label>
+      <%= f.text_field :date, value: Date.today.strftime("%Y-%m-%d"), size: "12", style: "width: 75px", class: "calendar" %>
+
+      <div class="time_holders input-append toggle-append bootstrap-timepicker">
+        <label for="chemical_treatment_start_time">Start Time</label>
+        <%= f.text_field :start_time, size: "7", style: "width: 65px", class: "time hasTimeEntry" %>
+        <br>
+        <label for="chemical_treatment_end_time">End Time</label>
+        <%= f.text_field :end_time, size: "7", style: "width: 65px", class: "time hasTimeEntry" %>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="details">
+    <h4>Chemical Information</h4>
+      </br>
+    <%= f.hidden_field :mixture_short_name, value: "" %>
+    <ul id="chemicals">
+      <li>
+        <label>Chemical Tracking</label>
+        <label style="margin-right: 225px;">Concentration</label>
+      </li>
+      <li style="padding: 0px 30px 0px 0px;">
+        <%= select_tag "chemical[chemicals][0][name]", grouped_options_for_select(get_chemical_and_mixture(@chemical_treatment_setting, @chemical_treatment_mixtures)) %>
+
+        <%= text_field_tag "chemical[chemicals][0][concentration][]",nil, value: "" %>
+        <a class="circle_icon minus_icon start_grey" href="#" onclick="$(this).parent().remove();; return false;">-</a>
+      </li>
+    </ul>
+    <a href="#" id="add_chemical" onclick="add_chemicals_info(); return false;">Add a Chemical</a>
+    <br>
+      <br>
+    <h4>Application Details</h4>
+    </br>
+    <p class="field">
+      <label for="chemical_treatment_targeted_pest">Targeted Pest</label>
+      <%= f.text_field :targeted_pest %>
+    </p>
+
+    <p class="field">
+      <label for="chemical_treatment_total_applied">Total Chemical Applied</label>
+      <%= f.text_field :total_applied %>
+    </p>
+
+    <p class="field">
+      <label for="chemical_treatment_total_area_of_application">Application Area</label>
+      <%= f.text_field :total_area_of_application %>
+    </p>
+
+    <p class="field">
+      <label for="chemical_treatment_application_rate">Application Rate</label>
+      <%= f.text_field :application_rate %>
+    </p>
+
+    <br>
+
+    <h4>Weather Conditions</h4>
+      </br>
+    <p class="field">
+      <label for="chemical_treatment_wind_direction">Wind Direction</label>
+      <%= f.text_field :wind_direction %>
+    </p>
+
+    <p class="field">
+      <label for="chemical_treatment_wind_velocity">Wind Velocity</label>
+      <%= f.text_field :wind_velocity %>
+    </p>
+
+    <p class="field">
+      <label for="chemical_treatment_temperature">Temperature</label>
+      <%= f.text_field :temperature %>
+    </p>
+
+    <br>
+
+    <h4>Other Information</h4>
+    </br>
+    <p class="field">
+      <label for="chemical_treatment_apparatus_info">Apparatus info</label>
+      <%= f.text_area :apparatus_info, rows: "2", placeholder: "License Plate" %>
+    </p>
+
+    <p class="field">
+      <label for="chemical_treatment_notes">Additional Notes</label>
+      <%= f.text_area :notes, rows: "3", placeholder: "License Plate" %>
+    </p>
+
+    <p class="submit_holder">
+      <%= f.submit "Save", class: "model_save_button", style: "display:none" %>
+      <%= link_to 'Save', '#', onclick: "$(this).closest('form').submit(); return false;", class: "model_save_button" %>
+      <%= link_to 'Cancel', chamicals_path, class: "button_cancel cancel" %>
+    </p>
+  </div>
+<% end %>

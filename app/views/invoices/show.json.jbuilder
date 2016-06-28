@@ -1,0 +1,1 @@
+json.extract! @invoice, :id, :payment, :subject, :issued_date, :tax, :discount_amount, :discount_type, :deposite_amount, :entry_date, :payment_method_type, :payment_method, :additional_note, :client_message, :created_at, :updated_at

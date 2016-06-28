@@ -1,0 +1,38 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="145px" class="created">Created</th>
+        <th width="189px" class="client_name">Customer Name</th>
+        <th width="257px" class="description">Description</th>
+        <th width="169px" class="scheduled">Scheduled</th>
+        <th width="169px" class="completed">Completed</th>
+        <th width="169px" class="hash">#</th>
+        <th width="225px" class="visits_assigned_to">Visits Assigned To</th>
+        <th width="92px" class="doller">$</th>
+        <th width="92px" class="client_email">Customer Email</th>
+        <th width="42px" class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @jobs_summary.blank?%>
+    	<% @jobs_summary.each_with_index do |job,i| %>
+    	<tr> 
+    		<td class="created"><%= job.created_at.strftime("%d-%m-%Y")%></td>
+    		<td class="client_name"><%= job.property.client.first_name %> &nbsp;<%= job.property.client.last_name %></td>
+        <td class="description"><%= job.description%></td>
+        <td class="scheduled"><%= job.start_date%></td>
+        <td class="completed"><%= job.start_date%></td>
+        <td class="hash">-</td>
+        <td class="visits_assigned_to"><%= i+1 %></td>
+        <td class="doller">0.00</td>
+        <td class="client_email"><%= job.property.client.emails.first.email.first rescue ""%></td>
+        <td class="open"><a target="_blank" href="/jobs/<%=job.id%>" class="open ui-icon ui-icon-newwin">open</a></td>
+      </tr>  
+    	<% end %>
+    <%end%> 
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

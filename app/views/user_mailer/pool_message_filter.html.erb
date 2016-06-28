@@ -1,0 +1,53 @@
+<h2><font face="Verdana, Verdana, Geneva, sans-serif" style="font-weight:100;font-size:18px;font-style:normal;color:#565656" align="left">Pool Message</font></h2>
+<body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+	<table width="100%" border="0">
+    <tr>
+      <td align='center'>
+          <center>
+              <table border='0' cellpadding='50' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                  <tr>
+                      <td align='center' valign='top'>
+                          <img width="200" style="outline:none; text-decoration:none;border:none,display:block;" src="http://45.55.157.4/assets/logo1.jpg">
+                      </td>
+                  </tr>
+              </table>
+          </center>
+      </td>
+    </tr>
+		<tr>
+		  <td>
+		    <font align="left"><strong><%=  @message %></strong></font>
+		  </td>
+		</tr>
+
+		<tr>
+			<td>
+				<font align="left"> <%=@property.try(:street)%></font>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<font align="left"> <%=@property.try(:city)%></font>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<font align="left"> <%=@property.try(:state)%></font>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<font align="left"> <%=@property.try(:zipcode)%></font>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<font align="left"> <%=@property.try(:country)%></font>
+			</td>
+		</tr>
+	</table>	
+</body>		

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  applies_to: MyString
+  name: MyString
+  value_type: MyString
+
+two:
+  applies_to: MyString
+  name: MyString
+  value_type: MyString

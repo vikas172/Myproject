@@ -1,0 +1,12 @@
+<div class="client_index">
+  <div class="main_container">
+  	<%if !@message_display.blank?%>
+	  	Sender Name : <%= get_display_notify_new(@message_display)%></br>
+	  	Subject : <%= @message_display["subject"]%></br>
+	  	Body    : <%= @message_display["body"]%></br>
+	  <%else%>
+	     No Details Found
+	  <%end%>	
+  	<%= link_to "Back",dashboard_path,:class=>"button"%>
+  </div>
+</div>

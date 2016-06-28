@@ -1,0 +1,20 @@
+
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+      <h4 class="modal-title" id="myModalLabel">Downgrade Plan</h4>
+    </div>
+    <div class="modal-body">
+     <p style="pading:10px;">Current you used this plan <b><%= current_user.plan_type.capitalize %></b> and now you are downgrade your plan <b><%= params[:plan_type].capitalize%></b> So your remaining amounty is <b><%= @base_charge.abs %></b> will refund. </p>
+      <%= form_tag downgrade_plan_subscriptions_path do %>
+        <%= hidden_field_tag "amount",nil,:value=> @base_charge.abs %>
+        <%= hidden_field_tag "plan_type",nil,:value=> params[:plan_type] %>
+        <%= submit_tag "Down Grad plan",:class=>"button",:data => {:confirm => 'Are you sure downgrade your plan?'},:style=>"margin:52px 144px; padding:12px;"%>
+      <%end%>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

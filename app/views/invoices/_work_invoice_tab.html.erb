@@ -1,0 +1,49 @@
+<div class="row_holder extend_to_footer invoice_search" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @invoices_all.blank? %> 
+        <div id="output"></div> 
+        <% @invoices_all.each_with_index do |invoice,index| %>
+          <tr data-link="/invoices/<%=invoice.id%>" class="propert" > 
+            <td> Invoice #<%=index+1%> 
+              <br/>
+              <span class="status">     
+                <%if invoice.mark_sent == false%>
+                  <span style="padding: 2px 6px;  background-color:#888888; color:#FFFFFF; border-radius:2px 2px 2px 2px;">Draft</span>
+                <%elsif invoice.invoice_bad_debt== false%>
+                  <%if invoice.invoice_paid==false%>
+                    <%if invoice.past_due==false%>
+                      <span style="background-color: #1f518b; padding: 2px 6px; border-radius:2px 2px 2px 2px;">Outstanding</span>
+                    <%else%>
+                      <span style="color: #FFFFFF; padding: 2px 6px; border-radius:2px 2px 2px 2px; background-color:#B22F23;">Past Due</span>
+                    <%end%>
+                  <%else%>
+                    <span style=" background-color: #1f518b; color: #FFFFFF; padding: 2px 6px; border-radius:2px 2px 2px 2px;">Paid</span>
+                  <%end%>
+                <%else%>
+                  <span style="color: #FFFFFF; padding: 2px 6px; background-color:#B22F23; border-radius:2px 2px 2px 2px;">Bad Debt</span>
+                <%end%>
+              </span> 
+            </td>
+            <td>
+              <%= payment_date_calculate(invoice)%> 
+            </td>
+            <td><%= invoice.subject%></td>
+            <td><span class="summary" style="margin-left: 42%; font-weight: bold;"><%@total= total_amount_invoice(invoice)%>$<%=number_with_precision(@total, :precision => 2)%></span><br/>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <b>No matches found</b>
+      <% end %>  
+    </table>
+  </div>
+</div>   
+
+<script>
+  $(function($) {
+  $("tr[data-link]").click(function() {
+  window.location = this.dataset.link
+  });
+  })
+</script>

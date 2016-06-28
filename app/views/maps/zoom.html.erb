@@ -1,0 +1,77 @@
+<div class="client_index1">
+  <div class="main_container">
+    <div class="cell_wrapper">
+      <div id="current_map_address" style='width: 100%; height: 460px; position: relative; background-color: rgb(229, 227, 223);  overflow: hidden;'  >
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	<%if !@address.blank?%>
+	  var map;
+	  var elevator;
+	  var myOptions = {
+	      zoom: 11,
+	      scrollwheel: false,
+	      center: new google.maps.LatLng(40.71, -74.00),
+	      mapTypeId: 'terrain'
+	  };
+	  map = new google.maps.Map($('#current_map_address')[0], myOptions);
+	  var pinImage={}    
+	  var icons = <%=raw @users%>
+	  <% @address.each_with_index do |address,index|%>        
+	    $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=<%=address%>&sensor=false', null, function (data) {
+		    var p = data.results[0].geometry.location
+		    var latlng = new google.maps.LatLng(p.lat, p.lng);
+		    var marker<%=index%> = new google.maps.Marker({
+			    position: latlng,
+			    map: map,
+			    icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|'+icons[<%= index%>]
+		      });
+	      });
+	  <%end%>
+	<%else%>
+	  <%if !current_user.street.blank?%>
+	    var map;
+	    var center = new google.maps.LatLng(37.09024,-95.712891);
+	    var elevator;
+	    var myOptions = {
+	        'zoom': 3,
+	        'center': center,
+	        mapTypeId: 'terrain'
+	    };
+	    map = new google.maps.Map($('#current_map_address')[0], myOptions);
+	    var addresses = <%= raw @waypoint_geo1 %>;
+	    for (var x = 0; x < addresses.length; x++) {
+	      $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
+	        var p = data.results[0].geometry.location
+	        var latlng = new google.maps.LatLng(p.lat, p.lng);
+	        new google.maps.Marker({
+	            position: latlng,
+	            map: map
+	        });
+	      });
+	    }
+		<%else%>
+	    var lat = <%= @weather.data["geometry"]["location"]["lat"] rescue "0"%>
+	    var lng = <%= @weather.data["geometry"]["location"]["lng"] rescue "0"%> 
+	    var myCenter=new google.maps.LatLng(lat,lng);
+	    function initialize()
+	    {
+	    var mapProp = {
+	      center:myCenter,
+	      zoom:5,
+	      scrollwheel: false,
+	      mapTypeId:google.maps.MapTypeId.ROADMAP
+	      };
+	    var map=new google.maps.Map(document.getElementById("current_map_address"),mapProp);
+	    var marker=new google.maps.Marker({
+	      position:myCenter,
+	      });
+	    marker.setMap(map);
+	    }
+			google.maps.event.addDomListener(window, 'load', initialize);
+		<%end%>
+	<%end%>   
+</script>

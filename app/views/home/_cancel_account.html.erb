@@ -1,0 +1,7 @@
+<div class="cancel_own_account">
+	<%if current_user.cancel_account==false%>
+    <%#= link_to "Cancel Account Request",cancel_account_path,:class=>"cancel_account_button",data: {confirm: "Are You Sure Account Cancel??"},:remote=>true%>
+  <%else%>
+    <%#= link_to "Account cancel pending...",cancel_account_path,:class=>"cancel_account_button",data: {confirm: "Are You Sure Account Recancel?"},:remote=>true%>
+  <%end%> 
+</div>

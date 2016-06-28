@@ -1,0 +1,73 @@
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <div style="height: auto;">
+        <div>
+          <%=render "home/work_item_side_bar" %>
+          <div id="settings_area">
+            <h4 class="title1-font">Service & Product Overview</h4>
+            <div id="head">
+              <div class="config_description">
+                The services your business provides are specified here. These services are made available throughout CopperService when working with Estimate, Work Orders and Invoices.
+              </div>
+            </div>
+
+            <h4 class="title2-font">
+              Services
+              <%if current_user.user_type=="admin"%>
+                <a data-toggle="modal" data-target="#myModal"  class="add_button_setting save-new-btn1" id="service">+ Add a Service</a>
+              <%end%>
+            </h4>
+            <ul class="striped ui-sortable service_content" id="work_items">
+              <%if current_user.user_type=="admin"%>
+                <%if !@services_all.blank?%>            
+                  <%@services_all.each do |service_name|%>
+                    <% unless service_name.blank? %>
+                      <li class="work_item clearfix " id="work_item_776511">
+                        <span class="work_item_info service_product">
+                          <a data-toggle="modal" data-target="#product_service_<%=service_name.id%>">
+                            <%= service_name.name rescue "" %>&nbsp;&nbsp;</a>
+                          <%if !service_name.description.blank?%>
+                            <%= service_name.description rescue "" %>
+                          <%else%>
+                            <em style="color: #777;">No Description</em>
+                          <%end%>
+                        </span>
+                        <%= render :partial=>"service_edit",:locals=>{:service_name=>service_name, :service=>true} %>
+                      </li>
+                    <% end %>
+                  <%end%>
+                <%end%>
+              <%end%>
+            </ul>     
+
+            <h4 class="title2-font">
+              Products
+              <%if current_user.user_type=="admin"%>
+                <a data-toggle="modal" data-target="#myModal"  class="add_button_setting save-new-btn1" data-value="product" id="product">+ Add a Product</a>
+              <%end%>
+            </h4>
+
+            <ul class="striped ui-sortable service_content" id="work_item_products">
+              <%if current_user.user_type=="admin"%>
+                <%if !@products_all.blank?%>
+                  <%@products_all.each do |product_name|%>
+                    <li class="work_item clearfix " id="work_item_711391"> 
+                      <span class="work_item_info service_product">
+                        <a data-toggle="modal" data-target="#product_service_<%=product_name.id%>" id="product" class="">
+                        <%= product_name.name rescue "" %>&nbsp;&nbsp;</a>
+                        <%= product_name.description rescue "" %>
+                      </span>
+                      <%= render :partial=>"service_edit",:locals=>{:service_name=>product_name, :service=>false} %>
+                    </li>
+                  <%end%>
+                <%end%>
+              <%end%>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%=render "home/service_and_product_model" %>

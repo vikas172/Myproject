@@ -1,0 +1,30 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="363px" class="client_name">Customer Name</th>
+        <th width="280px" class="drafted_date">Drafted Date</th>
+        <th width="136px" class="hash">#</th>
+        <th width="176px" class="status">Status</th>
+        <th width="142px" class="doller">$</th>
+        <th width="42px"  class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @quotes.blank?%>
+      <% @quotes.each_with_index do |quote,index| %>
+      <tr> 
+        <td class="client_name"><%= quote.property.client.first_name %> &nbsp;<%= quote.property.client.last_name %></td>
+        <td class="drafted_date"><%= quote.created_at.strftime("%d-%m-%Y")%></td>
+        <td class="hash"><%=index+1 %></td>
+        <td class="status">Draft</td>
+        <td class="doller"><%=@total= total_amount(quote)%></td>
+        <td class="open"><a target="_blank" href="/quotes/<%=quote.id%>" class="open ui-icon ui-icon-newwin">open</a></td>
+      </tr>  
+      <% end %>
+    <%end%> 
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

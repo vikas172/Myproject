@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item_type: MyString
+  name: MyString
+  description: MyText
+  unit_cost: 1.5
+  non_taxable: false
+
+two:
+  item_type: MyString
+  name: MyString
+  description: MyText
+  unit_cost: 1.5
+  non_taxable: false

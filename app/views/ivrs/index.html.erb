@@ -1,0 +1,140 @@
+<div class="client_index">
+  <div class="main_container">
+<br>
+<!--Notifications start-->
+<% if @account_update  %>
+    <div class="row">
+      <div class="columns large-9 large-centered">
+        <% if @account_update  == "success"  %>
+            <div data-alert class="alert-box success radius">
+              Profile settings updated successfully !
+              <a href="#" class="close">&times;</a>
+            </div>
+        <% elsif @account_update  == "failure"%>
+            <div data-alert class="alert-box alert radius">
+              Profile settings update failed !
+              <a href="#" class="close">&times;</a>
+            </div>
+        <% end  %>
+      </div>
+    </div>
+<% end  %>
+
+<div id="page-layout">
+  <br/>
+  <div class="row page-layout">
+    <div class="large-9 large-centered columns panel white-panel">
+      <table id="ivrs_table" style="width: 100%">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Country</th>
+          <th>Phone</th>
+          <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @ivrs.each do |ivr| %>
+            <tr>
+              <td><%= ivr.name %></td>
+              <td><%= ivr.region %></td>
+              <td><%= number_to_phone(ivr.phone , :area_code => true)%></td>
+              <td><%= link_to 'Configure', edit_ivr_path(ivr.uuid) , :class => "animated pulse animate_infinite" %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <!--&lt;!&ndash;Updates&ndash;&gt;-->
+  <!--<div class="row page-layout">-->
+
+
+    <!--<div class="  panel white-panel large-9 large-centered columns">-->
+      <!--<h5>Updates</h5>-->
+
+      <!--<hr>-->
+      <!--<div class="row">-->
+        <!--<div class="large-3 columns">-->
+          <!--<span class="label info">1/28/2015</span>-->
+        <!--</div>-->
+        <!--<div class="large-9 columns">-->
+          <!--<span>Beta release live !</span>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<hr>-->
+      <!--<div class="row">-->
+        <!--<div class="large-3 columns">-->
+          <!--<span class="label info">12/15/2014</span>-->
+        <!--</div>-->
+        <!--<div class="large-9 columns">-->
+          <!--<span>One click to call functionality to test the attendants</span>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<hr>-->
+      <!--<div class="row">-->
+        <!--<div class="large-3 columns">-->
+          <!--<span class="label info">12/14/2014</span>-->
+        <!--</div>-->
+        <!--<div class="large-9 columns">-->
+          <!--<span> Call logs for attendants</span>-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+    <!--</div>-->
+  <!--</div>-->
+</div>
+
+
+<!--feedback modal-->
+<div id="feedback_modal" class="reveal-modal" data-reveal>
+  <% @feedback = Feedback.new %>
+  <%= simple_form_for(@feedback , :url => create_feedback_ivrs_url) do |f|  %>
+      <h4 class="text-center">Feedback</h4>
+      <%= f.hidden_field :user_id , :value => session[:uid] %>
+      <div class="field">
+        <%= f.input :like  , :label =>"I like Auto Attend" %>
+      </div>
+      <hr>
+      <h5 class="text-center">Features that you wish to have at the earliest!</h5><br>
+      <div class="field">
+        <%= f.input :scheduling  , :label =>"Configure IVR behavior based on the date and time of the caller" %>
+      </div>
+      <div class="field">
+        <%= f.input :submenu  , :label =>"Configure more than 2 levels of IVR menu" %>
+      </div>
+      <div class="field">
+        <%= f.input :api  , :label =>"API to integrate your application with the IVR. Collect user input and direct to a callback URL" %>
+      </div>
+      <div class="field">
+        <%= f.input :analytics  , :label =>"View call analytics of calls received in the IVR" %>
+      </div>
+      <hr>
+      <div class="field">
+        <%= f.label :comment %><br>
+        <%= f.text_area :comment %>
+      </div>
+      <div class="actions">
+        <%= f.submit 'Submit' , :class => "radius button right" %>
+      </div>
+  <% end  %>
+  <a class="close-reveal-modal">&#215;</a>
+
+  <!--countries modal-->
+  <%= render :partial => 'home/countries' %>
+</div>
+<br>
+<br>
+<br>
+<br>
+</div>
+</div>

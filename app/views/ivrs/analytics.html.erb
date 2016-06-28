@@ -1,0 +1,96 @@
+<div class="client_index">
+  <div class="main_container">
+<%= render "ivrs/top_header"%>
+
+    <div class="large-12 columns end">
+      <%= render :partial => 'click_to_call' %>
+      <hr>
+      <div class="panel white-panel">
+        <%= simple_form_for @transaction , :url => filters_ivr_path do |f| %>
+          <%= f.label :start_date %>
+          <%= f.text_field :start_date , :class => "span2 datepicker" %>
+          <%= f.label :end_date %>
+          <%= f.text_field :end_date , :class => "span2 datepicker"%>
+          <%= f.submit :class => "tiny success radius button" , :value => "filter" %>
+        <% end %>
+
+        <br>
+        <br>
+        <table style="width:100%;">
+          <thead style="line-height: 30px;">
+          <tr>
+            <th>Key</th>
+            <th>Press count</th>
+            <th>Key description</th>
+          </tr>
+          </thead>
+          <tbody>
+            <%@keys.each_with_index do |key, index| %>
+            <tr>
+              <td><%= index %></td>
+              <td><%= @calls.where(:key_press => index.to_s).count %></td>
+              <td><span class="<%= key.id%>"><%= key.description%></span><i class="icon-edit" id="<%= key.id%>" style="margin-left:5px; cursor:pointer;" onclick="keyDescription(this.id)"></i>
+              <%=form_tag key_description_ivrs_path :id=>key.id do %>
+                <div class="row">
+                  <%= text_field_tag "description",nil,:value=>key.description,:style=>"display:none;width:98.4%;",:class=>"desc_#{key.id}"%>
+                  <%= submit_tag "Update",:style=>"display:none;",:class=>"desc_#{key.id}"%>
+                </div>  
+              <% end %>
+              </td>
+            </tr>
+          <%end%>  
+          </tbody>
+        </table>
+      </div>
+      <div class="panel white-panel">
+        <table id="analytics_table" style="width:100%;">
+          <thead>
+            <tr>
+              <th>Call Id</th>
+              <th>Caller</th>
+              <th>Key press</th>
+              <th>Date and Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @calls.blank? %>
+              <% @calls.each do |call| %>
+                <tr>
+                  <td><%= call.call_id %></td>
+                  <td><span class="success label"><%= number_to_phone(call.call.caller_number, :area_code => true) rescue ""%></span></td>
+                  <td>
+                    <%= call.key_press %>
+                  </td>
+                  <td><%= call.created_at %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        <%= will_paginate @calls %>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+  });
+
+  function keyDescription(id){
+    $("."+id).css("display","none");
+    $(".desc_"+id).css("display","block");
+    $("#"+id).css("display","none");
+  }
+</script>
+<style type="text/css">
+
+.side-nav li a:not(.button) {
+  display: block;
+  color: #fff;
+  margin:0;
+  padding: 0.4375rem 0.875rem;
+}
+</style>

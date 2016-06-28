@@ -1,0 +1,1 @@
+# <%#= tinymce :theme => "simple", :language => "de", :plugins => ["wordcount", "paste"] %>

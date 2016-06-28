@@ -1,0 +1,21 @@
+<div class="head hide">Select Attachment</div>
+<div class="content hide">
+  <div id="popup">
+	  <%if !@attachments.blank? %>
+		 	<% @attachments.each_with_index do |attach,i| %>
+		  	<p>
+		  		<input class="employee_check" id="attach_<%= i+1%>" name="assigned_to" onclick="attachmentQuoteEmail(this.id, '<%= attach.image_file_name %>','<%= attach.id%>')" type="checkbox" value="<%= attach.image_file_name %>"><%= attach.image_file_name %>
+		  	</p>
+			<% end %>
+		<%else%>
+		No attachment for client	
+		<% end %>
+  </div>
+</div>
+<style type="text/css">
+.popover .fade .bottom .in{
+	display: block !important;
+	left: 530px !important;
+	top: 403px !important;
+}
+</style>

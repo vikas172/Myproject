@@ -1,0 +1,228 @@
+
+<script type="text/javascript"
+      src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
+<%if current_user.user_type=="admin"%>
+  <div class="col-6 box map_display_dash">
+    <div class="box-header">
+      <div class="title title1-font" style="width:100%;">
+        <i class="icon-map-marker "></i>
+        Location
+        <%if !@job_schedules.blank?%>
+          <%=link_to "Zoom",zoom_maps_path, :target => "_blank",:class=>"button pull-right"%>
+        <%end%>
+        <%if !current_user.jobs.blank?%>
+          <%= link_to "Assign",assigned_team_maps_path,:target=>"_blank",:class=>"button pull-right"%>
+        <%end%>
+        <%= link_to "Lead",lead_maps_path,:target=>"_blank",:class=>"button pull-right",:style=>"margin-right: 5px;"%>
+      </div>
+    </div>
+    <div class="box-content pull_content">
+      <div id="stats-chart2">
+        <%keys = {api: 'ddc0472200ecbb715cf9901ded8320cb'}%>
+        <%if Rails.env== "development"%>
+          <%query = find_current_address("122.168.204.0")%>
+        <%else%>
+          <%query = find_current_address(request.remote_ip)%>
+        <%end%>
+        <%@barometer = find_current_barometer(query,keys)%>
+        <% @weather=find_current_weather(@barometer.query)%>   
+        <div class="cell_wrapper">
+          <div id="current_map_address" style='width: 100%; height: 346px; position: relative; background-color: rgb(229, 227, 223);  overflow: hidden;'  >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<%else%>
+  <div class="box map_display_dash">
+    <div class="box-header">
+      <div class="title title1-font" style="width:100%;">
+        <i class="icon-map-marker "></i>
+        Location
+        <%=link_to "Route Optimize",optimize_maps_path,:class=>"button pull-right"%>
+      </div>
+    </div>
+    <div class="box-content pull_content">
+      <div id="stats-chart2">
+        <%keys = {api: 'ddc0472200ecbb715cf9901ded8320cb'}%>
+        <%if Rails.env== "development"%>
+          <%query = find_current_address("122.168.204.0")%>
+        <%else%>
+          <%query = find_current_address(request.remote_ip)%>
+        <%end%>
+        <%@barometer = find_current_barometer(query,keys)%>
+        <% @weather=find_current_weather(@barometer.query)%>   
+        <div class="cell_wrapper">
+          <div id="current_map_address" style='width: 100%; height: 300px; position: relative; background-color: rgb(229, 227, 223);  overflow: hidden;'  >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%end%>
+
+<%if current_user.user_type=="admin"%>
+<%= render "dashboards/dashboard_communication"%>
+<%end%>
+
+
+
+<script type="text/javascript">
+   $(".email_notify").click(function(){
+     $.ajax({
+      type: "POST",
+      url: "/email_notifications/email_read"
+     });
+   })
+  $(".sms_notify").click(function(){
+    $.ajax({
+    type: "POST",
+    url: "/sms_notification_time"
+   });
+  })
+  ChangeSelectClientUser()
+
+    
+    Twilio.Device.setup("<%= @token %>", {debug: true});
+ 
+      Twilio.Device.ready(function (device) {
+        $("#twilio_log").text("Ready");
+      });
+ 
+      Twilio.Device.error(function (error) {
+        $("#twilio_log").text("Error: " + error.message);
+      });
+ 
+      Twilio.Device.connect(function (conn) {
+        $("#twilio_log").text("Successfully established call");
+      });
+ 
+      Twilio.Device.disconnect(function (conn) {
+        $("#twilio_log").text("Call ended");
+      });
+ 
+      Twilio.Device.incoming(function (conn) {
+        $("#twilio_log").text("Incoming connection from " + conn.parameters.From);
+        // accept the incoming connection and start two-way audio
+        conn.accept();
+      });
+ 
+      function call() {
+
+        // get the phone number to connect the call to
+        var dail1 = $(".number").html();
+        var dail2 = $("#number").val();
+        
+         if (dail1==""){
+          params = {"PhoneNumber":dail2};
+         }
+         else
+         {
+          params = {"PhoneNumber":"+1"+dail1};
+         }
+       
+        Twilio.Device.connect(params);
+      }
+ 
+      function hangup() {
+        Twilio.Device.disconnectAll();
+      }
+
+var connection=null;
+
+
+      $.each(['0','1','2','3','4','5','6','7','8','9','star','pound'], function(index, value) { 
+          $('#button' + value).click(function(){ 
+          if(connection) {
+            if (value=='star')
+              connection.sendDigits('*')
+            else if (value=='pound')
+              connection.sendDigits('#')
+            else
+              connection.sendDigits(value)
+            return false;
+          } 
+          });
+      });
+
+
+
+<%if !@address.blank?%>
+    var map;
+    var elevator;
+    var myOptions = {
+        zoom: 8,
+        center: new google.maps.LatLng(40.71, -74.00),
+        mapTypeId: 'terrain'
+    };
+    map = new google.maps.Map($('#current_map_address')[0], myOptions);
+    var pinImage={}    
+    var icons = <%=raw @users%>
+    <% @address.each_with_index do |address,index|%>        
+        $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=<%=address%>&sensor=false', null, function (data) {
+            var p = data.results[0].geometry.location
+            var latlng = new google.maps.LatLng(p.lat, p.lng);
+            var marker<%=index%> = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|'+icons[<%= index%>]
+            });
+          });
+    <%end%>
+
+ <%else%>
+
+
+  <%if !current_user.street.blank?%>
+
+    var map;
+    var center = new google.maps.LatLng(37.09024,-95.712891);
+    var elevator;
+    var myOptions = {
+        'zoom': 3,
+        'center': center,
+        mapTypeId: 'terrain'
+    };
+    map = new google.maps.Map($('#current_map_address')[0], myOptions);
+
+    var addresses = <%= raw @waypoint_geo1 %>;
+
+    for (var x = 0; x < addresses.length; x++) {
+        $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
+            var p = data.results[0].geometry.location
+            var latlng = new google.maps.LatLng(p.lat, p.lng);
+            new google.maps.Marker({
+                position: latlng,
+                map: map
+            });
+
+        });
+    }
+  <% else %>
+    var lat = <%= @weather.data["geometry"]["location"]["lat"] rescue "0"%>
+    var lng = <%= @weather.data["geometry"]["location"]["lng"] rescue "0"%> 
+    var myCenter=new google.maps.LatLng(lat,lng);
+
+    function initialize()
+    {
+    var mapProp = {
+      center:myCenter,
+      zoom:5,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+      };
+
+    var map=new google.maps.Map(document.getElementById("current_map_address"),mapProp);
+
+    var marker=new google.maps.Marker({
+      position:myCenter,
+      });
+
+    marker.setMap(map);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+<%end%>
+ <%end%>   
+</script>
+

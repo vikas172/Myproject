@@ -1,0 +1,88 @@
+<%if current_user.user_type=="admin"%>
+  <%@client.notes.reverse.each do |note|%>
+    <div id="note_<%= note.id%>" data-permission="true" data-edit-url="" class="note row no_hover"  onclick = "replace('note_<%= note.id%>','noteshow_<%=note.id%>','<%=note.id%>');" style="block">
+      <%if !note.attachments.blank?%>
+        <div class="notes_images" id =<%=note.id%> >
+          <a data-toggle="modal" data-target="#attachment_display_<%=note.id%>" class="note_attachment" style="cursor:pointer;" data-id =<%=note.id%>>
+          <img src=<%=note.attachments.last.image(:medium)%> alt="Image1s" style="width:75%!important;"><br>
+          <%=note.attachments.count%> files</a>
+        </div>
+      <%end%>
+      <p>
+        <%= note.note%>
+      </p>
+      <div class="details">
+        <%=current_user.full_name%>
+        <span class="date">
+          <span title="Created at">
+            <%= note.created_at.strftime("%m/%d/%Y")%>
+          </span>
+        </span>
+      </div>
+      <div class="modal fade" id="attachment_display_<%= note.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Files</h4>
+            </div>
+            <div class="modal-body">
+              <% get_note(note.id).attachments.each do |attach|%>
+                <a target="_blank" href=<%=attach.image.url(:thumb)%> class="note_attachment">
+                <img src=<%=attach.image.url(:thumb)%> style="width:70px!important;"><br>
+                <%=attach.image_file_name%></a>
+              <%end%>  
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%end%>
+<%else%>
+  
+  <%@client.notes.reverse.each do |note|%>
+    <%if set_permission_attachment_note(@team_member)=="read"%>
+      <div style="block">
+    <%elsif set_permission_attachment_note(@team_member)=="read_write_delete"%>
+      <div id="note_<%= note.id%>" data-permission="true" data-edit-url="" class="note row no_hover"  onclick = "replace('note_<%= note.id%>','noteshow_<%=note.id%>','<%=note.id%>');" style="block">
+    <%end%>    
+        <%if !note.attachments.blank?%>
+          <div class="notes_images" id =<%=note.id%> >
+            <a data-toggle="modal" data-target="#attachment_display_<%=note.id%>" class="note_attachment" style="cursor:pointer;" data-id =<%=note.id%>>
+            <img src=<%=note.attachments.last.image(:medium)%> alt="Image1s" style="width:75%!important;"><br>
+            <%=note.attachments.count%> files</a>
+          </div>
+        <%end%>
+        <p>
+          <%= note.note%>
+        </p>
+        <div class="details">
+          <%=current_user.full_name%>
+          <span class="date">
+            <span title="Created at">
+              <%= note.created_at.strftime("%m/%d/%Y")%>
+            </span>
+          </span>
+        </div>
+        <div class="modal fade" id="attachment_display_<%= note.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Files</h4>
+              </div>
+              <div class="modal-body">
+                <% get_note(note.id).attachments.each do |attach|%>
+                  <a target="_blank" href=<%=attach.image.url(:thumb)%> class="note_attachment">
+                  <img src=<%=attach.image.url(:thumb)%> style="width:70px!important;"><br>
+                  <%=attach.image_file_name%></a>
+                <%end%>  
+              </div>
+              <div class="modal-footer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <%end%>
+<%end%>

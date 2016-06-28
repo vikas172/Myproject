@@ -1,0 +1,121 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <%#= render partial: "total_charge" %>
+    <h4 class="title1-font">Billing Overview</h4>
+    <div class="main_column">
+      <div class="payment-display">
+        <div class="row charge_view">
+          <div class="span1">
+            Plan
+          </div>
+          <div class="span8">
+            <%if @charge.blank? %>
+              <b>Small</b> Using 7 to 10 private Repositories.
+            <%else%>
+              Your current plan is <b><%= current_user.plan_type%></b> And you want to change their plan click on change plan button.
+            <%end%>       
+          </div>
+          <div class="span3">
+            
+            <%= link_to("<i class='icon-gear'></i> Change Plan".html_safe,plan_subscriptions_path,:class=>"button pull-right")%>
+          </div>
+        </div>
+
+        <div class="row charge_view">
+          <div class="span1">
+            Payment
+          </div>
+          <div class="span8">
+            <%if @charge.blank? %>
+              American Express 3*******4001 Expiration 4/2017<br/>
+              Next Payment Due 2015-01-25<br/>
+              Amount $12.00.
+            <%else%>
+              American Express XXXX-XXXX-XXXX-<%=@charge.card_number.last(4)%> Expiration <%= @charge.exp_month%>/<%= @charge.exp_year%><br/>
+              Next Payment Due <%= @subscription.active_date+30%><br/>
+              Amount $<%=  (@subscription.amount.to_f)/100%>.
+            <%end%>
+          </div>
+          <div class="span3">
+            <button type="button" class="button pull-right" data-toggle="modal" data-target="#payment_billing"><i class='icon-credit-card'></i> Update payment method
+            </button>
+          </div>
+        </div>
+
+        <div class="row charge_view">
+          <div class="span1">
+            Coupon
+          </div>
+          <div class="span8">
+            <%if @present_coupon.blank?%>
+              You don't have active coupon.
+            <%else%>
+              You have active coupon.</br>
+              <%=@present_coupon.percent_off%> % off <%= @present_coupon.duration%>
+            <%end%>
+          </div>
+          <div class="span3">
+            <button type="button" class="button pull-right" data-toggle="modal" data-target="#coupon-form"><i class="icon-gift"></i> Redeem a coupan
+            </button>
+          </div>
+        </div>
+
+        <div class="row charge_view">
+          <div class="span1">
+            Extra Info
+          </div>
+          <div class="span8">
+            You have not added any additional information of your receipts.
+          </div>
+          <div class="span3">
+            <%#= link_to("<i class='icon-pencil'></i> Add Information".html_safe,"#",:class=>"button pull-right")%>
+             <button type="button" class="button pull-right" data-toggle="modal" data-target="#information-form"><i class="icon-pencil"></i> Add Information
+            </button>
+          </div>
+        </div>
+      </div>  
+    
+      <div class="display_payment-view">
+        <%if !@all_payment.blank?%>
+          <table class="table">
+            <tr>
+              <th>ID</th>
+              <th>DATE</th>
+              <th>PLAN</th>
+              <th>PAYMENT METHOD</th>
+              <th>RECEIPT</th>
+              <th>AMOUNT</th>
+              <th>STATUS</th>
+            </tr>
+            <tbody>
+              <%@all_payment.each_with_index do |payment,index|%>
+                <tr>
+                  <td><%=index+1%></td>
+                  <td><%=Time.at(payment.created)%></td>
+                  <td><%=@charges_plan[index]%></td>
+                  <td><%=payment.card.brand%> <%=payment.card.last4%></td>
+                  <td><%=link_to "view receipt",view_receipt_charge_path(:id=>payment.id,:data=> @charges_id[index]) ,:remote=>true,:data=>{toggle: "modal",:target=>"#view_receipt"}%></td>
+                  <td>USD<%=payment.amount.to_f/100 rescue ""%></td>
+                  <td><%=payment.paid ? "Succeeded" : "Pending"   rescue "" %></td>
+                </tr>
+              <%end%>  
+            </tbody>
+          </table>
+        <%else%>
+          <i style="text-align:center;">NO PAYMENT YET</i>
+        <%end%>  
+      </div>
+    </div>  
+    <div class="modal fade" id="payment_receipt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 
+    </div>
+    <%= render "charges/coupon_form"%>
+    <%= render "charges/plan_payment"%>
+    <%= render "charges/information_form"%>
+  </div>
+</div>
+
+<script>
+stripeTokenGenerateTest()
+</script>

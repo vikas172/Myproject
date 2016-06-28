@@ -1,0 +1,100 @@
+<div class="row">
+	<!-- ###change col-4 to row### -->
+	<div class='row box'>
+	  <div class='box-header'>
+	    <div class='title'>
+	      <i class="fa fa-legal"></i>
+	      Today Job Schedule
+	    </div>
+	  </div>
+	  <div class='box-content pull_content today-work-new'>
+	    <div id='stats-chart2'>
+	     	<%if !@today_schedule.blank?%>
+	     		<table class="table">
+	     			<tr>
+							<th>Description</th>
+							<th>Address</th>
+	     			</tr>
+		     		<% @today_schedule.each do |schedule|%>
+			     		<tr>
+			     			<td><%= schedule.job.description%></td>
+			     			<td><%= schedule.job.property.try(:street)%>
+			     				&nbsp;
+			     				<%= schedule.job.property.try(:street2)%>
+			     				&nbsp;
+			     				</br>
+			     				<%= schedule.job.property.try(:city)%>
+			     				&nbsp;
+			     				<%= schedule.job.property.try(:state)%>
+			     				&nbsp;
+			     				<%= schedule.job.property.try(:zipcode)%>
+
+			     			</td>
+			     		</tr>	 
+		     		<%end%>
+	     		</table>
+	     	<%else%>
+	     		<i>No Schedule Today.....</i>
+	     	<%end%>
+	    </div>
+	  </div>
+	</div>
+
+		<div class='row box'>
+	  <div class='box-header'>
+	    <div class='title'>
+	      <i class='fa fa-calendar'></i>
+	      Today Event
+	    </div>
+	  </div>
+	  <div class='box-content pull_content'>
+	    <div id='stats-chart2'>
+	     	<%if !@today_event.blank?%>
+	     		<table class="table">
+	     			<tr>
+							<th>Title</th>
+							<th>Description</th>
+	     			</tr>
+		     		<% @today_event.each do |event|%>
+			     		<tr>
+			     			<td><%= event.title%></td>
+			     			<td><%= event.description%></td>
+			     		</tr>	 
+		     		<%end%>
+	     		</table>
+	     	<%else%>
+	     		<i>No Event Today .....</i>
+	     	<%end%>
+	    </div>
+	  </div>
+	</div>
+
+	<div class='row box'>
+	  <div class='box-header'>
+	    <div class='title'>
+	      <i class='fa fa-check-square-o'></i>
+	      Today Basic task
+	    </div>
+	  </div>
+	  <div class='box-content pull_content'>
+	    <div id='stats-chart2'>
+	     	<%if !@today_basic.blank?%>
+	     		<table class="table">
+	     			<tr>
+							<th>Title</th>
+							<th>Description</th>
+	     			</tr>
+		     		<% @today_basic.each do |basic|%>
+			     		<tr>
+			     			<td><%= basic.title%></td>
+			     			<td><%= basic.description%></td>
+			     		</tr>	 
+		     		<%end%>
+	     		</table>
+	     	<%else%>
+	     		<i>No Basic Task Today .....</i>
+	     	<%end%>
+	    </div>
+	  </div>
+	</div>
+</div>

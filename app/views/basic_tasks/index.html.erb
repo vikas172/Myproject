@@ -1,0 +1,38 @@
+<script>
+  $(document).ready(function(e) {
+    $('#btnNext').click(function() {
+      $('#calendar').fullCalendar('next'); 
+      $("#current_date").html( $("#calendar").find('span.fc-header-title h2').text());  
+      e.preventDefault(); 
+    });     
+    $('#btnPrev').click(function(e) {
+      $('#calendar').fullCalendar('prev');        
+      $("#current_date").html( $("#calendar").find('span.fc-header-title h2').text());
+      e.preventDefault(); 
+    });
+
+    draw_calender("calendar",<%= raw @basic_tasks %>);
+    $('.popover').css('left', event.pageX+'px');
+    $('.popover').css('top', event.pageY+'px');
+  });
+
+  $('body').on('click', function (e) {
+    $('[data-toggle=popover]').each(function () {
+      // hide any open popovers when the anywhere else in the body is clicked
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+          $(this).popover('hide');
+      }
+    });
+  });
+</script>
+
+<div class="left header_date_picker" style="display: block ;">
+  <div class="rounded">
+    <a href="#" id="btnPrev" class="prev side_arrow">◀</a>
+    <span id="current_date" class="current"></span>
+    <a href="#" id="btnNext" class="next side_arrow">▶</a>
+  </div><br/><br/><br/><br/>
+</div>
+<div class='calender' id='calendar'></div>
+
+<div id="myModalBox"></div>

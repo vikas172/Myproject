@@ -1,0 +1,184 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<%= form_tag({:action => :update_property}, :multipart => true) do %>
+  <% if @property.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@property.errors.count, "error") %> prohibited this property from being saved:</h2>
+
+      <ul>
+      <% @property.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="span12 new-form-design">
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :street %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[street]" ,nil,:value=>@property.try(:street),:placeholder=>"street"%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :street2 %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[street2]" ,nil,:value=>@property.try(:street2),:placeholder=>"street2"%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :city %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[city]",nil,:value=>@property.try(:city),:placeholder=>"city"%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :state%>
+      </div> 
+      <div class="span7"> 
+        <%= text_field_tag "property[state]",nil,:value=>@property.try(:state),:placeholder=>"state"%>
+      </div>  
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :zipcode %>
+      </div>  
+      <div class="span7">
+        <%= text_field_tag "property[zipcode]" ,nil,:value=>@property.try(:zipcode),:placeholder=>"zipcode"  %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :country %>
+      </div>
+      <div class="span7">
+        <%= country_select "property[country]",nil, {priority: %w(US CA), prompt: @property.try(:country)} %>
+      </div>
+    </div>
+    
+    <hr style="border:1px solid #D3D3D3;">
+    <h3 class="main_heading" style="margin-left: 28px;">Pool Summary</h3>
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :pool_name %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[pool_name]",nil,:value=>@property.try(:pool_name),:placeholder=>"Sample Pool" ,:required=>true%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :pool_activity %>
+      </div>
+      <div class="span7">
+        <%if ((@property.pool_activity =="lead") || (@property.pool_activity == "followup"))%>
+          <p class="span2"><%= select_tag "pool_activity",options_for_select([["Active", "active"], ["Inactive", "inactive"],["Lead", "lead"],["FollowUp", "followup"]],:selected=>@property.try(:pool_activity))%></p>
+        <%else%>
+          <p class="span2"><%= select_tag "pool_activity",options_for_select([["Active", "active"], ["Inactive", "inactive"]],:selected=>@property.try(:pool_activity))%></p>
+        <%end%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :pool_type %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[pool_type]",nil,:value=>@property.try(:pool_type),:placeholder=>"Commercial Pool",:required=>true%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :pool_volume %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[pool_volume]",nil,:value=>@property.try(:pool_volume),:placeholder=>"75000",:required=>true%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%=label_tag :pool_volume2 %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[pool_volume2]",nil,:value=>@property.try(:pool_volume2),:placeholder=>"2000",:required=>true%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :pool_gate_code %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[pool_gate_code]",nil,:value=>@property.try(:pool_gate_code),:placeholder=>"Gate Code",:required=>true%>
+      </div>
+    </div>
+    <%if !@property.market_source.blank?%>
+      <div class="row">
+        <div class="span2">
+          <%= label_tag :market_source %>
+        </div>
+        <div class="span7">
+          <%= select_tag "property[market_source]",options_from_collection_for_select(@market_sources, "id", "source_name",:selected=> @property.try(:market_source))%>
+        </div>
+      </div>
+    <%end%>  
+    
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :source%>
+      </div>
+      <div class="span7">
+        <%= select_tag "property[source]",options_for_select([["Maps","maps"],["Referal","referal"],["CL","cl"],["PennySaver","pennysaver"],["HomeAdvisor","homeadvisor"],["AngiesList","angieslist"]], selected: @property.try(:pool_source))%>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :pool_lifeguards %>
+      </div>
+      <div class="span7">
+        <%= text_field_tag "property[pool_lifeguards]",nil,:value=>@property.try(:pool_lifeguards),:placeholder=>"0",:required=>true%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= label_tag :pool_notes %>
+      </div>
+      <div class="span7">
+        <%= text_area_tag "property[pool_notes]",@property.try(:pool_notes),:rows=>"4" ,:placeholder=>"This is the pool notes",:required=>true%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        Pool Photos
+      </div>
+
+      <div class="span7">
+       <%=file_field_tag "photos[]", multiple: true%>
+      </div>
+    </div>
+
+    <div class="client_custom_field">
+      <%= render "clients/custom_field_display" if params[:action] == "new" %>
+      <%= render "clients/edit_custom_field_display" if params[:action] == "edit" %>
+    </div>
+    <%#= render "properties/hidden_field_value"%>
+    <div class="actions">
+      <%= submit_tag "Update", :class=>"button_new_create client_create save-new-btn1",:id=>"create_property"%>
+    </div>
+  </div>  
+<% end %>

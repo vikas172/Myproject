@@ -1,0 +1,19 @@
+<div class="dropdown_menu icon_drop">
+  <li class="dropdown" style="list-style: none; float:right; margin-top: 25px;">
+    <a href="#" class="dropdown-toggle dropdown_button save-new-btn1" data-toggle="dropdown">Actions <span class="caret"></span></a>
+    <ul class="dropdown-menu edit_drop_menu" role="menu">
+      <span class="arrow_action"></span>
+      <li><i class="fa fa-check-square-o"></i>
+        <%= link_to "Basic Task",to_dos_basic_tasks_path,:remote=>true%>
+      </li>
+      <%if current_user.user_type == "admin" %>
+        <li><i class="fa fa-calendar"></i>
+          <%= link_to "Event",to_dos_events_path(:unschedule=>"unschedule"),:remote=>true%>
+        </li>
+      <%end%>
+      <li><i class="fa fa-legal"></i>
+        <%= link_to "New Work Order",new_job_event_events_path(:unschedule=>"unschedule"),:remote=>true%>
+      </li>
+    </ul>
+  </li>
+</div>

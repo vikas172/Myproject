@@ -1,0 +1,30 @@
+
+<%if session[:sucess_team_member]%>
+  <div class="flash_team_member">
+    <div id="flash_notice_team_member" class="flash_team_member flash_notice_team_member clearfix hide_for_print"><%= session[:sucess_team_member]%><i class="fa fa-check" style="float:right;"></i></div>
+   
+  </div>
+  <%session[:sucess_team_member]=nil%>
+<%end%>  
+
+<%if !session[:team_member_error].blank?%> 
+  <div class="error_messages_team_member"> 
+    <h2>Invalid Fields. Correct the following errors and try again.</h2>
+    <ul>
+      <%- session[:team_member_error].each do |name, msg| -%>
+        <li>
+          <%= content_tag :div, name + " " +msg.first, :id => "flash_#{name}", :style => "color: red;" %> 
+        </li>
+      <%- end -%> 
+    </ul>
+    <%session[:team_member_error]=nil%> 
+  </div>    
+<%- end -%> 
+
+
+<%if (alert =="You are not authorized to access this page.")%>
+  <div class="flash_team_member">
+    <div id="flash_notice_team_member" class="flash_team_member flash_notice_team_member clearfix hide_for_print"><%=alert%>
+   <i class="fa fa-check" style="float:right;"></i></div>
+  </div>
+<%end%>  

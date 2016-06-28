@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Key:</strong>
+  <%= @key_action.key_id %>
+</p>
+
+<p>
+  <strong>Action type:</strong>
+  <%= @key_action.action_type_id %>
+</p>
+
+<p>
+  <strong>Sequence:</strong>
+  <%= @key_action.sequence %>
+</p>
+
+<p>
+  <strong>Say:</strong>
+  <%= @key_action.say %>
+</p>
+
+<p>
+  <strong>Play:</strong>
+  <%= @key_action.play %>
+</p>
+
+<p>
+  <strong>Dial:</strong>
+  <%= @key_action.dial %>
+</p>
+
+<p>
+  <strong>Record:</strong>
+  <%= @key_action.record %>
+</p>
+
+<p>
+  <strong>Gather:</strong>
+  <%= @key_action.gather %>
+</p>
+
+<p>
+  <strong>Sms:</strong>
+  <%= @key_action.sms %>
+</p>
+
+<%= link_to 'Edit', edit_key_action_path(@key_action) %> |
+<%= link_to 'Back', key_actions_path %>

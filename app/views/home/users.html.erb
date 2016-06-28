@@ -1,0 +1,24 @@
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <%= render 'clients/error_message_and_flash' %>
+      <div style="height: auto;">
+        <div>
+          <%=render "home/work_item_side_bar" %>
+          <div id="settings_area"> 
+            <%= render "error_and_success_message"%>
+            <h4 class="title1-font">Users Overview</h4>         
+            <div class="config_description">
+              Build your team to make the most of CopperService. Once entered into our system, you can schedule Work Orders and visits for this employee. If you give them login access, they can view their schedules from their phones, view directions and details related to their work. They will also have access to add-ons such as timesheets.
+            </div>
+            <%= render "active_and_deactive_users"%>
+            <br><br>
+            <%if user_plan_type_valid(current_user)%>
+              <a href="/home/users/new" class="update_button_setting save-new-btn1">+ Add Team Member</a>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,206 @@
+<% @w_api = Wunderground.new("bd8736ce0e6cc2de")%>
+<% barometer = current_barometer %>
+<% weather = find_current_weather(barometer.query)%>
+<%@barometer = barometer%>
+<%@weather = weather %>
+<%options = { units: "imperial", APPID: "45c5cb2f83d12744849fd8797b8f19ac" }%>
+<div class="col-md-2">   
+  <p class="time_zone_display time-add">
+    <% res = OpenWeather::Current.city("#{current_user.street + ","+current_user.city}", options) rescue "" %>
+    <% result = GoogleTimezone.fetch(res["coord"]["lat"],res["coord"]["lon"]) rescue "" %>
+    <% @result_id=result.time_zone_id rescue "" %>
+    <% @timezone = Timezone::Zone.new :zone => "#{@result_id}" rescue ""%>
+    <%@date_zone = @timezone.time(Time.now) rescue ""%>
+
+    <span>
+      <span id="format"></span>
+      <span id="clock1"></span>:
+      <span id="clock2"></span>
+      <span id="clock3"></span>
+    </span>
+
+  </p>
+<p class="date_zone_display"></p>
+  <% @barometer_address = Barometer.new("#{@result_id}")%>
+  <% @weather_address = @barometer_address.measure rescue""%>
+  <p class="display_tempature"></p>
+</div>
+
+  <div class="col-md-1">
+    <p class="datess"><%=DateTime.now.in_time_zone("#{@result_id}").strftime("%a") rescue ""%></p>
+    <p class="date_zone_display daysss" >
+      <%=DateTime.now.in_time_zone("#{@result_id}").strftime("%b %d,%Y") rescue ""%>
+    </p>
+  </div>
+<%@wunder = @w_api.forecast_and_conditions_for("#{@lat},#{@lng}")%>
+<div class="col-md-2 current-weather"><P><b>Current Weather</b></p>
+  <% current_val= @wunder.values[1]["icon_url"]%>
+ <b><%= find_current_temperature(@barometer).round()%>&deg;F</b>
+  <div class="col-md-4 no-padding pull-left"><img src="<%=current_val%>"></div>
+</div>
+
+<% list_value = @w_api.forecast_and_conditions_for("#{@lat},#{@lng}")["forecast"].values[1]["forecastday"] %>
+<%if !list_value.blank?%>
+  <ul  class="weather-dis-icon weather-list col-md-6">
+    <%@count=0%>
+    <%list_value.each do |list_val|%>
+      <% @date = list_val["date"]["pretty"] %>
+      <% if ((@date != @l_date) && (@count < 5))%>
+        <%@count=@count+1%>
+        <li>
+          <div >
+            <p><%#= @date.strftime("%a") rescue ""%><%= list_val["date"]["weekday_short"] rescue ""%>
+            </p>
+          </div>        
+          <%icon_value = list_val["icon_url"] rescue ""%>
+          <img src="<%=icon_value %>">
+          <p><b><%=  list_val["high"]["fahrenheit"] rescue ""%> &deg;F</b></p>
+                    
+          <div>
+            <p><b><%#= ((list_val["main"]["temp_min"]*9)/5+32).floor rescue "0.0" %><%= list_val["low"]["fahrenheit"] rescue "" %> &deg;F</b></b></p>
+          </div>
+        </li>
+      <%end%>
+      <%@l_date = @date %>    
+    <%end%>
+  </ul>
+<%else%>
+  <p class="forecast">
+    <%= @weather_address.responses.first.current.icon rescue ""  %>
+  </p>
+<%end%>
+<script type="text/javascript">
+  var date = "<%=@date_zone%>";
+  var realDate = parse_date(date)
+  var timer = setInterval(function() {
+  realDate.setSeconds(realDate.getSeconds() + 1);
+  var hours = realDate.getHours();
+  var ampm = hours >= 12 ? "PM" : "AM";
+  var minutes = realDate.getMinutes();
+  var seconds = realDate.getSeconds();
+ hours = hours % 12;
+ hours = hours ? hours : 12; // the hour '0' should be '12'
+ minutes = minutes < 10 ? '0'+minutes : minutes;
+ seconds = seconds < 10 ? '0'+seconds : seconds;
+
+$("#format").text(ampm);
+$("#clock1").text(hours);
+$("#clock2").text(minutes);
+$("#clock3").text(':'+seconds);
+realDate = realDate
+
+},1000);
+
+function parse_date(date){
+var dateString = date;
+var reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
+var dateArray = reggie.exec(dateString);
+
+var dateObject = new Date(
+   (+dateArray[1]),
+   (+dateArray[2])-1,
+   (+dateArray[3]),
+   (+dateArray[4]),
+   (+dateArray[5]),
+   (+dateArray[6]));
+   return dateObject;
+   }
+</script>
+<style type="text/css">
+.weather-list li{
+  display: inline;
+  width: 25%;
+  float: left;
+}
+.weather-list{
+  margin: 0px;
+  padding: 0px;
+  width: 55%;
+}
+.weather-btn{
+  width:96.99%;
+  padding: 7px 9.3px !important;
+  border: none;
+   background-color:#fff;
+}
+
+.weather-btn .time_zone_display{
+  font-size: 40px;
+}
+.no-padding{
+  padding: 0px;
+}
+.weather-list img{
+   float: left;
+    margin-top: -4px !important;
+    
+    width: 35%;
+}
+.weather-list li div{
+  
+  float:left;
+}
+.weather-list li p{
+  color:#686868;
+  margin: 0px !important;
+}
+.weather-list li div p{
+  color:#686868;
+  margin:0px !important;
+  font-weight: bold;
+}
+.weather-list li div p span{
+  color:#595959;
+}
+.weather-btn:hover{
+  background-color: #fff;
+  color:#595959;
+  border:none;
+}
+.time-add{
+  padding: 7px;
+}
+.current-weather{
+margin-top:-4px;
+width: 12%;
+}
+.current-weather p{
+  margin: 0px !important;
+  color:#686868;
+}
+
+.current-weather img{
+  margin-top: -7px !important;
+}
+#format{
+font-size: 12px !important;
+font-weight: 400;
+position: relative;
+bottom: 16px;
+}
+#clock3{
+font-size: 18px !important;
+font-weight: 400;
+position: relative;
+margin-left: -12px;
+}
+#clock1 ,#clock2{
+margin-right: 5px;
+margin-left: -7px;
+
+}
+.datess{
+color: #686868; 
+font-size: 35px; padding: 0px; 
+margin: -5px 0px 0px; 
+text-align: center;
+ height: 23px; 
+ vertical-align: middle; 
+ line-height: 27px; 
+ 
+}
+.daysss{
+  clear: both; font-size: 15px; padding-top: 0px;
+  color: #686868; font-weight: bold;
+  text-align: center;
+}

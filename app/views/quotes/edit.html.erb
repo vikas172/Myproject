@@ -1,0 +1,170 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+   <!--  <h5 style="width: 14%; margin-left: 3%; font-weight: normal;"> Back to: <%#= link_to 'Quotes>',quotes_path,:style=>"text-decoration:-moz-anchor-decoration;"%></h5> -->
+    <h3 style="margin-left: 3%;" class="title1-font">Edit quote</h3>
+
+    <%= form_for(@quote) do |f| %>
+      <% if @quote.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@quote.errors.count, "error") %> prohibited this quote from being saved:</h2>
+          <ul>
+          <% @quote.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="top"  style="border-top: 1px solid #c3c8c7;"> 
+        <div class="span7" id="conten_left_align">
+          <table class="quotes_left left" style="width:100%;">
+            <tbody>
+              <tr>
+                <td width="30%" align="right" nowrap><label for="quote_rating">Address</label></td>
+                <td class="billing_address">
+                <p>
+                  <%=@property.try(:street)%><br><%=@property.try(:street2)%><br><%=@property.try(:city)%>, <%=@property.try(:state)%>  <%=@property.try(:zipcode)%>
+                </p>
+                </td>
+              </tr>
+              <tr>
+                <td nowrap>
+                  <label for="quote_rating" >Rate Opportunity</label>
+                </td> 
+                <td><span data-tooltip="Likely">
+                <span id="show_rating1" data-toggle="tooltip" data-placement="right" title="Tooltip on right" value="<%=@quote.raty_score %>"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="span5">
+          <table class="right" style="width:100%;">
+            <tbody>
+              <tr>
+                <td width="75%"><label for="quote_stripped_tax">Tax</label></td>
+                <td><a href="#" onclick="$(this).next().show(); $(this).hide();; return false;"><%=  @quote.tax.blank? ? 0 : @quote.tax %>%</a>
+                  <span style="display:none">
+                    <%= f.text_field :tax,:id=>"quote_stripped_tax",:style=>"text-align:right; width: 32%;",:value=>@quote.try(:tax),:onchange=>"AddTotal()"%>
+                  </span>
+                </td>
+              </tr>
+              <tr id="discount_row">
+                <td><label for="quote_discount_rate">Discount</label></td>
+                <td>
+                  <div class="valign_top_edit">
+                    <%= f.text_field :discount,:placeholder=>"0.00" ,:id=>"quote_discount_rate",:value=>@quote.try(:discount) ,:style=>"width: 32%;",:onchange=>"AddTotal()"%>
+                    <%= f.select "discount_type",options_for_select([["$","$"],["%","%"]]),:id=>"quote_discount_type",:style=>"width: 15%;" %>
+                  </div>
+                </td>
+              </tr>
+
+              <tr id="deposit_row">
+                <td nowrap><label for="quote_deposit_rate">Require Deposit</label></td>
+                <td>
+                 <div class="valign_top_edit">
+                  <%= f.text_field :require_deposit,:placeholder=>"0.00",:id=>"quote_deposit_rate",:style=>"text-align:right" ,:value=>@quote.try(:require_deposit),:style=>"width: 32%;" %>
+                  <%= f.select "require_deposit_type",options_for_select([["$","$"],["%","%"]]),:id=>"quote_deposit_type"%>
+                </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>  
+        <div class="quote_custom_field">
+          <%= render "clients/edit_custom_field_display"%>
+        </div>
+        <div id="line_items">
+          <div id="line_items_head" class="display_work_quote">
+            <span class="name">Work Item</span>
+            <span class="short">Area or Description</span>
+            <div style="float: right;">
+              <span class="centered hours_column">Qty.</span>
+                <span class="centered cost_column">Unit Cost</span>
+                <span class="centered cost_column">Total</span>
+            </div>
+          </div>
+          <span id="work_result" style="color: red; margin-left: 4%;" ></span>
+          <div id="add_more_work">
+        	  <% @total_value = 0 %>
+            <% unless @quote.quote_works.first.blank? %>
+        	  <% @quote.quote_works.first.name.each_with_index do |value,index| %>
+              <p> 
+                <span style="width: 1%;" class="remScnt btn btn">-</span>
+                <%=text_field_tag "name[]",nil,:value=>@quote.quote_works.first.name[index],:style=>"margin-top: 10px; width: 14%;" ,:id=>"p_name_#{index+1}" ,:class=>"work_name"%>
+
+                <%=text_area_tag("description[]",@quote.quote_works.first.description[index],:value=>@quote.quote_works.first.description[index],:style=>"height: 47px; width: 46%; margin-left: 2.5%;",:id=>"p_description_#{index+1}")%>
+        
+                <%=text_field_tag "quantity[]",nil,:value=>@quote.quote_works.first.quantity[index],:style=>"width: 4%; margin-left: 8%;" ,:id=>"p_quantity_#{index+1}",:onchange=>"AddQuantity(this.id)"%>
+         
+                $<%=text_field_tag "unit_cost[]",nil,:value=>@quote.quote_works.first.unit_cost[index] ,:style=>"width: 4%; margin-left: 1%;",:id=>"p_unit_cost_#{index+1}",:onchange=>"AddUnitCost(this.id)"%>
+
+                $<%=text_field_tag "total[]",nil,:value=>@quote.quote_works.first.total[index],:style=>"margin-left: 1%; width: 6%; ",:id=>"p_total_#{index+1}",:class=>"p_total",:readonly => true%>
+             
+                <%@total_value= @quote.quote_works.first.total[index].to_i+ @total_value%>
+              </p>
+            <% end %>
+            <% end %>    
+          </div>
+        </div>
+      <p id="addScnt" style="float:left;"><a herf="">+add line item</a></p>
+      <div id="bottom">
+        <div class="clearfix" id="totals">
+          <div>
+            <span>Subtotal: </span>
+            $<span id="quote_subtotal" class="cost_column important"><%=@total_value%></span>
+          </div>
+
+          <div>
+            <span>Discount: </span>
+            <% if !@quote.discount.nil? %>
+              -$<span id="quote_discount" class="cost_column"><%=@quote.discount%></span>
+            <%else%>
+              -$<span id="quote_discount" class="cost_column">0.00</span>
+            <%end%>
+          </div>
+
+          <div id="total_tax1">
+            <span> Tax: </span>
+            <%@tax=show_tax(@quote,@total_value)%>
+            $<span id="total_tax" class="cost_column"><%=@tax%></span>
+          </div>
+
+          <div>
+            <span>Total Quote: </span>
+            $<span id="total_quote" class="cost_column very_important"><%=@tax_calculate+@tax%></span>
+          </div>     
+        </div>
+      </div>
+
+      <div class="field" style="width:100%;margin-top:10%">
+        Client Message
+        <%= f.text_area :client_message,:style=>"width: 100%; margin-bottom: 20px;", :rows=>"4",:placeholder=>"Estimate details..."  %>
+      </div>
+
+      <%if @property_id!= nil%>
+        <%= hidden_field_tag "property_id",@property_id%>
+      <%else%>
+        <%= hidden_field_tag "property_id",params[:property_id]%>
+      <%end%>
+     
+    <% end %>  
+</div>
+<div class="actions row">
+    <%= submit_tag "update Estimate", :class=>"button_new_create",:id=>"quote_edit",:style=>"float:right;"%>
+    <%= link_to 'Cancel', quotes_path ,:class=>"model_cancel_button"%></div>
+  </div>
+
+<script>
+  $(document).ready(function(){
+  AddMoreWork()
+  EditQuoteSubmit() 
+  $('#show_rating1').raty({
+   score: "<%= @quote.raty_score%>"});
+  })
+  var states = <%= raw @services_all.collect(&:name) rescue "" %> 
+  $("#p_name_1").autocomplete({
+    source: states
+  });
+</script>
+

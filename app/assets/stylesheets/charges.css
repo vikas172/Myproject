@@ -1,0 +1,432 @@
+/*NEW CHARGE CSS START*/
+  .payment-display > .charge_view {
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+  }
+  .payment-display{
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ccc;
+    border: 1px solid #ccc;
+  }
+
+
+  .price-plan-chat .price-cols .heading {
+    background: none repeat scroll 0 0 padding-box #444444;
+    border-radius: 4px 4px 0 0;
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 0;
+    padding: 10px 0;
+    position: relative;
+    text-transform: uppercase;
+}
+.price-plan-chat .price-cols .content {
+    background: none repeat scroll 0 0 #f5f5f5;
+    padding: 30px;
+}
+.price-plan-chat .price-figure .currency {
+    font-size: 24px;
+    position: relative;
+    top: -25px;
+}
+.price-plan-chat .price-figure .number {
+    font-size: 60px;
+}
+.price-plan-chat .btn {
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 45px;
+    padding-right: 45px;
+    background-color: #1f518b;
+    background-image: none;
+    color: #fff;
+    text-shadow:none !important;
+}
+.price-plan-chat ul .list-unstyled {
+    list-style: none outside none;
+    padding-left: 0;
+}
+
+
+.price-plan-chat .feature-list li {
+    padding: 10px 0;
+     color: black;
+}
+.price-plan-chat .btn .extra {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: normal;
+    text-transform: none;
+}
+.price-plan-chat .heading .label {
+    font-size: 12px;
+    padding: 5px 10px;
+    right: 15px;
+}
+.price-plan-chat .heading .label {
+    background:  #1f518b !important;
+    border-radius: 4px;
+    color: #fff !important;
+    font-size: 12px;
+    padding: 5px 10px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.price-plan-chat .title {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.price-plan-chat .intro {
+    color: #999999;
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+.price-plan-chat .content {
+    background: none repeat scroll 0 0 #f5f5f5;
+    padding: 30px;
+}
+
+
+.solo_active .heading{
+  background-color: #1f518b !important;
+}
+.solo_active p span{
+  color: #1f518b;
+}
+
+.business_active .heading{
+  background-color: #1f518b !important;
+}
+.business_active p span{
+  color: #1f518b;
+}
+
+.team_active .heading{
+  background-color: #1f518b !important;
+}
+.team_active p span{
+  color: #1f518b;
+}
+/*NEW CHARGE CSS END*/
+  #referrals div#referral_description {
+  float: left;
+  margin: 0 45px 0 0;
+  width: 47%;
+  }#referrals p {
+  color: #333333;
+  }#referrals div#referral_description ol {
+    margin: 15px 0 10px 20px;
+  }#referrals div#referral_description ol li {
+  color: #333333;
+  font-size: 16px;
+  font-weight: bold;
+  }#referrals div#referral_description ol p {
+  color: #595959;
+  font-size: 14px;
+  margin-top: 3px;
+  }#referrals #sharing {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 18px;
+  width: 48%;
+  }#referrals #sharing form.set_code {
+  margin-bottom: 20px;
+  }.fieldset {
+  position: relative;
+  }.fieldset .content {
+  background-color: white;
+  border-color: #DADAD0;
+  border-style: solid;
+  border-width: 0 1px 1px;
+  overflow: auto;
+  }#referrals #sharing div#referral_code, #referrals #sharing div#share_links {
+  padding: 10px;
+  }#referrals #sharing p.description.no_spam {
+  color: #666666;
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 20px;
+  padding: 0 0 10px;
+  }.clipboard a {
+  background: url("//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/clipboard_16x16-9b8481443130869d29efc0e090f288f8.png") no-repeat scroll left center transparent;
+  color: black;
+  display: inline-block;
+  line-height: 20px;
+  padding-left: 18px;
+  text-decoration: none;
+  }.clipboard a span {
+  display: inline-block;
+  line-height: 20px;
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  }#referrals #sharing ul {
+  height: 32px;
+  list-style: none outside none;
+  margin: 0;
+  padding: 0;
+  }ul.socialicons li {
+  display: inline;
+  float: left;
+  list-style-type: none;
+  padding: 0 5px 0 0;
+  }#referrals #sharing ul a {
+  margin: 0;
+  }
+  ul.socialicons li a.email {
+  background-position: 0 -1623px;
+  }
+  ul.socialicons li a {
+  display: block;
+  height: 33px;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 32px;
+  }
+  #referrals #the_fine_print {
+  border-top: 1px solid #A3A3A3;
+  clear: both;
+  color: #555555;
+  font-size: 13px;
+  margin-top: 30px;
+  padding-top: 30px;
+  }#referrals #the_fine_print ul {
+  line-height: 18px;
+  margin-left: 0;
+  padding-left: 20px;
+  margin-top: 10px;
+  }
+
+
+/*Charges new page csss*/
+
+  #cost_breakdown {
+position: relative;
+margin-bottom: 30px;
+}
+#cost_breakdown .bar {
+margin-bottom: 10px;
+height: 60px;
+}
+.bar {
+background-color: #B4F5B4;
+width: 0%;
+height: 20px;
+border-radius: 3px;
+}
+#cost_breakdown .bar .cost_type:first-child {
+-moz-border-radius-bottomleft: 10px;
+-webkit-border-bottom-left-radius: 10px;
+border-bottom-left-radius: 10px;
+-moz-border-radius-topleft: 10px;
+-webkit-border-top-left-radius: 10px;
+border-top-left-radius: 10px;
+margin-left: 0px;
+}
+#cost_breakdown .bar .cost_type {
+float: left;
+padding: 10px;
+border: 1px solid #999;
+margin-left: 7px;
+width: 140px;
+text-align: center;
+height: 60px;
+color: #333;
+position: relative;
+position: relative;
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.2),0 0 0 #fff inset;
+-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.2),0 0 0 #fff inset;
+box-shadow: 0px 1px 3px rgba(0,0,0,0.2),0 0 0 #fff inset;
+position: relative;
+background-image: -webkit-linear-gradient(top, #fff, #eee);
+background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#eee));
+background-image: -moz-linear-gradient(top, #fff, #eee);
+background-image: -ms-linear-gradient(top, #fff, #eee);
+background-image: -o-linear-gradient(top, #fff, #eee);
+}
+#cost_breakdown .bar #monthly_charge_amount {
+float: right;
+width: 375px;
+-moz-border-radius-bottomright: 10px;
+-webkit-border-bottom-right-radius: 10px;
+border-bottom-right-radius: 10px;
+-moz-border-radius-topright: 10px;
+-webkit-border-top-right-radius: 10px;
+border-top-right-radius: 10px;
+margin-right: 0px;
+text-align: right;
+padding-right: 15;
+margin-left: 0px;
+color: #000;
+}
+#cost_breakdown .explanation {
+clear: both;
+padding: 10px 20px;
+border-style: solid;
+border-width: 0 1px 1px 1px;
+border-color: #ccc;
+background-color: #f1f2ef;
+height: 115px;
+margin: 0 20px;
+position: relative;
+-moz-border-radius-bottomleft: 5px;
+-webkit-border-bottom-left-radius: 5px;
+border-bottom-left-radius: 5px;
+-moz-border-radius-bottomright: 5px;
+-webkit-border-bottom-right-radius: 5px;
+border-bottom-right-radius: 5px;
+position: relative;
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.2),0 0 0 #fff inset;
+-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.2),0 0 0 #fff inset;
+box-shadow: 0px 1px 3px rgba(0,0,0,0.2),0 0 0 #fff inset;
+}
+#cost_breakdown .explanation a {
+position: relative;
+z-index: 3;
+float: right;
+}
+.ui-icon {
+display: block;
+text-indent: -99999px;
+overflow: hidden;
+background-repeat: no-repeat;
+}
+.ui-icon-close {
+background-position: -80px -128px;
+}
+.ui-icon, .ui-widget-content .ui-icon {
+background-image: url(//d3ey4dbjkt2f6s.cloudfront.net/assets/jquery-ui/ui-icons_222222_256x240-1d52eaca08dbb229ab98ce3deb8f608f.png);
+}
+.ui-icon {
+width: 16px;
+height: 16px;
+}
+#cost_breakdown .explanation div {
+position: absolute;
+top: 10px;
+left: 10px;
+margin-right: 10px;
+}
+strong, b {
+font-weight: bold;
+}
+#cost_breakdown .bar .cost_type h5 {
+padding: 0px 15px;
+margin: 0px 0px 10px 0;
+font-size: 15px;
+font-weight: normal;
+white-space: nowrap;
+}
+#cost_breakdown .bar .cost_type div {
+font-size: 26px;
+padding-right: 10px;
+}
+
+.amount_sign{
+  top: -0.1em !important;
+}
+
+/*charges css new page new design*/
+#cost_breakdown .bar .cost_type:hover {
+    background-image: -moz-linear-gradient(center top , #eee, #ddd);
+    border-color: #B87333;
+    color: #B87333;
+    cursor: pointer;
+    position: relative;
+}
+
+#cost_breakdown .bar .cost_type small {
+    background-color: #fff;
+    border: 1px solid #888;
+    border-radius: 7px;
+    color: #888;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 14px;
+    position: absolute;
+    right: 5px;
+    text-align: center;
+    top: 5px;
+    width: 14px;
+}
+#cost_breakdown .bar .cost_type span{
+    color: #333;
+}
+
+#cost_breakdown .bar #monthly_charge_amount:hover {
+    color: #B87333;
+
+}
+
+.billing_information label {
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 30px;
+    width: 130px;
+    float: left;
+    text-align: right;
+    margin-right: 20px;
+}
+
+#charge_exp_year {
+    width: 75px;
+}
+/*end design for new page*/
+
+.list_addon{
+  list-style: none;
+  padding: 5px;
+}
+.list_addon li {
+  padding: 18px;
+}
+
+.list_addon input[type="radio"], input[type="checkbox"] {
+    margin: 0 5px 0 0;
+}
+
+
+.payment-display td{
+padding: 10px;
+}
+.rec-box{
+  background: #B87333;
+  color: #fff;
+  padding: 20px 0px 0px;
+}
+.rec-box h2{
+
+  color: #fff;
+  padding-bottom: 20px;
+  width: 150px;
+  border-bottom: 1px solid #fff;
+  text-align: center;
+  margin: 0 auto;
+}
+.rec-box h3{
+  color: #fff;
+  text-align: center;
+
+}
+.rec-box h4{
+  color: #fff;
+  padding: 5px 5px 10px; 
+  text-align: center;
+
+}
+.rec-box-date {
+  color: #fff;
+  padding: 5px 30px;
+  background-color: #E8A363;
+  height: 20px;
+}
+
+.rec-box-date span{
+  color: #fff;
+}

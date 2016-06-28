@@ -1,0 +1,41 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Import Lead</h4>
+    </div>
+    <div class="modal-body">
+
+      <%= form_tag import_file_path , multipart: true  do  %>
+        <div class="row">
+          <div class="span1">
+            Import File:
+          </div>
+          <div class="span3">
+            <%= file_field_tag :file, :type => 'text/csv' %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span1">
+            Tags:
+          </div>
+          <div class="span3">
+            <%= text_field_tag "pool_tag"%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span1">
+            Source:
+          </div>
+          <div class="span3">
+            <%= select_tag "source",options_for_select([["Maps","maps"],["Referal","referal"],["CL","cl"],["PennySaver","pennysaver"],["HomeAdvisor","homeadvisor"],["AngiesList","angieslist"]])%>
+          </div>
+        </div>
+      <div class="row text-right">
+        <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+        <%= submit_tag "Import CSV" ,:class=>"button_new_create save-new-btn1",:style=>"float:right; margin-right:15px;"%>
+      </div>
+    <%end%>
+    </div>
+  </div>
+</div>

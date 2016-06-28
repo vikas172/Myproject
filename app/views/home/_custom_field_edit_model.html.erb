@@ -1,0 +1,20 @@
+<%if !@custom_field.blank?%>
+	<%@custom_field.each do |custom_client|%>
+		<div class="service_content">
+			<%=link_to custom_client.name, custom_field_edit_path(:custom_id=>custom_client.id), remote: true, data: {toggle: "modal", target: "#custom_field_show_modal"}%>
+			<%if custom_client.value_type.first=="select" %>
+				<span>Can hold one of the following: <%= custom_client.value_type[1]%> ...</span>
+			<%elsif custom_client[:value_type].first=="text"%>
+				<span> Stores a text value (default : <%= custom_client.value_type[1]%>) </span>
+			<%elsif custom_client[:value_type].first=="area"%>
+			<span>Stores an area in square <%= custom_client.value_type[3]%>s</span>
+			<%elsif custom_client[:value_type].first=="integer"%>
+				<span>Stores the number of <%= custom_client.value_type[2]%>s</span>
+			<%elsif custom_client[:value_type].first=="boolean"%>
+			 <span>Stores a true or false value</span>     
+			<%end%>
+		</div>
+	<%end%>
+<%else%>
+	<div class="emptyList">There are no custom fields on <%= not_present %> yet.</div>
+<%end%>

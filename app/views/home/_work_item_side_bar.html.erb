@@ -1,0 +1,35 @@
+<ul id="settings_sidebar">
+
+  <%if current_user.user_type=="admin"%>
+    <li class="separator"><div></div></li>
+    <li class="heading">Company Settings</li>
+    <li><a href="/accounts/edit" class="spin_on_click <%= setting_selected_sidebar("general_account")%>">General</a></li>
+    <li><a href="/users" class="spin_on_click <%= setting_selected_sidebar("users")%><%= setting_selected_sidebar("user_new")%> <%= setting_selected_sidebar("user_show")%> <%= setting_selected_sidebar("member_edit")%> member_edit">Team Members</a></li>
+    <li><a href="/work_configuration/edit" class="spin_on_click <%= setting_selected_sidebar("company_brand")%>">Company Branding</a></li>
+  
+  <li><a href="/work_items" class="spin_on_click <%= setting_selected_sidebar("work_items")%>">Services &amp; Products</a></li>
+  
+    <li><a href="/custom_fields" class="<%= setting_selected_sidebar("custom_field")%>">Custom Fields</a></li>
+    <li><a href="/notifications/new" class="<%= setting_selected_sidebar("new")%>">Notifications</a></li>
+
+    <li class="separator"><div></div></li>
+    <li class="heading">Work Settings</li>
+    <li><%= link_to "Pool",market_source_pool_services_path,:class=>"spin_on_click #{setting_selected_sidebar("market_source")}"%></li>
+    <li><%= link_to "Plan Builder",service_plan_pool_services_path,:class=>"spin_on_click #{setting_selected_sidebar("service_plan")}"%></li>
+    <li><a href="/work_configuration/edit/quotes" class="spin_on_click <%= setting_selected_sidebar("quote_work_configuration")%>">Quotes</a></li>
+    <li><a href="/work_configuration/edit/work_orders" class="spin_on_click <%= setting_selected_sidebar("job_work_configuration")%>">Work Orders</a></li>
+    <li><a href="/work_configuration/edit/invoices" class="spin_on_click <%= setting_selected_sidebar("invoice_work_configuration")%>">Invoices</a></li>
+    <!-- <li><a href="/work_configuration/edit/statements" class="spin_on_click <%#= setting_selected_sidebar("statement_work_configuration")%>">Statements</a></li> -->
+    <li><%= link_to "Folder Access",document_setting_documents_path,:class=>"spin_on_click #{setting_selected_sidebar("document_setting")}"%></li>
+    <li><%= link_to "Inventory Setup",inventory_head_items_path,:class=>"spin_on_click #{setting_selected_sidebar("inventory_head")}"%></li>
+    <li><%= link_to "Pool Service",pool_service_pool_services_path,:class=>"spin_on_click #{setting_selected_sidebar("pool_service")}"%></li>
+    <li><%= link_to "Spa Service",spa_service_pool_services_path,:class=>"spin_on_click #{setting_selected_sidebar("spa_service")}"%></li>
+    <li><%= link_to "Chemical Items",chemical_items_pool_services_path,:class=>"spin_on_click #{setting_selected_sidebar("chemical_items")}"%></li>
+    <li><a href="/work_configuration/edit/email_options" class="spin_on_click <%= setting_selected_sidebar("email_option_work_configuration")%>">Email Options</a></li>
+    <li><%= link_to 'Expenses', expenses_mileage_expenses_path ,:class=>"spin_on_click #{setting_selected_sidebar("mile_category")}" if get_add_on_status(@active_addon, "expenses")%></li>
+    <li><%= link_to 'Timesheet', category_new_timesheets_path, :class=>"spin_on_click #{setting_selected_sidebar("category_new")}"%></li>
+    <li><%= link_to 'QuickBooks', accounts_syncer_qb_show_path, :class=>"spin_on_click #{setting_selected_sidebar("qb_show")}"if get_add_on_status(@active_addon, "quickbooks_ids") %></li>
+    <!--  <li><%#= link_to 'Customer Reminders', '' if get_add_on_status(@active_addon, "client_reminders") %></li>
+    <li><%#= link_to 'Chemical Tracking', chemical_treatment_setting_path ,:class=>"spin_on_click #{setting_selected_sidebar("chemical_treatment_setting")}" if get_add_on_status(@active_addon, "chemical_treatments") %></li> -->
+  <%end%>
+</ul>

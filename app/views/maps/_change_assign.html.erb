@@ -1,0 +1,55 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Work Order Reassign</h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">     
+        ID: <%= @job.id%>
+      </div>
+      <div class="row">
+       Description: <%= @job.description  rescue ""%>
+      </div>
+      <% !@job.crew.blank?%>
+        <div class="row">
+          <label>Assigned User:</label>
+          <% @job.crew.each_with_index do |crew,index|%>
+            <%= index+1%> &nbsp;<%= get_user_assigned(crew) rescue ""%><br/>
+          <%end%>
+        </div>
+      <%= form_tag reassign_maps_path do %>
+        <%= hidden_field_tag "job_id",nil,value: @job.id%>
+        <li class="user_selector"><span><b>Reassign Work Order</b></span>
+          <!-- select job emplyee -->
+          <br/>
+          <span class="popover-markup">
+            <a class="popoverThis trigger clickMeShow" data-toggle="popover" onclick="check_assigned()">
+              Click to Assign
+            </a>
+            <br/>
+            <div  id="job_assign_user"></div>
+            <%= render "jobs/select_job_employees" %>
+          </span>
+        </li>
+        <div class="row">
+          <%= submit_tag "Reassign",:class=>"update_button_setting",:style=>"margin-right:5px; float:right;"%>
+          <button type="button" class="model_cancel_button" data-dismiss="modal">Close</button>
+        </div>
+      <% end %>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  li {
+    list-style: none;
+  }
+  .popover-markup .popover{
+    left: 15px !important;
+  }
+</style>
+<script type="text/javascript">
+  popover_show();
+</script>

@@ -1,0 +1,130 @@
+<body class="pricing-page">    
+  <div class="client_index">
+  <div class="main_container">
+    <!-- ******PRICE PLAN****** --> 
+    <%= render "clients/error_message_and_flash" %>
+    <section id="price-plan" class="price-plan-chat section">
+      <div class="container text-center">
+        <h2 class="title">15 day FREE trial with all plans!</h2>
+        <p class="intro">CopperService's pricing is simple and you can change your plan at any time. </p>
+        <div class="price-cols row">
+          <div class="col-md-4 col-xs-12 price-tag <%= plan_activation_solo(current_user)%>">
+            <%= form_tag change_plan_subscriptions_path,:method=>"post" ,:remote=>true do %>
+            <div class="item col-md-12 col-sm-12 col-xs-12">  
+              <h3 class="heading">SOLO</h3>
+              <div class="content">
+                <p class="price-figure"><span class="currency">$</span><span class="number">19.95</span><span class="unit">/month</span></p>
+                <ul class="list-unstyled feature-list">
+                  <li>1 user</li>
+                  <li>Client Unlimited</li>
+                  <li>Email Notification yes</li>
+                  <li>10 Gb</li>
+                </ul>
+                <%= hidden_field_tag "plan_type" ,"solo"%>
+
+                <%if current_user.plan_type.blank?%>
+                  <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Choose Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%elsif current_user.plan_type=="solo"%>
+                  <%= link_to "#",:class=>"btn btn-cta btn-cta-primary" do %>Selected Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%else%>  
+                  <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Down Grade Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%end%>
+              </div>
+            </div>  <!--//content--> 
+            <%end%> 
+          </div><!--//item--> 
+
+          <div class="col-md-4 price-tag col-xs-12 <%= plan_activation_team(current_user)%>">
+            <%= form_tag change_plan_subscriptions_path ,:method=>"post" ,:remote=>true do %> 
+            <div class="item col-md-12 col-sm-12 col-xs-12">       
+              <h3 class="heading">TEAM <span class="label label-custom">Popular</span></h3>
+              <div class="content">
+                <p class="price-figure"><span class="currency">$</span><span class="number">29.95</span><span class="unit">/month</span></p>
+                <ul class="list-unstyled feature-list">
+                  <li>5 users</li>
+                  <li>Client Unlimited</li>
+                  <li>Email Notification yes</li>
+                  <li>25 Gb</li>
+                </ul>
+                <%= hidden_field_tag "plan_type" ,"team"%>
+                <%if current_user.plan_type.blank?%>
+                  <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Choose Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%elsif current_user.plan_type=="team"%>
+                  <%= link_to "#",:class=>"btn btn-cta btn-cta-primary" do %>Selected Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%elsif current_user.plan_type=="solo"%>
+                  <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Upgrade Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%elsif current_user.plan_type=="business"%>  
+                  <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Down Grade Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%end%>
+
+              </div>
+            </div><!--//content-->
+            <%end%>
+          </div><!--//item--> 
+
+          <div class="col-md-4 price-tag col-xs-12 <%= plan_activation_business(current_user)%>">
+            <%= form_tag change_plan_subscriptions_path ,:method=>"post" ,:remote=>true  do %> 
+            <div class="item col-md-12 col-sm-12 col-xs-12">   
+              <h3 class="heading">BUSINESS</h3>
+              <div class="content">
+                <p class="price-figure"><span class="currency">$</span><span class="number">49.95</span><span class="unit">/month</span></p>
+                <ul class="list-unstyled feature-list">
+                  <li>20 Each additional user $2</li>
+                  <li>Client Unlimited</li>
+                  <li>Email Notification yes</li>
+                  <li>100 Gb</li>
+                </ul>
+                <%= hidden_field_tag "plan_type" ,"business"%>
+                <%if current_user.plan_type.blank?%>
+                  <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Choose Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%elsif current_user.plan_type=="business"%>
+                  <%= link_to "#",:class=>"btn btn-cta btn-cta-primary" do %>Selected Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%elsif current_user.plan_type =="team"%>
+                  <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Upgrade Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%elsif current_user.plan_type =="solo"%>  
+                  <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Upgrade Plan<br/>
+                    <span class="extra">30 day free trial</span>
+                  <%end%>
+                <%end%>
+              </div>
+            </div><!--//content-->
+            <%end%>
+          </div><!--//item-->   
+        </div><!--//row-->
+      </div>
+    </div><!--//container-->
+  </section><!--//price-plan-->     
+  </div><!--//wrapper-->
+  <div class="modal fade" id="payment_pay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;"></div>         
+</body>
+</html> 
+
+
+<style type="text/css">
+ul.list-unstyled.feature-list {
+  list-style: none;
+}
+.price-tag{
+  width: 30% !important;
+}
+</style>

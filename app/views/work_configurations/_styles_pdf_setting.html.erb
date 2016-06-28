@@ -1,0 +1,33 @@
+<br><br>
+<br><br>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="show_company_name_on_pdfs">
+  <%= check_box_tag 'show_company_name_on_pdfs', 'yes', true,:onclick=>"checkMarked(this.id,'styles')" ,:value=>"1"%>
+  <label for="pdf_settings_show_company_name_on_pdfs">Show name with logo?</label>
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="pdf_shows_phone">
+  <%= check_box_tag 'pdf_shows_phone', 'yes', true,:onclick=>"checkMarked(this.id,'styles')" ,:value=>"1"%>
+  <label for="pdf_settings_pdf_shows_phone">Show your phone number in header?</label>
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="pdf_shows_email">
+  <%= check_box_tag 'pdf_shows_email', 'yes', true,:onclick=>"checkMarked(this.id,'styles')" ,:value=>"1"%>
+  <label for="pdf_settings_pdf_shows_email">Show your email in header?</label>
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="pdf_shows_website">
+  <%= check_box_tag 'pdf_shows_website', 'yes', true,:onclick=>"checkMarked(this.id,'styles')" ,:value=>"1"%>
+  <label for="pdf_settings_pdf_shows_website">Show your website in header?</label>
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="pdf_shows_client_phone">
+  <%= check_box_tag 'pdf_shows_client_phone', 'yes', true,:onclick=>"checkMarked(this.id,'styles')" ,:value=>"1"%>
+  <label for="pdf_settings_pdf_shows_client_phone">Show client phone number?</label>
+</p>   
+<p></p>

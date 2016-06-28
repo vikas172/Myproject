@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vehicle:</strong>
+  <%= @fuel.vehicle_id %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @fuel.date %>
+</p>
+
+<p>
+  <strong>Odometer:</strong>
+  <%= @fuel.odometer %>
+</p>
+
+<p>
+  <strong>Mark as void:</strong>
+  <%= @fuel.mark_as_void %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @fuel.price %>
+</p>
+
+<p>
+  <strong>Fuel type:</strong>
+  <%= @fuel.fuel_type %>
+</p>
+
+<p>
+  <strong>Vandor name:</strong>
+  <%= @fuel.vandor_name %>
+</p>
+
+<p>
+  <strong>Reference:</strong>
+  <%= @fuel.reference %>
+</p>
+
+<p>
+  <strong>Mark as expense:</strong>
+  <%= @fuel.mark_as_expense %>
+</p>
+
+<p>
+  <strong>Partial fuel up:</strong>
+  <%= @fuel.partial_fuel_up %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @fuel.comment %>
+</p>
+
+<%= link_to 'Edit', edit_fuel_path(@fuel) %> |
+<%= link_to 'Back', fuels_path %>

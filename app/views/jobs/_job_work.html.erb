@@ -1,0 +1,15 @@
+<div id="edit_<%= @work_id %>" class="replace_job replace_job_text">
+  <%= link_to(get_edit_job_path(@job_work.id, @work_id.split('_')[2].to_i), :remote=>true) do %>
+    <span class="work_job_name name"><%= @job_work.name %></span>
+    <span class="work_job_description description"><%= @job_work.description %></span>
+    <div class="work_job_right">
+      <span class="work_job_cost cost_column"><%= @job_work.quantity %></span>
+      <span class="work_job_column cost_column" style="margin-left: 70px;"><%= @job_work.unit_cost %></span>
+      <span class="work_job_column cost_column show_total" style="margin-left: 70px;"><%= @job_work.total %> </span>
+    </div>
+  <% end %>
+</div>
+
+<script>
+Show_total()
+</script>

@@ -1,0 +1,36 @@
+<div id="app_wrapper">
+	<div class="client_index">
+		<div class="main_container">
+			<div id="content" style="height: auto;">
+				<div class="padding">
+					<%=render "home/work_item_side_bar" %>
+					<div id="settings_area">
+
+						<div id="head">
+							<div id="controls" class="hide_for_print">      
+								<a rel="nofollow" href="/home/users/<%=@team_member.id%>/reactivate"  class="update_button_setting">Reactivate <%= @team_member.full_name%> </a>
+							</div>
+							<h1 class="title1-font">Team Member Settings</h1>		  
+						</div>
+
+						<p>
+						<strong><%= @team_member.full_name%> </strong> is
+						inactive.
+						</p>
+
+						<div class="form_section faded_remove_holder" id="destroy_user">
+							<h2>Permanently Delete Member</h2>
+							<div style="float: right; margin-left:60px; margin-bottom:20px">
+								<%= link_to "Delete User",user_delete_path(:id=> @team_member.id),:class=>"button remove",:data=> {:confirm=>"Are you sure you wish to permanently delete #{@team_member.full_name} ?"}%>
+							</div>
+
+							<p class="desc">
+								This will delete <%= @team_member.full_name%>  and <strong>all records of past activity.</strong> We strongly discourage deleting users. There is <strong>no undo</strong>.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+</div> 

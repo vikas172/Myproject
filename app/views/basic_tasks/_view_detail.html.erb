@@ -1,0 +1,66 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel"><%= @basic_task.title rescue "" %></h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="span3" id="popover_left">
+          <%= form_tag basic_task_complete_basic_task_path(@basic_task), remote: true do %>
+            <label>
+              <%= check_box_tag "is_completed ", nil, @basic_task.is_completed, :onclick=>"$('form').submit();" %>
+              <b>Completed? </b><%= "("+ @basic_task.completed_date.strftime("%m/%d/%Y %H:%M ") +") by  " + @user.first_name rescue "" %>
+            </label>
+            <div class="" style="padding: 20px 0px 0px;">
+              <i class="fa fa-calendar"></i> <b><%= @basic_task.start_at_date.strftime("%m/%d/%Y") rescue "" %> Anytime</b>
+              <div class="assigned_to">
+                <%if !@basic_task.assigned_to.blank?%>
+                  <% @basic_task.assigned_to.each do |user_id|%>
+                    <i class="fa fa-user"></i>  <%=get_assigined_user_name(user_id)%>
+                    <br>
+                  <%end%>
+                <%else%>
+                  Not Assigned Yet
+                <%end%>  
+              </div>
+            </div>
+            <p class="toDo-description"><%= @basic_task.description %></p>
+            
+          <% end %>
+        </div>
+        <%if current_user.user_type=="admin"%>
+          <div class="span2">
+            <div class="" style="text-align:right;margin-bottom:10px;">
+              <%= link_to edit_basic_task_path(@basic_task), class: "button edit spin_on_click save-new-btn1", data: {toggle: "modal", target: "#edit_calender_task"}, remote: true do %>
+              <i class="fa fa-pencil"></i> Edit
+              <% end %>
+              <%= link_to @basic_task, method:'delete',  html:{data:{confirm:"are you sure?"}}, class: "button trash spin_on_click save-new-btn1" do %>
+              <i class="fa fa-minus-circle"></i> Delete
+              <% end %>
+            </div>
+          </div>
+        <%elsif @team_member.permission.to_dos=="edit_delete_all"%>
+          <div class="span2">
+            <div class="" style="text-align:right;margin-bottom:10px;">
+              <%= link_to edit_basic_task_path(@basic_task), class: "button edit spin_on_click save-new-btn1", data: {toggle: "modal", target: "#edit_calender_task"}, remote: true do %>
+              <i class="fa fa-pencil"></i> Edit
+              <% end %>
+              <%= link_to @basic_task, method:'delete',  html:{data:{confirm:"are you sure?"}}, class: "button trash spin_on_click save-new-btn1" do %>
+              <i class="fa fa-minus-circle"></i> Delete
+              <% end %>
+            </div>
+          </div> 
+        <%elsif @team_member.permission.to_dos=="edit_all"%>
+          <%= link_to edit_basic_task_path(@basic_task), class: "button edit spin_on_click", data: {toggle: "modal", target: "#edit_calender_task"}, remote: true do %>
+              <i class="fa fa-pencil"></i> Edit
+          <%end%>
+        <%elsif @team_member.permission.to_dos=="edit_all"%>
+          <%= link_to edit_basic_task_path(@basic_task), class: "button edit spin_on_click", data: {toggle: "modal", target: "#edit_calender_task"}, remote: true do %>
+              <i class="fa fa-pencil"></i> Edit
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>

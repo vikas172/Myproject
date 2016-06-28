@@ -1,0 +1,61 @@
+<div class="fieldset">
+  <%= render "work_property_head" , :locals=>{:@client=> @client,:@property=>@property}%>
+  <div style="max-height:400px;" class="content">
+    <div style="" class="thicklist" id="tab1">
+      <%if !@active_jobs.blank?%>
+        <%= render "jobs/work_job_active", :locals=>{:@jobs=> @active_jobs} %>
+      <%end%>
+      <%if !@active_quotes.blank?%>
+        <%= render "quotes/work_quote_active", :locals=>{:@quotes=> @active_quotes} %>
+      <%end%>
+       <!--  <div class="emptyList">No Active Work</div> -->
+    </div>
+    <%if current_user.user_type=="user"%>
+      <%if set_view_permission_for_work_client_property(@team_member.permission.permission_quotes)%>
+        <% if !@quotes_all.blank? %>
+          <div style="display:none" class="thicklist" id="tab2">
+            <%= render "quotes/work_quote_tab", :locals=>{:@quotes=> @quotes_all} %>
+          </div> 
+        <% else %>
+          <div style="display:none" class="thicklist" id="tab2">
+            <div class="emptyList">No Estimate</div>
+          </div>
+        <% end%>
+      <%end%>
+    <%else%>
+      <% if !@quotes_all.blank? %>
+        <div style="display:none" class="thicklist" id="tab2">
+          <%= render "quotes/work_quote_tab", :locals=>{:@quotes=> @quotes_all} %>
+        </div> 
+      <% else %>
+        <div style="display:none" class="thicklist" id="tab2">
+          <div class="emptyList">No Estimate</div>
+        </div>
+      <% end%>
+    <%end%>  
+
+    <%if current_user.user_type=="user"%>
+      <%if set_view_permission_for_work_client_property(@team_member.permission.permission_quotes)%>
+        <%if !@jobs_all.blank?%>
+          <div style="" class="thicklist" id="tab3">
+            <%= render "jobs/work_job_tab", :locals=>{:@jobs=> @jobs_all} %>
+          </div>
+        <%else %>
+          <div style="display:none" class="thicklist" id="tab3">
+            <div class="emptyList">No Work Orders</div>
+          </div>
+        <%end%>
+      <%end%>
+    <%else%>
+      <%if !@jobs_all.blank?%>
+        <div style="" class="thicklist" id="tab3">
+          <%= render "jobs/work_job_tab", :locals=>{:@jobs=> @jobs_all} %>
+        </div>
+      <%else %>
+        <div style="display:none" class="thicklist" id="tab3">
+          <div class="emptyList">No Work Orders</div>
+        </div>
+      <%end%>
+    <%end%>  
+  </div>
+</div>

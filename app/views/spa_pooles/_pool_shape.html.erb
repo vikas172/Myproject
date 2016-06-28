@@ -1,0 +1,36 @@
+<h6>Size </h6>
+<div class="depth">
+  <label>Depth1</label>
+  <%= text_field_tag "pool_data[depth]"%>
+</div>
+
+<div class="depth2">
+  <label>Depth2</label>
+  <%= text_field_tag "pool_data[depth2]"%>
+</div>
+
+<%if params[:shape] == "round"%>
+  <div class="diameter">
+    <label>Diameter</label>
+    <%= text_field_tag "pool_data[diameter]"%>
+  </div>
+<%elsif ((params[:shape] == "rectangular") || (params[:shape] == "oval") || (params[:shape] == "kidney"))%>  <div class="length">
+    <label>Length</label>
+    <%= text_field_tag "pool_data[length]"%>
+  </div>
+
+  <div class="width">
+    <label>Width</label>
+    <%= text_field_tag "pool_data[width]"%>
+  </div>
+
+  <%if (params[:shape] == "kidney")%>
+    <div class="width2">
+      <label>Width2</label>
+      <%= text_field_tag "pool_data[width2]"%>
+    </div>
+  <%end%>  
+<%end%>
+<label>Gallonage:</label>
+<%= text_field_tag "pool_data[pool_gallonage]",nil,:value=>@pool_data.try(:pool_gallonage)%>
+

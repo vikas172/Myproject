@@ -1,0 +1,74 @@
+<%= form_for(@pool_service, url: service_create_pool_services_path) do |f| %>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Pool Chemical Ranges</th>
+				<th>Low Range</th>
+				<th>High Range</th>
+				<th>Select</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>PH:</td>
+				<td><%= f.text_field :ph_low,:placeholder=>"7.3"%></td>
+				<td><%= f.text_field :ph_high,:placeholder=>"7.6"%></td>
+				<td><%= f.check_box :ph_select %></td>
+			</tr>
+			<tr>
+				<td>CH:</td>
+				<td><%= f.text_field :ch_low,:placeholder=>"3 ppm"%></td>
+				<td><%= f.text_field :ch_high,:placeholder=>"7 ppm"%></td>
+				<td><%= f.check_box :ch_select %></td>
+			</tr>
+			<tr>
+				<td>Combined CH:</td>
+				<td><%= f.text_field :combined_ch_low,:placeholder=>"0 ppm"%></td>
+				<td><%= f.text_field :combined_ch_high,:placeholder=>"1 ppm"%></td>
+				<td><%= f.check_box :combined_select %></td>
+			</tr>
+			<tr>
+				<td>Alkalinity:</td>
+				<td><%= f.text_field :alkalinity_low,:placeholder=>"90"%></td>
+				<td><%= f.text_field :alkalinity_high,:placeholder=>"150"%></td>
+				<td><%= f.check_box :alkalinity_select %></td>
+			</tr>
+			<tr>
+				<td>Calcium Hardness:</td>
+				<td><%= f.text_field :calcium_hardness_low,:placeholder=>"200"%></td>
+				<td><%= f.text_field :calcium_hardness_high,:placeholder=>"400"%></td>
+				<td><%= f.check_box :calcium_select %></td>
+			</tr>
+			<tr>
+				<td>Stabilizer:</td>
+				<td><%= f.text_field :stabilizer_low,:placeholder=>"30 ppm"%></td>
+				<td><%= f.text_field :stabilizer_high,:placeholder=>"60 ppm"%></td>
+				<td><%= f.check_box :stabilizer_select %></td>
+			</tr>
+			<tr>
+				<td>Salt:</td>
+				<td><%= f.text_field :salt_low,:placeholder=>"2300 ppm"%></td>
+				<td><%= f.text_field :salt_high,:placeholder=>"3400 ppm"%></td>
+				<td><%= f.check_box :salt_select %></td>
+			</tr>
+			<tr>
+				<td>Total Dissolved Soiled:</td>
+				<td><%= f.text_field :dissolved_soild_low,:placeholder=>"0 ppm"%></td>
+				<td><%= f.text_field :dissolved_soild_high,:placeholder=>"2000 ppm"%></td>
+				<td><%= f.check_box :dissolved_select %></td>
+			</tr>
+			<tr>
+				<td>Saturation Index:</td>
+				<td><%= f.text_field :saturation_index_low,:placeholder=>"-0.4"%></td>
+				<td><%= f.text_field :saturation_index_high,:placeholder=>"0.4"%></td>
+				<td><%= f.check_box :saturation_select %></td>
+			</tr>		
+      <%= f.hidden_field :user_id,:value=>current_user.id%>
+      <%= hidden_field_tag "service_type",nil,:value=>params[:action]%>
+
+		</tbody>
+	</table>
+	<div class="row">
+		<%=f.submit "save",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+	</div>
+<%end%>

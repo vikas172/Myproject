@@ -1,0 +1,133 @@
+<%= form_for(@item) do |f| %>
+  <% if @item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% @item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="span12 new-form-design">
+    <div class="row">
+      <div class="span2">
+        <%= f.label :name %>
+      </div>
+      <div class="span7">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :description %> 
+      </div>
+      <div class="span7">
+        <%= f.text_area :description %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :product_model_number %>
+      </div>
+      <div class="span7">
+        <%= f.text_area :product_model_number %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :vendor_part_number %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :vendor_part_number %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :vendor_name %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :vendor_name %>
+      </div>
+    </div>
+
+
+      <div class="row">
+      <div class="span2">
+        <%= f.label :quantity %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :quantity %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :unit_value %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :unit_value %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :value %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :value %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :vendor_url %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :vendor_url %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :category %> 
+      </div>
+      <div class="span7">
+        <%= f.select(:category, options_for_select([['Arduino', 'Arduino'], ['Raspberry Pi', 'Raspberry Pi'],['BeagleBone', 'BeagleBone'],['Prototyping','Prototyping'],['Kits & Projects','Kits & Projects'],['Boards','Boards'],['LCDS & Displays','LCDS & Displays'],['LEDS','LEDS'],['Power','Power'],['Cables','Cables'],['Tools','Tools'],['Robotics','Robotics'],['CNC','CNC'],['Components & Parts','Components & Parts'],['Sensors','Sensors'],['3D Printing','3D Printing'],['Wireless','Wireless']]), {}, {class: "form-control"}) %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :image %> 
+      </div>
+      <div class="span7">
+        <%= f.file_field :image %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :location %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :location %>
+      </div>
+    </div>
+
+    <div >
+      <%=render "items/custom_new"%>
+    </div>
+    
+    <div class="clearfix"></div>
+    <div class="actions">
+      <%= link_to 'Back', items_path,:class=>"model_cancel_button",:style=>"margin: -1px 23px -1px -1px;" %>
+      <%= f.submit "Create Inventory",:class=>"button_new_create save-new-btn1 pull-right"%>
+    </div>
+  </div>  
+<% end %>

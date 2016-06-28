@@ -1,0 +1,259 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="margin-right: 0px!important;">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">New Expense</h4>
+    </div>
+    <div class="modal-body">
+      <%= form_for @expense, html: {class: "expense compressed_form new-expense-modal"} do |f| %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <div class="row">
+          <div id="popover_form_content">
+            <div class="span2" id="popover_left">
+              <label for="expense_clean_date">Date</label>
+            </div>
+            <div class="span3" id="popover_left">
+              <%= link_to Date.today, '#', onclick: "$(expense_clean_date).css('display', 'block'); $(expense_clean_date).val(this.val); $(this).hide(); $( '#expense_clean_date' ).datepicker({dateFormat: 'yy-mm-dd',}).datepicker('setDate', new Date());return false;", id: "expense_date" %>
+              <%= f.text_field :clean_date, value: Date.today, style: "display:none;", class: "calendar", size: "10" %>
+            </div>
+          </div>
+        </div>
+
+        <%if params[:action]=="edit"%>
+          <%if @expense.expense_type=="merchant"%>
+            <div class="row">
+              <div id="popover_form_content" class="merchant-box">
+                <div class="span2" id="popover_left">
+                  <label for="expense_name">Merchant</label>
+                </div>
+                <div class="span3" id="popover_left">
+                <%= f.text_field :name, class: "large full_width ui-autocomplete-input", autofocus: "autofocus" %>
+                </div>
+              </div>
+            </div>
+          <%else%>
+            <div class="row">
+              <input type="checkbox" name="distance" value="mileage" class="expense-distance" checked="checked"> Distance/Mileage Expense
+            </div>
+            <div class="row distance-box">
+              <div id="popover_form_content">
+                <div class="span2" id="popover_left">
+                  <label for="expense_cost">Distance</label>
+                </div> 
+                <div class="span3"  id="popover_left">
+                  <%= f.text_field :miles, class: "large strong", autofocus: "autofocus",:style=>"width: 20%;"%>
+                  <%=f.select(:unit,options_for_select([["mi","mi"],["km","km"]],:selected=>@custom_expense.try(:default_unit))) %>
+                <%= render "calculate_mileage"%>
+                </div>
+              </div>
+            </div>
+          <%end%>
+        <%else%> 
+          <div class="row">
+            <div class="span2"></div>
+            <div class ="span3" id="popover_left" >
+             
+            <input type="radio" name="distance" value="mileage" id="expense" class=" radio" checked="checked">Expense
+            <span>
+            <input type="radio" name="distance" value="mileage" class="expense-distance radio">Mileage Expense
+          </span>
+          </div>
+        </div>
+          <div class="row">
+            <div id="popover_form_content" class="merchant-box">
+              <div class="span2" id="popover_left">
+                <label for="expense_name">Merchant</label>
+              </div>
+              <div class="span3" id="popover_left">
+              <%= f.text_field :name, class: "large full_width ui-autocomplete-input", autofocus: "autofocus" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row distance-box" style="display:none;">
+            <div id="popover_form_content">
+              <div class="span2" id="popover_left">
+                <label for="expense_cost">Distance</label>
+              </div> 
+              <div class="span3"  id="popover_left">
+                <%= f.text_field :miles, class: "large strong", autofocus: "autofocus",:style=>"width: 20%;"%>
+                <%=f.select(:unit,options_for_select([["mi","mi"],["km","km"]],:selected=>@custom_expense.try(:default_unit))) %>
+                <%= render "calculate_mileage"%>
+              </div>
+            </div>
+          </div>
+        <%end%> 
+
+        <div class="row">
+          <div id="popover_form_content">
+            <div class="span2" id="popover_left">
+              <label for="expense_note">Details</label>
+            </div>
+            <div class="span3" id="popover_left">
+              <%= f.text_area :note, rows: "2", autofocus: "autofocus", placeholder: "details..." %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="popover_form_content">
+            <div class="span2" id="popover_left">
+              <label for="expense_cost">Total $</label>
+            </div> 
+            <div class="span3"  id="popover_left">
+              <%= f.text_field :cost, class: "large strong", autofocus: "autofocus", placeholder: "0.00" ,:id=>"total-amount"%>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="popover_form_content">
+            <div class="span2 label-check" id="popover_left">
+            </div>  
+            <div class="span3" id="popover_left">               
+              <%#= f.check_box :exp_reimbursable,:value=>"reimbursable"%> <!-- Reimbursable -->
+              <%= f.radio_button :exp_billable,"reimbursable"%> Reimbursable
+              <span><%= f.radio_button :exp_billable,"billable"%> Billable</span>
+              <%#= f.check_box :exp_billable,:value=>"billable"%> <!-- Billable -->
+            </div>  
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="popover_form_content">
+            <div class="span2" id="popover_left">
+              <label for="expense_work_order_id">Job</label>
+            </div>
+            <div class="span3" id="popover_left"> 
+              <%= f.select :job_id, options_for_select(@jobs.each_with_index.map{ |job,i| ["##{i+1}-#{client_full_name(job.property.client)}-#{job.description}", job.id ] rescue "" },:selected=> @expense.try(:job_id)) %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="popover_form_content">
+            <div class="span2" id="popover_left">
+              <label for="expense_cost">Category</label>
+            </div> 
+            <div class="span3"  id="popover_left">
+              <%= select_tag "expense[exp_category]", options_from_collection_for_select(@categories, "id", "category" ,:selected=>@expense.try(:exp_category))%>
+            </div>
+          </div>
+        </div>               
+
+        <div class="row">
+          <div id="popover_form_content">
+            <div class="span2" id="popover_left">
+              <label for="file">Receipt</label>
+            </div>
+            <div class="span3" id="popover_left">
+              <%= f.file_field :image ,class: "margin-left: 75px;" %>
+            </div>
+          </div>  
+        </div>  
+
+        <div class="row"> 
+          <div id="popover_form_content " style="text-align: right;" class="model_butn">
+             <% if params[:action] == "edit" %>
+              <%= link_to "Delete Expense", expense_path(@expense), method: "delete", class: "button remove delete_expense pull-left" %>
+            <% end %>
+            <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+            <%= f.submit 'SAVE', class: "model_save_button " %>
+          </div>
+        </div>
+      <% end %>     
+    </div>
+  </div>
+</div>
+<script>
+
+
+  $( "#expense_dist_date" ).datepicker({dateFormat: 'yy-mm-dd'});
+
+  $(document).on('change','#expense_miles','#expense_unit',function(){
+
+    var unit = $("#expense_unit").val();
+    var amount = $('#per-unit').data('value');
+    var km= <%= @custom_expense.km rescue 0.357%>
+    var mile= <%= @custom_expense.mileage rescue 0.575%>
+    var miles= $("#expense_miles").val();
+    if (unit == "km"){
+      $("#per-unit").html("at $" + km + "per km.")
+      $('#per-unit').attr('data-value', km);
+      $("#total-amount").val((parseInt(miles)*km).toFixed(2))
+    }
+    else
+    {
+      $("#per-unit").html("at $" + mile + "per mi.")
+      $('#per-unit').attr('data-value', mile);
+      $("#total-amount").val((parseInt(miles)*mile).toFixed(2))
+    }
+  })
+
+
+  $(document).on('change','#expense_unit',function(){
+
+    var unit = $("#expense_unit").val();
+    var amount = $('#per-unit').data('value');
+    var km= <%= @custom_expense.km rescue 0.357%>
+    var mile= <%= @custom_expense.mileage rescue 0.575%>
+    var miles= $("#expense_miles").val();
+    if (unit == "km"){
+      $("#per-unit").html("at $" + km + "per km.")
+      $('#per-unit').attr('data-value', km);
+      $("#total-amount").val((parseInt(miles)*km).toFixed(2))
+    }
+    else
+    {
+      $("#per-unit").html("at $" + mile + "per mi.")
+      $('#per-unit').attr('data-value', mile);
+      $("#total-amount").val((parseInt(miles)*mile).toFixed(2))
+    }
+  })
+
+
+
+  $("body").on('change',".expense-distance",function()
+  {
+    if($(this).is(':checked')){
+      $(".merchant-box").css("display","none");
+      $(".distance-box").css("display","block");
+      $('#expense_exp_category option[value=fuel_mileage]').prop('selected', true);
+      $("#total-amount").prop("readonly", true);
+    }
+    else
+      {
+        $(".merchant-box").css("display","block");
+        $(".distance-box").css("display","none");
+        $('#expense_exp_category option[value=uncategorized]').prop('selected', true);
+        $("#total-amount").prop("readonly", false);
+        $("#total-amount").val("");
+        $("#expense_miles").val("");
+      }
+  })
+  $("#expense").click(function() {
+    $(".merchant-box").show();
+    $(".distance-box").css("display","none");
+    $('#expense_exp_category option[value=uncategorized]').prop('selected', true);
+    $("#total-amount").prop("readonly", true);
+    
+  });
+</script>
+
+<style type="text/css">
+#expense_unit{
+  width: 21% !important;
+  top: -4px;
+}
+#popover_form_content{
+  margin-bottom: 0px !important;
+  
+}
+.model_butn{
+  margin-top: 10px;
+}
+.delete_expense{
+  margin-right: 10px;
+  padding:7px 8px;
+}
+</style>

@@ -1,0 +1,141 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <div class="show_view_button" style="width:30%; float:right;">
+      <%if set_view_permission_client_property_view(@team_member)%>
+        <button class="button_new_index save-new-btn1" data-toggle="modal" data-target="#myModal" >
+        New Pool</button>
+       
+        <%= link_to "Email","",:id=>"market-email",:style=>"margin-right:5px",:class=>"button_new_index save-new-btn1",data: {toggle: "modal", target: '#email-message'}%> 
+      <%end%>  
+    </div>
+
+
+    <div class="tabbable">
+      <div id="properties" class="tab-pane">
+        <div class="tables">
+          <div class="filter-by-column" style="top:164px;"> Filter By Columns </div>
+          <table class="sortable wide" cellspacing="0" cellpadding="0" id="property_index_view" width="99%" style="top: 50px;">  
+            <tfoot class="filter-top">
+              <tr>
+                <th width="9%" class="filter-index-check" style="padding:0;"></th>
+                <th width="5%">ID</th>
+                <th width="12%">Owner</th>
+                <th width="12%">Street</th>
+                <th width="12%">City</th>
+                <th width="12%">State</th>
+                <th width="9%">Zip Code</th>
+                <th width="9%">Status</th>
+                <th width="10%">Source</th>
+                <th width="10%">Tags</th>
+            </tfoot>
+
+            <thead class="thead">
+              <tr>
+                <th width="2%"><input type="checkbox" name="check_all" value="all" id="check-all-index"></th>
+                <th width="5%">ID</th>
+                <th width="15%">Owner</th>
+                <th width="15%">Street</th>
+                <th width="12%">City</th>
+                <th width="12%">State</th>
+                <th width="10%">Zip Code</th>
+                <th width="9%">Status</th>
+                <th width="10%">Source</th>
+                <th width="10%">Tags</th>
+              </tr>
+            </thead>
+
+            <% unless @clients.blank?%>
+              <% @clients.each do |client| %>
+                <%if !client.properties.blank?%>
+                  <%client.properties.each do |property|%>
+                    <tr>
+                      <td><input type="checkbox" class ="lead-index-check"name="check_all_<%=property.id%>" value="<%= property.id%>" id="<%= property.id%>"></td>
+                      <td><%= property.id %></td>
+                      <td><%= link_to "#{ property.client.try(:initial)} #{property.client.try(:first_name)}  #{property.client.try(:last_name)}" , "/properties/#{property.id}",:id=>property.id,:class=>"propert",:onclick=>"propertyShowView()"%></td>
+                      <td><%=  property.try(:street) rescue "" %></br><%=property.try(:street2) rescue "" %></td>
+                      <td><%=  property.try(:city) rescue "" %></td>
+                      <td><%=  property.state rescue "" %></td>
+                      <td><%= property.zipcode rescue "" %></td>   
+                      <td><%= property.try(:pool_activity)%></td>
+                      <td><%= property.try(:source)%></td>                       
+                      <td>
+                        <%property.tags.each do |tag|%>
+                          <%= tag.name%>
+                        <%end%>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %> 
+              <% end %>
+            <% end %>  
+          </table>
+        </div>
+      </div>
+    </div><!-- /.tab-content -->
+  </div>
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header new-modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+          <h4 class="modal-title" id="myModalLabel">New Pool</h4>
+        </div>
+        <div class="modal-body">
+          <div id="client_selector">
+          <p>Which Customer would you like to use for this Pool?</p>
+          <div class ="search-div row">
+            <%= text_field_tag :search, nil, :class=>"form-control",:placeholder=>"Start typing to find your Clients...",:require=>true,:id=>"search_input_property_client",:style=>"width: 48%;" ,:onkeyup => "searchPropertyClientModel($(this).val())"%>
+            <span class="or">or</span>
+            <% if params[:controller]=="properties" %>
+              <%= link_to 'Create New Customer', new_client_path(:id=>"property") ,:class=>"button_new_create save-new-btn1",:style=>"float:right;"%><br/><br/>
+            <% else %>
+              <%= link_to 'Create New Customer', new_client_path(:id=>"client"),:class=>"button_new_create save-new-btn1",:style=>"float:right;"%><br/><br/>
+            <% end%>
+          </div>
+          <h4 class="title1-font">Some Recently Used Customers:</h4>
+          <ul class="thicklist client_show" id="client_list_display"> 
+            <%= render "search_client_property"%>
+          </ul>
+        </div>  
+        </div>
+        <!-- <div class="modal-footer">
+        </div> -->
+      </div>
+    </div>
+  <!-- Modal End-->
+  </div>
+</div>
+<div class="modal fade" id="email-message" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+
+<script type="text/javascript">
+  $("#check-all-index").click(function(){
+    if($(this).is(':checked'))
+      {
+        $(".lead-index-check").prop('checked', true);
+      }
+    else
+      {
+       $(".lead-index-check").prop('checked', false);
+      }
+  })
+
+  $(".lead-index-check").click(function(){
+    $("#check-all-index").prop('checked', false);
+  })
+
+  $("#market-email").click(function(){
+    var properties = new Array();
+    $("input:checkbox:checked").each(function () {
+       properties.push( $(this).attr("id"));
+    });
+    $.ajax({
+      type: "GET",
+      url: "/properties/email_message",
+      data: {properties: properties}
+     });
+  })
+
+</script>

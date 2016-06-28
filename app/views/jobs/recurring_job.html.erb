@@ -1,0 +1,195 @@
+<div class="client_index">
+  <div class="main_container">
+
+    <h4 class="title2-font"><%= fetch_client_name(params) %></h4>
+    <br>
+    <div class="row form-group" id="type_picker">
+      <%= "Recurring Contract"%>
+    </div>
+    <br>
+    <%= form_for(@job) do |f| %>
+      <div class="row">
+        <% if @job.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@job.errors.count, "error") %>
+              prohibited this job from being saved:</h2>
+            <ul>
+              <% @job.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+      <%= f.hidden_field :job_type, :value=>"recurring_contract"%>
+      <%= hidden_field_tag "property_id",params[:property_id]%>
+
+      <div class="row">
+      <div class="span2 left_align">
+        <span><b>Work Order</b></span>
+      </div>
+      <div class="span7 left_align">
+        <span>#</span>
+        <span class="work_order_number"><%=@jobs.blank? ? 1 : ((@jobs.count)+1 )%></span>
+        -
+        <a class="expander" href="#" onclick="$(this).next().show(); $(this).hide(); $('.work_order_number').hide(); return false;">Change</a>
+        <span style="display:none;">
+         <%= f.text_field :job_order, :value=>@jobs.blank? ? @job.job_order : ((@jobs.count)+1 ),:id=>"job_order" %>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span2 left_align">
+        <span><b>Description</b></span>
+      </div>
+      <div class="span7 left_align">
+        <span>
+          <%= f.text_field :description,:placeholder=>"Optional"%><span class="description"> - a few words summarizing this Work Order
+        </span>
+      </div>
+    </div>
+
+    <div class="recurring_contract">
+      <div class="row">
+        <div class="span2 left_align">
+          <span><b>Starts on</b></span>
+        </div>
+        <div class="span7 left_align">
+          <span>
+            <%= f.text_field :start_date, :id => "datepicker", :class => "job_start_date", :value => job_date_time_format(@job) %>&nbsp;</span>
+          And Lasts 
+          <span> &nbsp;<%= f.text_field :number_of_invoice ,:required=>true, :class=>"job_invoice_type recurring_starton1 ",:style=>"width:30px; margin: 0 !important;"%>
+          </span>
+          <span>
+            <%= f.select(:invoice_type ,options_for_select([ ["day(s)", "days"],["week(s)", "weeks"], ["month(s)", "months"]]),:class=>'job_invoice_type recurring_starton2') %>
+          </span>
+          <span id="display-date"></span>
+          <%= f.hidden_field :end_date %>
+        </div>
+      </div>
+      <%= render "jobs/new_visit"%>
+      <div class="row">
+        <div class="span2"><span><b>payment type</b></span></div>
+        <div class="span8">
+          <span>
+            <select class="recurring_select_type" id="" name = "payment_type">
+              <option value="">10$</option>
+              <option value="">20$</option>
+              <option value="">30$</option>
+            </select>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span2 left_align"><span><b>Invoicing</b></span></div>
+        <div class="span8 left_align">
+          <div class="span2 left_align">
+            <span><%= f.radio_button :invoicing, 'Visit Based',:checked=>true%></span>
+            <span><b>Visit Based</b></span>
+          </div>
+          <div class="span5 left_align">
+            <span class="description"> - Invoice price is based on the number of 
+            visits in a given period.</span>
+          </div>
+          <div class="span2 left_align">
+            <span><%= f.radio_button :invoicing, 'Fixed Price'%></span>
+            <span><b>Fixed Price</b></span>
+          </div>
+          <div class="span5 left_align">
+            <span class="description"> - The Work Order will be invoiced at a set price based on the frequency you specify.</span>
+          </div>
+          <div class="span5 left_align">
+            <div id="invoice_period">
+              <%= f.select :invoice_period ,options_for_select([ ["As needed - we won't prompt you", "As needed - we won't prompt you"],["After each visit", "After each visit"], ["Once when contract is completed", "null"], ["Monthly", "Monthly"], ["Monthly on the last day of month", "Monthly on the last day of month"]],:selected=>"Monthly on the last day of month")%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pre_billing">
+      <div class="span2"></div>
+      <div class="span8">
+        <p class="count_recur">
+          <strong class="recurring_starton">1</strong>
+          invoices total
+        </p>
+        <p id="month_last_date"><%= end_date_month_job%></p>
+        <p id="begin_end_date"></p>
+      </div>
+    </div>
+
+    <div class="row" id="optional_fields">
+      <div class="field vis span5 left_align">
+        <div id="one_off_check_time">
+          <ul>
+            <li>
+              <div id="job_time_show">
+                <span><b>Times</b></span>
+                <a id="clickMeShow" class="clickMeShow">click to set</a>&nbsp;&nbsp;
+              </div>
+              <div id="times" style="display:none;">
+                <p>
+                  <span><b>Start Time</b></span>
+                  <span class="input-append toggle-append bootstrap-timepicker">
+                    <%= f.text_field :start_time ,:id=>"timepicker"%> 
+                  </span>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <span>
+                    <a id="clickMeHide" onclick="$('#time').hide();" >clear times</a>&nbsp;&nbsp;
+                  </span>
+                </p>
+                <p>
+                  <span><b>End Time</b></span>
+                  <span class="input-append toggle-append bootstrap-timepicker">
+                    <%= f.text_field :end_time ,:id=>"timepicker1"%> 
+                  </span>
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div id="unscheduled_visit_calender_job">
+          <ul>
+            <li class="user_selector"><span><b>Crew</b></span>
+              <!-- select job emplyee -->
+              <span class="popover-markup">
+                <a class="popoverThis trigger clickMeShow" data-toggle="popover" onclick="check_assigned()">
+                  Click to Assign
+                </a>
+                <div  id="job_assign_user"></div>
+                <%= render "select_job_employees", :locals => {:ff => f} %>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="span4">
+        <p>
+          Save time by setting the time and crews for this Work Order now.
+          These fields can easily be set or changed from the calendar, scheduler, or final Work Order.
+        </p>
+      </div>
+    </div>
+    <div class="quote_custom_field">
+      <%= render "clients/custom_field_display" %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Create Job',:class=>"button_new_create save-new-btn1", :onsubmit=>"return validateForm()",:style=>"float:right; margin-right: 8px;",:id=>"recurring_job_create"%>
+     
+    </div>
+  <% end %>
+  </div>
+</div>
+<%= render partial: "repeats"%>
+<script>
+  select_period(); 
+  checkBoxCheked();
+  popover_show();
+  when_multiday_select();
+  $("input[name='job_type']").on('click', function(){
+    $(this).submit();
+  })
+</script>
+

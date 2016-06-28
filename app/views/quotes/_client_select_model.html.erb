@@ -1,0 +1,28 @@
+<div class="modal fade client_select_model_quote" id="newqoute" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Estimate</h4>
+      </div>
+      <div class="modal-body">
+        <div id="client_selector">
+          <p>Which Client would you like to use for this Estimate? </p>
+          <div class ="search-div row">
+              <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Clients...",:require=>true,:id=>"search_input_job_client_model",:onkeyup => "searchClientQuoteModel($(this).val())" ,:style=>"width:48%;"%>
+             <span class="or">or</span>
+              <%= link_to 'Create New Client', new_client_path(:id=>"quote"),:class=>"button_new_create save-new-btn1" ,:style=>"float:right;"%>
+          </div>
+          <br/><br/>
+          <h4>Some Recently Used Clients:</h4>
+          <br/>
+          <ul class="thicklist quotes_client" id="client_list_display"> 
+            <%= render "quotes/search_quote_client"%>
+          </ul>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+      </div> -->
+    </div>
+  </div>
+</div>

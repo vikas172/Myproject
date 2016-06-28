@@ -1,0 +1,65 @@
+<div class="container" style="margin-top:3%;">
+  <div class="main_container">
+    <div id="" style="height: auto;">
+      <div id="head">
+        <h3 class="main_heading">New Work Order</h3>
+      </div>
+      <p class="description">
+        Which property would you like to use for this Work Order?
+      </p>
+      <h3 class="main_heading">Properties belonging to <%= @client.try(:initial)%>
+        <%= @client.try(:first_name)%>
+        <%= @client.try(:last_name)%>
+      </h3>
+        or
+      <%if params[:work]=="work"%>
+        <%= link_to "create a new property", {:controller => "properties", :action => "new", :client_id => @client.id, :job_prop => "job",:work=>"work" }%>
+      <%else%>
+        <%if params[:date].nil?%>
+          <%= link_to "create a new property", {:controller => "properties", :action => "new", :client_id => @client.id, :job_prop => "job" }%>
+        <%else%>  
+          <%= link_to "create a new property", {:controller => "properties", :action => "new", :client_id => @client.id, :job_prop => "job",:date=>params[:date] }%>
+        <%end%>
+      <%end%>
+      <div id="select_property_list">
+        <br><br>
+        <% if params[:value]=="client_show" %>
+          <h3 style="margin-bottom:10px;">Choose a property:</h3>
+          <% @client_properties.reverse.each do |property|%>
+            <ul style="overflow:visible" class="thicklist"  id="list_view">
+              <li>
+                  <a class="row clearfix" href="/jobs/new?property_id=<%= property.id%>&value=client_show&client_id=<%=params[:client_id]%>">
+                    <span><%= property.street %> <%= property.street2 %> <%= property.city %>,<%= property.state %></span>
+                  </a>
+              </li>
+            </ul>
+          <% end %>           
+        <% else %>
+          <h3 style="margin-bottom:10px;">Choose a property:</h3>
+          <% @client_properties.reverse.each do |property|%>
+            <ul style="overflow:visible" class="thicklist"  id="list_view">
+              <li>
+                <%if params[:work]=="work"%>
+                  <a class="row clearfix" href="/jobs/new?property_id=<%= property.id%>&work=work">
+                    <span><%= property.street %> <%= property.street2 %> <%= property.city %>,<%= property.state %></span>
+                  </a>
+                <% else %>
+                  <%if params[:date].nil?%>
+                    <a class="row clearfix" href="/jobs/new?property_id=<%= property.id%>">
+                      <span><%= property.street %> <%= property.street2 %> <%= property.city %>,<%= property.state %></span>
+                    </a>
+                  <%else%>
+                    <a class="row clearfix" href="/jobs/new?property_id=<%= property.id%>&date=<%= params[:date]%>">
+                      <span><%= property.street %> <%= property.street2 %> <%= property.city %>,<%= property.state %></span>
+                    </a>   
+                  <%end%>  
+                <% end %>
+              </li>
+            </ul>
+          <% end %>
+        <% end %>
+      </div>     
+    </div>
+  </div>
+</div>  
+

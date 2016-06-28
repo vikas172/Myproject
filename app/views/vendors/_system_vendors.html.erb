@@ -1,0 +1,35 @@
+<div class="row">
+  <div id="error-search" class="error_messages_team_member"></div>
+  <div class="col-md-6">
+    <%= form_tag search_vendors_vendors_path ,:id=>"search_vendor_vendors",:remote=>true do %>
+      <%= text_field_tag "city",nil,:placeholder=>"City"%>
+      <%= text_field_tag "zipcode",nil,:placeholder=>"Zipcode"%>
+    <%end%>
+  </div>
+  <%=submit_tag "Search",:class=>"button_new_create save-new-btn1",:id=>"search-vendor"%>
+  <%= submit_tag "ADD Preferred",:id=>"pref-vendors",:class=>"button_new_create save-new-btn1",:style=>"float:right; display:none;"%>
+  <%= link_to "View Preferred",preference_vendors_vendors_path,:remote=>true,:id=>"pref-view",:class=>"button_new_create save-new-btn1",:style=>"float:right; margin-right:5px;"%>
+  <div id="search-vendors"></div>
+</div>
+<style type="text/css">
+  div#error-search {
+    margin: 5px;
+    padding: 5px;
+    display:none;
+  }
+</style>
+<script type="text/javascript">
+  $("body").on("click","#search-vendor",function(){
+    var city = $("#city").val();
+    var zipcode = $("#zipcode").val();
+    if (city =="" && zipcode == ""){
+      $("#error-search").css("display","block");
+      $("#error-search").html("Please put atleast one field");
+    }
+    else
+    {
+      $("#error-search").css("display","none");
+      $("#search_vendor_vendors").submit();
+    }
+  })
+</script>

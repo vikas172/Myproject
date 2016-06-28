@@ -1,0 +1,27 @@
+<div class="client_index">
+  <div class="main_container">
+  	<div>
+      <%=render "home/work_item_side_bar" %>
+			<div id="settings_area"> 
+				<%= form_tag category_update_timesheets_path ,:class=>"edit_work_configuration compressed_form" do %>
+					<div class="row">
+						<div id="popover_form_content">
+							<div class="span2" id="popover_left">
+								<label for="expense_cost">Category</label>
+							</div> 
+							<div class="span3"  id="popover_left">
+								<%= text_field_tag "custom[category]", nil,class: "large strong", autofocus: "autofocus" ,:required=>true,:placeholder=>"category",:value=>@category.try(:category)%>
+								<%= hidden_field_tag "custom[user_id]",nil,value: current_user.id%>
+								<%= hidden_field_tag "id",nil,value: params[:id]%>
+								<%= hidden_field_tag "custom[category_type]",nil,value: "timesheets"%>
+							</div>
+						</div>
+					</div> 
+					<div class="row">
+						<%= submit_tag "Update",:class=>"button_new_create save-new-btn1",:style=>"margin-left: 36%;"%>	
+					</div>
+				<%end%>
+			</div>	
+		</div>	
+	</div>	
+</div>	

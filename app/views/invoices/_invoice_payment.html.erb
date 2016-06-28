@@ -1,0 +1,67 @@
+<div class="row_holder extend_to_footer invoice_search" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @invoices.blank? %> 
+      <div id="output"></div> 
+        <% @invoices.each_with_index do |invoice,index| %>
+          <tr class="propert" > 
+            <td>#<%=index+1%> :
+              <%if params[:sort_by]=="last_name"%>
+                <%=invoice_client_lname(invoice)%>
+              <%else%>
+                <%= invoice_client_name(invoice) rescue nil%>
+              <%end%>
+               <b></b><br/>
+              <span class="status">     
+                <%if invoice.mark_sent == false%>
+                  <span style="padding: 2px 6px;  background-color:#888888; color:#FFFFFF; border-radius:2px 2px 2px 2px;"></span>
+                <%elsif invoice.invoice_bad_debt== false%>
+                    <%if invoice.invoice_paid==false%>
+                      <%if invoice.past_due==false%>
+                        <span style="background-color: #1f518b; padding: 2px 6px; border-radius:2px 2px 2px 2px;">Outstanding</span>
+                      <%else%>
+                        <span style="color: #FFFFFF; padding: 2px 6px; border-radius:2px 2px 2px 2px; background-color:#B22F23;">Past Due</span>
+                      <%end%>
+                      <%else%>
+                      <span style=" background-color: #B87333; color: #FFFFFF; padding: 2px 6px; border-radius:2px 2px 2px 2px;">Paid</span>
+                      <%end%>
+                <%else%>
+                  <span style="color: #FFFFFF; padding: 2px 6px; background-color:#B22F23; border-radius:2px 2px 2px 2px;">Bad Debt</span>
+                <%end%>
+              </span> 
+            </td>
+          
+            <td><small>Due</small><br/>
+              <%if invoice.payment=="Custom"%>
+                <%= invoice.due_date%>
+              <%else%>
+                <%= invoice.payment%>
+              <%end%>  
+            </td>
+
+            <td><%= invoice.subject%></td>
+
+            <td><span class="summary" style="margin-left: 42%; font-weight: bold;"><%@total= total_amount_invoice(invoice)%>$<%=number_with_precision(@total, :precision => 2)%></span><br/>
+            </td>
+  
+            <td> 
+              <% if invoice.invoice_bad_debt== false%>
+                <%if invoice.invoice_paid==false%>
+                  <%if invoice.past_due==false%>
+                     <i class="fa fa-envelope-o"></i>
+                      <%= link_to "Mark As Paid","#" ,:id=>"mark_received",:class=>"has_icon",:'data-toggle'=>"modal" ,:'data-target'=>"#payment_record"%>
+                      <%= render partial: "invoice_payment_model",:locals=>{:@invoice=>invoice}%>
+                  <%end%> 
+                <%else%>
+                  <b>PAID</b>
+                <%end%>  
+              <%end%>  
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+      <b>No Invoices present</b>
+      <% end %>  
+    </table>
+  </div>
+</div>   

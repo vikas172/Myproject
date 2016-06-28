@@ -1,0 +1,155 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<%= form_for(@classified) do |f| %>
+  <% if @classified.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@classified.errors.count, "error") %> prohibited this classified from being saved:</h2>
+
+      <ul>
+      <% @classified.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="postings span8">
+    <fieldset style="margin-bottom: 1.5em;">
+      <legend class="classified-legend">contact info</legend>
+      <div class="row legend-box">
+        <div class="span4">
+          <div class="email-show">Email
+            <i><%= current_user.email%></i>
+          </div>
+        </div>
+
+        <div class="span4">
+          <ul class="privacy-check">
+            <li>
+              <%= f.radio_button :privacy ,"cl_mail"%> CL mail reply
+            </li>
+            <li>
+              <%= f.radio_button :privacy ,"show_real_address"%> show my real email address 
+            </li>
+            <li>
+              <%= f.radio_button :privacy ,"no_replies"%> no replies to this email 
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row legend-box">
+        <div class="span4"> 
+          <span> users can also contact me:</span><br>
+          <%= f.check_box :contact_phone %> by phone
+          <%= f.check_box :contact_text %> by text 
+        </div>
+        <div class="span4 cont-phone" >
+          <label class="contact_phone std">
+            phone number
+            <%= f.text_field :phone_number %>
+          </label>
+          <label class="std">
+            contact name
+            <%= f.text_field :contact_name %>
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div> 
+
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="span8" style="margin:0;">
+      <label class="posting-box std">
+        Posting Title
+        <%= f.text_field :posting_title %>
+      </label>
+      <label class="posting-box std">
+        Specific Location
+        <%= f.text_field :specific_location %>
+      </label>
+     <!--  <label class="posting-box std">
+        Postal Code
+        <%#= f.text_field :postal_code %>
+      </label> -->
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="span8" style="margin:0px;">
+      <b>Posting Body</b><br>
+      <%= f.text_area :posting_body,:rows=>"10" %>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <%= f.radio_button :license   ,"unlicensed" %> UnLicensed
+    <%= f.radio_button :license   ,"licensed" %> Licensed [Include license info]
+    <br>
+    <br>
+    <%= f.text_field :license_info ,:style=>"display:none;"%>
+  </div>
+
+  <div class="postings span8">
+    <fieldset style="margin-bottom: 1.5em;">
+      <legend class="classified-legend">
+        &nbsp;<%= f.check_box :show_on_map %> Show On Maps
+      </legend>
+
+      <div class="row">
+        <div class="span1">
+          <b>Street</b>
+        </div>
+        <div class="span3">
+          <%= f.text_field :street %>
+        </div>
+      </div>  
+
+      <div class="row">
+        <div class="span1">
+          <b>City</b>
+        </div>
+        <div class="span3">
+          <%= f.text_field :city %>
+        </div>  
+      </div>  
+
+      <div class="row">
+        <div class="span1">
+          <b>State</b>
+        </div> 
+        <div class="span3"> 
+          <%= f.text_field :state %>
+        </div>  
+      </div>  
+   
+      <div class="row">
+        <div class="span1">
+          <b>Zip Code</b>
+        </div>
+        <div class="span3">   
+          <%= f.text_field :zipcode %>
+        </div>  
+      </div>  
+    </fieldset>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <%= f.check_box :contact_ok %> &nbsp;ok for others to contact you about other services, products or commercial interests
+  </div>
+  
+  <br>
+  <br>
+  
+  <div class="row text-right show-space">
+    <%= link_to 'Back', classifieds_path ,:class=>"model_cancel_button"%>
+    <%= f.submit "Save & Continue",:class=>"button_new_create pull-right save-new-btn1" %>
+  </div>
+<% end %>

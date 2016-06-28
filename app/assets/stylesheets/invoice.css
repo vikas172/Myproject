@@ -1,0 +1,78 @@
+
+#invoices_index_form {
+    float: left;
+}#invoices_index_form .type_filter {
+    float: left;
+    margin-right: 20px;
+}#invoices_index_form .time_period_filter {
+    float: left;
+    margin-right: 20px;
+}#invoices_index_form .order_by {
+    float: left;
+    margin-right: 10px;
+}
+
+#invoice_discount_type{
+  width:50px;
+}
+#invoice_payment{
+  width:125px;
+}
+div.top {
+    /*line-height: 30px;*/
+    line-height: 20px;
+}
+
+div.top table.left {
+    float: left;
+}table {
+    position: relative;
+}.subject_holder td {
+    padding: 10px 0;
+}table.right {
+    float: right;
+}
+
+div.top table.left label {
+    float: right;
+    font-weight: normal;
+    margin-right: 10px;
+    text-align: right;
+}
+.progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+.bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; display:inline-block; top:3px; left:48%; }
+
+
+/*Show invoice model payment create*/
+.content_invoice {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 15px;
+}
+.balance_adjustment {
+    overflow: visible !important;
+}.compressed_form p, .compressed_form p > span, .compressed_form p > a {
+    line-height: 20px;
+}.balance_adjustment .payment_form.compressed_form label {
+    width: 150px;
+}
+.compressed_form label {
+    display: block;
+    float: left;
+    line-height: 22px;
+    margin-right: 10px;
+    text-align: right;
+    width: 160px;
+    font-weight: normal;
+}
+.balance_adjustment .payment_form #initial_balance_warning {
+    color: #B47A00;
+    
+    letter-spacing: 1px;
+}.strong {
+    font-weight: normal;
+}.invoice_payment_method select {
+    background-color: #FEFEFE;
+    font-weight: normal;
+}

@@ -1,0 +1,25 @@
+<div id="summary" class="content_align">
+  <div data-dynamic="true" class="summary_bars">
+    <%= link_to("/reports/transactions/", :class=>"subsection_link #{get_selected_default}" ) do %>
+      <h3>
+        Credit Balance
+        <span class="count"><%= get_transaction_count("") %></span>
+      </h3>
+       <span data-value="<%= get_transactions_data("", @transactions_summary, @invoices)%>" class="total" style="width: 330px;">$<%= get_transactions_data("", @transactions_summary, @invoices).round(2) %></span>
+    <% end %>
+    <%= link_to("/reports/transactions/outgoing", :class=>"subsection_link #{get_selected("outgoing")}" ) do %>
+      <h3>
+        Outstanding
+        <span class="count"><%= get_transaction_count("outgoing") %></span>
+      </h3>
+       <span data-value="<%= get_transactions_data("outgoing", @transactions_summary, @invoices)%>" class="total" style="width: 330px;">$<%= get_transactions_data("outgoing", @transactions_summary, @invoices) %></span>
+    <% end %>
+    <%= link_to("/reports/transactions/income", :class=>"subsection_link #{get_selected("income")}" ) do %>
+      <h3>
+        Paid/Deposit
+        <span class="count"><%= get_transaction_count("income") %></span>
+      </h3>
+       <span data-value="<%= get_transactions_data("income", @transactions_summary, @invoices)%>" class="total" style="width: 330px;">$<%= get_transactions_data("income", @transactions_summary, @invoices) %></span>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Edit Custom Field</h4>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <%= form_tag({:action=>"custom_field_update",:controller=>"home"},:class=>"compressed_form work_item") do %>
+          <p>
+            <label for="custom_field_name">Name</label>
+            <%= text_field_tag "custom_field[name]",nil,:value=>@custom_field.name,:class=>"large name", :id=>"work_item_name"%>
+          </p>
+          <p>
+            <label for="custom_field_value_type">Value Type</label>
+            <%= select_tag("custom_field[value_type][]", options_for_select([["True/False","boolean"],["Numeric","integer"],["Area (length X width)","area"],["Text","text"]],:selected=>@custom_field.value_type[0]),:onchange=>"customFieldSet()",:id=>"custom_field_value_type")%>
+          </p>
+          <div id ="boolean_options" class="add_input_custom"  style=" text-align: center;">
+          <%if @custom_field.value_type[0]=="area" %>
+            <label for="custom_field_value_type">Default Value</label>
+            <%= text_field_tag  "custom_field[value_type][]",nil,:value=> @custom_field[:value_type][1],:class=>"pull-left",:style=>"width:10%;"%>X
+            <%= text_field_tag  "custom_field[value_type][]",nil,:value=> @custom_field[:value_type][2] ,:class=>"pull-left" ,:style=>"width:10%;"%>
+            <br>
+            <label for="custom_field_value_type">Unit</label>
+            <%= text_field_tag "custom_field[value_type][]" ,nil,:value=>@custom_field[:value_type][3] ,:style=>"width:10%;"%>
+          <%elsif @custom_field[:value_type][0]=="select"%>
+            <label for="custom_field_value_type">Option for select</label><br/> <br/>
+            <%@custom_field[:value_type].each_with_index do |field,index|%>
+                <% if index!=0 %>
+                    <%= index%> <input type="text" id="textbox<%=index%>" name="custom_field[value_type][]" value=<%= @custom_field[:value_type][index]%>><br/>
+                <%end%>
+              <%end%>
+          <%elsif @custom_field[:value_type][0]=="integer"%>
+            <label for="custom_field_value_type">Default Value</label>
+            <%= text_field_tag  "custom_field[value_type][]",nil,:value=>@custom_field[:value_type][1] ,:class=>"pull-left",:style=>"width:10%;"%>
+            <br>
+            <label for="custom_field_value_type">Unit</label>
+            <%= text_field_tag "custom_field[value_type][]" ,nil,:value=>@custom_field[:value_type][2] ,:style=>"width:10%;"%>
+          <%elsif @custom_field[:value_type][0]=="text" %>
+            <label for="custom_field_value_type">Default Value</label>
+            <%= text_field_tag  "custom_field[value_type][]",nil,:value=>@custom_field[:value_type][1]%>
+          <%elsif @custom_field[:value_type][0]=="boolean"%>
+            <label for="custom_field_value_type">Default Value</label>
+             <%= select_tag("custom_field[value_type][]", options_for_select([["True","true"],["False","false"]],:selected=>@custom_field.value_type[1]))%>
+          <%end%>
+          </div>
+          <%= hidden_field_tag "custom_field_id",nil,:value=>@custom_field.id%>
+          <div class="clearfix"></div>
+          <br>
+          <br>
+          <p>
+            <%= link_to "Delete",custom_field_delete_path(:id=>@custom_field.id),:class=>"cancel_account_button pull-left",data: { confirm: 'Are you sure?' }%>
+            <%= submit_tag "Update",:class=>"model_save_button save-new-btn1"%>
+            <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Cancel</button>
+          </p>
+          <!-- <div class="clearfix"></div>
+          <p style="float:left;">
+            
+          </p> -->
+        <%end%>
+     
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+customFieldSet();
+</script>
+<style>
+.model_cancel_button{
+  margin: 0 10px 0 163px;
+  padding: 10px;
+}
+</style>

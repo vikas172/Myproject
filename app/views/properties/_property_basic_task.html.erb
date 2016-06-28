@@ -1,0 +1,118 @@
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Basic Task</h4>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <%= form_for(@basic,:url=>property_task_create_path)  do |f| %>  
+            <div class="row">
+              <div class="span3" id="popover_left">
+                <p>
+                  <%= f.label :title%>
+                  <%= f.text_field :title ,:style=>"width: 95%;"%>
+                </p>
+
+                <a style="display: inline;" id="add_basic_schedule" href="#" class="schedule">
+                    <i class="icon-calendar"></i>
+                    <span>click to schedule</span>
+                </a>
+                <div id="to_do_scheduler" style="display:none;">
+                  <p style="font-size: 12px;">
+                    <a id="remove_unschedule" href="#">Don't Schedule</a>
+                  </p>
+                  <p>
+                    <%= f.label :all_day%>
+                    <%= f.check_box :all_day %>
+                  </p>    
+                  <p>
+                    <label for="to_do_start_at_date">Start at</label>
+                    <%= f.text_field :start_at_date, class:"datepicker",:style=>"width:33%;", value: "" %>
+                    <span class="input-append toggle-append bootstrap-timepicker" style="width:30%;">
+                      <%= f.text_field :start_at_time, class:"time",:style=>"display:none; width:85%;margin-left:3%;"%>
+                    </span>
+                  </p>
+                  <p>
+                    <label for="to_do_start_at_date">End at</label>
+                    <%= f.text_field :end_at_date, class:"datepicker",:style=>"width:33%;", value:"" %>    
+                    <span class="input-append toggle-append bootstrap-timepicker" style="width:30%;">
+                      <%= f.text_field :end_at_time, class:"time",:style=>"display:none; width:85%;margin-left:3%;"%>
+                    </span>
+                  </p> 
+                </div>
+              </div>
+              <div class="span2" style="float:right;">
+                <span class="popover-markup">
+                  <a class="popoverThis trigger clickMeShow" data-toggle="popover">
+                    Click to Assign
+                  </a> 
+                  <%= render "basic_tasks/task_assign_to_user" %>
+                </span>
+                <p style="float: right;" id="task_assign_user">
+
+                </p>
+              </div>
+
+              <div class="span2 property_display_task">
+                <div class="description attachments">
+                  <ul>
+                    <li class="strong">
+                      <i class="fa fa-user fa-2"></i> &nbsp;&nbsp;
+                      <a href="/clients/<%=@property.client.id%>">
+                        <%=@property.client.first_name%> 
+                      </a>
+                    </li> 
+                    <li class="">
+                      <i class="fa fa-phone"></i>&nbsp;&nbsp;
+                      <%=@property.client.mobile_number%>
+                    </li>
+                    <li class="strong">
+                      <i class="fa fa-home"></i>&nbsp;&nbsp;
+                      <a href="/properties/<%= @property.id%>"> <%= @property.try(:street)%>&nbsp;<%= @property.try(:street2)%><br><%= @property.try(:city)%>, <%= @property.try(:state)%>  <%= @property.try(:zipcode)%> </a>
+                    </li>
+                  </ul>
+                </div>
+              </div> 
+            </div>  
+            <%= hidden_field_tag "property_id",nil,:value=>params[:property_id]%>
+            <%= hidden_field_tag "action_type",nil,:value=>@basic_action%>
+            <%= hidden_field_tag "basic_id",nil,:value=>@basic.id%>
+
+            <div class="row"> 
+                <%= f.label :description %>
+                <%= f.text_area "description" ,:rows=>"4", :placeholder=>"details...",:style=>"width:98%;"  %>    
+            </div>
+            <div class="row">  
+              <p class="submit_holder">
+                <div class="">
+                  <%= f.submit "Save Changes", :class=>"model_save_button save-new-btn1", onclick:"$('#myModal').modal('hide');"%>
+                  <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>   
+                </div>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+$(document).ready(function(){
+  $("#basic_task_all_day").click(function(){
+    $(".time").toggle()
+  });   
+   $("#add_basic_schedule").click(function(){
+    $("#to_do_scheduler").css("display","block");
+    $("#add_basic_schedule").css("display","none");
+  })
+  $("#remove_unschedule").click(function(){
+    $("#to_do_scheduler").css("display","none");
+    $("#add_basic_schedule").css("display","block");
+  })
+});
+$(".time").timepicker()
+$(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' })
+popover_show();
+</script>

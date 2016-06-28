@@ -1,0 +1,6 @@
+<ul class="side-nav" id="aa-sidebar">
+  <li><%= link_to 'Settings', edit_ivr_path(@ivr.uuid) %></li>
+  <!--<li><%#= link_to 'Cookbook', templates_ivr_path(@ivr.uuid) , :id => "cookbook" %></li>-->
+  <li><%= link_to 'Call Logs', calls_ivr_path(@ivr.uuid) , :id => "calls_recordings"%></li>
+  <li><%= link_to 'Analytics', analytics_ivr_path(@ivr.uuid) , :id => "analytics"%></li>
+</ul>

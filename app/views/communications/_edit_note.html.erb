@@ -1,0 +1,9 @@
+<div>
+	<%= form_tag update_note_activty_path ,:remote=>true do %>
+		<%= text_area_tag "note",@note.note ,:style=>"width: 99%;"%>
+		<%= hidden_field_tag "note_id",nil,:value=>@note.id%>
+		<%= hidden_field_tag "activity_id",nil,:value=>params[:id]%>
+		</br>
+		<%= submit_tag "Update Note"%>
+	<% end %>
+</div>

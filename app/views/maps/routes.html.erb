@@ -1,0 +1,277 @@
+<div class="client_index">
+  <div class="main_container new-routes">
+    <div id ="head">
+  	  <%= render "master_routes_top_right_optimize_button"%>
+      <%if $optimize_route%>
+        <button type="button" class="button_new_index" data-toggle="modal" data-target="#print_route" style="margin-right: 10px; line-height: 18px;">
+          Pdf Print or Email
+        </button>
+      <%end%>  
+      <%if !$optimize_route%>
+      <br>
+      <div class="clearfix"></div>
+      <div class="col-md-4 routes-new_one">
+    	  <%= form_tag route_optimize_path,:method=>:get ,:id=>"route_plan" ,:remote=>true do%>
+          <%@address_start=[]%>
+          <%@address_start_prev=[]%>
+          <%if @properties.blank?%>
+            <%@properties_add.each {|p| @address_start <<["#{p.street} " "#{p.city} ," "#{p.state}, " "#{p.country}",p.id]}%>
+          <%else%>
+            <%@properties.each {|p| @address_start <<["#{p.street} " "#{p.city} ," "#{p.state}, " "#{p.country}",p.id]}%>
+            <%@properties_previous.each {|p| @address_start_prev <<["#{p.street} " "#{p.city} ," "#{p.state}, " "#{p.country}",p.id] rescue ""}%>
+          <%end%>
+
+          <%if current_user.street.blank?%>
+             <div class="flash validation_email_reminder" style="width:75%;"><p style="margin: 0; padding: 0; line-height: 18px;"><%= link_to "Please add address to add on the route.",edit_user_registration_path%></p></div>
+          <%else%>
+            <% @address_start << ["Home address","user_#{current_user.id}"]%>
+          <%end%>
+
+          <%if current_user.user_type == "admin"%>
+            <%if !current_user.company.blank?%>
+              <%if !current_user.company.street.blank?%>
+                <% @address_start << ["Company address","company_#{current_user.id}"]%>
+              <%end%>
+            <%end%>
+          <%else%>
+            <%@company = get_company_address(current_user)%>
+            <%if !@company.blank?%>
+              <%if !@company.street.blank?%>
+                <% @address_start << ["Company address","company_#{current_user.id}"]%>
+              <%end%>
+            <%end%>
+          <%end%>
+          <table width="100%">
+            <tr>
+              <th class="title2-font">Start Point</th>
+              <td><%= select_tag "start_point",options_for_select(@address_start,:selected=>$optimize_start_point),{ :prompt => "Select Address" }%>
+              </td>
+              <!-- <th class="title2-font">Add Point</th> -->
+            </tr>
+            <tbody>
+              <tr>
+                <th class="title2-font">End Point</th>
+                <td><%= select_tag "end_point",options_for_select(@address_start,:selected=>$optimize_end_point),{ :prompt => "Select Address" }%></td>
+                <!-- <td><%#= select_tag "add_point[]",options_for_select(@address_start_prev),{ :prompt => "Select Address",:multiple=>"multiple" } %></td> -->
+              </tr>
+            </tbody>
+          </table>
+    
+     <div id="list">
+          <%#= select_tag "add_point[]",options_for_select(@address_start_prev),{ :prompt => "Select Address",:multiple=>"multiple" } %>
+        <select id="address_point" multiple="multiple" name="add_point[]">
+          <%@address_start_prev.each do |address|%>
+            <option value="<%=address.last%>">
+              <%=address.first%>
+            </option>
+          <%end%>
+        </select>
+      </div>
+    </div>  
+    <div class="col-md-6  new-routes1">
+    <div id="routes_map">
+     
+      <%end%>
+    <%end%>
+      <!-- <div id="list">
+        <%#if $optimize_route%>
+          <div class="header title2-font"><%=@properties.count%> Properties</div>
+        <%#else%>
+          <div class="header title2-font"><%=property_route_count(@properties,@properties_add)%> Properties</div>
+        <%#end%>
+        <div id="property_holder" style ="height:356px" >
+          <div>
+            <%# @geocode=[] %>
+            <%# @property_routes_pdf=[] %>
+            <%# @waypoint_geo=[] %>
+            <%# @waypoint_geo1=[] %>
+            <%# @properties.each_with_index do |property,index|%>
+              <%# @waypoint_geo1 << "#{property.street.gsub(/[^a-zA-Z0-9\-]/," ") rescue ""}, #{property.street2}, #{property.city}, #{property.country} " %>
+
+              <%# unless (index==0 || index==(@properties.count-1)) %>
+                <%#@waypoint_geo << "#{property.street}, #{property.street2}, #{property.city}, #{property.country} " %>
+              <% #end %>
+              <%#if gecode_find(property,@geocode)%>
+                <% #@geocode << gecode_find(property,@geocode)%>
+                <%# @property_routes_pdf << property.id %> 
+              <%#else%>
+               <% #@property_not_pin = property%> 
+              <%#end%>  
+              <% #if property != @property_not_pin%>
+                <div class="property" >
+                  <span class="popover-markup">
+                    <a class="popoverThis trigger clickMeShow" data-toggle="popover">
+                      <h3><%#= property.client.first_name%> <%#= property.client.last_name%></h3><%#= property.try(:street)%>
+                    </a>
+                    <div class="content hide">
+                      <div id="popup">
+                        <p>
+                          <a target='_blank' href='/properties/<%#= property.id%>?show=client_property&client_id=<%#=property.client.id%>' class="title_routes"><%#= property.street%> / <%#= property.street2%>  / <%#= property.city%>...</a><div class="route_contain"> <a class='button_new_index' data-on-click='start_alt_route' href='/remove_at_route?property_id=<%#= property.id%>'> + Remove at Route</a></div>
+                        </p>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              <%#else%>
+                <div class="property" >
+                  <span class="popover-markup">
+                    <a class="popoverThis trigger clickMeShow" data-toggle="popover">
+                      <h3><%#= property.client.first_name%> <%#= property.client.last_name%></h3><%#= property.try(:street)%><span class="not_found_map"></span>
+                    </a>
+                    <div class="content hide">
+                      <div id="popup">
+                        <p>
+                          <a target='_blank' href='/properties/<%#= property.id%>?show=client_property&client_id=<%#=property.client.id%>' class="title_routes"><%#= property.street%> / <%#= property.street2%>  / <%#= property.city%>...</a><div class="route_contain"> <a class='button_new_index' data-on-click='start_alt_route' href='/remove_at_route?property_id=<%#= property.id%>'> + Remove at route</a></div>
+                        </p>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              <%#end%>  
+            <%#end%> 
+            <hr style="border: 1px solid #333;">   
+            <%#if !$optimize_route%>
+              <%# @properties_add.each do |property|%>
+                <div class="property" >
+                  <span class="popover-markup">
+                    <a class="popoverThis trigger clickMeShow" data-toggle="popover">
+                      <h3><%#= property.client.first_name%> <%#= property.client.last_name%></h3><%#= property.try(:street)%>
+                    </a>
+                    <div class="content hide">
+                      <div id="popup">
+                        <p>
+                          <a target='_blank' href='/properties/<%#= property.id%>?show=client_property&client_id=<%#=property.client.id%>' class="title_routes">
+                          <%#= property.street%> / <%#= property.street2%>  / <%#= property.city%>...</a><div class="route_contain"><a class='button_new_index' data-on-click='start_alt_route' href='/insert_at_route?property_id=<%#= property.id%>'> + Insert at Route</a></div>
+                        </p>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              <%#end%>
+            <%#end%>
+          </div>
+        </div>
+      </div> -->
+
+      <%if $optimize_route%>
+        <%= form_tag routes_optization_pdf_path,:id=>"route_pdf_display",:style=>"margin:0;" do %>
+            <%= hidden_field_tag("property_details", @property_routes_pdf )%> 
+        <%end%>
+        
+        <%= form_tag route_pdf_email_path,:id=>"route_pdf_email" ,:style=>"margin:0;" do %>
+          <%= hidden_field_tag("property_details", @property_routes_pdf )%>
+        <%end%>
+        <div style='width: 100%; clear: both; float: none;border-left: 1px solid #a3a3a3;'>
+          <div id="map" style='width: 100%; height: 400px; position: relative; background-color: rgb(229, 227, 223);  overflow: hidden;'  >
+          </div>
+        </div>
+      <%else%>
+        <div style='width: 100%; float: right; border-left: 1px solid #a3a3a3;'>
+          <div id="map-canvas" style='width: 100%; height: 400px; position: relative; background-color: rgb(229, 227, 223);  overflow: hidden;'  >
+          </div>
+        </div>
+      <%end%>  
+    </div>      
+  </div>
+ </div> 
+  <div id="route_optimize">
+    <%= render "route_optimize"%>
+  </div>
+</div>
+
+<%= render "pdf_email_popup"%>
+
+<style type="text/css">
+  select[multiple], select[size] {
+    height: auto;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+  .multiselect-container .checkbox input[type="checkbox"]{
+    opacity: 1;
+  }
+  .multiselect-container{
+    left: 0px;
+    padding: 6px;
+    height: 350px;
+    overflow-y: scroll;
+  }
+  .filter {
+    display: none;
+  }
+  .multiselect{
+    text-align: right;
+    width: 322px;
+  }
+  .multiselect span{
+    float: left;
+
+  }
+
+  
+</style>
+
+<script type="text/javascript">
+    popover_show()
+    $('body').on('click', function (e) {
+     $('[data-toggle=popover]').each(function () {
+       // hide any open popovers when the anywhere else in the body is clicked
+       if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+           $(this).popover('hide');
+       }
+     });
+   }); 
+  <%if !$optimize_route%>
+
+    var map;
+    var elevator;
+    var myOptions = {
+        zoom: 3,
+        scrollwheel: false,
+        center: new google.maps.LatLng(<%=raw @geocode.first[0] rescue 37.4419%>,<%= raw @geocode.first[1] rescue -122.1419%>),
+        mapTypeId: 'terrain'
+
+    };
+    var infowindow =  new google.maps.InfoWindow({
+    content: ''
+    });
+    var leadimage = new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+    map = new google.maps.Map($('#map-canvas')[0], myOptions);
+    var addresses =  <%= raw @waypoint_geo1.to_json rescue 0%>;
+    // for (var x = 0; x < addresses.length; x++) {
+    //     $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
+    //         var p = data.results[0].geometry.location
+    //         var latlng = new google.maps.LatLng(p.lat, p.lng);
+    //         var marker = new google.maps.Marker({
+    //             position: latlng,
+    //             map: map
+    //         });
+    //         bindInfoWindow(marker, map, infowindow, "<p>" + addresses[x-1] + "</p>");   
+    //     });
+    // }
+    for (i = 0; i < addresses.length; i++) {
+    // create a marker
+    var marker = new google.maps.Marker({
+      icon:leadimage,
+      position: new google.maps.LatLng(addresses[i].lat, addresses[i].lon),
+      map: map
+    });
+    
+    // add an event listener for this marker
+    bindInfoWindow(marker, map, infowindow, "<p>" + addresses[i].description + "</p>");  
+  }
+    function bindInfoWindow(marker, map, infowindow, html) { 
+      google.maps.event.addListener(marker, 'click', function() { 
+        infowindow.setContent(html); 
+        infowindow.open(map, marker); 
+      }); 
+  } 
+  <%end%>
+  $(document).ready(function() {
+    $('#address_point').multiselect({ 
+      includeSelectAllOption: true,
+      enableFiltering:true                
+    });
+  });
+  
+</script>

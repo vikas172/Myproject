@@ -1,0 +1,122 @@
+<div class="dropdown_menu icon_drop">
+  <li class="dropdown" style="list-style: none; float:right; margin-top: 0%;">
+    <a href="#" class="dropdown-toggle dropdown_button save-new-btn1" data-toggle="dropdown">Actions <span class="caret"></span></a>
+    <ul class="dropdown-menu edit_drop_menu" role="menu">
+      <span class="arrow_action"></span>
+      <%if set_view_permission_client_property_view(@team_member)%>
+        <%if current_user.user_type=="user"%>
+          <%if set_permission_for_work_quote_new(@team_member.permission.permission_quotes)!="read"%>
+            <li>
+              <i class="fa fa-quote-left"></i>
+              <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+                <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+                <%= hidden_field_tag "value1",nil,:value=>"quote_create_action"%>
+                <%= link_to "Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+              <%end%>
+            </li>
+          <%end%>
+          <%if set_permission_for_work_quote_new(@team_member.permission.permission_jobs)!="read"%>
+            <li>
+              <i class="fa fa-legal"></i>
+              <%= form_tag(new_job_path, :method => "post",:class=>"job_url_link",:style=>" display: inline;") do %>
+                <%= hidden_field_tag "client_id",nil,:value=>@client.id%> 
+                <%= hidden_field_tag "value1",nil,:value=>"job_create_action"%>
+                <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+             
+                <%= link_to "Job","#",:id=>"new_job",:class=>"has_icon",:onclick=>"$('.job_url_link').submit();"%>
+              <%end%>
+            </li>
+          <%end%>  
+          <%if set_permission_for_work_quote_new(@team_member.permission.permission_invoices)!="read"%>
+            <li>
+              <i class="fa fa-pencil-square-o"></i>
+              <%= link_to "Invoice",new_invoice_path(:client_id=>@client.id) ,:id=>"new_invoice",:class=>"has_icon"%>
+            </li>
+          <%end%>  
+        <%else%>
+          <li>
+            <i class="fa fa-quote-left"></i>
+            <%= form_tag(new_quote_path, :method => "post",:class=>"quote_url_link",:style=>" display: inline;") do %>
+              <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+              <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+              <%= hidden_field_tag "value1",nil,:value=>"quote_create_action"%>
+              <%= link_to "Estimate","#",:id=>"new_quote",:class=>"has_icon",:onclick=>"$('.quote_url_link').submit();"%>
+            <%end%>  
+          </li>
+
+          <li>
+            <i class="fa fa-legal"></i>
+            <%= form_tag(new_job_path, :method => "post",:class=>"job_url_link",:style=>" display: inline;") do %>
+              <%= hidden_field_tag "client_id",nil,:value=>@client.id%> 
+              <%= hidden_field_tag "value1",nil,:value=>"job_create_action"%>
+              <%= hidden_field_tag "value",nil,:value=>"client_show"%>
+             
+              <%= link_to "Job","#",:id=>"new_job",:class=>"has_icon",:onclick=>"$('.job_url_link').submit();"%>
+            <%end%> 
+          </li>
+
+          <li>
+            <i class="fa fa-pencil-square-o"></i>
+            <%= link_to "Invoice",new_invoice_path(:client_id=>@client.id) ,:id=>"new_invoice",:class=>"has_icon"%>
+          </li>
+
+          <li>
+            <i class="fa fa-credit-card"></i>
+            <%= link_to "Payment","#{}" ,:id=>"new_payment",:class=>"has_icon", data: {toggle: "modal", target: '#client_payment'} %>
+          </li>
+        <%end%>  
+        <li class="divider"></li>
+        <li>
+          <i class="fa fa-check-square-o"></i>
+          <%= link_to "Basic Task", "/basic_tasks/to_dos?todo[start_at]=#{Date.today}&todo[end_at]=#{Date.today}&todo[all_day]=true&todo[plugin_type]=basic_task", :id=>"new_basic_task" , :class=>"has_icon click_ignore", :'data-toggle'=>"modal", :'data-target'=>"", remote: true %>
+        </li>
+
+        <li>
+          <i class="fa fa-calendar"></i>
+          <%= link_to "Calendar Event", "/events/to_dos?todo[start_at]=#{Date.today}&todo[end_at]=#{Date.today}&todo[all_day]=true&todo[plugin_type]=event", :id=>"new_event" , :class=>"has_icon click_ignore", :'data-toggle'=>"modal", :'data-target'=>"", remote: true %>
+        </li> 
+
+        <li class="divider"></li>
+        <% if params[:value]=="client_show" %>
+          <li>
+            <i class="fa fa-home"></i>
+            <%= form_tag(new_property_path, :method => "post",:class=>"property_url_link",:style=>" display: inline;") do %>
+              <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+              <%= hidden_field_tag "value",nil,:value=>params[:value]%>
+              <%= link_to "New Property","#",:id=>"new_property",:class=>"has_icon",:onclick=>"$('.property_url_link').submit();"%>
+            <%end%> 
+          </li>
+        <% else %>
+          <li>
+            <i class="fa fa-home"></i>
+            <%= form_tag(new_property_path, :method => "post",:class=>"property_url_link",:style=>" display: inline;") do %>
+              <%= hidden_field_tag "client_id",nil,:value=>@client.id%>
+              <%= link_to "New Property","#",:id=>"new_property",:class=>"has_icon",:onclick=>"$('.property_url_link').submit();"%>
+            <%end%> 
+          </li>
+        <% end %>
+      <%end%>
+
+      <li>
+        <i class="fa fa-download"></i>
+        <%= link_to "Download Vcard",vfc_export_path(:client_id=>@client.id) ,:id=>"download_vcard",:class=>"has_icon"%>
+      </li>
+
+      <%if current_user.user_type=="admin"%>
+        <li>
+          <i class="fa fa-minus-circle"></i>
+          <%= link_to 'Delete',"#",:id=>"",:class=>"has_icon" ,:'data-toggle'=>"modal" ,:'data-target'=>"#delete_model_client"%>
+        </li>
+      <%else%>
+        <%if set_view_permission_action_view_delete(@team_member.permission.permission_client_properties)%>
+          <li>
+            <i class="fa fa-minus-circle"></i>
+            <%= link_to 'Delete',"#",:id=>"",:class=>"has_icon" ,:'data-toggle'=>"modal" ,:'data-target'=>"#delete_model_client"%>
+          </li>
+        <%end%>
+      <%end%>  
+    </ul>
+  </li>
+</div>
+<div id="myModalBox"></div>

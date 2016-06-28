@@ -1,0 +1,247 @@
+<body class="pricing-page">    
+  <div class="wrapper">
+    <!-- ******PRICE PLAN****** --> 
+    <section id="price-plan" class="price-plan section">
+      <div class="container text-center">
+        <h2 class="title">30 day FREE trial with all plans!</h2>
+        <p class="intro">CopperService's pricing is simple and you can change your plan at any time. </p>
+        <div class="price-cols row">
+
+          <%= form_tag new_user_registration_path ,:method=>"get" do %>  
+            <div class="item col-md-4 col-sm-4 col-xs-12">
+              <h3 class="heading first">SOLO</h3>
+              <div class="content">
+                <p class="price-figure"><span class="currency">$</span><span class="number">19.95</span><span class="unit">/month</span></p>
+                <ul class="list-unstyled feature-list">
+                  <li>1 user</li>
+                  <li>Customer Unlimited</li>
+                  <li>Email Notification yes</li>
+                  <li>10 Gb</li>
+                </ul>
+                <%= hidden_field_tag "plan_type" ,"solo"%>
+                <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Sign Up<br/>
+                <span class="extra">30 day free trial</span>
+                <%end%>
+              </div><!--//content-->
+            </div><!--//item--> 
+          <%end%> 
+
+          <%= form_tag new_user_registration_path ,:method=>"get" do %>        
+            <div class="item col-md-4 col-sm-4 col-xs-12">
+              <h3 class="heading first">TEAM <span class="label label-custom">Popular</span></h3>
+              <div class="content">
+                <p class="price-figure"><span class="currency">$</span><span class="number">29.95</span><span class="unit">/month</span></p>
+                <ul class="list-unstyled feature-list">
+                  <li>5 users</li>
+                  <li>Customer Unlimited</li>
+                  <li>Email Notification yes</li>
+                  <li>25 Gb</li>
+                </ul>
+                <%= hidden_field_tag "plan_type" ,"team"%>
+                <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Sign Up<br/>
+                <span class="extra">30 day free trial</span>
+                <%end%>
+              </div><!--//content-->
+            </div><!--//item-->  
+          <%end%>
+
+          <%= form_tag new_user_registration_path ,:method=>"get" do %>    
+            <div class="item col-md-4 col-sm-4 col-xs-12">
+              <h3 class="heading first">BUSINESS</h3>
+              <div class="content">
+                <p class="price-figure"><span class="currency">$</span><span class="number">49.95</span><span class="unit">/month</span></p>
+                <ul class="list-unstyled feature-list">
+                  <li>20 Each additional user $2</li>
+                  <li>Customer Unlimited</li>
+                  <li>Email Notification yes</li>
+                  <li>100 Gb</li>
+                </ul>
+                <%= hidden_field_tag "plan_type" ,"business"%>
+                <%= button_tag :class=>"btn btn-cta btn-cta-primary" do %>Sign Up<br/>
+                <span class="extra">30 day free trial</span>
+                <%end%>
+              </div><!--//content-->
+            </div><!--//item--> 
+          <%end%>  
+
+
+        </div><!--//row-->
+      </div><!--//container-->
+    </section><!--//price-plan-->
+        
+    <!-- ******FAQ****** --> 
+    <section id="faq" class="faq section has-bg-color">
+        <div class="container">
+            <h2 class="title text-center">Frequently Asked Questions</h2>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a data-parent="#accordion"
+                            data-toggle="collapse" class="panel-toggle" href="#faq1"><i class="fa fa-plus-square"></i>Why is CopperService the best time solution for us?</a></h4>
+                        </div>
+            
+                        <div class="panel-collapse collapse" id="faq1">
+                            <div class="panel-body">
+                              Our field service solution helps manage your customers and field staff, schedule
+
+                              and dispatch field staff, send estimates and email invoices. You get also get instant 
+
+                              notifications vial SMS to better manage your staff and project. Our solution helps increase 
+
+                              your productivity and efficiency and provide complete visibility to Work Orders, invoices and 
+
+                              improves your cash flow and eliminate paperwork.
+                            </div>
+                        </div>
+                    </div><!--//panel-->
+            
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a data-parent="#accordion"
+                            data-toggle="collapse" class="panel-toggle" href="#faq2"><i class="fa fa-plus-square"></i>Which methods of payment do you accept?</a></h4>
+                        </div>
+            
+                        <div class="panel-collapse collapse" id="faq2">
+                            <div class="panel-body">
+                              We take our payments through Credit Card or Paypal. So, if you have a Paypal account, 
+
+                              you can just use that. If you don't have a Paypal account, you can quickly and easily pay 
+
+                              using Visa, Mastercard or AMEX.
+                            </div>
+                        </div>
+                    </div><!--//panel-->
+            
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a data-parent="#accordion"
+                            data-toggle="collapse" class="panel-toggle" href="#faq3"><i class="fa fa-plus-square"></i>Can I cancel my account at any time?</a></h4>
+                        </div>
+            
+                        <div class="panel-collapse collapse" id="faq3">
+                            <div class="panel-body">
+                              Yes. You can cancel your account at any time without penalty.
+                            </div>
+                        </div>
+                    </div><!--//panel-->
+                    
+<!--                     <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a data-parent="#accordion"
+                            data-toggle="collapse" class="panel-toggle" href="#faq4"><i class="fa fa-plus-square"></i>Can I ipsum dolor sit amet nascetur ridiculus?</a></h4>
+                        </div>
+            
+                        <div class="panel-collapse collapse" id="faq4">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life
+                                accusamus terry richardson ad squid. 3 wolf moon officia
+                                aute, non cupidatat skateboard dolor brunch. Food truck
+                                quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                sunt aliqua put a bird on it squid single-origin coffee
+                                nulla assumenda shoreditch et. Nihil anim keffiyeh
+                                helvetica, craft beer labore wes anderson cred nesciunt
+                                sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                Leggings occaecat craft beer farm-to-table, raw denim
+                                aesthetic synth nesciunt you probably haven't heard of them
+                                accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div> --><!--//panel--> 
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a data-parent="#accordion"
+                            data-toggle="collapse" class="panel-toggle" href="#faq5"><i class="fa fa-plus-square"></i>Is there a discount for yearly payment?</a></h4>
+                        </div>
+            
+                        <div class="panel-collapse collapse" id="faq5">
+                            <div class="panel-body">
+                              Yes. We offer a 20% discount to our yearly prepaid accounts.
+                            </div>
+                        </div>
+                    </div><!--//panel-->
+            
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a data-parent="#accordion"
+                            data-toggle="collapse" class="panel-toggle" href="#faq6"><i class="fa fa-plus-square"></i>Can we sign up for free trial?</a></h4>
+                        </div>
+            
+                        <div class="panel-collapse collapse" id="faq6">
+                            <div class="panel-body">
+                              Yes. We provide the 30-day free trial to give our users the chance to try out the full 
+
+                              features with their team. We will only charge your credit card after the trial has ended.
+                            </div>
+                        </div>
+                    </div><!--//panel-->
+            
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a data-parent="#accordion"
+                            data-toggle="collapse" class="panel-toggle" href="#faq7"><i class="fa fa-plus-square"></i>How much do SMS messages cost?</a></h4>
+                        </div>
+            
+                        <div class="panel-collapse collapse" id="faq7">
+                            <div class="panel-body">
+                              SMS messages are currently included of your monthly subscription.
+                            </div>
+                        </div>
+                    </div><!--//panel-->
+                    
+<!--                     <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a data-parent="#accordion"
+                            data-toggle="collapse" class="panel-toggle" href="#faq8"><i class="fa fa-plus-square"></i>Can I imperdiet massa ut?</a></h4>
+                        </div>
+            
+                        <div class="panel-collapse collapse" id="faq8">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life
+                                accusamus terry richardson ad squid. 3 wolf moon officia
+                                aute, non cupidatat skateboard dolor brunch. Food truck
+                                quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                sunt aliqua put a bird on it squid single-origin coffee
+                                nulla assumenda shoreditch et. Nihil anim keffiyeh
+                                helvetica, craft beer labore wes anderson cred nesciunt
+                                sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                Leggings occaecat craft beer farm-to-table, raw denim
+                                aesthetic synth nesciunt you probably haven't heard of them
+                                accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div> --><!--//panel--> 
+                </div>
+            </div><!--//row-->
+            <div class="more text-center">
+                <h4 class="title">More questions?</h4>
+                <a class="btn btn-cta btn-cta-secondary" href="contact.html">Get in touch</a>
+            </div>
+        </div><!--//container-->        
+    </section><!--//faq-->
+         
+    <!-- ******SIGNUP****** --> 
+    <section id="signup" class="signup">
+        <div class="container text-center">
+            <h2 class="title">Ready to kickstart your business with CopperService?</h2>
+            <p class="summary">Sign up to try CopperServiceFREE for 30 days! No credit card needed.</p>
+            <form class="signup-form">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter your email address">
+                </div>
+                <button type="submit" class="btn btn-cta btn-cta-primary">SIGN UP</button>
+            </form><!--//signup-form-->
+        </div>
+    </section><!--//signup-->
+            
+  </div><!--//wrapper-->         
+</body>
+</html> 
+<style>
+
+.list-unstyled.feature-list {
+    color: black;
+}
+</style>

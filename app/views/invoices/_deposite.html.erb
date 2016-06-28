@@ -1,0 +1,31 @@
+<%= form_for(@invoice) do |f| %>
+  <div class="form-group" style="width: 58%;">
+    <div class="icon-addon "> 
+      <table>
+        <tr class="form-control">
+          <td width="50px" class="form-control">Deposite&nbsp;Amount</td> 
+          <td><%= f.text_field :deposite_amount, :class=>"form-control" %></td>
+        </tr>
+        <tr>
+          <td class="form-control">Entry Date </td>
+          <td><%= f.text_field :entry_date, :class=>"form-control",:id=>"entrydate-datepicker-invoice" %></td>
+        </tr>
+        <tr class="form-control">
+          <td class="form-control">Payment Method</td>
+          <td><%= f.select 'payment_method_type', options_for_select([['Cash','Cash'],["Credit",'Credit'],["Cheque",'Cheque'],["Bank Transfer",'Bank Transfer'],["Money Order",'Money Order'],["Other",'Other']]), :class=>"form-control",:id=>"pay" %></td>
+        </tr>
+       
+        <tr class="hidden_option hidden">
+          <td class="hidden_option hidden">Payment </td>
+          <td><%= f.text_field :payment_method, :class=>"form-control hidden_option hidden",:id=>"entrydate-datepicker-invoice" %></td>
+        </tr>
+         <tr class="form-control">
+          <td class="form-control">Additional Note </td>
+          <br />
+          <td><%= f.text_area :additional_note, :class=>"form-control" %> </td>
+      </table>
+      <label for="email" class="glyphicon glyphicon-search" rel="tooltip" title="email"></label>
+    </div>
+  </div>
+  <%= f.submit "Submit",:class=>"btn btn-success", :style=>"text-align:center;margin-right:100px;" %>
+<% end %>

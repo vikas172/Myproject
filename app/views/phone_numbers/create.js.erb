@@ -1,0 +1,9 @@
+<%if !@twilio_sms.blank?%>
+	$('#hidden_phone_number').val('<%= @phone_number.phone_number %>' )
+	$('#phone_number_id').val('<%= @phone_number.id %>' )
+	$('#pin').focus()
+<%else%>
+	$("#status-box").css("display","block");
+	$("#status-box").html("Please check the mobile number");
+<%end%>	
+$('#status-box').fadeToggle( 3000);

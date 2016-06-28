@@ -1,0 +1,16 @@
+<% @job.job_works.each_with_index do |job_work, index| %>
+  <div id="edit_job_work_<%= index+1%>" class="replace_job replace_job_text">
+    <%= link_to(get_edit_job_path(job_work.id, index+1), :remote=>true) do %>
+      <span class="work_job_name"><%= job_work.name %></span>
+      <span class="work_job_description"><%= job_work.description %></span>
+      <div class="work_job_right">
+        <span class="work_job_cost"><%= job_work.quantity %></span>
+        <span class="work_job_column" style="margin-left: 70px;"><%= job_work.unit_cost %></span>
+        <span class="show_total work_job_column" style="margin-left: 70px;"><%= job_work.total %> </span>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<script>
+Show_total()
+</script>

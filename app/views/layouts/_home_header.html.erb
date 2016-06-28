@@ -1,0 +1,44 @@
+<header id="header" class="header">
+  <div class="container">
+    <h1 class="logo pull-left"> <a href="<%= root_url%>"><span><img src="../assets/copper-service-logo.png"></span> </a> </h1>
+    <!--//logo-->
+    <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <!--//nav-toggle--> 
+      </div>
+      <!--//navbar-header-->
+      <div class="navbar-collapse collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav">
+          <!-- <li class="active nav-item"><a href="index.html">Tour</a></li>-->
+          <li class=" <%= active_home_nav("tour")%>"><%= link_to "Feature",tour_path%></li>
+          <li class="<%= active_home_nav("pricing")%>"><%= link_to "Pricing",pricing_path%></li>
+          <li class="<%= active_home_nav("contact")%>"><%= link_to "Support",contact_path%></li>
+         <!--  <li class="<%#= active_home_nav("blog")%>"><%#= link_to "Blog",blog_path%></li> -->
+
+            <% if user_signed_in? %>
+              <li class="nav-item nav-item-cta last">
+                <%= link_to "Log out",destroy_user_session_path,:method=>:get ,:class=>"btn btn-cta btn-cta-primary"%> 
+              </li>
+            <%else%>
+              <li class="nav-item nav-item-cta last">
+                <%= link_to "Login",new_user_session_path,:class=>"#{active_home_nav('new')}" %>
+              </li>
+              <li class="nav-item nav-item-cta last">
+                <%= link_to "Sign Up",pricing_path,:class=>"btn btn-cta btn-cta-primary" %> 
+              </li>
+              
+            <%end%>
+         
+        </ul>
+        <!--//nav--> 
+      </div>
+      <!--//navabr-collapse--> 
+    </nav>
+    <!--//main-nav--> 
+  </div>
+  <!--//container--> 
+</header>
+
+
+

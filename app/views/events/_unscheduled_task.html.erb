@@ -1,0 +1,16 @@
+<ul id="external-events">
+  <%if !@unschdule_tasks.blank?%>
+    <%@unschdule_tasks.each do |basic|%>
+      <li class="popover-markup fc-event task_event" id="<%= basic.id%>"><%= basic.title%>
+      </li>
+    <%end%>
+  <%end%>
+  <% if !@unschdule_visit.blank? %>
+    <% @unschdule_visit.each do |visit| %>
+      <li class="popover-markup fc-visit job_event" id="<%= visit.id%>" data="visit"> <%= visit.job.property.client.first_name%> <%#= visit.job.property.client.first_name%> - <%= visit.title%></li>
+    <%end%>
+  <%end%>
+</ul>
+<script type="text/javascript">
+popover_show();
+</script>

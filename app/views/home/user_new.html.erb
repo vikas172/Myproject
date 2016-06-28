@@ -1,0 +1,366 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <div style="height: auto;">
+        <div>
+          <%=render "home/work_item_side_bar" %>
+          <div id="settings_area"> 
+            <%= render "error_and_success_message"%>
+            <%=form_tag home_create_user_path,:class=>"user_form" do %>
+             <!--  <div class="login_access clearfix form_section">
+                <h3 class="title2-font">
+                  <i class="icon-user"></i>
+                  Grant Login Access?
+                </h3>
+                <div>
+                  <%#= check_box_tag :login_access,nil,:true,:class=>"login_access",:style=>"float:left;margin:10px 10px 0px 0px; "%>
+                  <div id="flash_warning" class="useless_login_access login_access_disclaimer useless flash " style="display:none;" >
+                    <h4 class="title2-font">No Login Access</h4>
+                    <p>
+                      This Team Member can be used by users with login access to manage scheduling and timesheets. They will not be able to track their own information.
+                    </p>
+                  </div>
+                  <div id="flash_notice" class="login_access_disclaimer payment flash payment_login_access " >
+                    <h4>$9 Per Month for Login Access</h4>
+                    <p>Full login access to all features of CopperService.</p>
+                  </div>
+                </div>
+                <br style="clear:both">
+              </div> -->
+
+              <div class="compressed_form form_section">
+                <h3 class="title2-font">
+                  <i class="fa fa-lock"></i>
+                  Member Info
+                </h3>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_name">First Name*</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :full_name,nil, autofocus: true ,:class=>"large wide" ,:required=>true%>
+                  </div>
+                </div>
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_name">Last Name*</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :last_name,nil, autofocus: true ,:class=>"large wide" ,:required=>true%>
+                  </div>
+                </div>
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_email">E-mail*</label>
+                  </div>
+                  <div class="col-8">
+                   <%= email_field_tag :email,nil, autofocus: true ,:class=>"large wide",:required=>true %>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_email">Mobile Number*</label>
+                  </div>
+                  <div class="col-8">
+                    <%= select_tag "initial_phone" ,options_for_select(country_phone_code),:style=>"vertical-align: middle;"%>
+                    <%= text_field_tag :mobile_number,nil,:placeholder=> "Mobile Number...",:class=>"mobile_number_team_member",:maxlength=>"12",:required=>true%>
+                  </div>
+                </div>
+                
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_email">Marker Color*</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :marker_color,nil,:placeholder=> "Marker color",:class=>"colorpicker",:required=>true%>
+                  </div>
+                </div>
+                <span class="requires_login_access" id="login_credentials"></span>
+              </div>
+
+              <div class="compressed_form form_section">
+                <h3 class="title1-font">
+                  <i class="fa fa-cog"></i>
+                  Additional Details
+                </h3>
+
+                <div class="photo_upload_area">
+                  <div class="col-4">
+                    <label for="user_photo">Photo</label>
+                  </div>
+                  <div style=" margin-bottom: 15px; " class="col-8">
+                    <%= file_field_tag :photo %>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_phone">Phone Number</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :phone_number,nil ,:class=>"large"%> 
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_street">Street Address</label>
+                  </div>
+                  <div class="col-8">
+                   <%= text_field_tag :street ,nil,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_city">City</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :city ,nil,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_province">State</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :state ,nil,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_pc">Zip Code</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :zipcode ,nil,:class=>"large"%>
+                  </div>
+                </div>
+             
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_sin">SSN</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :ssn_number ,nil,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_start_date">Start Date</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :start_date ,nil,:class=>"large", value: date_time_format%>
+                  </div>
+                </div>
+
+                <%= render "clients/custom_field_display"%>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form_section requires_login_access">
+                <h4 class="title2-font">
+                  <i class="fa fa-lock"></i>
+                  Permissions
+                 <!--  <a target="_docs" href="#">Learn about permissions</a> -->
+                </h4>
+
+                <div class="compressed_form">
+                  <div class="client-form-row">
+                    <div class="col-4 content_align new_contain">
+                      <label for="user_company_admin">Administrator</label>
+                    </div>
+                    <div class="span5 content_align" style="float:right;">
+                      <input id="permission_company_admin" name="permission[company_admin]" type="checkbox" onclick="$(this).is(':checked') ? $('#detailed_permissions').hide() : $('#detailed_permissions').show()">
+                      <p class="inline-paragraph desc" style="margin-left: 18% ! important; margin-top: -4% ! important;">
+                        Company Administrators have access to all of the data for this account. Only Company Administrators can add, remove, or edit other member profiles.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="detailed_permissions">
+                  <fieldset style="margin-top: 10%;" class="basick_remin">
+                    <div class="permission">
+                      <div class="parent">
+                        <input type="checkbox" disabled="disabled" checked="checked">
+                        <label>Tasks</label>
+                        <div class="description">Applies to basic tasks, reminders,<br>
+                          events and visits.
+                        </div>
+                      </div>
+                      <div class="detail view-detail">
+                        <ul class="vertical">
+                          <li>
+                            <input checked="checked" id="permission_to_dos_" name="permission[to_dos]" type="radio" value="view_complete">
+                            <label for="user_permissions_to_dos_1">View and Complete  Tasks</label>
+                          </li>
+                          <li>
+                          <input checked="checked" id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit"><label for="user_permissions_to_dos_2">Edit Their Tasks</label>
+                          </li>
+                          <li>
+                            <input checked="checked" id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit_all"><label for="user_permissions_to_dos_6">Edit All Tasks</label>
+                          </li>
+                          <li>
+                            <input checked="checked" id="permission_to_dos_" name="permission[to_dos]" type="radio" value="edit_delete_all"><label for="user_permissions_to_dos_8">Edit &amp; Delete All Tasks</label>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <fieldset  style="margin-top: 0px;" class="basick_remin">
+                    <div class="permission">
+                      <div class="parent">
+                        <input type="checkbox" id="user_permissions_pricing" class="has_details" name="permission[permission_show_pricing]"> 
+                        <label for="user_permissions_pricing">Show Pricing</label>
+                        <div class="description">Required to edit Estimate, invoices and line items on Work Orders.</div>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <fieldset class="basick_remin">
+                    <div class="permission" style="overflow-y:auto;">
+                      <div class="parent">
+                        <input type="checkbox" id="user_permissions_clients" class="has_details"> 
+                        <label for="user_permissions_clients">Customers &amp; Pools</label>
+                      </div>
+                      <div class="detail invisible diplay_client_properties_detail">
+                        <%= select_tag("permission[permission_client_properties][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_clients_rwd") %>
+                        <p>
+                          <input type="checkbox" id="user_permissions_clients_index" class="" name="permission[permission_client_properties][]"> <label for="user_permissions_clients_index">List All Customers &amp; Pools</label>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="permission indent pad-top">
+                      <div class="parent">
+                        <input type="checkbox" id="user_permissions_quotes" disabled="disabled" class="has_details require_clients check_box_unselect"> <label for="user_permissions_quotes" class="disabled check_box_unselect">Estimate</label>
+                      </div>
+                      <div class="detail invisible diplay_quotes_detail">
+                        <span style="display:none;" class="has_pricing">
+                          <%= select_tag("permission[permission_quotes][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_quotes_rwd") %>
+                        </span>
+                        <span class="not_has_pricing">
+                          Read Only
+                        </span>
+                        <p>
+                          <input type="checkbox" id="user_permissions_quotes_index" class="" name="permission[permission_quotes][]"> <label for="user_permissions_quotes_index">List All Quotes</label>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="permission indent pad-top">
+                      <div class="parent">
+                        <input type="checkbox" id="user_permissions_invoices" disabled="disabled" class="require_clients has_details check_box_unselect"> <label for="user_permissions_invoices" class="disabled">Invoices</label>
+                      </div>
+                      <div class="detail invisible diplay_invoices_detail">
+                        <span style="display:none;" class="has_pricing">
+                          <%= select_tag("permission[permission_invoices][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_invoices_rwd") %>
+                        </span>
+                        <span class="not_has_pricing" style="display:none;">
+                          Read Only
+                        </span>
+                        <p>
+                          <input type="checkbox"  name="permission[permission_invoices][]" id="user_permissions_invoices_index" class=""> <label for="user_permissions_invoices_index">List All Invoices</label>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="permission indent pad-top">
+                      <div class="parent">
+
+                        <input type="checkbox" name="" id="user_permissions_work_orders" disabled="disabled" class="require_clients has_details check_box_unselect">
+                        
+                         <label for="user_permissions_work_orders" class="disabled">Work Orders</label>
+                      </div>
+                      <div class="detail invisible display_work_orders_detail">
+                        <%= select_tag("permission[permission_jobs][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_work_orders_rwd") %>
+                        <p>
+                          <input type="checkbox" id="user_permissions_work_orders_index" name="permission[permission_jobs][]" class=""> <label for="user_permissions_work_orders_index">List All Work Orders</label>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="permission indent pad-top">
+                      <div class="parent">
+                        <input type="checkbox" id="user_permissions_notes" disabled="disabled" class="require_clients has_details check_box_unselect">
+
+                        <label for="user_permissions_notes" class="disabled">Note &amp; Attachments</label>
+                        <div class="description" style="margin-left:18px;">On Clients, Quotes, Invoices &amp; Work Orders.</div>
+                      </div>
+                      <div class="detail invisible display_attachment_notes_detail">
+                        <%= select_tag("permission[permission_note_attachment][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_notes_rwd") %>
+                         <p>
+                          <input type="hidden" id="user_permissions_work_orders_index" name="permission[permission_note_attachment][]" class="" value="on">
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="permission indent pad-top">
+                      <input type="checkbox" disabled="disabled" class="require_clients check_box_unselect" name="permission[permission_reports]" style="float: left; margin-right: 10px;"><label for="user_permissions_reports" class="disabled" style="width: auto; float: left;">Reports</label>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+
+              <div class="form_section save_button_holder" style="text-align:right;">
+                <%= submit_tag "Create Employee",:class=>"update_button_setting save-new-btn1"%>
+              </div>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>
+<script>
+$(window).on('click', '#permission_company_admin', function(){
+  if($(this).prop('checked')){
+    $('#detailed_permissions').html('<%= j render partial: "admin_permission_added" %>');
+  }else{
+    $('#detailed_permissions').html('<%= j render partial: "admin_permission_removed" %>');
+  }
+})
+ teamAdd()
+ $('.colorpicker').colorpicker()
+</script>
+<style type="text/css">
+.basick_remin .permission .parent{
+  width: 23% !important;
+  margin-right: 1%;
+}
+.basick_remin .permission .detail{
+  width: 75%;
+} 
+.basick_remin .permission ul.vertical li{
+  width: 24%;
+  margin: 0px;
+  float: left;
+
+}
+.basick_remin .permission ul.vertical li input{
+  float: left;
+  margin-right: 5px;
+}
+.new_contain{
+  color: #555;
+  float: left;
+  font-weight: bold;
+  margin-left: 333px;
+  margin-right: 20px;
+  text-align: right;
+  width: 180px;
+}
+.view-detail label{
+  font-size: 13px !important;
+  font-weight: normal !important;
+ 
+  margin-right: 9px !important;
+}
+</style>

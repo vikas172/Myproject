@@ -1,0 +1,44 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Back Up</h4>
+    </div>
+    <div class="modal-body">
+      <%=form_tag csv_generate_path do%>
+        <div class="back-up"> 
+          <div class="row">
+            <%= radio_button_tag "csv_file","clients" %> Customers
+          </div>
+          <div class="row">
+            <%= radio_button_tag "csv_file","properties" %> Properties
+          </div>
+          <div class="row">
+            <%= radio_button_tag "csv_file","invoices" %> Invoices
+          </div>
+          <!-- <div class="row">
+            <%#= radio_button_tag "csv_file","jobs" %> Jobs
+          </div> -->
+        </div>
+        <div class="row">
+          <%= submit_tag "Generate",class: "generate-csv"%>
+        </div>
+      <%end%>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+.back-up{
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+</style>
+<script type="text/javascript">
+$(".generate-csv").click(function(){
+  $("#backup_modal").modal('hide');
+})
+</script>

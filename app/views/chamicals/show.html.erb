@@ -1,0 +1,115 @@
+<div class="client_index">
+	<div class="main_container">
+		<div id="head">
+			<div class="hide_for_print" id="controls">
+				<a class="button spin_on_click printer" href="https://heavy.getjobber.com/chemical_treatments/36737.pdf" target="_Blank" >
+					<img alt="Printable Client Copy" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/printer-133a3d8f6dc57554d068670fb5469604.svg" title="Printable Client Copy" style="padding:7px 7px !important;">
+				</a>
+				<%= link_to edit_chamical_path, class: "button_new_index icon-pencil" do %>
+					Edit
+				<% end %>
+				<li class="dropdown" style="list-style:none; float:right;margin-top: 0%;">
+					<a href="#" class="dropdown-toggle dropdown_button secondary action_menu dropdown_activator" data-toggle="dropdown" style="">Actions <span class="caret"></span></a>
+					<ul class="dropdown-menu edit_drop_menu" role="menu"><span class="arrow_action"></span>
+						<li>
+							<i class="fa fa-envelope-o"></i>
+							<%= link_to 'E-mail to Client', '#', id: "email", class: "has_icon"%>
+						</li>
+						<li>
+							<i class="fa fa-file-pdf-o"></i>
+							<%= link_to 'Download PDF', '#', id: "download_pdf", class: "has_icon"%>
+						</li>
+						<li><i class="fa fa-minus-circle"></i>
+							<%= link_to 'Delete', @chamical, class: "has_icon", confirm: "Are you sure you want to delete this chemical treatment?", method: "delete", id: 'delete'  %>
+						</li>
+					</ul>
+				</li>
+			</div>
+			<div class="breadcrumbs hide_for_print">Back to: <%= link_to 'Chemical Tracking', chamicals_path %>&gt; </div>
+			<h1>Chemical Treatment Record</h1>
+		</div>
+		<div id="show" class="chemical_treatment">
+			<div class="chemical_header">
+				<div class="property_confirmation">
+					<span style="float: left;"><img alt="House" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/house-dd988ce3e2dcf8fcd0f39dcc19681600.svg"></span>
+					<div style="float: left;">
+						<a class="strong" href="/properties/<%= @property.id %>?client_id=<%= @client.id %>">
+							<%= @client.initial %> <%= @client.first_name %> <%= @client.last_name %> <br>
+							<%= @property.street %><br><%= @property.street2 %><br><%= @property.city %>, <%= @property.state %>  <%= @property.zipcode %>
+						</a>
+					</div>
+				</div>
+
+			<div class="work_order_selector">
+				<span style="float: left;"><img alt="Hammer" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/hammer-105fd9699715aa7033eeca8befcf3049.svg"></span>
+				<div style="float: left;">
+					<strong>Job Information</strong><br>
+					<%= @job_info.blank? ? "- not attached to a Job -" : @job_info %>
+				</div>
+			</div>
+
+			<div class="applicator_selector">
+				<span style="float: left;"><img alt="User" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/user-c310e7db44a02768bb993933150e7245.svg"></span>
+				<div style="float: left;">
+					<strong>Applicator</strong><br>
+					<%= @applicator.blank? ? "Set Later" : @applicator %>
+				</div>
+			</div>
+
+			<div class="application_datetime">
+				<span style="float: left;"><img alt="Clock" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/clock-d0b3a486eb5c761bc00aae57c02c9c4c.svg"></span>
+				<div style="float: left;">
+					<strong>Application Date &amp; Time</strong><br>
+					<%= @chemical.date.strftime("%d/%m/%Y") rescue "" %><br>
+					<%= @chemical.start_time.strftime("%H:%M") rescue "" %> to <%= @chemical.end_time.strftime("%H:%M") rescue "" %>
+				</div>
+			</div>
+		</div>
+
+		<div class="details">
+			<div id="current_chemicals">
+				<h3>
+					Chemical:
+					<span>Set Later ( Conc:cvdsasd)</span>
+				</h3>
+			</div>
+
+			<p>
+				<label>Targeted Pest:</label>
+				<%= @chemical.targeted_pest %>
+			</p>
+			<p>
+				<label>Total Chemical Applied:</label>
+				<%= @chemical.total_applied %>
+			</p>
+			<p>
+				<label>Application Area:</label>
+				<%= @chemical.total_area_of_application %>
+			</p>
+			<p>
+				<label>Application Rate:</label>
+				<%= @chemical.application_rate %>
+			</p>
+			<p>
+				<label>Wind Direction:</label>
+				<%= @chemical.wind_direction %>
+			</p>
+			<p>
+				<label>Wind Velocity:</label>
+				<%= @chemical.wind_velocity %>
+			</p>
+			<p>
+				<label>Temperature:</label>
+				<%= @chemical.temperature %>
+			</p>
+			<p>
+				<label>Apparatus Info:</label>
+				<%= @chemical.apparatus_info %>
+			</p>
+			<p>
+				<label>Additional Notes:</label>
+				<%= @chemical.notes %>
+			</p>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,89 @@
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <%=render "home/work_item_side_bar" %>
+      <div id="settings_area">
+        <h3 class="title1-font" style="margin-bottom: 5px;">
+          QuickBooks Integration
+        </h3>     
+        <% if get_add_on_status(@active_addon, "quickbooks_ids") %>
+          <% unless session[:token] %>
+            <ipp:connectToIntuit></ipp:connectToIntuit>
+          <% else %>
+            <div style="float:left" class="flash flash_notice">
+              <strong>
+                QuickBooks authorized
+                for another 6 months
+              </strong>
+            </div>
+
+            <%= link_to "Disconnect QB!",closed_qb_account_intuits_path,:class=>"button remove",:data => {:confirm=>"Are you absolutely sure you want to disconnect from QuickBooks?"},:style=>"float:right;"%>
+
+            <%= form_tag({:action => :sync_to_quick_book, :controller => "intuits"}, :multipart => true) do %>
+              <ul style="line-height:20px; list-style:none; padding:0px; margin:0;">
+                <li>
+                  <select id="syncer_qbo_global" name="syncer[qbo_global]"><option selected="selected" value="false">QBO US</option>
+                  <option value="true">QBO Global (CA/UK/AUS)</option></select>
+                  <span class="question" data-popuptitle="">?</span>
+                  <br>
+                  <br>
+                </li>
+
+                <input id="syncer_sync_clients" name="syncer[sync_clients]" type="hidden" value="true">
+                <li>
+                  <input disabled="disabled" name="syncer[sync_clients]" type="hidden" value="0"><input checked="checked" disabled="disabled" id="syncer_sync_clients" name="syncer[sync_clients]" type="checkbox" value="1">
+                    <b for="syncer_sync_clients">Sync Clients</b>
+                    <span class="question" data-popuptitle="Sync clients with QuickBooks Customers" data-popupcontent="">?</span>
+                </li>
+
+                <li>
+                  <input name="syncer[sync_services_and_products]" type="hidden" value="0"><input checked="checked" id="syncer_sync_services_and_products" name="syncer[sync_services_and_products]" type="checkbox" value="1">
+                  <b for="syncer_sync_services_and_products">Sync Services &amp; Products</b>
+                  <span class="question" data-popuptitle="">?</span>
+                </li>
+
+                <li>
+                  <input name="syncer[sync_invoices]" type="hidden" value="0"><input id="syncer_sync_invoices" name="syncer[sync_invoices]" type="checkbox" value="1">
+                  <b for="syncer_sync_invoices">Sync Selected Invoices</b>
+                  <span class="question" data-popuptitle="">?</span>
+                </li>
+
+                <li id="auto_push_invoice_holder" style="display: list-item;">
+                  <input name="syncer[auto_push_invoices]" type="hidden" value="0"><input id="syncer_auto_push_invoices" name="syncer[auto_push_invoices]" type="checkbox" value="1">
+                  <b for="syncer_auto_push_invoices">Push Invoice to QB when marked 'Sent'</b>
+                </li>
+
+                <li id="sync_payments_holder" style="display: list-item;">
+                  <input name="syncer[sync_payments]" type="hidden" value="0"><input id="syncer_sync_payments" name="syncer[sync_payments]" type="checkbox" value="1">
+                  <b for="syncer_sync_payments">Push New Payments</b>
+                  <span class="question" data-popuptitle="">?</span>
+                </li>
+
+                <li id="sync_time_sheets_holder">
+                  <input name="syncer[sync_time_sheets]" type="hidden" value="0"><input id="syncer_sync_time_sheets" name="syncer[sync_time_sheets]" type="checkbox" value="1">
+                  <b for="syncer_sync_time_sheets">Push Approved Timesheet Hours</b>
+                  <span class="question" data-popuptitle="">?</span>
+                </li>
+              </ul>
+              <p class="update_holder">
+                <input type="submit" value="Sync Now!" name="commit" class="button save larger spin_on_click" style=" margin-top: 16px;">
+              </p>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p>To start Quick book synch active add- ons <%= link_to "Click here", "/accounts/edit" %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#settings_area li {
+  width: 30%;
+  margin-bottom: 6px;
+  }
+#settings_area ul li input[type="checkbox"] {
+  width: 8%;
+}
+</style>

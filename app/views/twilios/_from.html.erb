@@ -1,0 +1,31 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+      <h4 class="modal-title" id="myModalLabel">New Message</h4>
+    </div>
+    <div class="modal-body">
+			<%= form_tag message_create_path do |f| %>
+				<div class="row">
+					<%if params[:type]=="user"%>
+						<%= select_tag "number" , options_from_collection_for_select(@team, "mobile_number" ,"full_name")%>
+					<%else%>
+						<%= select_tag "number" , options_from_collection_for_select(@clients, "mobile_number" ,"first_name")%>
+					<%end%>	
+				</div>
+
+				<div class="row">
+					<%= text_area_tag :body,nil, as: :text ,:required=>true%>
+				</div>
+
+				<div class="form-actions">
+					<%= submit_tag :submit, class: 'button_new_create' %>
+					<%#= link_to 'Cancel', dashboard_path, class: 'model_cancel_button' ,:style=>"float: left; margin-left: 10px;"%>
+				</div>
+			<% end %>
+		</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

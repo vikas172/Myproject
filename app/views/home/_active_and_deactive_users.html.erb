@@ -1,0 +1,77 @@
+<table style="margin-top: 15px;" class="wide striped spaced user_listing" id="users">
+  <thead class="thead">
+    <tr>
+      <th style="width:24px">&nbsp;</th>
+      <th class="name">Name</th>
+      <th class="phone">Last Name</th>
+      <th class="phone">Phone</th>
+      <th class="Email">Email</th>
+      <th class="last_login">Used</th>
+      <th class="admin">Admin?</th>
+    </tr>
+  </thead>
+   <tbody>
+    <tr onclick="document.location='/users/edit';" style="cursor:pointer" class="user_listing">
+      <td class="photo">
+        <i class="fa fa-user fa-2"></i></td>
+      <td class="name"><%= current_user.full_name%></td>
+      <td class="name"><%= current_user.last_name%></td>
+      <td class="phone"><%= current_user.try(:mobile_number)%></td>
+      <td class="email"><%= current_user.email%></td>
+      <td class="last_login"><%= get_last_login_main(current_user)%></td>
+      <td class="admin_checkmark"><i class="fa fa-check"></i></td>
+    </tr>
+  </tbody>
+  <%if !@team_members_active.blank?%>
+    <%@team_members_active.each do |member|%>
+      <tbody>
+        <tr onclick="document.location='/home/users/<%=member.id%>/edit';" style="cursor:pointer" class="user_listing">
+          <td class="photo"><i class="fa fa-user fa-2"></td>
+          <td class="name"><%= member.full_name%></td>
+          <td class="name"><%= member.last_name rescue "" %></td>
+          <td class="phone"><%=member.try(:mobile_number)%></td>
+          <td class="email"><%= member.email%></td>
+          <td class="last_login"><%= get_last_login(member)%></td>
+          <td class="admin checkmark">&nbsp;</td>
+        </tr>
+      </tbody>
+    <%end%>  
+  <%end%> 
+</table>  
+<br/><br/>
+<%if !@team_members_deactive.blank?%>
+  <%= link_to "#{@team_members_deactive.count} inactive user" ,"#" ,:style=>"background-color:#FFFFFF; color:#B87333; text-decoration: underline;",:id=>"deactive_table_show"%> 
+  <div id="deactive_member" style="display:none;">
+    <table style="margin-top: 15px;" class="wide striped spaced" id="users">
+      <thead class="thead">
+        <tr>
+          <th style="width:24px">&nbsp;</th>
+          <th class="name">Name</th>
+          <th class="phone">Phone</th>
+          <th class="Email">Email</th>
+          <th class="last_login">Used</th>
+          <th class="admin">Admin?</th>
+        </tr>
+      </thead>
+      <%if !@team_members_deactive.blank?%>
+        <%@team_members_deactive.each do |member|%>
+          <tbody>
+            <tr onclick="document.location='/home/users/<%=member.id%>';" style="cursor:pointer">
+              <td class="photo"><i class="fa fa-user fa-2"></td>
+              <td class="name"><%= member.full_name%></td>
+              <td class="phone"><%=member.try(:phone_number)%></td>
+              <td class="email" style="text-decoration:line-through;"><%= member.email%></td>
+              <td class="last_login"><%= get_last_login(member)%></td>
+              <td class="admin checkmark">&nbsp;</td>
+            </tr>
+          </tbody>
+        <%end%>  
+      <%end%>
+    </table>   
+  </div>
+<%end%>  
+<script>
+  $("#deactive_table_show").click(function(){
+    $("#deactive_member").toggle()
+  })
+</script>

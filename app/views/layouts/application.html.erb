@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <title>CopperService</title>
+	  <%= stylesheet_link_tag    'application', media: 'all' %>
+	  <%= javascript_include_tag 'application' %>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js">
+		</script>
+	  <%= csrf_meta_tags %>
+    <meta content='<%= user_signed_in? ? current_user.id : "" %>' name='user-id'/>
+    <!-- <script src="http://js.pusherapp.com/3.0.0/pusher.min.js"></script>--> 
+     <script src="http://js.pusherapp.com/1.9/pusher.min.js"></script> 
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-67561313-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>   
+	</head>
+	<body>
+    <div id="body-wrapper">
+  		<%= render 'layouts/header' %>
+  		<div class="container">
+
+        <div class="comm-loader" style="display:none;">
+          <%= image_tag("loader.gif")%>
+        </div>
+  			<%= yield %>
+  		</div>
+      <%= render 'layouts/footer' %>
+    </div>
+    <div class="modal fade" id="support_new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    </div>
+<!-- Button trigger modal -->
+    <script>
+    $(function() {
+      var pusher = new Pusher('d08eb71a0c0c3805381b'); // Replace with your app key
+      var channel = pusher.subscribe('private-'+<%= current_user ? current_user.id : 'null' %>);
+      
+      channel.bind('new_message', function(data) {
+        msg = data.from + ' has sent you a message: ' + data.subject;
+        dom_notify(msg);
+        title_notify(msg);
+        if (window.webkitNotifications) { webkit_notify(msg); }
+      });
+      
+      // In DOM alert
+      function dom_notify(msg) {
+        $('#notify').text(msg);
+        $('#notify').fadeIn();
+        setTimeout(function() {
+          $('#notify').fadeOut
+          ();
+        }, 2000);
+      }
+      
+      // <title> msg
+      function title_notify(msg) {
+        $.titleAlert(msg);
+      }
+      
+      // Webkit Notifications API
+      // http://www.html5rocks.com/en/tutorials/notifications/quick/
+      
+      // Setup permissions
+      if (window.webkitNotifications) {
+        console.log("Notifications are supported!");
+        $('#notify_api').show();
+      }
+      else {
+        console.log("Notifications are not supported for this Browser/OS version yet.");
+      }
+      
+      $('#ask_notify_permission').click(function() {
+        window.webkitNotifications.requestPermission();
+      });
+      
+      // Notify function
+      function webkit_notify(msg) {
+        notify = window.webkitNotifications.createNotification('http://pusher.com/stylesheets/images/feature_scalable.png', msg, '');
+        notify.show();
+      }
+      
+      // Some useful Pusher debug msgs
+      pusher.connection.bind('connecting', function() {
+        $('div#status').text('Connecting to Pusher...');
+      });
+      pusher.connection.bind('connected', function() {
+        $('div#status').text('Connected to Pusher!');
+      });
+      pusher.connection.bind('failed', function() {
+        $('div#status').text('Connection to Pusher failed :(');
+      });
+      channel.bind('subscription_error', function(status) {
+        $('div#status').text('Pusher subscription_error');
+      });
+    });
+    </script>
+
+    <%if $check_demo == true%>
+      <%= render 'layouts/demo_check' %>
+      <% $check_demo = false%>
+    <%end%>
+	</body>
+</html>
+
+<style type="text/css">
+.comm-loader {
+    position: absolute;
+    z-index: 99999;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    top: 0;
+    background: rgba(0,0,0,0.5);
+    height: 100%;
+    padding-top: 200px;
+}
+</style>
+<script>
+$(document).ready(function(){
+  intuit.ipp.anywhere.setup({menuProxy: '<%= path_to_blue_dot_path %>', grantUrl: '<%= authenticate_intuits_url %>'});
+});
+</script>

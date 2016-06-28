@@ -1,0 +1,108 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=drawing"></script>
+<div class="client_index">
+	<div class="main_container">
+		List of selected Address
+		<div class="clearfix"></div>
+		<div id="map-selected"></div>
+    <div id="map-controls" style="margin-left: 19%;">
+      <button>Select</button>
+    </div>
+    <div id="current_map_address1" style='height: 480px; position: relative; background-color: rgb(229, 227, 223);  overflow: hidden;'  >
+    </div>
+	</div>
+</div>
+<div class="modal fade" id="assign-reassign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<style type="text/css">
+	#map-selected{
+		float: left;
+		width: 18%;
+	}
+	#current_map_address1{
+		width: 81% !important;
+  	float: right !important;
+	}
+</style>
+
+<script type="text/javascript">
+  var selectedArea = null,
+    selecting = false,
+    map, drawingManager;
+  function initialize () {
+    var mapOptions = {
+      center: new google.maps.LatLng(40.7127, -73.985428),
+      zoom: 4,
+      scrollwheel: false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('current_map_address1'),
+      mapOptions);
+    drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: google.maps.drawing.OverlayType.CIRCLE,
+      drawingControl: false,
+      circleOptions: {
+        fillColor: '#B87333',
+        fillOpacity: 0.3,
+        strokeWeight: 1,
+        clickable: false,
+        editable: true,
+        zIndex: 1
+      }
+    });
+
+    $('#current_map_address11').mousedown(function() {
+      if ( !selecting ) return;
+      if ( selectedArea ) {
+         selectedArea.setMap(null);
+         google.maps.event.clearInstanceListeners(selectedArea);
+      }
+      selectedArea = null;
+     });
+    google.maps.event.addListener(drawingManager, 'circlecomplete', function( circle ) {
+        selectedArea = circle;
+        google.maps.event.addListener(circle, 'center_changed', listSelected);
+        google.maps.event.addListener(circle, 'radius_changed', listSelected);
+        listSelected();
+        toggleSelector();
+    });
+    $('#map-controls').children().button().click(toggleSelector);
+      plotMarkers();
+    }
+
+    function plotMarkers () {
+      $.each( sites, function () {
+        if ( this.marker ) this.marker.setMap(null);
+        this.position = new google.maps.LatLng(this.lat, this.lng);
+        this.marker = new google.maps.Marker({
+           position: this.position,
+           map: map,
+           title: this.location
+        });
+     });
+    }
+
+    function listSelected () {
+      var r = selectedArea.getRadius(),
+         c = selectedArea.getCenter();
+      var inside = $.map( sites, function ( s ) {
+        var d;
+        if ( ( (d = google.maps.geometry.spherical.computeDistanceBetween( s.position, c )) <= r ) )
+        	
+           return '<p>'+ s.location + ' ('+(Math.round(d/100)/10)+' km) '+ ' <a class="button pull-right" href="/maps/change_assign?job_id='+s.job_id+'" data-remote="true" data-target="#assign-reassign" data-toggle="modal">Reassign</a></p>';
+      });
+      $('#map-selected').html( inside.sort().join('<br/>') );
+    }
+
+    function toggleSelector () {
+      var $el = $('#map-controls button');
+    	if ( $el.button('option', 'label') == 'Select' ) {
+        $el.button('option', 'label', 'Interact');
+        drawingManager.setMap(map);
+     	} else {
+        $el.button('option', 'label', 'Select');
+        drawingManager.setMap(null);
+     	}
+      selecting = !selecting;
+    }
+    $(initialize);
+    var sites =  <%=raw @address.to_json%>
+</script>

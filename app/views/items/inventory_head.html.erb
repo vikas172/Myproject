@@ -1,0 +1,47 @@
+<div id="app_wrapper">
+	<div class="client_index">
+		<div class="main_container">
+			<div >
+				<%=render "home/work_item_side_bar" %>
+				<div id="settings_area">
+
+					<p class="title1-font"> Inventory Head </p>
+					<%= form_tag inventory_update_items_path do %>
+
+						<div class="row">
+							<div class="span2">
+								<label>Item Head</label>
+							</div>
+							<div class="span7">
+								<%= text_field_tag "item_head",nil,:value=>@item_head%>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="span2">
+								<label>Part Head</label>
+							</div>
+							<div class="span7">
+								<%= text_field_tag "part_head",nil,:value=>@part_head%>
+							</div>	
+						</div>	
+
+						<div class="">
+							<span>Note: Enter table name to create two inventory tables. Leave blank will have default ONE table.
+							</span>
+						</div>
+
+						<div class= "row">
+							<%= submit_tag "Save",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+						</div>
+					<%end%>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<style type="text/css">
+#settings_area {
+  padding: 22px 0 10px 20px;
+}
+</style>

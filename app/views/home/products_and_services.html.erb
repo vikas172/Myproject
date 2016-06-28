@@ -1,0 +1,54 @@
+<div class="client_index">
+  <div class="main_container">
+    <div id="head">
+      <h1>Product and Services - Usage Report</h1>
+    </div>
+    <%= render "report_summary_time_picker", :locals => {:quotes_action => "products_and_services_summary"}%>
+    </br></br></br>
+    <div id="summary" class="content_align">
+      <div id="left_summary">
+        <div style="background-color: #eef; border: 1px solid #dcdcdc; padding: 5px 10px; margin-bottom: 20px;" class="legend">
+          <strong>Estimate:</strong> How many times does a line item appear on a <strong>Sent</strong> Estimate.<br>
+          <strong>On Work Orders:</strong> How many times does a line item appear on a Work Order which overlaps with the time period (Based on initial Start/End/Duration).<br>
+          <strong>Invoiced:</strong> How many times does a line item appear on a <strong>Sent</strong> Invoice.
+        </div>
+      </div>
+    </div>
+    <a class="button_new_create" id="column_selector" href="#column_selector_model" data-toggle="modal" style="float: right; z-index: 9; margin-right:16px;"><span id = "column_selector_count"></span> Columns</a>
+    <div id="products_and_services_summary">
+		  <div class="tables" style="width: 98%; margin: 10px;">
+        <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+          <thead class="thead">
+            <tr>
+              <th width="145px" class="name">Name</th>
+              <th width="189px" class="quote_qty">Estimate Qty</th>
+              <th width="257px" class="quot_doller">Estimate $</th>
+              <th width="169px" class="on_job-qty">On Work Orders Qty</th>
+              <th width="169px" class="on_job_doller">On Work Orders $</th>
+              <th width="169px" class="invoice_qty">Invoiced Qty</th>
+              <th width="225px" class="invoiced_doller">Invoiced $</th>
+            </tr>
+          </thead>
+          <% unless @job_works.blank?%>
+        	  <% get_name_summary(@invoice_works,@job_works,@quote_works).each_with_index do |product,i| %>
+            	<tr> 
+            		<td class="name"><%= product %></td>
+            		<td class="quote_qty"><%= get_count_summary(product, @quote_works)%></td>
+                <td class="quot_doller"><%= get_total_summary(product, @quote_works)%></td>
+                <td class="on_job_qty"><%= get_job_work_count_summary(product, @job_works)%></td>
+                <td class="on_job_doller"><%= get_job_work_total_summary(product, @job_works)%></td>
+                <td class="invoice_qty"><%= get_count_summary(product, @invoice_works)%></td>
+                <td class="invoiced_doller"><%= get_total_summary(product, @invoice_works)%></td>
+              </tr>
+        	  <% end %>
+          <% end %> 
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render "services_and_work_reports_column_edit"%>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

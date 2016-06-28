@@ -1,0 +1,59 @@
+<div class="hours-day clearfix new_timesheet_row_" >
+  <div class="row new-entry">
+    <%= form_for(@add_row, class: "new_time_sheet_entry", remote: true) do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :start_date, value: current_user.id %>
+      <%= f.hidden_field :auto_start_timer, value: current_user.id %>
+      <%if params[:day].blank?%>
+        <%= f.hidden_field :day, value: Date.today %>
+      <%else%>
+        <%= f.hidden_field :day, value: params[:day] %>
+      <%end%>
+      <div class="task">
+        Job: <%= f.select :job_id, options_for_select(@jobs.each_with_index.map{ |job,i| ["##{i+1}-#{client_full_name(job.property.client)}-#{job.description}", job.id ] },:selected=> @timesheet.try(:job_id)) rescue "" %>
+        Category: <%= select_tag "timesheet[custom_category_id]", options_from_collection_for_select(@categories, "id", "category" ,:selected=>@timesheet.try(:custom_category_id))%>
+        <%= f.hidden_field :label, value: "General" %>
+        <%= f.check_box :billable,:value=>"billable"%> Billable
+        <div class="clearfix"></div>
+        <%= f.text_area :note, placeholder: "Notes...", rows: "3" %>
+
+      </div>
+      <div class="dur_">
+        <div class="picker input-append toggle-append bootstrap-timepicker" id="start_dur">
+          <label for="time_sheet_entry_start_time">Start Time</label>
+          <%= f.text_field :start_time, class: "time start-timesheet hasTimeEntry", size: "7" , data: {duration: "start_"}%>
+        </div>
+        <div class="picker input-append toggle-append bootstrap-timepicker" id="end_dur">
+          <label for="time_sheet_entry_end_time">End Time <span id="next_day" style="display: none;">Next Day</span></label>
+          <%= f.text_field :end_time, class: "time hasTimeEntry end-timesheet", size: "7", value: "0:00", data: {duration: "end_"}%>
+        </div>
+        <div class="picker sum" id="total_dur">
+          <label for="time_sheet_entry_duration">Duration</label>
+          <%= text_field_tag :duration, class: "duration hasTimeEntry", size: "7", value: "0:00", autocomplete: "off" ,:Disabled=>true, data: {duration: "dur_"}%>
+        </div>
+      </div>
+      <div class="controls">
+        <%= link_to 'Cancel', timesheets_path, class: "cancel model_cancel_button cancel-button" %>
+        <%= f.submit :commit, class: "button save larger submit_timer", value: "Save" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  $(".hasTimeEntry").timepicker({
+        template: false,
+        showMeridian: false,
+        showInputs: false,
+        minuteStep: 1,
+        use24hours: false
+    });
+  
+</script>
+<style type="text/css">
+.cancel{
+   right: 75px !important;
+   top: 38px !important;
+}
+</style>

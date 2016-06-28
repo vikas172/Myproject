@@ -1,0 +1,79 @@
+<p style="display:none;" class="description" id="client_view_warning">
+  <b>NOTE:</b> These changes will be applied to all future invoices. Existing invoices must be changed on an individual basis.
+</p>
+
+<br>
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="invoice_show_line_item_qty">
+  <%if current_user.pdf_setting.blank? || current_user.pdf_setting.invoice_show_line_item_qty %>  
+    <%= check_box_tag 'invoice_show_line_item_qty', 'yes', true,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%else%>
+    <%= check_box_tag 'invoice_show_line_item_qty', 'no', false,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%end%>
+  <b for="pdf_settings_invoice_show_line_item_qty">Show QTY on line items?</b>
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="invoice_show_line_item_unit_costs">
+  <%if current_user.pdf_setting.blank? || current_user.pdf_setting.invoice_show_line_item_unit_costs %>
+    <%= check_box_tag 'invoice_show_line_item_unit_costs', 'yes', true,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%else%>
+    <%= check_box_tag 'invoice_show_line_item_unit_costs', 'no', false,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%end%>  
+  <b for="pdf_settings_invoice_show_line_item_unit_costs">Show unit cost on line items?</b>
+
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="invoice_show_line_item_total_costs">
+  <%if current_user.pdf_setting.blank? || current_user.pdf_setting.invoice_show_line_item_total_costs %>
+    <%= check_box_tag 'invoice_show_line_item_total_costs', 'yes', true,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%else%>
+    <%= check_box_tag 'invoice_show_line_item_total_costs', 'no', false,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%end%>  
+  <b for="pdf_settings_invoice_show_line_item_total_costs">Show total cost on line items?</b>
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="pdf_return_stub">
+  <%if current_user.pdf_setting.blank? || current_user.pdf_setting.pdf_return_stub %>
+    <%= check_box_tag 'pdf_return_stub', 'yes', true,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%else%>
+    <%= check_box_tag 'pdf_return_stub', 'no', false,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%end%>  
+  <b for="pdf_settings_pdf_return_stub">Include return payment stub?</b></br></br>
+  <span class="description">
+    Adds a tear off payment return stub at the bottom of your <b>Unpaid Invoices</b>.
+    <br> <b> NOTE: </b>The return stub is formatted to fit #8 Envelopes.
+  </span>
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="invoice_show_late_stamp">
+  <%if current_user.pdf_setting.blank? || current_user.pdf_setting.invoice_show_late_stamp %>
+    <%= check_box_tag 'invoice_show_late_stamp', 'yes', true,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%else%>
+    <%= check_box_tag 'invoice_show_late_stamp', 'no', false,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%end%>  
+  <b for="pdf_settings_invoice_show_late_stamp">Show late stamp if overdue?</b>
+</p>
+
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="invoice_show_account_balance">
+  <%if current_user.pdf_setting.blank? || current_user.pdf_setting.invoice_show_account_balance %>
+    <%= check_box_tag 'invoice_show_account_balance', 'yes', true,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%else%>
+    <%= check_box_tag 'invoice_show_account_balance', 'no', false,:onclick=>"checkMarked(this.id,'invoices')" ,:value=>"1"%>
+  <%end%>  
+  <b for="pdf_settings_invoice_show_account_balance">Invoice show account balance</b></br></br>
+  <div class="description" style="clear: both;">Only when account balance is not zero or the value of the invoice.</div>
+</p>
+
+<p style="padding: 10px; border: 1px solid #ccc; clear:both; overfow-y:auto;">
+  <b for="work_configuration_invoice_contract" style="text-align: left;">
+    Contract/Disclaimer<br>
+  </b>
+    <span class="description">This message will appear at the bottom of every invoice</span>
+  </p>
+  <%= text_area_tag "invoice_contract" ,"Thank you for your business. Please contact us with any questions regarding this invoice.",:rows=>"4",:style=>"width:98%;"%>
+

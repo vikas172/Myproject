@@ -1,0 +1,395 @@
+<div class="client_index quotes-index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <%if permission_for_edit_work_jobs(@team_member)!="read"%>
+      <%= render "job_action"%>
+      <%if @job.job_required== "Require Invoice"%>
+        <%@count=check_job_invoice_genrate(@job)%>
+        <%if @count== 0%>
+          <%= link_to 'Edit', edit_job_path(@job),:class=>"button_new_index icon-pencil save-new-btn1",:style=>"float:right; " %>
+        <%end%>
+      <%else%>
+        <%= link_to 'Edit', edit_job_path(@job),:class=>"button_new_index icon-pencil save-new-btn1",:style=>"float:right; " %>
+      <%end%>   
+    <%end%>    
+    <br>
+
+    <%= render "signature_job_model"%>
+    <div class="work_area" id="work_order">
+      <div class="stamp">
+        <span>
+          <%if @job.job_status.nil? && !@job.try(:start_date).blank?%>
+            <%if @job.start_date > get_date_today %>
+              <span class="status upcoming"> Upcoming </span>
+            <%elsif @job.start_date == get_date_today %>
+              <span style=" color:#1f518b" class="status"> Today </span>
+            <%elsif !@job.end_date.nil?%>
+
+              <%if ((@job.end_date < get_date_today ) || (@job.start_date < get_date_today ))%>
+                  <span style=" color:#B22F23" class="status"> Late </span>
+              <%end%>
+            <%elsif (@job.start_date < get_date_today )%> 
+              <span style=" color:#B22F23" class="status"> Late </span>   
+            <%end%> 
+          <%elsif @job.job_required== "Require Invoice"%> 
+            <%@count=check_job_invoice_genrate(@job)%>
+            <%if @count== 0%>
+              <span  style= "color: #1f518b;" class="status">REQUIRES INVOICING</span>
+            <%else%>
+              <span  style=" color: #AAAAAA;" class="status">ARCHIVED</span>
+            <%end%>
+          <%elsif @job.scheduled%>
+            <span  style="color: #1f518b;" class="status">ACTION REQUIRED</span>
+          <%else%>
+            <span style="color: #1f518b;" class="status">UNSCHEDULED</span>
+          <%end%> 
+        </span>
+      </div>
+      <div class="work_order_header top clearfix">
+        <div class="span7 content_align">
+          <% @client = @job.property.client rescue "" %>
+          <h3 class="title1-font"><a href="/clients/<%=@client.id rescue "" %>"><%= @client.initial rescue ""  %>&nbsp;<%= @client.first_name.titleize rescue ""  %>&nbsp;<%= @client.last_name.titleize rescue "" %></a></h3>
+          <p>
+            <%= @job.property.try(:street) %><br><%= @job.property.try(:city) %>,  <%= @job.property.try(:state) %>  <%@job.property.try(:zipcode) %>
+            <br>
+          </p>
+
+          <p>
+            <%if @property.latitude.blank? %>
+              <a href="/properties/<%= @property.id%>/manually_geocode?job=<%= @job.id %>" class="button_new_create save-new-btn1">Map pin not found. Set Now!</a>
+            <%else%>
+              <a target="_map" href="http://maps.google.com?q=<%= @property.latitude%>,<%= @property.longitude%>" class="button_new_create save-new-btn1"><span><i class="icon-map-marker"></i></span> Show On Map</a>
+            <%end%>
+            <br>
+          </p>
+          <br/>
+          <p>
+            <%= @client.mobile_number rescue ""  %>
+            <br>
+            <a href="#"><%=@client.personal_email rescue "" %></a>
+          </p>
+        </div>
+
+        <div class="span5">
+          <table class="right_show_quote right">
+            <tbody>
+              <tr>
+                <td>
+                  <span class="label">Work Order</span></td>
+                  <td><span>#<%=@job.job_order rescue ""  %></span></td>
+                </tr>
+              <tr>
+                <td>
+                  <span class="label">Description</span></td>
+                  <td><span><%= @job.description rescue "" %></span></td>
+                </td> 
+              </tr>
+   
+              <%if @job.scheduled==true%>
+                <tr>
+                  <td><span class="label">Starts on</span></td>
+                  <td><span><%= @job.start_date%></span></td>
+                </tr>
+                <tr>
+                  <%if @job.job_type=="recurring_contract" %>
+                    <td><span class="label">Lasts for</span></td>
+                     <td><%=@job.try(:number_of_invoice) rescue ""  %> 
+                    <%= @job.try(:invoice_type)rescue "" %> </td>
+                  <%else%>
+                     <td><span class="label">Ends on</span> </td>
+                     <td><span><%=@job.end_date rescue "" %></span></td>
+                  <%end%>
+                </tr>
+              <%else%>
+                <tr>
+                  <td><span class="label">Starts on</span></td>
+                  <td><span><%= @job.start_date%></span></td>
+                </tr>
+                <tr>
+                  <td><span class="label">Lasts for</span></td>
+                  <td><span><%= @job.number_of_invoice rescue ""%> &nbsp; <%= @job.invoice_type rescue ""%></span></td>
+                </tr>
+                <tr>
+                  <td><span class="label">Billing type</span></td>
+                  <td><span><%= @job.invoicing rescue ""%></span></td>
+                </tr>
+              <%end%>  
+              <tr>
+                <td><span class="label">Billing frequency</span></td>
+                <td><span><%= @job.invoice_period %></span></td>
+              </tr>
+
+              <tr>
+                <%#if @job.scheduled==true%>
+                  <td><span class="label">Schedule</span></td>
+                  <td><span><%=@job.visits rescue "" %></span></td>
+                <%#end%>
+              </tr>
+         
+              <% if @job.quote_id.present? %>
+                <tr>
+                  <td> From quote </td><td> <%= link_to 'Quote#'+@job.quote_id.to_s, "/quotes/#{@job.quote_id}" %> 
+                  </td>
+                </tr>
+              <% end %>
+              <tr>
+                <%= render "clients/custom_field_show"%>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> 
+    </div>
+
+    <div class="fieldset">
+      <div class="display_work_quote title1-font" id="line_items_head" style="width:98.4%;padding:5px 10px;">Work Items <small>- click a line to edit</small>
+        <%if ((@job.job_status.blank?) ||(@job.job_required!= "Require Invoice"))%>
+          <%if current_user.user_type=="admin"%>
+            <button id="more" class="button_new_index save-new-btn1" style="float:right;">+ Add line items</button>
+          <%else%>
+            <%if set_permission_for_quote_job_convert(@team_member) != "read"%>
+            <button id="more" class="button_new_index save-new-btn1" style="float:right;"> + Add line items</button>
+            <%end%>
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+    <span id="work_result" style="color: red; margin-left: 4%;" ></span>
+      <div id="line_items" >
+        <div id="line_items_head" class="display_work_quote">
+          <span class="name">&nbsp;</span>
+          <span class="description"></span>
+          <div class="work_job_right">
+            <ul class="value_right">
+              <li>Qty</li>
+              <li>Unit Cost</li>
+              <li>Total$</li>
+            </ul>
+          </div>
+        </div>
+      </div>  
+      </br>
+      <div id="add_more_work" >
+        <%= render "show_work" %>
+          <div id="job_work_<%=@job.job_works.count+1%>" class="replace_job">
+            <%= form_for :job_works, url: job_work_path ,method: "post" , :html=> {:id => "#{@job.job_works.count+1}",:class=>'clas row_div work_order_line_item'},:remote=>true do |f|%>
+              <%= hidden_field_tag "work_id", nil, value: "job_work_#{@job.job_works.count+1}" %>
+              <%=f.hidden_field :job_id,:value=>@job.id %><span class="work_job_name">
+              <%= f.text_field :name,:placeholder=>"name...",:style=>"",:id=>"p_name_#{@job.job_works.count+1}",:required=>true, maxlength: 50 %></span>
+              <span class="work_job_description">
+              <%= f.text_area :description,:placeholder=>"description...",:style=>"",:id=>"p_description_#{@job.job_works.count+1}" %></span>
+              <div class="work_job_right">
+                <span class="work_job_cost">
+                  <%= f.text_field :quantity,:value=>"1",:style=>"",:id=>"p_quantity_#{@job.job_works.count+1}",:onchange=>"AddjobQuantity($(this).val(),#{@job.job_works.count+1})"%>$
+                </span>
+                <span class="work_job_column">
+                  <%= f.text_field :unit_cost,:placeholder=>"0.00",:style=>"",:id=>"p_unit_cost_#{@job.job_works.count+1}" ,:onchange=>"AddJobUnitCost($(this).val(),#{@job.job_works.count+1})"%>$ 
+                </span>
+                <span class="work_job_column">
+                  <%= f.text_field :total,:placeholder=>"0.00",:style=>"",:id=>"p_total_#{@job.job_works.count+1}",:class=>"p_total" ,:readonly => true%>
+                </span>
+              </div>
+              <div class="clear"></div>
+              <%=f.submit "Save" ,:style=>"float:right;",:class=>"save button_new_index save-new-btn1", onsubmit: " $(this).hide();" %>
+              <span class="remScnt model_cancel_button" style="float:right; margin-right:10px;" >cancel</span>
+            <% end %>
+          </div>
+        </div>
+ 
+      <div class="work_job_subtotal" id="subtotal">
+        <span class="cost_column"></span>
+      </div>
+
+      <div id="work_order_visits" data-url="/work_orders/694090/visits" class="fieldset">
+        <div style="width:98.4%;padding:5px 10px;" id="line_items_head" class="display_work_quote title1-font">Assigned Visits
+          <%if ((@job.job_status.blank?) ||(@job.job_required!= "Require Invoice"))%>
+            <%if current_user.user_type=="admin"%>
+              <a id="collect_signature" href="#" data-toggle="modal" data-target="#plan_visit_model" class="button_new_index save-new-btn1"> + Plan Visit</a>
+            <%else%>
+              <%if set_permission_for_quote_job_convert(@team_member) != "read"%>
+                <a id="collect_signature" href="#" data-toggle="modal" data-target=" #plan_visit_model" class="button_new_index save-new-btn1">+ Plan Visit</a>
+              <%end%>
+            <%end%>  
+          <%end%>
+        </div>
+        <div>  
+          <div data-thicklist-headers="true" data-thicklist="true" class="thicklist" id="assigned_visits" style="display: block;">
+            <div id="job_visit_replace">
+             <%= render "job_complete"%>
+            </div>  
+          </div>
+        </div>
+      </div>
+  <%#= render "job_visit_model"%>
+
+    <div class="row fieldset" style="margin-left:0px; margin-bottom: 10px;">
+      <div style="width:98.4%;padding:5px 10px;" id="line_items_head" class="display_work_quote title1-font">Billing  - will invoice when job is completed
+        <div class="dropdown_menu icon_drop" id="new_billing_drop">
+          <li class="dropdown" style="list-style: none; float:right; margin-top:-35px;">
+            <%if current_user.user_type=="admin"%>
+              <a href="#" class="dropdown-toggle dropdown_button save-new-btn1" data-toggle="dropdown">New <span class="caret"></span></a>
+            <%else%>
+              <%if set_permission_for_work_quote_new(current_user.permission.permission_invoices)!= "read"%>
+                <a href="#" class="dropdown-toggle dropdown_button save-new-btn1" data-toggle="dropdown">New <span class="caret"></span></a>
+              <%end%>
+            <%end%>
+
+            <ul class="dropdown-menu edit_drop_menu" role="menu">
+              <span class="arrow_action"></span>
+              <li>
+                <i class="fa fa-pencil-square-o"></i>
+                <%= link_to "New Invoice",genrate_job_invoice_path(:job_id=>@job.id)%>
+              </li>
+              <li>
+                <i class="fa fa-check-square-o"></i>
+                <%= link_to "Add Reminder","#" %>
+              </li>
+            </ul>
+          </li>
+        </div>
+      </div>
+      <div class="content">
+        <div class="invoicing thicklist"> 
+          <div class="row_holder">
+            <%if !@invoices.blank?%>
+              <%@total_invoice=0%>
+              <%@invoices.each do |invoice|%>
+                <a header_class="draft" header_title="Draft" href="/invoices/<%=invoice.id%>" class="invoice row work_type spin_on_click" style="margin-left: -1%;">
+
+                  <div class="work_ref">
+                    <h3 class="client_name">#<%= invoice.id %> : <%=invoice.client.first_name rescue ""%> &nbsp; <%=invoice.client.first_name rescue ""%></h3>
+                    <span class="status draft">Draft</span>
+                  </div>
+
+                  <span class="date" style="margin-left: 9%;">
+                    <small>Due</small><br>
+                    <%if invoice.payment=="Custom"%>
+                      <%= invoice.due_date rescue "" %>
+                    <%else%>
+                      <%= invoice.payment rescue "" %>
+                    <%end%>
+                  </span>
+
+                  <span class="subject">
+                    <%= invoice.subject rescue "" %>
+                  </span>
+
+                  <div class="cost">
+                    <%@total= total_amount_invoice(invoice) rescue "" %>$<%=number_with_precision(@total, :precision => 2) rescue "" %>
+                  </div>
+                  <%@total_invoice = @total_invoice rescue 0 + @total rescue 0 %>
+                </a>
+              <%end%>
+            <%else%>
+              No Invoices
+            <%end%>    
+          </div>
+          <div class="row no_hover footer"> Billed so far $<%=number_with_precision(@total_invoice, :precision => 2)%> </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="notes_sidebar" class="fieldset">
+      <div class="display_work_quote title1-font" id="line_items_head" style="width:98.4%;padding:5px 10px;">Internal Notes &amp; Attachments</div>
+      <div class="content">
+        <div id="notes_list" class="thicklist">
+          <div id="new_note" class="note container auto_new">
+            <%if current_user.user_type=="admin"%>
+              <%= form_tag({:action => :job_image_upload}, :multipart => true) do %>
+               <%= hidden_field_tag :job_id,@job.id %>
+                <%= text_area_tag :note, nil, :class=>"form-control",:placeholder=>"new note...",:style=>"width: 97%;height:100px;"%>   <br/> <br/> 
+                <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer;">Attach Files</div> 
+                <div id="attachment_field" style="display:none;">
+                <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control",:multiple=>true %>
+                <div class="row"  style="border:none;">
+                  <%= submit_tag "Save",:class=>"button_new_index"%>
+                  <div class="model_cancel_button cancel pull-right">Cancel</div>
+                </div>
+              </div>
+              <% end %>
+            <%else%>
+              <%if set_permission_attachment_note(@team_member)!= "read"%>
+                <%= form_tag({:action => :job_image_upload}, :multipart => true) do %>
+                  <%= hidden_field_tag :job_id,@job.id %>
+                  <%= text_area_tag :note, nil, :class=>"form-control",:placeholder=>"new note...",:style=>"width: 97%;height:100px;"%>   <br/> <br/> 
+                  <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer;">Attach Files</div> 
+                    <div id="attachment_field" style="display:none;">
+                      <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control",:multiple=>true %>
+                      <div class="row" style="border:none;">
+                        <%= submit_tag "Save",:class=>"button_new_index"%>
+                        <div class="model_cancel_button cancel pull-right">Cancel</div>
+                      </div>
+                    </div>
+                <% end %>
+              <%end%>
+            <%end%>  
+            </div>
+
+
+          <%@job.notes.reverse.each do |note|%>
+            <div id="note_<%= note.id%>" data-permission="true" data-edit-url="" class="note row no_hover">
+              <%if !note.attachments.blank?%>
+                <a data-toggle="modal" data-target="#attachment_display_<%=note.id%>" class="note_attachment" style="cursor:pointer;" data-id =<%=note.id rescue "" %>>
+                
+                <img src=<%=note.attachments.last.image(:medium)%> alt="Image1s" style="width:75%!important;"><br>
+                
+                <%=note.attachments.count rescue "" %> files</a>
+              <%end%>
+              <p>
+                <%= note.note rescue "" %>
+              </p>
+
+              <div class="details">
+                <%=current_user.full_name rescue "" %>
+                <span class="date">
+                  <span title="Created at">
+                    <%= note.created_at.strftime("%m/%d/%Y") rescue "" %>
+                  </span>
+                </span>
+              </div>
+
+              <div class="modal fade" id="attachment_display_<%= note.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header new-modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Files</h4>
+                    </div>
+                    <div class="modal-body">
+                      <% get_note(note.id).attachments.each do |attach|%>
+                        <a target="_blank" href=<%=attach.image.url(:thumb) rescue "" %> class="note_attachment">
+                        <img src=<%=attach.image.url(:thumb)%> style="width:70px!important;"><br>
+                        <%=attach.image_file_name rescue "" %></a>
+                      <%end%>  
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <%end%>
+        </div>
+        <%= render "visit_plan"%>
+        <%= render "incomplete_visit"%>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+.quotes-index{
+    margin-top: 70px;
+}
+
+</style>
+<script>
+ShowHide()
+AddjobWork()
+var count = $('div#add_more_work > .replace_job').length+1
+$('#more').click(function(){
+  // $('#'+count).attr('id', count+1);
+  $("#counter").html("My current count is: "+count);
+  asd = "<%= escape_javascript(render :partial => 'jobwork',:locals => {:job_work => @job_work}) %> "
+  asdf=asd.replace(/-9-/g,count)
+  $("#add_more_work").append(asdf);
+  count++;
+ })
+</script>

@@ -1,0 +1,2 @@
+$('[data-toggle="popover"]').popover('hide');
+$("#recurring_contracts_summary").html("<%= escape_javascript(  render :partial => 'get_summary_report',  :locals => {:@contracts_summary => @contracts_summary} ) %> ")

@@ -1,0 +1,55 @@
+<div class="client_index">
+  <div class="main_container">
+  	<div>
+      <%=render "home/work_item_side_bar" %>
+      <div id="settings_area"> 
+		  	<h2 class="title2-font"> Distance</h2>
+		  	<%= form_tag  create_mileage_expenses_path ,:class=>"edit_work_configuration compressed_form" do %>
+					<div class="row">
+						<div id="popover_form_content">
+							<div class="span2" id="popover_left">
+								<label for="expense_cost">Mileage</label>
+							</div> 
+							<div class="span3"  id="popover_left">
+								<%= text_field_tag "custom_expense[mileage]",nil, class: "large strong", autofocus: "autofocus",:placeholder=>0.00,:value=>@custom_expense.try(:mileage) %>
+								<%= hidden_field_tag "custom_expense[user_id]",nil,value: current_user.id ,class: "large strong", autofocus: "autofocus" %>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div id="popover_form_content">
+							<div class="span2" id="popover_left">
+								<label for="expense_cost">KM</label>
+							</div> 
+							<div class="span3"  id="popover_left">
+								<%= text_field_tag "custom_expense[km]", nil,class: "large strong", autofocus: "autofocus" ,:placeholder=>0.00,:value=>@custom_expense.try(:km)%>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div id="popover_form_content">
+							<div class="span2" id="popover_left">
+								<label for="expense_cost">Default Unit</label>
+							</div> 
+							<div class="span3"  id="popover_left">
+								<%= select_tag "custom_expense[default_unit]",options_for_select([["Miles","mi"],["Kilometers","km"]],:selected=>@custom_expense.try(:default_unit)) %>
+							</div>
+						</div>
+					</div>  
+					<%= submit_tag "save",:class=>"button_new_create save-new-btn1",:style=>"margin-left: 36%;"%>	
+				<% end %>
+<br/>
+				<h2 class="title2-font"> Categories</h2>
+				<div class="category=-list">
+				</div>
+				<div class="category-form">
+					<%= render "category"%>
+				</div>
+			</div>	
+		</div>
+  </div>
+</div>
+
+

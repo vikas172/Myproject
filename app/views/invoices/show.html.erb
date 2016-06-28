@@ -1,0 +1,262 @@
+<div class="client_index invoice-index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <br/>
+    <div class="show_invoice_view">
+      <%if permission_for_edit_work_invoices(@team_member)!="read"%>
+        <%= render "invoice_action"%>
+        <%= link_to 'Edit', edit_invoice_path(@invoice),:class=>"button_new_index icon-pencil save-new-btn1"%>
+      <%end%>
+    </div>
+    <%= render "signature_invoice"%>
+    <%= render "delete_invoice_model"%>
+    <%= render "invoice_payment_model"%>
+    <div id="print_override" class="work_area quote">
+      <div class="stamp">
+        <%if @invoice.mark_sent == false%>
+          <span>DRAFT</span>
+        <%elsif @invoice.invoice_bad_debt== false%>
+          <%if @invoice.invoice_paid==false%>
+            <%if @invoice.past_due==false%>
+              <span style="color: #1f518b;">OUTSTANDING</span>
+            <%else%>
+              <span style="color: #B22F23;">PAST DUE</span>
+            <%end%>  
+          <%else%>
+            <span style="color: #1f518b;">PAID</span>
+          <%end%>
+        <%else%>
+          <span style="color: #B22F23;">BAD DEBT</span>
+        <%end%>
+      </div>
+      <%if !@invoice.quote_id.blank?%>
+        <div class="title2-font">Invoice For Quote  <%= @invoice.quote_id%> </div>
+      <%end%>
+      <div class="top clearfix">
+        <div class="span7 content_align">
+          <h3 class="title1-font">
+            <a href="/clients/<%= @invoice.client.id %>?invoice_id=<%= @invoice.id %>"><%=client_detail(@invoice) %></a>
+          </h3>
+          <p>
+            <label>Billing Address</label>  
+          </p>
+          <p class="property_address">
+            <%=invoice_client_detail(@invoice)%>
+          </p>
+          <h4 style="font-weight:bold; clear:both;"><%= @invoice.subject%></h4>
+        </div>
+        <div class="span5">
+          <table class="right">
+            <tbody>
+              <tr>
+                <td class="label" style="margin-top: 8px;">Invoice</td>
+                <td>#<%= @invoices %></td>
+              </tr>
+              <tr>
+                <%if !@invoice.jobs_id.blank?%>
+                  <td class="label"><%= @invoice.jobs_id.count %> Work Orders</td>
+                  <td>
+                    <%@invoice.jobs_id.each do |job_id|%>
+                    <%@job= Job.find(job_id) rescue "" %>
+                    <%if @job.blank?%>
+                    <%@invoice.jobs_id.delete(job_id)%>
+                    <%@invoice.save%>
+                    <%else%>
+                    <a href="/jobs/<%= job_id%>">#<%=job_id %></a>
+                    <%end%>
+                    <%end%>
+                  </td>
+                <%end%>
+              </tr>
+              <tr>
+                <td class="label" style="margin-top: 8px;">Created On</td>
+                <td><%= @invoice.created_at.strftime("%m/%d/%Y") %></td>
+              </tr>
+              <%if !@invoice.discount_amount.blank? && @invoice.discount_amount != 0.00%>
+                <tr>
+                  <td class="label">Discount</td>
+                  <td>$<%= @invoice.discount_amount%> </td>
+                </tr>
+              <%end%>
+              <%if !@invoice.deposite_amount.blank? && @invoice.deposite_amount != 0.00%>
+                <tr>
+                  <td class="label">Deposit</td>
+                  <td>$<%= @invoice.deposite_amount %></td>
+                </tr>
+              <%end%>
+              <tr>
+                <td><%= render "clients/custom_field_show"%></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <!-- end of top -->
+      <div id="line_items">
+        <div class="display_work_quote">
+          <span class="name title2-font">Service / Product</span>
+          <span class="description short  title2-font" style="color:#333333;margin-top: 8px;">Description</span>
+          <div style="float: right;">
+            <span class="centered hours_column title2-font">Qty.</span>
+            <span class="centered cost_column title2-font">Unit Cost</span>
+            <span class="centered cost_column title2-font">Total</span>
+          </div>
+        </div>
+        <div id="line_items_body">
+          <%@total_value=0%>
+          <% if !@invoice.invoice_works.blank?%>
+            <% if !@invoice.invoice_works.first.name.blank?%>
+              <%@invoice.invoice_works.first.name.each_with_index do |value,index|%>
+                <div class="line_item">
+                  <span class="name">
+                    <%= @invoice.invoice_works.first.name[index]%>
+                  </span>
+                  <span class="description short">
+                    <%= @invoice.invoice_works.first.description[index]%>
+                  </span>
+                  <div class="right_items">
+                    <span class="hours_column ">
+                      <%= @invoice.invoice_works.first.quantity[index].to_f%>
+                    </span>
+                    <span class="cost_column ">
+                      $<%= @invoice.invoice_works.first.unit_cost[index].to_f%>
+                    </span>
+                    <span class="cost_column ">
+                      $<%= @invoice.invoice_works.first.total[index]%>
+                    </span>
+                    <%@total_value= @invoice.invoice_works.first.total[index].to_i+ @total_value%>
+                  </div>
+                </div>
+              <%end%> 
+            <%end%>    
+          <%end%>    
+        </div>
+      </div>
+      <div class="page_breaker" style="margin-top:10%;"></div>
+      <div class="clearfix" id="bottom">
+        <div class="" id="totals">
+          <%if @total_value!=0%>
+            <%if ((@invoice.tax!=0.00) && (@invoice.discount_amount!=0.00))%>
+              <div>
+                <span>Subtotal: </span>
+                <span class="cost_column important">$<%=@total_value%></span>
+              </div>
+            <%end%> 
+          <%end%>
+          <% if !@invoice.discount_amount.nil?%> 
+            <% if @invoice.discount_amount!=0.0 %> 
+              <div>
+                <span> Discount: </span>
+                <span class="cost_column">- $<%=@invoice.discount_amount%></span>
+              </div>
+            <%end%>
+          <%end%>
+          <% if !@invoice.tax.nil? %>
+            <% if @invoice.tax!= 0.00 %>
+              <div id="total_tax">
+                <span class="description">(<%=@invoice.tax%>%) Tax: </span>
+                <%@tax=show_tax_invoice(@invoice,@total_value)%>       
+                <span class="cost_column">$<%=@tax %></span>
+              </div>
+            <%end%>  
+          <%end%>
+          <div id="total_value_invoice">  
+            <span>Invoice Total:</span>
+              <%if !@tax.nil?%>
+                <span class="cost_column very_important ">$<%=@tax_calculate+@tax%></span>
+              <%elsif @tax_calculate.nil?%>
+                <%if !@total_value.nil?%>
+                  <%if @invoice.discount_amount.blank?%>
+                    <span class="cost_column very_important">$ <%= @total_value%></span>
+                  <%else%>
+                    <span class="cost_column very_important">$ <%= @total_value - @invoice.discount_amount%></span>
+                  <%end%>
+                <%else%>
+                  <span class="cost_column very_important">$ 0.00</span>
+                <%end%>
+              <%else%>
+                <span class="cost_column very_important">$<%=@tax_calculate%></span>
+              <%end%>
+            </div>
+            <div>
+              <span>Due By</span>
+              <span style="font-weight:normal" class="cost_column">
+                <%if @invoice.payment=="Custom"%>
+                  <%= @invoice.due_date%>
+                <%else%>
+                  Net <%= @invoice.payment%> days
+                <%end%>
+              </span>
+            </div>
+          </div>
+          <p style="display:none;" id="nontaxable_footnote">
+            <span class="tax_asterisk">*</span>
+            Non-taxable
+          </p>
+          <div id="message">
+            <%=@invoice.client_message%><br>
+            Thank you for your business. Please contact us with any questions regarding this invoice
+          </div>
+        </div>
+      </div>
+      <div id="notes_sidebar" class="fieldset">
+        <h2 class="title1-font">Internal Notes &amp; Attachments</h2>
+          <div class="content">
+            <div id="notes_list" class="">
+              <div id="new_note" class="note container auto_new">
+                <%if current_user.user_type=="admin"%>
+                  <%= form_tag({:action => :invoice_image_upload}, :multipart => true,:method=>"post",:id=>"image_upload_form" ) do %>
+                    <%= text_area_tag :note, nil, :class=>"form-control",:placeholder=>"new note...",:style=>"width: 99%;height:100px;"%>   <br/> <br/> 
+                    <%= hidden_field_tag :invoice_id,@invoice.id %>
+                    <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer;">Attach Files</div>
+                    <div id="attachment_field" style="display:none;">
+                      <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control save",:multiple=>true %>
+                      <%= submit_tag "Save",:class=>"button_new_index"%>
+                    </div>
+                  <% end %>
+                <%else%>
+                  <%if set_permission_attachment_note(@team_member)!= "read"%>
+                    <%= form_tag({:action => :invoice_image_upload}, :multipart => true,:method=>"post",:id=>"image_upload_form" ) do %>
+                      <%= text_area_tag :note, nil, :class=>"form-control",:placeholder=>"new note...",:style=>"width: 757px;height:100px;"%>   <br/> <br/> 
+                      <%= hidden_field_tag :invoice_id,@invoice.id %>
+                      <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer;">Attach Files</div>
+                      <div id="attachment_field" style="display:none;">
+                        <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control save",:multiple=>true %>
+                        <%= submit_tag "Save",:class=>"button_new_index"%>
+                      </div>
+                    <% end %>
+                  <%end%>  
+                <%end%>  
+              <div class="model_cancel_button cancel" style="margin-right: 6%; margin-top: -4%; display:none;">Cancel</div>
+            </div>
+            <div style="width:200px;display:none;" class="progress_div">
+              <div class="progress">
+                <div class="bar"></div >
+                <div class="percent">0%</div >
+              </div>
+            </div>
+          <div class="invoice_image">
+            <%= render "show_invoice_notes",:locals=>{:@invoice=>@invoice} %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% unless session[:send_mail].blank? %>
+<%= render partial: "quotes/send_email" %>
+<% end %>
+<script>
+  $(document).ready(function(){
+    <% if session[:record_payment] == "1" %>
+      $('#payment_record').modal('show');
+      <% session[:record_payment]=nil %>
+    <% end %>
+    <% if session[:send_mail] == "1" %>
+      $('#send_email').modal('show');
+      <% session[:send_mail]=nil %>
+    <% end %>
+  })
+  ShowHide()
+  PaymentMethod()
+  ProgressBar()
+</script>

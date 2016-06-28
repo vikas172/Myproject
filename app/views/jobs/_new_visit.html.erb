@@ -1,0 +1,75 @@
+<div class="row">
+  <p>
+    <div class="span2 left_align"><b>Visits</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div class=" span7 when_multiday left_align" style="display: inline;">
+    <%if params[:action]!= "edit"%>
+      <select class="recurring_select" id="work_order_dispatch_rrule" name = "job[visits]">
+        <option selected="selected" value="Weekly on <%=Date.today.strftime('%A')%>s" id="weekly-visit"> Weekly on <%=Date.today.strftime('%A')%>s<span class="start-date-day"></span></option>
+        <option value="Monthly on the <%=Date.today.strftime('%d')%>th day of the month" id="monthly-visit">Monthly on the <%=Date.today.strftime("%d")%>th day of the month</option>
+        <option value='custom' data-toggle='modal' data-target='#repeatModal' >Custom schedule...</option>
+      </select>
+    <%elsif @job.repeat.blank?%>
+      <select class="recurring_select" id="work_order_dispatch_rrule" name = "job[visits]">
+        <option <%= visits_select_default(@job,'weekly')%> value="Weekly on <%=Date.today.strftime('%A')%>s" id="weekly-visit"> Weekly on <%=Date.today.strftime('%A')%>s<span class="start-date-day"></span></option>
+        <option <%= visit_select_default(@job,'monthly')%> value="Monthly on the <%=Date.today.strftime('%d')%>th day of the month" id="monthly-visit">Monthly on the <%=Date.today.strftime("%d")%>th day of the month</option>
+        <option value='custom' data-toggle='modal' data-target='#repeatModal' >Custom schedule...</option>
+      </select>
+    <%else%>
+      <%if @job.repeat.frequency == "Daily"%>
+        <select class="recurring_select" id="work_order_dispatch_rrule" name = "job[visits]">
+          <option value="Weekly on <%=Date.today.strftime('%A')%>s" id="weekly-visit"> Weekly on <%=Date.today.strftime('%A')%>s<span class="start-date-day"></span></option>
+          <option value="Monthly on the <%=Date.today.strftime('%d')%>th day of the month" id="monthly-visit">Monthly on the <%=Date.today.strftime("%d")%>th day of the month</option>
+          <option selected="selected" value="Daily"> Daily *<span class="start-date-day"></span></option>
+          <option value='custom' data-toggle='modal' data-target='#repeatModal' >Custom schedule...</option>
+        </select>
+      <%elsif @job.repeat.frequency == "Weekly"%>
+        <%if !@job.repeat.day_holder.first.blank?%>
+          <% @days=get_weekly_day(@job)%>
+          <select class="recurring_select" id="work_order_dispatch_rrule" name = "job[visits]">
+            <option value="Weekly on <%=Date.today.strftime('%A')%>s" id="weekly-visit"> Weekly on <%=Date.today.strftime('%A')%>s<span class="start-date-day"></span></option>
+            <option value="Monthly on the <%=Date.today.strftime('%d')%>th day of the month" id="monthly-visit">Monthly on the <%=Date.today.strftime("%d")%>th day of the month</option>
+            <%if @days.count < 4%>
+              <option selected="selected" value="Weekly on <%= @days.join(',')%>"> Weekly on <%= @days.join(',') %><span class="start-date-day"></span></option>
+              <%else%>
+              <option selected="selected" value="Weekly on <%= @days.join(',')%>"> Weekly days *<span class="start-date-day"></span></option>
+              <%end%>
+            <option value='custom' data-toggle='modal' data-target='#repeatModal' >Custom schedule...</option>
+          </select>
+        <%else%>
+          <select class="recurring_select" id="work_order_dispatch_rrule" name = "job[visits]">
+            <option value="Weekly on <%=Date.today.strftime('%A')%>s" id="weekly-visit"> Weekly on <%=Date.today.strftime('%A')%>s<span class="start-date-day"></span></option>
+            <option value="Monthly on the <%=Date.today.strftime('%d')%>th day of the month" id="monthly-visit">Monthly on the <%=Date.today.strftime("%d")%>th day of the month</option>
+            <option selected="selected" value="Weekly"> Weekly *<span class="start-date-day"></span></option>
+            <option value='custom' data-toggle='modal' data-target='#repeatModal' >Custom schedule...</option>
+          </select>
+        <%end%> 
+      <%elsif @job.repeat.frequency == "Monthly"%>
+        <%if @repeat.monthly_rule_type == "day_of_month"%>
+          <%@day_month= get_day_of_month(@job)%>
+          <select class="recurring_select" id="work_order_dispatch_rrule" name = "job[visits]">
+            <option value="Weekly on <%=Date.today.strftime('%A')%>s" id="weekly-visit"> Weekly on <%=Date.today.strftime('%A')%>s<span class="start-date-day"></span></option>
+            <option value="Monthly on the <%=Date.today.strftime('%d')%>th day of the month" id="monthly-visit">Monthly on the <%=Date.today.strftime("%d")%>th day of the month</option>
+            <%if @day_month.first.blank?%>
+              <option selected="selected" value="Monthly"> Monthly *<span class="start-date-day"></span></option>
+            <%else%>
+              <option selected="selected" value="Monthly"> Monthly on the <%= @day_month.join(',')%> days of the month<span class="start-date-day"></span></option>
+            <%end%>
+            <option value='custom' data-toggle='modal' data-target='#repeatModal' >Custom schedule...</option>
+          </select>
+        <%elsif @repeat.monthly_rule_type == "day_of_week"%>
+        <% @day_week = get_day_of_week(@job)%>
+          <select class="recurring_select" id="work_order_dispatch_rrule" name = "job[visits]">
+            <option value="Weekly on <%=Date.today.strftime('%A')%>s" id="weekly-visit"> Weekly on <%=Date.today.strftime('%A')%>s<span class="start-date-day"></span></option>
+            <option value="Monthly on the <%=Date.today.strftime('%d')%>th day of the month" id="monthly-visit">Monthly on the <%=Date.today.strftime("%d")%>th day of the month</option>
+            <option selected="selected" value="Monthly"> Monthly on the <%= @day_week.join(",")%><span class="start-date-day"></span></option>
+            <option value='custom' data-toggle='modal' data-target='#repeatModal' >Custom schedule...</option>
+          </select>
+        <%end%>  
+      <%end%>  
+    <%end%>  
+      &nbsp;
+      &nbsp;         
+      <span class = "description"> - until job is completed</span>
+    </div>
+  </p>
+</div>

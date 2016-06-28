@@ -1,0 +1,8 @@
+<div class="client_index">
+  <div class="main_container">
+		<%= form_tag import_vendor_vendors_path, multipart: true do %>
+		  <%= file_field_tag :file %>
+		  <%= submit_tag "Import" %>
+		<% end %>
+	</div>
+</div>

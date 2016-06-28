@@ -1,0 +1,26 @@
+<div id="summary" class="content_align">
+  <div data-dynamic="true" class="summary_bars">
+    <%= link_to("/reports/expenses?display_method=#{params[:display_method]}", :class=>"subsection_link #{get_selected_default}" ) do %>
+      <h3>
+        Total
+        <span class="count"><%= @expense_summary.count rescue 0 %></span>
+      </h3>
+       <span data-value="<%= %>" class="total" style="width: 330px;">$<%= @expense_summary.pluck(:cost).sum rescue 0 %></span>
+    <% end %>
+    <div class="short_separator"></div>
+    <%= link_to("/reports/expenses?display_method=#{params[:display_method]}", :class=>"subsection_link #{get_selected("draft")}" ) do %>
+      <h3>
+        ptest1
+        <span class="count"><%= %></span>
+      </h3>
+       <span data-value="<%= get_quotes_report_data("draft") rescue "" %>" class="total" style="width: 330px;">$<%= %></span>
+    <% end %>
+    <%= link_to("/reports/expenses?display_method=#{params[:display_method]}", :class=>"subsection_link #{get_selected("sent")}" ) do %>
+      <h3>
+        ptest
+        <span class="count"><%= %></span>
+      </h3>
+       <span data-value="<%= get_quotes_report_data("sent") rescue "" %>" class="total" style="width: 330px;">$<%= %></span>
+    <% end %>
+  </div>
+</div>

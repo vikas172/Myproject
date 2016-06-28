@@ -1,0 +1,25 @@
+<div class="modal fade" id="coupon-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Coupon</h4>
+      </div>
+      <div class="modal-body">
+        <%if !@present_coupon.blank?%>
+
+          You have already used this coupon and its expires date <%= @present_coupon.created_at.to_date + 30 %>
+        <%end%></br>
+          <i>Please Insert the Coupon Code Or ID</i> </br></br>
+          <%= form_tag charges_coupan_create_path do%>
+            <%= text_field_tag "coupan_id",nil,:placeholder=>"Please insert coupon id"%><br/>
+            <div class="row text-right">
+              <%= submit_tag "Save",:class=>" button_new_create pull-right save-new-btn1"%>
+             <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+             
+            </div>
+          <%end%>
+      </div>
+    </div>
+  </div>
+</div>

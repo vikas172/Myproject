@@ -1,0 +1,50 @@
+<div class="modal fade" id="tax_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header new-modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Tax Info</h4>
+			</div>
+			<div class="modal-body">
+				<%= form_for @general_account,:url=>"general_account_update" do |f|%>
+				<h4 class="title2-font">Tax</h4>
+					<div class="row">
+						<div class="span2">
+							Sales tax rate
+						</div>
+						<div class="span3">
+							<%= f.text_field :default_tax%>%
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span2">
+							Service tax
+						</div>
+						<div class="span3">
+							<%= f.text_field :service_tax%>%
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="span2">
+							Tax Registration
+						</div>
+						<div class="span3">
+							<%= f.text_field :tax_reg_type, :class=>"large wide", :placeholder=>"Tax Registration Type (eg. GST #)"%><br>
+							<%= f.text_field :tax_reg_number,:class=>"large wide" ,:placeholder=>"Tax Registration Number"%>
+						</div>
+					</div>
+
+					<%=f.hidden_field :user_id, :value => current_user.id%>
+					<br><br>
+					<div class="row text-right">
+						<%=f.submit "Update",:class=>"model_save_button pull-right save-new-btn1"%>
+						<button type="button" class="model_cancel_button pull-right" data-dismiss="modal">CANCEL</button>
+					</div>
+				<%end%>	
+			</div>	
+		</div>
+	</div>
+</div>

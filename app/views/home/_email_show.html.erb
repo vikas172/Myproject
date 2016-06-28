@@ -1,0 +1,27 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="margin-right: 0px!important;">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Email Communication</h4>
+    </div>
+    <div class="modal-body">
+      <p><strong>To:</strong> <span class="email_field">
+        <% @communication.to.each_with_index do |to, i|%>
+          <%if i==0 %>
+            <%= to %>
+          <% else %>
+            , <%= to %>
+          <% end %>
+        <% end %>
+        </span></p>
+        <p><strong>Cc:</strong> <span class="email_field"><% if @communication.cc.blank? %><% "- None -" %><% else %><%= @communication.cc %><% end %></span></p>
+        <p><span class="email_field subject"> <strong><%= @communication.subject %>  </strong></span></p>
+        <div class="email_field" style="overflow-y:auto; max-height:300px;">
+          <%= @communication.message %>
+        </div>
+        <p class="submit_holder">
+          <button type="button" class="button large" data-dismiss="modal">Close</button>
+        </p> 
+    </div>
+  </div>
+</div>

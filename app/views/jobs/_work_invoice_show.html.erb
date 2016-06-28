@@ -1,0 +1,166 @@
+<div class="row work-box horizontal">
+  <div class="module pad_bottom half border_bottom">
+    <div class="col-9">
+      <h3><a href="/invoices">Invoices</a></h3>
+    </div>
+
+    <div class="col-3">
+      <%if current_user.user_type=="admin"%>
+       <button class="button_new_index" data-toggle="modal" data-target="#newinvoice" >+ New Invoice</button>
+      <%else%>
+      <% if set_view_permission_readwritedelete(@team_member.permission.permission_quotes)!="read"%>
+      <button class="button_new_index" data-toggle="modal" data-target="#newinvoice">+ New Invoice</button><%end%><%end%>
+    </div>
+  </div>
+  <div class="module pad_top border_top">                
+    <div class="column_thirds">
+      <div class="summary">
+        <div class="numbers">
+          <a href="/invoices">
+            <div class="number_box inactive">
+             <span ><%=@invoices_draft.count rescue nil%></span>
+            </div>
+          </a>      
+        </div><!-- end of column left <-->
+        <div class="col-9">
+          <a href="/invoices?type_filter=Draft">
+            <h3 class="inactive" style="font-size: 20px;">
+              Draft
+            </h3>
+                   
+          <p>
+            Drafted and Unsent worth <span style=" line-height: 150%; " class=" ">$<%@total_invoice=0%>
+            <%if !@invoices_draft.blank?%>
+              <%@invoices_draft.each do |invoice|%>
+                <%@total_invoice= @total_invoice+total_amount_invoice(invoice)%>
+              <%end%>
+            <%end%>  
+            <%=@total_invoice%></span>
+          </p>
+        </div><!-- end of column right -->
+      </div><!-- end of summary -->
+      </a> 
+      <%if !@invoices_draft.blank?%> 
+      <div class="module">
+        <table style="width:100%;">
+          <tbody><tr class="heading">
+            <td style="font-weight: bolder;" >Customer</td>
+            <td align="right" style="font-weight: bolder;" >Created On</td>
+          </tr>
+          
+          <%@invoices_draft.sort.pop(3).each do |invoice_draft|%>
+            <tr onclick="location.href='/invoices/<%=invoice_draft.id%>'" class="link">
+              <td><%=invoice_draft.client.first_name rescue nil %>&nbsp;<%=invoice_draft.client.last_name rescue nil%></td>
+              <td align="right"><%= invoice_draft.created_at.strftime("%b %d")%></td>
+            </tr>
+          <%end%>
+          </tbody>
+        </table>
+      </div>
+      <a class="button_new_index" href="/invoices?type_filter=draft" class="button alpha_top align_right">View all <%=@invoices_draft.count rescue nil %></a>
+      <%end%> 
+    </div>
+           
+    <div class="column_thirds">
+      <a href="/invoices?type_filter=outstanding">
+        <div class="summary">
+          <div class="numbers">
+           
+              <div class="number_box pending">
+                <span><%if !@invoices_outstand.blank?%><%= @invoices_outstand.count %><%else%>0<%end%></span>
+              </div>
+          </div><!-- end of column left <-->
+          <div class="col-9">
+              <h3 class="pending" style="font-size: 20px;">
+                Outstanding
+              </h3>
+            <p>
+              Yet Due
+            <span style=" line-height: 150%; " class=" ">$<% @total_out=0%>
+              <%if !@invoices_outstand.blank?%>
+                <%@invoices_outstand.each do |invoice|%>
+                <%@total_out= @total_out + total_amount_invoice(invoice)%>
+                <%end%>
+              <%end%>
+              <%=@total_out%>
+            </span>
+            </p>
+          </div><!-- end of column right -->
+        </div><!-- end of summary -->
+      </a>
+      <%if !@invoices_outstand.blank?%>
+       <div class="module">
+          <table style="width:100%;">
+            <tbody>
+              <tr class="heading">
+                <td style="text-align: left; font-weight: bolder;" >Customer</td>
+                <td style="text-align: left; font-weight: bolder;" >Sent</td>
+                <td  align="right" style="font-weight: bolder;" >Amount</td>
+              </tr>
+
+              <%@invoices_outstand.sort.pop(3).each do |invoice_outstand|%>
+                <tr onclick="location.href='/invoices/<%=invoice_outstand.id%>'" class="link">
+                  <td><%=invoice_outstand.client.first_name rescue nil%>&nbsp;<%=invoice_outstand.client.last_name rescue nil%></td>
+                  <td class=""><%= invoice_outstand.created_at.strftime("%b %d")%></td>
+                  <td align="right">$<%= total_amount_invoice(invoice_outstand)%></td>
+                </tr>
+
+              <%end%>  
+            </tbody>
+          </table>
+         
+        </div>
+      <a class="button_new_index" href="/invoices?type_filter=outstanding" class="button alpha_top align_right">View all <%=@invoices_outstand.count rescue nil %></a>  
+       <%end%> 
+    </div>
+            
+    <div class="column_thirds">
+      <a href="/invoices?type_filter=past_due">
+        <div class="summary">
+          <div class="numbers">
+            <div class="number_box late">
+              <span><%= @invoices_past.count%></span>
+            </div>      
+          </div><!-- end of column left <-->
+          <div class="col-9">
+            <h3 class="late" style="font-size: 20px;">
+              Past Due
+            </h3>
+            <p>
+              Overdue
+              <span style=" line-height: 150%; " class=" ">$<%@total_invoice_past=0%>
+            <%if !@invoices_past.blank?%>
+              <%@invoices_past.sort.pop(3).each do |invoice|%>
+                <%@total_invoice_past= @total_invoice_past+total_amount_invoice(invoice)%>
+              <%end%>
+            <%end%>  
+            <%=@total_invoice_past%></span>
+            </p>
+          </div><!-- end of column right -->
+        </div><!-- end of summary -->
+      </a>
+      <%if !@invoices_past.blank?%>
+        <div class="module">
+          <table style="width:100%;">
+            <tbody>
+              <tr class="heading">
+                <td style="text-align: left; font-weight: bolder;" >Customer</td>
+                <td style="text-align: left; font-weight: bolder;" >Due Date</td>
+                <td  align="right" style=" font-weight: bolder;" >Amount</td>
+              </tr>
+
+              <%@invoices_past.each do |invoice_past|%>
+                <tr onclick="location.href='/invoices/<%=invoice_past.id%>'" class="link">
+                  <td><%=invoice_past.client.first_name rescue nil%>&nbsp;<%=invoice_past.client.last_name rescue nil%></td>
+                  <td class=""><%= invoice_past.created_at.strftime("%b %d")%></td>
+                  <td align="right">$<%= total_amount_invoice(invoice_past)%></td>
+                </tr>
+              <%end%>  
+            </tbody>
+          </table>
+        </div>
+        <a class="button_new_index" href="/invoices?type_filter=past_due" class="button alpha_top align_right">View all <%=@invoices_outstand.count rescue nil %></a> 
+      <%end%>  
+    </div>
+  </div>
+</div>

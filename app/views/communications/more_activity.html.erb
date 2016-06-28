@@ -1,0 +1,80 @@
+<div class="client_index">
+  <div class="main_container">
+
+  	<div class="activity-filter">
+			<ul>
+			<li class="filter-active" id="all">All</li>
+			<li class="filter-active" id="notes">Notes</li>
+			<li class="filter-active" id="email">Email</li>
+			<li class="filter-active" id="sms">Sms</li>
+			<li class="filter-active" id="call">Call</li>
+			</ul>
+  	</div>
+  	<div id="loader-img" style="display:none; text-align:center;"> <img src="../assets/loader.gif"></div>
+  	<div class="display-smen" id="extra-activity">
+			<%= render "more_activity"%>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+$(".filter-active").click(function(){
+	$(".filter-active").css("background-color","transparent");
+	if (this.id == "notes"){
+		$("#notes").css("background-color","#808080");
+	}
+		if (this.id== "all"){
+		$("#all").css("background-color","#808080");
+	}
+		if (this.id == "sms"){
+		$("#sms").css("background-color","#808080");
+	}
+		if (this.id == "email"){
+		$("#email").css("background-color","#808080");
+	}
+	if (this.id == "call"){
+		$("#call").css("background-color","#808080");
+	}
+	$("#loader-img").css("display","block");
+	var filter = this.id;
+	var property_id = <%= params[:property_id]%>;
+$.ajax({
+    url: "/filter_activity",
+    data: {filter: filter,property_id: property_id}
+  })
+})
+
+</script>
+<style type="text/css">
+.show-activity{
+  border-bottom: 1px solid #dadada;
+  margin-bottom: 10px;
+}
+.display-smen{
+	border: 1px solid #dadada;
+  padding: 10px;
+}
+.activity-filter ul{
+margin: 0px;
+padding: 0;
+list-style: none;
+}
+.activity-filter li{
+	display: inline-block;
+	margin-right: 5px;
+	padding: 4px 7px;
+  margin: 0 2px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+.activity-filter{
+	padding: 10px;
+	cursor: pointer;
+}
+
+.activity-filter li:hover{
+	background-color: #C0C0C0;
+	text-decoration: none;
+}
+</style>

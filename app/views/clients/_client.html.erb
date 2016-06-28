@@ -1,0 +1,43 @@
+<div class="row_holder  extend_to_footer" style="overflow: auto;">
+  <div class="client_count_display">
+    <%=@clients.count%> Customers
+  </div>
+  <% @clients.each do |client| %>  
+    <li>
+      <a href="/clients/<%= client.id%>" class="row spin_on_click" style="border: 1px solid #ccc;">
+        <div class="popover_user">
+          <i class="fa fa-user fa-2"></i>
+        </div>
+        <div class="user_contain_search">
+        <h3 class="client_name individual">
+          <%if params[:sort_by]=="Last Name" %>
+            <%= client.last_name.titleize rescue "" %>,
+              <%= client.first_name.titleize rescue "" %>
+              <%= client.initial rescue "" %>
+              (<%=client.company_name.titleize if !client.company_name.blank?%>) 
+          <%else%>
+              <%= client.initial rescue "" %>
+              <%= client.first_name.titleize rescue "" %>
+              <%= client.last_name.titleize rescue "" %>
+              (<%=client.company_name.titleize if !client.company_name.blank? %>)
+          <%end%>
+        </h3>
+        <div class="client_labels" id="client_labels_tags"><%client.tags.each do |tag|%>
+          <%if client.tags.last == tag%>
+            <%= tag.name rescue "" %>
+            <%else%>
+             <%= tag.name rescue "" %>,
+            <%end%>
+          <%end%>
+        </div>
+        <span class="last_active" style="float:right;">
+          Activity &nbsp;<%= time_ago_in_words(client.created_at, include_seconds: true) rescue "" %>
+        </span>
+        <span style="display:inline-block; width:120px; padding-left:25px;"><%= client.properties.count rescue "" %> Pool</span>
+        <span><%= client.phone_number rescue "" %></span>
+        </div>
+      </a>
+    </li>
+  <%end%>
+</div>
+

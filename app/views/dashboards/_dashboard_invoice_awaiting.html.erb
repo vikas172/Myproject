@@ -1,0 +1,17 @@
+<div class="cell_wrapper">
+  <div id="invoice_widget" class="fieldset">
+   <!--  <h2>Invoices Awaiting Payment</h2> -->
+    <div class="">
+      <% if !@invoices.blank? %>
+        <span class="sent">
+          <%= @invoices.count rescue 0 %> invoice
+          ($<%= number_with_precision(total_invoice_awaiting(@invoices), :precision => 2) rescue 0%>)
+          sent but not yet due
+        </span>
+      <% end %>
+      <a href="/invoices" class="report" style="color:#1f518b;">
+        View Detailed Report...
+      </a>
+    </div>
+  </div>
+</div>

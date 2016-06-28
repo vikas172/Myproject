@@ -1,0 +1,155 @@
+<div class="row work-box">
+  <div class="module pad_bottom half border_bottom">
+    <div class="col-9">
+      <h3><a href="/jobs">Jobs</a></h3>
+    </div><!-- end of column left -->
+    <div class="col-3">
+      <%if current_user.user_type=="admin"%>
+       <button class="button_new_index" data-toggle="modal" data-target="#myModal1">+ New Work Order</button>
+      <%else%>
+        <% if set_view_permission_readwritedelete(@team_member.permission.permission_quotes)!="read"%>
+        <button class="button_new_index" data-toggle="modal" data-target="#myModal1" >+ New Work Order</button>
+        <%end%>
+      <%end%>
+    </div><!-- end of column right -->
+  </div>
+  <div class="module pad_top border_top">
+    <div class="column_thirds">
+      <a href="/jobs?type_filter=all_active">
+        <div class="summary">
+          <div class="numbers">
+            <div class="number_box active">
+              <span ><%if @job_actives.blank?%>0<%else%><%= @job_actives.count%><%end%></span>
+            </div>     
+          </div><!-- end of column left <-->
+          <div class="col-9">
+            <h3 class="active">
+              Active
+            </h3>
+            <p>
+              progress
+              <span style=" line-height: 150%; " class=" ">
+                <%@total_all=0.00%>
+                <% unless @job_actives.blank?%>
+                  <%@job_actives.each do |job_active|%> 
+                  
+                    <%if job_requires_amount_show(job_active).nil?%>
+                      <!-- 0.00 -->
+                    <%else%>
+                      <% @total_all= @total_all+job_requires_amount_show(job_active)%>
+                    <%end%>
+                  <%end%>
+                <% end %>
+                $<%= @total_all%>
+              </span>
+            </p>
+          </div><!-- end of column right -->
+        </div><!-- end of summary -->
+      </a> 
+      <%if !@job_actives.blank?%> 
+        <div class="module">
+          <table style="width:100%;">
+            <tbody><tr class="heading">
+              <td style="text-align: left; font-weight: bolder;" >Customer</td>
+              <td style="font-weight: bolder;" align="right">Created On</td>
+            </tr>
+
+            <%@job_actives.sort.pop(3).each do |job_active|%>
+              <tr onclick="location.href='/jobs/<%=job_active.id%>'" class="link">
+                <td><%=job_active.property.client.first_name rescue nil %>&nbsp;<%=job_active.property.client.last_name rescue nil%></td>
+                <td align="right"><%= job_active.created_at.strftime("%b %d")%></td>
+              </tr>
+            <%end%>
+            </tbody>
+          </table>
+        </div>
+
+        <a  href="/jobs?type_filter=all_active" class="button_new_index alpha_top align_right">View all <%=@job_actives.count rescue nil%></a>
+      <%end%>  
+    </div>
+
+    <div class="column_thirds">
+      <a href="/jobs?type_filter=require_invoice">
+        <div class="summary">
+          <div class="numbers">
+          
+            <div class="number_box requires_invoicing">
+              <span><%if !@jobs_requires.blank?%><%= @jobs_requires.count%><%else%>0<%end%></span>
+            </div>
+          </div><!-- end of column left <-->
+          <div class="col-9">
+
+            <h3 class="requires_invoicing">
+              Requires Invoicing
+            </h3>
+            <p>
+              Billable 
+              <span style=" line-height: 150%; " class=" ">$0</span>
+            </p>
+          </div><!-- end of column right -->
+        </div><!-- end of summary -->
+      </a>
+      <%if !@jobs_requires.blank?%> 
+        <div class="module">
+          <table style="width:100%;">
+            <tbody>
+              <tr class="heading">
+                <td style="text-align: left; font-weight: bolder;" >Customer</td>
+                <td style="font-weight: bolder;" align="right">Pending Since</td>
+              </tr>
+              
+              <%@jobs_requires.sort.pop(3).each do |job_requires|%>
+                <tr onclick="location.href='/jobs/<%=job_requires.id%>'" class="link">
+                  <td><%=job_requires.property.client.first_name rescue nil %>&nbsp;<%=job_requires.property.client.last_name rescue nil%></td>
+                  <td align="right"><%= job_requires.created_at.strftime("%b %d")%></td>
+                </tr>
+              <%end%>
+            </tbody>
+          </table>
+           
+        </div>
+        <a class="button_new_index" href="/jobs?type_filter=require_invoice" class="button alpha_top align_right">View all <%=@jobs_requires.count rescue 'nil' %></a>
+      <%end%> 
+    </div>
+
+    <div class="column_thirds">
+      <a href="/jobs?type_filter=archived">
+        <div class="summary">
+          <div class="numbers">
+            <div class="number_box inactive">
+              <span ><%if !@jobs_archived.blank? %><%= @jobs_archived.count %><%else%>0<%end%></span>
+            </div>
+          </div><!-- end of column left <-->
+          <div class="col-9">
+            <h3 class="inactive">
+              Archived
+            </h3>
+            <p>
+              Completed  <span style=" line-height: 150%; " class=" ">$ <%if job_archived_amount(@jobs_archived).nil?%>0<%else%><%=job_archived_amount(@jobs_archived)%><%end%></span>
+            </p>
+          </div><!-- end of column right -->
+        </div><!-- end of summary -->
+      </a> 
+      <%if !@jobs_archived.blank?%>
+        <div class="module">
+          <table style="width:100%;">
+            <tbody>
+              <tr class="heading">
+                <td style="text-align: left; font-weight: bolder;" >Customer</td>
+                <td style="font-weight: bolder;" align="right">Completed</td>
+              </tr>
+              
+              <%@jobs_archived.sort.pop(3).each do |job_archived|%>
+                <tr onclick="location.href='/jobs/<%=job_archived.id%>'" class="link">
+                  <td><%=job_archived.property.client.first_name rescue nil %>&nbsp;<%=job_archived.property.client.last_name rescue nil%></td>
+                  <td align="right"><%= job_archived.created_at.strftime("%b %d")%></td>
+                </tr>
+              <%end%>
+            </tbody>
+          </table>
+        </div>
+        <a class="button_new_index" href="/jobs?type_filter=archived" class="button alpha_top align_right">View all <%=@jobs_archived.count rescue 'nil' %></a>
+      <%end%>  
+    </div>
+  </div><!-- end of row work-box -->
+</div>

@@ -1,0 +1,72 @@
+<div class="client_index1">
+	<div class="main_container">
+		<div id="lead-map" style="width: 850px; height:460px; float:left;"></div>
+			<div style="float:right;width: 30%;">
+			<input onclick="showAddress();" type=button value="Display Address" id="display-address" class="button">
+			<div id="display-marker-address"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+<script type="text/javascript">
+
+  var markers = [];
+  var lat_log = [];
+  var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var labelIndex = 0;
+
+	window.onload = function () {
+  	var haightAshbury = {lat: <%= @lat %>, lng: <%= @lng %>};
+    var mapOptions = {
+        center: new google.maps.LatLng(<%= @lat %>, <%= @lng %>),
+        zoom: 14,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("lead-map"), mapOptions);
+    var marker = new google.maps.Marker({
+    	position: haightAshbury,
+    	map: map
+  	});
+    //Attach click event handler to the map.
+    google.maps.event.addListener(map, 'click', function (e) {
+ 
+        //Determine the location where the user has clicked.
+        var location = e.latLng;
+ 
+        //Create a marker and placed it on the map.
+        var marker = new google.maps.Marker({
+            position: location,
+            label: labels[labelIndex++ % labels.length],
+            map: map
+        });
+        markers.push(location);
+        //Attach click event handler to the marker.
+        google.maps.event.addListener(marker, "click", function (e) {
+
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: 'Latitude: ' + location.lat() + '<br />Longitude: ' + location.lng()
+            });
+            infoWindow.open(map, marker);
+
+        
+        });
+    });
+  };
+  function showAddress() {
+    for (var i = 0; i < markers.length; i++) {
+      lat_log.push({lat: markers[i].lat(),log: markers[i].lng()})
+    }
+  }
+
+	$("#display-address").click(function(){
+		$.ajax({
+			type: "POST",
+			url: "/maps/display_address",
+			data: {address: lat_log}
+		});
+	});
+</script>

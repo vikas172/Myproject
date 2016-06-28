@@ -1,0 +1,28 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Convert Customer</h4>
+    </div>
+    <div class="modal-body">
+      <div style="width:100%;">
+        <div style="width:50%; float:left;">
+          <%= form_tag  converted_properties_path do %>
+            <%= select_tag "client_id", options_for_select(@clients.collect{ |u| [u.first_name, u.id]})%>
+            <%= hidden_field_tag "property_id",nil,:value=>params[:property_id]%>
+            <div class="convert-new">
+            <%= submit_tag "Convert",:class=>"button_new_create save-new-btn1",:style=>"float:right; margin-right:5px;"%>
+            <button type="button" class="model_cancel_button" style="float:none; " data-dismiss="modal">Close</button>
+          </div>
+          <%end%>
+        </div>
+           OR
+        <div style="width:40%; float:right;">
+          <%= link_to 'Create New Customer', new_client_clients_path(:property_id=>params[:property_id]),:class=>"button_new_create save-new-btn1",:style=>"float:right;"%>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="modal-footer">    
+    </div> -->
+  </div>
+</div>

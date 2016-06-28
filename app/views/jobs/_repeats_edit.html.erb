@@ -1,0 +1,190 @@
+<%if params[:action] != "edit"%>
+	<div class="daily_options freq_option_section" style="display: block;">
+		<p> Every <%= f.text_field  :daily_interval, size: "2", value: @repeat.daily_interval.blank? ? "1" : @repeat.daily_interval , class: "rs_daily_interval" %> day(s) </p>
+	</div>
+	<div class="weekly_options freq_option_section" style="display: none;">
+		<p> Every <%= f.text_field :weekly_interval, size: "2", value: @repeat.weekly_interval.blank? ? "1" : @repeat.weekly_interval, class: "rs_weekly_interval" %> week(s) on: 
+		</p>
+		<div class="day_holder">
+			<%= hidden_field_tag "day_holder[]",nil, value: "" %>
+			<%#= f.hidden_field "day_holder[]", value: "" ,:class=>"day_holder1"%>
+			<a data-value="0" href="#" class="days <%= get_select_week_display(@repeat,0)%>">S</a><a data-value="1" href="#" class="days <%= get_select_week_display(@repeat,1)%>">M</a><a data-value="2" href="#" class="days <%= get_select_week_display(@repeat,2)%>">T</a><a data-value="3" href="#" class="days <%= get_select_week_display(@repeat,3)%>">W</a><a data-value="4" href="#" class="days <%= get_select_week_display(@repeat,4)%>">T</a><a data-value="5" href="#" class="days <%= get_select_week_display(@repeat,5)%>">F</a><a data-value="6" href="#" class="days <%= get_select_week_display(@repeat,6)%>">S</a>
+		</div>
+		<span style="clear:both; visibility:hidden; height:1px;">.</span>
+	</div>
+
+	<div class="monthly_options freq_option_section" style="display: none;">
+		<p> Every <%= f.text_field :monthly_interval, size: "2", value: "1", class: "rs_monthly_interval rs_interval" %> month(s): 
+		</p>
+		<p class="monthly_rule_type">
+			<span>Day of month 
+				<%= f.radio_button :monthly_rule_type, "day_of_month", class: "monthly_rule_type_day" ,:checked=>true%>
+			</span>
+			<span>Day of week
+				<%= f.radio_button :monthly_rule_type,"day_of_week", class: "monthly_rule_type_week" %>
+			</span>
+		</p> 
+		<p class="rs_calendar_day" style="display: block;">
+			<%= hidden_field_tag "calender_day[]",nil, value: "" %>
+		  <%= render "jobs/calender_day"%>
+		</p>
+		<p class="rs_calendar_week" style="display: none;">
+			<%= hidden_field_tag "calander_week[]",nil, value: "" %>
+			<%= render "jobs/calender_week"%>
+		</p>
+	</div>
+<%else%>
+	<%if @repeat.frequency =="Daily"%>
+		<div class="daily_options freq_option_section" style="display: block;">
+			<p> Every <%= f.text_field  :daily_interval, size: "2", value: @repeat.daily_interval.blank? ? "1" : @repeat.daily_interval , class: "rs_daily_interval" %> day(s) </p>
+		</div>
+		<div class="weekly_options freq_option_section" style="display: none;">
+			<p> Every <%= f.text_field :weekly_interval, size: "2", value: @repeat.weekly_interval.blank? ? "1" : @repeat.weekly_interval, class: "rs_weekly_interval" %> week(s) on: 
+			</p>
+			<div class="day_holder">
+				<%= hidden_field_tag "day_holder[]",nil, value: "" %>
+				<%#= f.hidden_field "day_holder[]", value: "" ,:class=>"day_holder1"%>
+				<a data-value="0" href="#" class="days <%= get_select_week_display(@repeat,0)%>">S</a><a data-value="1" href="#" class="days <%= get_select_week_display(@repeat,1)%>">M</a><a data-value="2" href="#" class="days <%= get_select_week_display(@repeat,2)%>">T</a><a data-value="3" href="#" class="days <%= get_select_week_display(@repeat,3)%>">W</a><a data-value="4" href="#" class="days <%= get_select_week_display(@repeat,4)%>">T</a><a data-value="5" href="#" class="days <%= get_select_week_display(@repeat,5)%>">F</a><a data-value="6" href="#" class="days <%= get_select_week_display(@repeat,6)%>">S</a>
+			</div>
+			<span style="clear:both; visibility:hidden; height:1px;">.</span>
+		</div>
+		<div class="monthly_options freq_option_section" style="display: none;">
+			<p> Every <%= f.text_field :monthly_interval, size: "2", value: "1", class: "rs_monthly_interval rs_interval" %> month(s): 
+			</p>
+			<p class="monthly_rule_type">
+				<span>Day of month 
+					<%= f.radio_button :monthly_rule_type, "day_of_month", class: "monthly_rule_type_day" ,:checked=>true%>
+				</span>
+				<span>Day of week
+					<%= f.radio_button :monthly_rule_type,"day_of_week", class: "monthly_rule_type_week" %>
+				</span>
+			</p> 
+			<p class="rs_calendar_day" style="display: block;">
+				<%= hidden_field_tag "calender_day[]",nil, value: "" %>
+			  <%= render "jobs/calender_day"%>
+			</p>
+			<p class="rs_calendar_week" style="display: none;">
+				<%= hidden_field_tag "calander_week[]",nil, value: "" %>
+				<%= render "jobs/calender_week"%>
+			</p>
+		</div>
+	<%end%>
+	<%if @repeat.frequency =="Weekly"%>
+		<div class="daily_options freq_option_section" style="display: none;">
+			<p> Every <%= f.text_field  :daily_interval, size: "2", value: @repeat.daily_interval.blank? ? "1" : @repeat.daily_interval , class: "rs_daily_interval" %> day(s) </p>
+		</div>
+		<div class="weekly_options freq_option_section" style="display: block;">
+			<p> Every <%= f.text_field :weekly_interval, size: "2", value: @repeat.weekly_interval.blank? ? "1" : @repeat.weekly_interval, class: "rs_weekly_interval" %> week(s) on: 
+			</p>
+			<div class="day_holder">
+				<%= hidden_field_tag "day_holder[]",nil, value: "" %>
+				<%#= f.hidden_field "day_holder[]", value: "" ,:class=>"day_holder1"%>
+				<a data-value="0" href="#" class="days <%= get_select_week_display(@repeat,0)%>">S</a><a data-value="1" href="#" class="days <%= get_select_week_display(@repeat,1)%>">M</a><a data-value="2" href="#" class="days <%= get_select_week_display(@repeat,2)%>">T</a><a data-value="3" href="#" class="days <%= get_select_week_display(@repeat,3)%>">W</a><a data-value="4" href="#" class="days <%= get_select_week_display(@repeat,4)%>">T</a><a data-value="5" href="#" class="days <%= get_select_week_display(@repeat,5)%>">F</a><a data-value="6" href="#" class="days <%= get_select_week_display(@repeat,6)%>">S</a>
+			</div>
+			<span style="clear:both; visibility:hidden; height:1px;">.</span>
+		</div>
+		<div class="monthly_options freq_option_section" style="display: none;">
+			<p> Every <%= f.text_field :monthly_interval, size: "2", value: "1", class: "rs_monthly_interval rs_interval" %> month(s): 
+			</p>
+			<p class="monthly_rule_type">
+				<span>Day of month 
+					<%= f.radio_button :monthly_rule_type, "day_of_month", class: "monthly_rule_type_day" ,:checked=>true%>
+				</span>
+				<span>Day of week
+					<%= f.radio_button :monthly_rule_type,"day_of_week", class: "monthly_rule_type_week" %>
+				</span>
+			</p> 
+			<p class="rs_calendar_day" style="display: block;">
+				<%= hidden_field_tag "calender_day[]",nil, value: "" %>
+			  <%= render "jobs/calender_day"%>
+			</p>
+			<p class="rs_calendar_week" style="display: none;">
+				<%= hidden_field_tag "calander_week[]",nil, value: "" %>
+				<%= render "jobs/calender_week"%>
+			</p>
+		</div>
+	<%end%>	
+
+	<%if @repeat.frequency == "Monthly"%>
+		<div class="daily_options freq_option_section" style="display: none;">
+			<p> Every <%= f.text_field  :daily_interval, size: "2", value: @repeat.daily_interval.blank? ? "1" : @repeat.daily_interval , class: "rs_daily_interval" %> day(s) </p>
+		</div>
+		<div class="weekly_options freq_option_section" style="display: none;">
+			<p> Every <%= f.text_field :weekly_interval, size: "2", value: @repeat.weekly_interval.blank? ? "1" : @repeat.weekly_interval, class: "rs_weekly_interval" %> week(s) on: 
+			</p>
+			<div class="day_holder">
+				<%= hidden_field_tag "day_holder[]",nil, value: "" %>
+				<%#= f.hidden_field "day_holder[]", value: "" ,:class=>"day_holder1"%>
+				<a data-value="0" href="#" class="days <%= get_select_week_display(@repeat,0)%>">S</a><a data-value="1" href="#" class="days <%= get_select_week_display(@repeat,1)%>">M</a><a data-value="2" href="#" class="days <%= get_select_week_display(@repeat,2)%>">T</a><a data-value="3" href="#" class="days <%= get_select_week_display(@repeat,3)%>">W</a><a data-value="4" href="#" class="days <%= get_select_week_display(@repeat,4)%>">T</a><a data-value="5" href="#" class="days <%= get_select_week_display(@repeat,5)%>">F</a><a data-value="6" href="#" class="days <%= get_select_week_display(@repeat,6)%>">S</a>
+			</div>
+			<span style="clear:both; visibility:hidden; height:1px;">.</span>
+		</div>
+		<div class="monthly_options freq_option_section" style="display: block;">
+			<p> Every <%= f.text_field :monthly_interval, size: "2", value: @repeat.monthly_interval.blank? ? "1" : @repeat.monthly_interval, class: "rs_monthly_interval rs_interval" %> month(s): 
+			</p>
+			<p class="monthly_rule_type">
+				<span>Day of month 
+					<%= f.radio_button :monthly_rule_type, "day_of_month", class: "monthly_rule_type_day" ,:checked=>get_mothly_rule(@repeat)%>
+				</span>
+				<span>Day of week
+					<%= f.radio_button :monthly_rule_type,"day_of_week", class: "monthly_rule_type_week",:checked=>get_mothly_rule_week(@repeat) %>
+				</span>
+			</p> 
+			<%if @repeat.monthly_rule_type == "day_of_month"%>
+				<p class="rs_calendar_day" style="display: block;">
+					<%= hidden_field_tag "calender_day[]",nil, value: "" %>
+				  <%= render "jobs/calender_day"%>
+				</p>
+				<p class="rs_calendar_week" style="display: none;">
+					<%= hidden_field_tag "calander_week[]",nil, value: "" %>
+					<%= render "jobs/calender_week"%>
+				</p>
+			<%else%>
+				<p class="rs_calendar_day" style="display: none;">
+					<%= hidden_field_tag "calender_day[]",nil, value: "" %>
+				  <%= render "jobs/calender_day"%>
+				</p>
+				<p class="rs_calendar_week" style="display: block;">
+					<%= hidden_field_tag "calander_week[]",nil, value: "" %>
+					<%= render "jobs/calender_week"%>
+				</p>
+			<%end%>	
+		</div>
+	<%end%>
+	<%if @repeat.id.blank?%>
+		<div class="daily_options freq_option_section" style="display: block;">
+			<p> Every <%= f.text_field  :daily_interval, size: "2", value: @repeat.daily_interval.blank? ? "1" : @repeat.daily_interval , class: "rs_daily_interval" %> day(s) </p>
+		</div>
+		<div class="weekly_options freq_option_section" style="display: none;">
+			<p> Every <%= f.text_field :weekly_interval, size: "2", value: @repeat.weekly_interval.blank? ? "1" : @repeat.weekly_interval, class: "rs_weekly_interval" %> week(s) on: 
+			</p>
+			<div class="day_holder">
+				<%= hidden_field_tag "day_holder[]",nil, value: "" %>
+				<%#= f.hidden_field "day_holder[]", value: "" ,:class=>"day_holder1"%>
+				<a data-value="0" href="#" class="days <%= get_select_week_display(@repeat,0)%>">S</a><a data-value="1" href="#" class="days <%= get_select_week_display(@repeat,1)%>">M</a><a data-value="2" href="#" class="days <%= get_select_week_display(@repeat,2)%>">T</a><a data-value="3" href="#" class="days <%= get_select_week_display(@repeat,3)%>">W</a><a data-value="4" href="#" class="days <%= get_select_week_display(@repeat,4)%>">T</a><a data-value="5" href="#" class="days <%= get_select_week_display(@repeat,5)%>">F</a><a data-value="6" href="#" class="days <%= get_select_week_display(@repeat,6)%>">S</a>
+			</div>
+			<span style="clear:both; visibility:hidden; height:1px;">.</span>
+		</div>
+
+		<div class="monthly_options freq_option_section" style="display: none;">
+			<p> Every <%= f.text_field :monthly_interval, size: "2", value: "1", class: "rs_monthly_interval rs_interval" %> month(s): 
+			</p>
+			<p class="monthly_rule_type">
+				<span>Day of month 
+					<%= f.radio_button :monthly_rule_type, "day_of_month", class: "monthly_rule_type_day" ,:checked=>true%>
+				</span>
+				<span>Day of week
+					<%= f.radio_button :monthly_rule_type,"day_of_week", class: "monthly_rule_type_week" %>
+				</span>
+			</p> 
+			<p class="rs_calendar_day" style="display: block;">
+				<%= hidden_field_tag "calender_day[]",nil, value: "" %>
+			  <%= render "jobs/calender_day"%>
+			</p>
+			<p class="rs_calendar_week" style="display: none;">
+				<%= hidden_field_tag "calander_week[]",nil, value: "" %>
+				<%= render "jobs/calender_week"%>
+			</p>
+		</div>
+	<%end%>	
+<%end%>	

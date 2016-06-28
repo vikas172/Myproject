@@ -1,0 +1,98 @@
+<div class="modal fade" id="plan_visit_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Schedule a Visit</h4>
+      </div>
+      <div class="modal-body">
+        <div class="content_visits_job">
+          <%= form_tag job_visit_plan_path do %>
+            <div class="row">
+              <div class="span3" id="popover_left">
+                <p >
+                  <%= text_field_tag "visit_name",nil, :value => truncate(get_visiter_name(@job), :length => 100) ,:size=>"30", maxlength: 100%>
+                    <br>
+                  <%= @job.start_date rescue "" %> - <%= @job.try(:end_date) rescue "" %> : <%= @job.try(:description) rescue "" %>
+                </p>
+
+                <div style=" " id="to_do_scheduler">
+                  <p>
+                    <%= check_box_tag "all_day" ,nil,false%>
+                    <label for="to_do_all_day">Any Time</label>
+                  </p>
+
+                  <p>
+                    <label for="to_do_start_at_date">Start at</label>
+                    <%= text_field_tag "start_date",nil,:style=>"width:33%;",:class=>"datepicker start_date_visit", value: date_time_format %>
+                     <b class="input-append toggle-append bootstrap-timepicker" style="width:30%;">
+                    <%= text_field_tag "start_time",nil,:style=>"width:85%;margin-left:3%;", :class=>"timepicker" %></b>
+                  </p>
+
+                  <p>
+                    <label for="to_do_end_at_date">End at</label>
+                    <%= text_field_tag "end_date",nil,:style=>"width:33%;",:class=>"datepicker end_date_visit", value: date_time_format %>
+                     <b class="input-append toggle-append bootstrap-timepicker"  style="width:30%;">
+                    <%= text_field_tag "end_time",nil, :style=>"width:85%;margin-left:3%;", :class=>"timepicker" %></b>
+                  </p> 
+                </div>
+                  <p style="cursor:pointer;" id="reminder"><a herf="">add a team reminder</a></p>
+                  <p style="display:none;" id="reminder_section">
+                    <label for="to_do_reminder_offset">Team Reminder</label>
+                    <%=select_tag("team_reminder",options_for_select([["-","-"],["at start of task","at_start_of_task"],["30 minutes before","30_minutes_before"],["1 hour before","1_hour_before"],["2 hours before","2_hours_before"],["5 hours before","5_hours_before"],["24 hours before","24_hours_before"]]))%>
+                  </p>  
+              </div> <!--Span 3 end  -->
+
+              <div class="span2" style="float:right;">
+                <div>
+                  <label style="color:#333; display:block;" class="strong">Assigned To:</label>
+                  <div class="popover-markup">
+                    <a class="popoverThis trigger" data-toggle="popover">
+                      Click to Assign
+                    </a>
+                    <div id="job_assign_user"></div>
+                    <div id="crew"><input id="member_selected_" name="job[crew][]" type="hidden" value=""></div>
+                    <%= render "select_job_employees" %>
+                  </div>
+                </div>
+                <br>
+                <div class="attachments_holder">       
+                  <div class="description attachments">
+                   <%= hidden_field_tag "job_id",nil,:value=> @job.id %>
+
+                    <ul>
+                      <li class="work_order strong"><a href="/jobs/<%=@job.id%>"> 
+                        Job #<%= @job.id%> </a></li>
+                      <li class="strong client"><a href="/clients/<%=@job.property.client.id%>">
+                      <%= @job.property.client.first_name rescue "" %> &nbsp; <%= @job.property.client.last_name rescue "" %> </a></li>
+                      <li class="phone">9713778332</li>
+                      <li class="property strong"><a href="/properties/<%=@job.property.id%>?view=show&client_id=<%= @job.property.client.id%>">  <%= @job.property.try(:street) rescue "" %><br><%= @job.property.try(:street2) rescue "" %><br><%= @job.property.try(:city) rescue "" %>, <%= @job.property.try(:state) rescue "" %> &nbsp;  <%= @job.property.try(:zipcode) rescue "" %> </a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- row end -->
+
+            <div class="row">
+              <%= text_area_tag "description" ,nil, :rows=>"4", :placeholder=>"details...",:style=>"width:98%;" %>
+            </div>
+            <div class="row">
+              <p class="submit_holder">
+                <div id="popover_form_content">
+                  <%= submit_tag "create",:class=>"model_save_button save-new-btn1"%>
+                  <a href="#" data-dismiss="modal" class="model_cancel_button pull-right">Cancel</a>
+                </div>
+              </p>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+popover_show();
+$("#reminder").click(function(){
+$("#reminder_section").show()
+})
+</script>

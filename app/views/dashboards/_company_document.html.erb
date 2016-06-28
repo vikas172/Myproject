@@ -1,0 +1,37 @@
+<!-- Modal -->
+<div class="modal fade" id="company_document" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display:none;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Select File</h4>
+      </div>
+     <div class="modal-body">
+        <%@uploded_files.each do |uploded_file|%>
+          <%=radio_button_tag 'document_id', uploded_file.id, false ,:class=>"file_radio_button #{uploded_file.file_file_name}" ,:id=>"#{uploded_file.id}"%>
+          <%=uploded_file.file_file_name%>
+          <br/>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+       <%=link_to "Select" , "#-", :class=>"btn btn-default choose_your_file"%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+ $(".choose_your_file").click(function(){
+   $("#company_document").modal('hide')
+ })
+
+ $(".file_radio_button").change(function(){
+   var company_file_name = $(this).attr("class").split(" ")[1]
+     $(".document_file_name").text(company_file_name)
+     var check = $(this).is(":checked")
+     if(check){
+       var id = this.id
+       $("#document_id").val(id)
+     } 
+ })
+</script>

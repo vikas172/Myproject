@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  any_time: false
+  start_date: 2014-08-11
+  end_date: 2014-08-11
+  start_time: 2014-08-11 12:20:35
+  end_time: 2014-08-11 12:20:35
+  team_reminder: MyString
+  description: MyText
+  job_id: 1
+  user_id: 1
+  assigned_users: MyString
+
+two:
+  title: MyString
+  any_time: false
+  start_date: 2014-08-11
+  end_date: 2014-08-11
+  start_time: 2014-08-11 12:20:35
+  end_time: 2014-08-11 12:20:35
+  team_reminder: MyString
+  description: MyText
+  job_id: 1
+  user_id: 1
+  assigned_users: MyString

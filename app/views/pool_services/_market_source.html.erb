@@ -1,0 +1,37 @@
+<%if !@market_sources.blank? %>
+	<%@market_sources.each_with_index do |source,index|%>
+		<div class="row">
+			<div id="popover_form_content">
+				<div class="span2" id="popover_left">
+				</div>
+				<div class="span2"  id="popover_left">
+					<%= index+1 %>. &nbsp;&nbsp;<%= source.source_name%>
+				</div>
+				<div class="span2"  id="popover_left">
+					<%= link_to "Edit",source_edit_pool_service_path(source)%> &nbsp;
+					<%= link_to "Delete",source_delete_pool_service_path(source), :data => {:confirm => 'Are you sure?'}%>
+				</div>
+			</div>
+		</div>
+	<%end%>
+<%end%>
+
+<h1 class="title2-font">Edit Market Sources</h1>
+
+<%= form_tag source_create_pool_services_path ,:class=>"edit_work_configuration compressed_form",:remote=>true do %>
+	<div class="row">
+		<div id="popover_form_content">
+			<div class="span2" id="popover_left">
+				<label for="expense_cost">Market Source</label>
+			</div> 
+			<div class="span3"  id="popover_left">
+				<%= text_field_tag "market_source[source_name]", nil,class: "large strong", autofocus: "autofocus" ,:required=>true,:placeholder=>"market source"%>
+				<%= hidden_field_tag "market_source[user_id]",nil,value: current_user.id%>
+			</div>
+		</div>
+	</div> 
+	<div class="row">
+		<%= submit_tag "save",:class=>"update_button_setting save-new-btn1",:style=>"margin-left: 36%;"%>	
+	</div>
+<%end%>
+

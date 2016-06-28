@@ -1,0 +1,86 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<div class="client_index">
+	<div class="main_container">
+		<%= form_tag converted_properties_path do  %>
+
+		<div class="row">
+			<div class="span2">
+				Contact Name
+			</div>
+			<div class="span7">
+				<%= select_tag "client[initial]" ,options_for_select([["Mr.", "Mr."], ["Ms.", "Ms."],["Mrs.", "Mrs."], ["Miss.", "Miss."], ["Dr.", "Dr."]])%>
+				<%= text_field_tag "client[first_name]",nil,:placeholder=> "First Name",:required=>true%>
+				<%= text_field_tag "client[last_name]" ,nil,:placeholder=> "Last Name",:required=>true%>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span2">
+				Company Name
+			</div>
+			<div class="span7">
+				<%= text_field_tag "client[company_name]",nil,:placeholder=> "Company Name...",:required=>true%>
+			</div>
+		</div>
+
+		<div class="row" style="margin-bottom: 15px;">
+			<div class="span2">
+				Billing Address
+			</div>
+			<div class="span7">
+				<div style="display: block; width: 400px;" id="billing_address">
+					<%= text_field_tag "client[street1]",nil,:placeholder=> "Street1" %><br/>
+					<%= text_field_tag "client[street2]" ,nil,:placeholder=> "Street2"%><br/>
+					<%= text_field_tag "client[city]" ,nil,:placeholder=> "City"%><br/>
+					<%= text_field_tag "client[state]" ,nil,:placeholder=> "State"%>
+					<%= text_field_tag "client[zip_code]",nil,:placeholder=> "Zip code"%><br/>
+					<br/> 
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span2">
+				Mobile Number
+			</div>
+			<div class="span7">
+				<%= select_tag "initial_phone" ,options_for_select(country_phone_code),:style=>"vertical-align: middle;"%>
+				<%= text_field_tag "client[mobile_number]",nil,:placeholder=> "Mobile Number...",:class=>"mobile_number_team_member",:maxLength=>12,:required=>true%>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span2">
+				Personal Email
+			</div>
+			<div class="span7">
+				<%= email_field_tag "client[personal_email]",nil,:placeholder=> "Personal Email...",:required=>true%>
+			</div>
+		</div>
+		<%= hidden_field_tag "property_id",nil,:value=>params[:property_id]%>
+		<div class="row">
+			<div class="span2">
+				Phone Number
+			</div>
+			<div class="span7">
+				<%= text_field_tag "client[phone_number]",nil,:placeholder=> "Phone number..."%>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span2">
+				Email
+			</div>
+			<div class="span7">
+				<%= email_field_tag "client[email]",nil,:placeholder=> "Email"%>
+			</div>
+		</div>
+
+		<div class="client_custom_field">
+			<%=render "custom_field_display"%>
+		</div>
+		<%= submit_tag "Create Client",:class=>"button_new_create"%>
+		<hr>
+		<%end%>
+	</div>
+</div>

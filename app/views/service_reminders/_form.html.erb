@@ -1,0 +1,163 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="margin-right: 0px!important;">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">New Service Reminder</h4>
+    </div>
+    <div class="modal-body">
+      <div class="">
+        <div class="">
+          <%= form_for(@service_reminder) do |f| %>
+            <% if @service_reminder.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@service_reminder.errors.count, "error") %> prohibited this service_reminder from being saved:</h2>
+
+                <ul>
+                <% @service_reminder.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+              <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :vehicle_name %></div>
+                <div class="col-md-6 no-padding">
+                  <%= f.text_field :vehicle_name %>
+                </div>
+              </div>
+            <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :service_task %></div>
+                  <div class="col-md-6 no-padding">
+                    <%#= f.text_field :service_task %>
+                    <%= f.select :service_task, options_for_select([["A/C Compressor Replacement","A/C Compressor Replacement"],["A/C Condenser Replacement","A/C Condenser Replacement"],["A/C Diagnosis","A/C Diagnosis"],["A/C Evaporator Replacement","A/C Evaporator Replacement"],["A/C Recharge","A/C Recharge"],["Air Filter Replacement","Air Filter Replacement"],["Alternator Replacement","Alternator Replacement"],["Ball Joint Replacement","Ball Joint Replacement"],["Battery Inspection","Battery Inspection"],["Battery Replacement","Battery Replacement"],["Brake Caliper Replacement","Brake Caliper Replacement"],["Brake Inspection","Brake Inspection"],["Brake Pad(s) Replacement","Brake Pad(s) Replacement"],["Car Wash","Car Wash"],["Catalytic Converter Replacement","Catalytic Converter Replacement"],["Charging System Diagnosis","Charging System Diagnosis"],["Door Window Motor/Regulator Replacement","Door Window Motor/Regulator Replacement"],["Engine Belt Inspection","Engine Belt Inspection"],["Engine Coolant Replacement","Engine Coolant Replacement"],["Engine/Drive Belt(s) Replacement","Engine/Drive Belt(s) Replacement"],["Exhaust Manifold Replacement","Exhaust Manifold Replacement"],["Factory Scheduled Maintenance","Factory Scheduled Maintenance"],["Fuel Injector Replacement","Fuel Injector Replacement"],["Fuel Pump Replacement","Fuel Pump Replacement"],["Head Gasket(s) Replacement","Head Gasket(s) Replacement"],["Heater Blower Motor Replacement","Heater Blower Motor Replacement"],["Heater Control Valve Replacement","Heater Control Valve Replacement"],["Heater Core Replacement","Heater Core Replacement"],["Heater Hose Replacement","Heater Hose Replacement"],["Ignition Coil Replacement","Ignition Coil Replacement"],["Intake Manifold Gasket Replacement","Intake Manifold Gasket Replacement"],["Oil Change","Oil Change"],["Oil Pump Replacement","Oil Pump Replacement"],["Other Maintenance","Other Maintenance"],["Oxygen Sensor Replacement","Oxygen Sensor Replacement"],["Power Steering Hose Replacement","Power Steering Hose Replacement"],["Power Steering Pump Replacement","Power Steering Pump Replacement"],["Radiator Repair","Radiator Repair"],["Resurface Rotors","Resurface Rotors"],["Rotate Tires","Rotate Tires"],["Rotor Replacement","Rotor Replacement"],["Spark Plug Replacement","Spark Plug Replacement"],["Starter Replacement","Starter Replacement"],["Thermostat Replacement","Thermostat Replacement"],["Tie Rod End Replacement","Tie Rod End Replacement"],["Tire Replacement","Tire Replacement"],["Tire Service","Tire Service"],["Transmission Filter Replacement","Transmission Filter Replacement"],["Transmission Fluid Replacement","Transmission Fluid Replacement"],["Transmission Replacement","Transmission Replacement"]])%>
+
+                  </div>
+                </div>
+            <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :meter_interval %></div>
+                <div class="col-md-6 no-padding">
+                  <%= f.text_field :meter_interval %>
+                </div>
+            </div>
+                        <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :meter_threshold %></div>
+                <div class="col-md-6 no-padding">
+                  <%= f.text_field :meter_threshold %>
+                </div>
+            </div>
+            <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :time_interval %></div>
+                <div class="col-md-6 no-padding">
+                  <%= f.text_field :time_interval %>
+                </div>
+            </div>
+            <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :time_duration %></div>
+                <div class="col-md-6 no-padding">
+                  <%#= f.text_field :time_duration %>
+                  <%= f.select :time_duration, options_for_select([["day(s)","day(s)"],["week(s)","week(s)"],["month(s)","month(s)"]])%>
+                </div>
+            </div>
+            <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :time_threshold %></div>
+                <div class="col-md-6 no-padding">
+                  <%= f.text_field :time_threshold %>
+                </div>
+            </div>
+            <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :threshold_duration %></div>
+                <div class="col-md-6 no-padding">
+                  <%#= f.text_field :threshold_duration %>
+                  <%= f.select :threshold_duration, options_for_select([["day(s)","day(s)"],["week(s)","week(s)"],["month(s)","month(s)"]])%>
+                </div>
+            </div>
+
+            <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :subscribed_user %></div>
+                <div class="col-md-6 no-padding">
+                  <%#= f.text_field :subscribed_user %>
+                    <select id="subscribre_user" multiple="multiple" data-size="5" name="service_reminder[subscribed_user][]">
+                      <%if  @user_list.present? %>
+                        <%@user_list.each do |user|%>
+                          <option value="<%=user.member_id%>">
+                            <%=user.email%>
+                          </option>
+                        <%end%>
+                      <%end%>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="field ">
+                <div class="col-md-3">
+                  <%= f.label :email_notification %></div>
+                <div class="col-md-6 no-padding">
+                  <%= f.check_box :email_notification %>
+                </div>
+            </div>
+            <div class="actions">
+              <% if params[:action] == "edit" %>
+                <%= link_to "Delete Service Reminder", service_reminder_path(@service_reminder), method: "delete", class: "button remove delete_expense pull-left" %>
+              <% end %>
+              <%= f.submit "SAVE", class: "model_save_button pull-right save-new-btn1"%>
+              <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#new_service_reminder .col-md-3{
+ width: 33% !important;
+}
+select[multiple], select[size] {
+    height: auto;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+  .multiselect-container .checkbox input[type="checkbox"]{
+    opacity: 1;
+  }
+  .multiselect-container{
+    left: 0px;
+    padding: 8px;
+    height: 250px;
+  }
+  .multiselect-container .filter {
+    display: none;
+  }
+  .multiselect{
+    text-align: right;
+    width: 221px;
+  }
+  .multiselect span{
+    float: left;
+
+  }
+  .button.remove {
+    padding: 7px;
+    margin-right: 13px;
+  }
+</style>
+<script>
+  $(document).ready(function() {
+    $('#subscribre_user').multiselect({ 
+      includeSelectAllOption: true,
+      enableFiltering:true                
+    });
+  })
+
+</script>

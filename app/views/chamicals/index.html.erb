@@ -1,0 +1,50 @@
+<div class="client_index invoice-index">
+	<div class="main_container">
+		<%= render "clients/error_message_and_flash" %>
+		<div id="head">
+			<div class="hide_for_print" id="">
+				<div class="show_view_button">
+				  <% if @chemical_setting.blank? %>
+				  	<%= link_to 'Configure Chemical Tracking', chemical_treatment_setting_path, class: "secondary button_new_index new spin_on_click" %>
+				  <% else %>
+					  <%= link_to '+ New Treatment Record', '', class: "secondary button_new_index new spin_on_click", data: {toggle: "modal", target: "#new_chemical_treatment"} %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+		<div class="thicklist index_thicklist chemical_index" id="expenses_index">
+			<div class="row toolbar clearfix no_hover" id="content">
+				<div class="count" data-count="3">
+					<div class="count" data-count="1"><%= @chamicals.count %> Chemical treatment</div>
+				</div>
+				<%= form_tag "chamicals", class: "index_thicklist_form", onchange: "$(this).submit();", remote: true, method: "get" do %>
+				  <div class="order_by">
+				    Sort By
+				    <select id="order_by" name="order_by"><option value="date">Date</option>
+							<option value="user_id">Customer</option>
+							<option value="applicator_id">Applicator</option></select>
+				  </div>
+				<% end %>
+			</div>
+			<div class="row_holder extend_to_footer" style="overflow: auto;">
+				<% unless @chamicals.blank? %>
+					<% @chamicals.each do |chamical| %>
+						<a href='<%= chamical_path(chamical) %>' class="chemical_treatment row spin_on_click" >
+				      <span class="top_right">
+				        <%= chamical.start_date rescue "" %>
+				        on
+				        <%= chamical.end_date rescue "" %>
+				      </span>
+				      <h3><%= get_client_name(chamical) %></h3>
+				      <p class="description">
+				        <%= client_address(chamical) %>
+				      </p>
+					  </a>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%= render partial: "select_client_property" %>

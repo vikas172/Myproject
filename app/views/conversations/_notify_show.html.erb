@@ -1,0 +1,78 @@
+<div style="margin:0 auto;width:900px">
+	<ul id="nav" class="notificationLink-not" style="display:none;">
+		<li id="notification_li">
+			<a href="#" id="notificationLink">Notifications</a>
+			<div id="notificationContainer">
+			<div id="notificationTitle">Notifications</div>
+			<div id="notificationsBody" class="notifications">
+				<div style="padding:0px 35px 0px 35px; line-height:25px;">
+					<span>Messages:-</span><br/>
+					<%if @unread_notify.blank?%>
+						No Notifications Present
+					<%else%>
+					<ul>
+						<% @unread_notify.each do |notify|%>
+						  <li><b style="font-size:14px;"><%= get_sender_notify(notify)%></b> Send Message To You
+							<%= link_to "View Message",display_notify_conversations_path(:value_notice=>notify.id),:style=>"color:#1f518b;"%></li>
+						<%end%>
+					</ul>	
+					<%end%>	
+
+					<div id="mydiv_notify" style="float: right; margin-right: 10%; display:none;">
+            			<img src="/assets/loader.gif" class="ajax-loader"/>
+          			</div> 
+
+					<br/><span>Work Orders:-</span><br/>
+					<%if @unread_job.blank?%>
+						No Work Order Notifications Present
+					<%else%>
+						<ul>
+							<% @unread_job.each do |job|%>
+							  <li><b style="font-size:14px;"><%=get_job_notify_new(job)%></b> New Work Order Assigned to You
+								<%#= link_to "View Job",job_path(job[1]["job_id"]),:style=>"color:#B87333;"%>
+								<%= link_to "View Job",job_path(job.id),:style=>"color:#1f518b;"%></li>
+							   </li>
+							<%end%>
+						</ul>	
+					<%end%>	
+					<br/><span>SMS:-</span><br/>
+
+					<%if @sent_message.blank?%>
+						No SMS Notifications Present
+					<%else%>
+						<table class="table">
+							 <thead>
+								<th>From</th>
+								<th>To</th>
+								<th>body</th>
+ 							</thead>
+							<% @sent_message.each do |sms|%>
+							<tr style="cursor:pointer; color:#1f518b;" onclick='viewDisplayMessage("<%=sms.sid%>")' data-toggle="model" data-target="#message_receive_dialog" class="message_display">
+							  <td><%= sms.from%></td>
+							  <td><%= sms.to%></td>
+							  <td><%= truncate(sms.body, :length => 5) rescue ""%></td>
+									<%#= link_to "View Job",job_path(job[1]["job_id"]),:style=>"color:#B87333;"%>
+									<td><%#= link_to "View SMS","/message_show/#{sms.sid}",:style=>"color:#B87333;"%></td>
+								</tr>
+							<%end%>
+						</table>	
+					<%end%>	
+
+				</div>
+			</div>
+			<!-- <div id="notificationFooter"><a href="#">See All</a></div> -->
+			</div>
+		</li>
+	</ul>
+</div>
+<style type="text/css">
+
+#notificationsBody ul {
+    list-style: outside none none;
+}
+#notificationsBody li {
+  border-bottom: 1px solid #999;
+  padding: 5px 5px 5px 10px;
+  margin-bottom: 3px;
+}
+</style>

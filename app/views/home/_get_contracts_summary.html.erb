@@ -1,0 +1,44 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="116px" class="created">Created</th>
+        <th width="151px" class="client_name">Client Name</th>
+        <th width="186px" class="description">Description</th>
+        <th width="166px" class="contract_start">Contract Start</th>
+        <th width="169px" class="closed">Closed</th>
+        <th width="169px" class="completed_visits">Completed Visits</th>
+        <th width="169px" class="job">job #</th>
+        <th width="180px" class="visits_assigned_to">Visits Assigned To</th>
+        <th width="169px" class="billing_type">Billing Type</th>
+        <th width="169px" class="doller">$</th>
+        <th width="89px" class="invoices">Invoices</th>
+        <th width="169px" class="line_items">Line Items</th>
+        <th width="42px" class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @contracts_summary.blank?%>
+    	<% @contracts_summary.each do |job| %>
+    	<tr> 
+    		<td class="created"><%= job.created_at.strftime("%d-%m-%Y")%></td>
+    		<td class="client_name"><%= job.property.client.first_name %> &nbsp;<%= job.property.client.last_name %></td>
+        <td class="description"><%= job.description%></td>
+        <td class="contract_start"><%= job.start_date%></td>
+        <td class="closed">-</td>
+        <td class="completed_visits"></td>
+        <td class="job">-</td>
+        <td class="visits_assigned_to"></td>
+        <td class="billing_type">-</td>
+        <td class="doller">0.00</td>
+        <td class="invoices">0</td>
+        <td class="line_items">-</td>
+        <td class="open"><a target="_blank" href="/jobs/<%=job.id%>" class="open ui-icon ui-icon-newwin">open</a></td>
+      </tr>  
+    	<% end %>
+    <%end%> 
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

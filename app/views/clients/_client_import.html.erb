@@ -1,0 +1,21 @@
+<!-- Modal -->
+<div id="client_import" class="modal  fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+	<div class="modal-header new-modal-header">
+		<button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
+		<h4 id="myModalLabel" class="modal-title">Import Wizard</h4>
+	</div>
+	<div class="modal-body">
+
+		<p style="line-height: 18px; margin-bottom: 25px;">
+			Import an existing Customer list into CopperService! Currently CSV and VCard formats are supported. Please read the
+			<a target="_blank" href="#" class="title1-font">Customer List Import Documentation</a>
+			for details on how to properly format the file.
+		</p>
+		<%= form_tag import_client_path , multipart: true  do  %>
+	    <%= file_field_tag :file, :type => 'text/csv' %>
+	    <%= submit_tag "Import CSV" ,:class=>"button_new_create save-new-btn1",:style=>"float:right; margin-right:15px;"%>
+		<%end%>
+	</div>
+	<!-- <div class="modal-footer">
+	</div> -->
+</div>

@@ -1,0 +1,190 @@
+<link rel="stylesheet" type="text/css" href="../assets/register/form-style.css" />
+ 
+<%#= javascript_include_tag 'new_application' %>
+<%#= stylesheet_link_tag   'new_application' %>
+<%#= render 'layouts/home_header' %>
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Caption' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Exo+2:400,500italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+<%= javascript_include_tag 'new_design_application' %>
+<%= stylesheet_link_tag   'new_design_application' %>
+<%= render 'layouts/home_new_header' %>
+
+  <div id="form_wrapper" class="form_wrapper new-form-login">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name),html: {:class=>"active new_user"}) do |f| %>
+    <%= devise_error_messages! %>
+      <h3 >Sign Up</h3>
+      <div class="space">
+        
+        
+          <label>Company Name</label>
+          <%= f.text_field :company_name, autofocus: true,:placeholder=>"Company Name", required: true%>
+         <!--  <span class="error">This is an error</span> -->
+        
+        <%= f.hidden_field :marker_color, autofocus: true,:placeholder=>"Company Name", value: "FF4632"%>
+        
+           <label>First Name</label>
+          <%= f.text_field :first_name, autofocus: true ,:placeholder=>"John", required: true%>
+          <div class="clearfix"></div>
+           <label>Last Name</label>
+          <%= f.text_field :last_name, autofocus: true ,:placeholder=>"Doe", required: true%>
+          <!-- <span class="error">This is an error</span> -->
+        
+
+          <div class="clearfix"></div>
+          <label>Mobile Number</label>
+          <%= f.text_field :mobile_number, autofocus: true,:placeholder=>"+1 (320) 555-5555" , :maxLength=>15, required: true%><span>(mobile number verification required)</span>
+          <!-- <span class="error">This is an error</span> -->
+        
+                        
+        <div class="clearfix"></div>
+          <label>Email</label>
+          <%= f.email_field :email, autofocus: true,:placeholder=>"johndoe@domain.com", required: true, pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$' %>
+          <!-- <span class="error">This is an error</span> -->
+       <div class="clearfix"></div>
+          <label>Password</label>
+          <%= f.password_field :password, autocomplete: "off" ,:placeholder=>"Password", required: true%>
+          <!-- <span class="error">This is an error</span> -->
+        <div class="clearfix"></div>
+          <label>Confirm Password</label>
+          <%= f.password_field :password_confirmation, autocomplete: "off", :placeholder=>"Password Confirmation", required: true%>
+          <!-- <span class="error">This is an error</span> -->
+       <div class="clearfix"></div>
+      <%= f.hidden_field :user_type,:value=>"admin"%>
+      <%= f.hidden_field :plan_type,:value=>params[:plan_type]%>
+    </div>
+      <div class="bottom">
+        <div class="remember">
+          <%= f.submit "Complete signup",:class=>"btn btn-primary btn-lg",:style=>"margin-bottom:10px;" %>
+        </div>
+        <div class="complete-signup">
+          By signing up, you are agreeing to copper service terms and conditions
+        </div>
+        <a href="" rel="login" class="linkform">You have an account already? Log in here</a>
+        <div class="clear"></div>
+      </div>
+    <%end%>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name),html: {:class=>"login "}) do |f| %>
+      <%- flash.each do |name, msg| -%>
+        <%= content_tag :div, msg, :id => "flash_#{name}", :style => "color: red;" if msg.is_a?(String) %>
+      <%- end -%> 
+      <h3>Login to access your account</h3>
+      <div class="space">
+        <label>Username</label>
+        <%= f.text_field :login, autofocus: true,:placeholder=>"Email/Username" %>
+       <!--  <span class="error">This is an error</span> -->
+      </div>
+      <div class="space">
+        <label>Password <a href="forgot_password.html" rel="forgot_password" class="forgot linkform">Forgot your password?</a></label>
+        <%= f.password_field :password, autocomplete: "off" ,:placeholder=>"Password" %>
+       <!--  <span class="error">This is an error</span> -->
+      </div>
+      <div class="bottom">
+        <div class="remember">
+          <%= f.submit "Login" %>
+        </div>
+        <a href="" rel="new_user" class="linkform">You don't have an account yet? Register here</a>
+        <div class="clear"></div>
+      </div>
+    <%end%>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post ,:class=>"forgot_password"}) do |f| %>  
+      <div class="space">
+        <label>Email</label>
+        <%= f.email_field :email, autofocus: true,:placeholder=>"johnsmith@gmail.com" %>
+        <!-- <span class="error">This is an error</span> -->
+      </div>
+      <div class="bottom">
+        <div class="remember"><%= f.submit "Reset my password" %></div>
+        <a href="" rel="login" class="linkform">Suddenly remebered? Log in here</a>
+        <a href="" rel="new_user" class="linkform">You don't have an account? Register here</a>
+        <div class="clear"></div>
+      </div>
+    <% end %>
+  </div>
+  <div class="clear"></div>
+</div>
+
+    <!-- The JavaScript -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+          //the form wrapper (includes all forms)
+        var $form_wrapper = $('#form_wrapper'),
+          //the current form is the one with class active
+          $currentForm  = $form_wrapper.children('form.active'),
+          //the change form links
+          $linkform   = $form_wrapper.find('.linkform');
+            
+        //get width and height of each form and store them for later            
+        $form_wrapper.children('form').each(function(i){
+          var $theForm  = $(this);
+          //solve the inline display none problem when using fadeIn fadeOut
+          if(!$theForm.hasClass('active'))
+            $theForm.hide();
+          $theForm.data({
+            width : $theForm.width(),
+            height  : $theForm.height()
+          });
+        });
+        
+        //set width and height of wrapper (same of current form)
+        setWrapperWidth();
+        
+        /*
+        clicking a link (change form event) in the form
+        makes the current form hide.
+        The wrapper animates its width and height to the 
+        width and height of the new current form.
+        After the animation, the new form is shown
+        */
+        $linkform.bind('click',function(e){
+          var $link = $(this);
+          var target  = $link.attr('rel');
+          $currentForm.fadeOut(400,function(){
+            //remove class active from current form
+            $currentForm.removeClass('active');
+            //new current form
+            $currentForm= $form_wrapper.children('form.'+target);
+            //animate the wrapper
+            $form_wrapper.stop()
+                   .animate({
+                    width : $currentForm.data('width') + 'px',
+                    height  : $currentForm.data('height') + 'px'
+                   },500,function(){
+                    //new form gets class active
+                    $currentForm.addClass('active');
+                    //show the new form
+                    $currentForm.fadeIn(400);
+                   });
+          });
+          e.preventDefault();
+        });
+        
+        function setWrapperWidth(){
+          $form_wrapper.css({
+            width : $currentForm.data('width') + 'px',
+            height  : $currentForm.data('height') + 'px'
+          });
+        }
+        
+        /*
+        for the demo we disabled the submit buttons
+        if you submit the form, you need to check the 
+        which form was submited, and give the class active 
+        to the form you want to show
+        */
+      });
+
+
+
+$('#user_phone_number').keyup(function() {
+  foo = $(this).val().split("-").join(""); // remove hyphens
+
+      foo = foo.match(new RegExp('.{1,4}$|.{1,3}', 'g')).join("-");
+
+      $(this).val(foo);
+ 
+  });
+        </script>

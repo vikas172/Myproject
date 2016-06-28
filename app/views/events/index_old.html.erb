@@ -1,0 +1,58 @@
+<link rel="stylesheet" type="text/css" href="../assets/calender.css" />
+<div class="client_index">
+  <div class="main_container">
+      <%= render "clients/error_message_and_flash" %>
+    <div class="left header_date_picker" style="display: block ;">
+      <div class="rounded">
+        <a href="#" id="btnPrev" class="prev side_arrow">◀</a>
+        <span id="current_date" class="current"></span>
+        <a href="#" id="btnNext" class="next side_arrow">▶</a>
+      </div>
+      <div style="float: right; padding: 0px; margin: 12px 196px;"> 
+        <%= link_to 'Month', '#', :class => 'selected button', id: 'calender_month', :'data-page-type' => 'month', onclick: "$('.content a').removeClass('selected'); $(this).addClass('selected'); $('.fc-button-month').click(); return false;"%>
+        <%= link_to 'Week', '#', :class => 'button', id: 'calender_week', :'data-page-type' => 'week', onclick: "$('.content a').removeClass('selected'); $(this).addClass('selected'); $('.fc-button-agendaWeek').click(); return false;"%>
+        <%= link_to 'Day', '#', :class => 'button', id: 'calender_grid', :'data-page-type' => 'grid', onclick: "$('.content a').removeClass('selected'); $(this).addClass('selected'); $('.fc-button-agendaDay').click(); return false;"%>
+        <%#= link_to 'Map', '#', :class => '', :'data-page-type' => 'map'%>
+        <%#= link_to 'List', '#', :class => 'button',id: 'calender_list', :'data-page-type' => 'list', onclick: "$('.content a').removeClass('selected'); $(this).addClass('selected');" %>
+      </div>
+    </div>
+    <%= render "event_action"%>
+      <div id="unscheduled" class="">
+        <h3 id="unscheduled_header" class="thead title2-font">Unscheduled Tasks &amp; Work Orders</h3>
+        <div>
+          <div id="unscheduled_list" class="ui-droppable">
+            <%= render "unscheduled_task"%>
+          </div>
+        </div>
+      </div>
+    <div class='calender' id='calendar'></div>
+  </div>
+</div>
+<div id="myModalBox"></div>
+<div class="modal fade" id="calender_task" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false"></div>
+<div class="modal fade" id="edit_calender_task" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false"></div>
+<!-- Modal start-->
+<div class="modal fade" id="assigned_visit_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="display:none;"></div>
+<div class="modal fade" id="edit_visit_plan_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false"></div>
+
+
+<style type="text/css">
+.fc-button.fc-button-today.fc-state-default.fc-corner-left.fc-corner-right.fc-state-disabled {
+   display: none !important; 
+}
+.fc-button.fc-button-today.fc-state-default.fc-corner-left.fc-corner-right {
+    display: none !important;
+}
+</style>
+
+<script>
+  draw_calender("calendar",<%= raw @basic_tasks %>)
+  $('body').on('click', function (e) {
+    $('[data-toggle=popover]').each(function () {
+      // hide any open popovers when the anywhere else in the body is clicked
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+          $(this).popover('hide');
+      }
+    });
+  });
+</script>

@@ -1,0 +1,200 @@
+  <body>
+    <div style="padding:50px; overflow-y:auto;">
+      <div style="width:50%; float:left;">
+        <p style="font-size: 28px; font-weight: 300;font-family: Lato,sans-serif; color:#2c3e50;padding:0px; margin:0px;">INVOICE NUMBER</p>
+        <p style="font-size: 14px; font-weight: 300; color:#2c3e50; font-family: Lato,sans-serif; padding:0px; margin:0px;"><%= @invoice.id%></p>
+      </div>
+      <div style="width:50%; float:left; ">
+        <p style="font-size: 14px; text-align:right; font-weight: 300; color:#2c3e50; font-family: Lato,sans-serif; padding:0px; margin:10px 0px;" ><%=  @invoice.created_at.strftime("%m/%d/%Y") %></p>
+      </div>
+    </div>
+    <div style="padding:0px 50px ; overflow-y:auto;">
+      <div style="width:59%; float:left;">
+        <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase;">INVOICE TO</p>
+        <p  style="font-size: 14px; font-weight: 300; color:#2c3e50; font-family: Lato,sans-serif; padding:0px; margin:0px;">
+          <span style="display:block; padding-bottom:8px;"><%=client_detail(@invoice)%></span>
+          <span style="display:block; padding-bottom:8px;"><%=client_property(@invoice)%></span>
+         <!--  <span style="display:block; padding-bottom:8px;">Mountain View, CA 94043</span>
+          <span style="display:block; padding-bottom:8px;">United States</span> -->
+        </p>
+      </div>
+      <div style="width:41%; float:right; text-align:center;">
+        <p style=" font-size: 2.2em;font-weight: 600; margin: 5px 0 0; color:#2c3e50; font-family: Lato,sans-serif;   "><%#= @invoice.invoice_works.collect(&:total).flatten.sum rescue "0.00"%><%=eval(@invoice.invoice_works.collect(&:total).flatten.join("+")) rescue "0.0"%></p>
+        <p style="color: #e67e22;  font-family: Lato,sans-serif; font-size:14px;margin: 5px 0 0; ">
+          Due By
+          <%if @invoice.payment=="Custom"%>
+            <%= @invoice.due_date%>
+          <%else%>
+            <%= @invoice.payment%>
+          <%end%>
+        </p>
+        <%#@amount = @invoice.invoice_works.collect(&:total).flatten.sum rescue "0.0"%>
+        <%@amount = eval(@invoice.invoice_works.collect(&:total).flatten.join("+")) rescue "0.0"%>
+        <%if params[:action] == "mail_to_client"%>
+        <%if  Rails.env.production?%>
+        <%= link_to "Pay Now" ,"http://45.55.157.4/invoice_payment_show/#{@invoice.id}?amount=#{@amount}",:style=>"background-color: #72c475;border: 0 none;color: white;display: block;font-size: 1.2em;font-weight: 400;margin: 1em auto 0;padding: 0.8em 0;text-align: center;
+          width: 200px;"%>
+        <!-- <button style="background-color: #72c475;border: 0 none;color: white;display: block;font-size: 1.2em;font-weight: 400;margin: 1em auto 0;padding: 0.8em 0;text-align: center;
+          width: 200px;">Pay Now</button> -->
+          <%else%>
+          <%= link_to "Pay Now" ,"http://localhost:3000/invoice_payment_show/#{@invoice.id}?amount=#{@amount}",:style=>"background-color: #72c475;border: 0 none;color: white;display: block;font-size: 1.2em;font-weight: 400;margin: 1em auto 0;padding: 0.8em 0;text-align: center;
+          width: 200px;"%>
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+    <div style="padding:30px 50px ; overflow-y:auto;">
+    <div style="width:50%; float:left;">
+      <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin:0px; padding:0px;">INVOICE FOR</p>
+      <p  style="font-size: 14px; font-weight: 300; color:#2c3e50; font-family: Lato,sans-serif; padding:0px; margin:0px;"><%= @invoice.subject%></p>
+    </div>
+    <div style="clear:both; width:100%; padding-top:50px; overflow-y:auto;">
+      <table width="100%">
+        <tr>
+          <td width="33%">
+            <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; font-family: Lato,sans-serif; margin-bottom:0px;">Service / Product</p>
+          </td>
+          <td width="30%">
+            <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; font-family: Lato,sans-serif; margin-bottom:0px;">Description</p>
+          </td>
+          <td width="9%"  align="right">
+            <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; font-family: Lato,sans-serif; margin-bottom:0px;">Unit</p>
+          </td>
+          <td width="17%" align="right">
+            <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; font-family: Lato,sans-serif; margin-bottom:0px;">Price ($)</p>
+          </td>
+          <td width="11%" align="right">
+            <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; font-family: Lato,sans-serif; margin-bottom:0px;">Amount</p>
+          </td>
+        </tr>
+        <%@total_value=0%>
+        <%@invoice.invoice_works.first.name.each_with_index do |value,index|%>
+          <tr>
+            <td width="33%">
+              <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px; margin:0px;
+                "><%= @invoice.invoice_works.first.name[index]%></p>
+            </td>
+            <td width="30%">
+              <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px; margin:0px;
+                "><%= @invoice.invoice_works.first.description[index]%></p>
+            </td>
+            <td width="9%" align="right">
+              <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;"><%= @invoice.invoice_works.first.quantity[index].to_f%></p>
+            </td>
+            <td width="17%" align="right">
+              <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;">$<%= @invoice.invoice_works.first.unit_cost[index].to_f%></p>
+            </td>
+            <td width="11%" align="right">
+              <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;">$<%= @invoice.invoice_works.first.total[index]%></p>
+            </td>
+          </tr>
+           <%@total_value= @invoice.invoice_works.first.total[index].to_i+ @total_value%>
+        <%end%>   
+
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+
+        <%if @total_value!=0%>
+          <%if ((@invoice.tax!=0.00) && (@invoice.discount_amount!=0.00))%>
+            <tr>
+              <td colspan="4">
+                <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;">Subtotal</p>
+              </td>
+              <td align="right">
+                <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;">$<%= @total_value %></p>
+              </td>
+            </tr>
+          <%end%>    
+        <%end%>
+
+        <% if !@invoice.discount_amount.nil?%> 
+          <% if @invoice.discount_amount!=0.0 %>
+            <tr>
+              <td colspan="4">
+                <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;">Discount</p>
+              </td>
+              <td align="right">
+                <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;">- $<%=@invoice.discount_amount%></p>
+              </td>
+            </tr>
+          <%end%>  
+        <%end%>
+
+        <% if !@invoice.tax.nil? %>
+          <% if @invoice.tax!= 0.00 %>
+            <tr>
+              <td colspan="4">
+                <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;">(<%=@invoice.tax%>%) Tax: </p>
+              </td>
+              <%@tax=show_tax_invoice(@invoice,@total_value)%>   
+              <td align="right">
+                <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px;">- $<%=@tax%></p>
+              </td>
+            </tr>
+          <%end%>  
+        <%end%>
+         
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; font-weight: 700;">TOTAL</p>
+          </td>
+          <td align="right">
+            <p style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; font-weight: 700;">
+              <%if !@tax.nil?%>
+                $<%=@tax_calculate+@tax%>
+              <%elsif @tax_calculate.nil?%>
+                <%if !@total_value.nil?%>
+                  <%if @invoice.discount_amount.blank?%>
+                    $ <%= @total_value%>
+                  <%else%>
+                    $ <%= @total_value - @invoice.discount_amount%>
+                  <%end%>
+                <%else%>
+                  $ 0.00
+                <%end%>
+              <%else%>
+                $<%=@tax_calculate%>
+              <%end%>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div style="padding:50px 0px; overflow-y:auto;">
+      <div style="width:27%;float:left;">
+        <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin-bottom:3px;">INVOICE BY</p>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;"><%=current_user.full_name%><br>
+          <%=client_property(@invoice)%>
+        </P>
+      </div>
+      <div style="width:20%;float:left; margin-left:10px;">
+        <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin-bottom:3px;">INVOICE DATE</p>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;"><%=@invoice.created_at.strftime("%m/%d/%Y")%></P>
+        <!-- <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin-bottom:3px;">INVOICE NUMBER</p>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;"><%#= @invoice.id%></P> -->
+       <!--  <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin-bottom:3px;">INVOICE TERMS</p>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;">14 days of notice</P> -->
+      </div>
+      <div style="width:19%;float:left; ">
+        <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin-bottom:3px;">DUE DATE</p>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;"> 
+
+          <%=(@invoice.created_at+14.days).to_date.strftime("%m/%d/%Y")%> </P>
+       <!--  <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin-bottom:3px;">REFERENCE NUMBER</p>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;">1204883918283</P> -->
+      </div>
+       <div style="width:20%;float:left; ">
+        <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin-bottom:3px;">INVOICE TERMS</p>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;">14 days of notice</P>
+       </div>
+     <!--  <div style="width:22%;float:left;">
+        <p style="color: #bdc3c7;font-size: 0.8em;text-transform: uppercase; margin-bottom:3px;">PAYMENT DETAILS</p>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;">Bank of America</P>
+        <P style="color: #2c3e50;font-family: Lato,sans-serif;font-size: 14px;  margin:0px; line-height:24px;">IBAN: 1234567890</P>
+      </div> -->
+    </div>
+  </body>

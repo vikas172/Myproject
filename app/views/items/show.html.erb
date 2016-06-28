@@ -1,0 +1,118 @@
+<div class="client_index">
+  <div class="main_container">
+    <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= @item.name %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8"><%=  image_tag @item.image.url(:medium) if @item.image.present? %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_description.blank? ? "Description" : @item.l_description%></b></div>
+          <div class="col-md-8"><%= simple_format(@item.description) %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_product_model.blank? ? "Product Model Number" : @item.l_product_model%></b></div>
+          <div class="col-md-4"><%= @item.product_model_number %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_vendor_name.blank? ? "Vendor" : @item.l_vendor_name%></b></div>
+          <div class="col-md-4"><%= @item.vendor_name %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_vendor_part.blank? ? "Vendor Part Number" : @item.l_vendor_part%></b></div>
+          <div class="col-md-4"><%= @item.vendor_part_number %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_vendor_url.blank? ? "Vendor URL" : @item.l_vendor_url%></b></div>
+          <div class="col-md-4"><%= link_to(@item.vendor_url, @item.vendor_url, :target => "_blank") %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_quantity.blank? ? "Quantity" : @item.l_quantity%></b></div>
+          <div class="col-md-4"><%= @item.quantity %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_unit.blank? ? "Unit Value" : @item.l_unit%></b></div>
+          <div class="col-md-4"><%= number_to_currency(@item.unit_value, :unit => "$")%></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_value.blank? ? "Total Value" : @item.l_value%></b></div>
+          <div class="col-md-4"><%= number_to_currency(@item.value, :unit => "$") %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"><b><%= @item.l_location.blank? ? "Location" : @item.l_location%></b></div>
+          <div class="col-md-4"><%= @item.location %></div>
+        </div>
+        <div class="row">
+         <%= render "custom_show_field"%>
+        </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+            <%= link_to 'Edit', edit_item_path(@item), :class => "button_new_create save-new-btn1 pull-right" ,:style=>"padding: 3px 28px 9px!important;"%>
+            <%= link_to 'Cancel', items_path, :class => "model_cancel_button pull-right" %>
+            <%#= link_to 'Delete', @item, confirm: 'Are you sure?', method: :delete, :class => "btn btn-warning" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+
+.panel-primary {
+  border-color: #428bca;
+}
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+
+.panel-primary>.panel-heading {
+  color: #fff;
+  background-color: #808080;
+  border-color: #808080;
+}
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+.panel-body {
+  padding: 15px;
+}
+.col-md-2 {
+  width: 16.66666667%;
+  float: left;
+
+}.col-md-8 {
+  width: 66.66666667%;
+  float: left;
+}
+.col-md-4 {
+  width: 33.33333333%;
+  float: left;
+}
+
+</style>

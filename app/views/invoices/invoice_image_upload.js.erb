@@ -1,0 +1,9 @@
+$(".invoice_image").html("<%= escape_javascript(  render :partial => 'show_invoice_notes',  :locals => {:@invoice => @invoice} ) %> ")
+    
+var delay=1000;//1 seconds
+setTimeout(function(){
+
+$('.progress_div').hide();
+$('.save').val('');
+
+},delay); 

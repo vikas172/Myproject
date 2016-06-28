@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tax: 1.5
+  discount: 1.5
+  discount_type: MyString
+  require_deposit: 1.5
+  require_deposit_type: MyString
+  client_message: MyText
+
+two:
+  tax: 1.5
+  discount: 1.5
+  discount_type: MyString
+  require_deposit: 1.5
+  require_deposit_type: MyString
+  client_message: MyText

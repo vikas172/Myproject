@@ -1,0 +1,104 @@
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Billing</h4>
+      </div>
+      <div class="modal-body">
+          <p style="pading:10px;">
+            <%if current_user.plan_type.blank?%>
+              You just select <b><%= params[:plan_type] %></b> plan , Please billing to confirm this plan.
+            <%else%>
+              Current you used this plan <b><%= current_user.plan_type.capitalize %></b> and now you are upgrade your plan <b><%= params[:plan_type].capitalize%></b> So your payment is auto adjusted , So please pay remaining account to upgrade your plan
+            <%end%>
+          </p>
+            
+        <div id="account_details" class="fieldset billing_information">
+          <div class="">
+            <% if current_user.confirmed? %>
+              <%= form_tag charges_create_path,:id=>"stripe-form" do%>
+              <p>
+                <label for="billing_info_name">Amount</label>
+                <%= text_field_tag "base_charge", nil, value: @base_charge,:readonly=>true %></p>
+                <p>
+                  <label for="billing_info_name">Name on Card</label>
+                
+                  <%= text_field_tag "charge[name]",nil,value: @charge.blank? ? "" : @charge.name,:id=>"billing_info_name"%>
+                </p>
+                <%= hidden_field_tag "type",nil,:value=>params[:plan_type]%>
+                <p>
+                  <label for="billing_info_card_number">Card Number</label>
+                  <%= text_field_tag "charge[card_number]",nil,:value=>@charge.blank? ? "" : @charge.card_number,:id=>"billing_info_card_number"%>
+                  <img src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/visa_48x29-78bbf7cfbc3ee34db0daf60b8b77a8dc.png" alt="Visa 48x29">
+                  <img src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/master_card_48x29-a6ebc0f3002c83d72e8f6e43d1a0c362.png" alt="Master card 48x29">
+                </p>
+
+                <p>
+                  <label for="billing_info_exp_month">Expiry</label>
+                 <%= select_tag("charge[exp_month]", options_for_select([["1","1"],["2","2"], ["3","3"], ["4","4"],["5","5"], ["6","6"], ["7","7"], ["8","8"],["9","9"],["10","10"],["11","11"],["12","12"]],:selected=>@charge.blank? ? "" : @charge.exp_month),:style=>"width: 50px;")%>
+                 	<%= select_year(@charge.blank? ? Date.today : @charge.exp_year, :start_year => Time.now.year, :end_year => Time.now.year + 15, :field_name => "exp_year", :prefix => :charge)%>
+                </p>
+                <br>
+                <p>
+                  <label for="billing_info_ccv">CVC</label>
+                  <%= text_field_tag "charge[cvc]",nil,:value=>@charge.blank? ? "" : @charge.cvc,:id=>"billing_info_ccv",:style=>"width: 50px;"%>
+                </p>
+                <br>
+                <p>
+                  <label for="billing_info_address1">Address 1</label>
+                  <%= text_field_tag "charge[address1]",nil,:value=>@charge.blank? ? "" : @charge.address1,:id=>"billing_info_address1"%>
+                  <br><span style="margin-left: 140px;" class="description">* as it appears on your credit card statement</span>
+                </p>
+
+                <p>
+                  <label for="billing_info_address2">Address 2</label>
+                  <%= text_field_tag "charge[address2]",nil,:value=>@charge.blank? ? "" : @charge.address2,:id=>"billing_info_address2"%> 
+                </p>
+
+                <p>
+                  <label for="billing_info_city">City</label>
+                  <%= text_field_tag "charge[city]",nil,:value=>@charge.blank? ? "" : @charge.city,:id=>"billing_info_city"%>
+                </p>
+
+                <p>
+                  <label for="billing_info_state">State/Province</label>
+                  <%= text_field_tag "charge[state]",nil,:value=>@charge.blank? ? "" : @charge.state,:id=>"billing_info_state"%>
+                </p>
+
+                <p>
+                  <label for="billing_info_country">Country</label>
+                  <%= country_select_tag "charge[country]", {priority: %w(US CA), prompt: 'Please select a country',:selected=>@charge.blank? ? "" : @charge.country},:class=>"billing_country" ,:style=>"width: 350px;"%>
+                </p>
+
+                <p>
+                  <label for="billing_info_zip">Zip/Postal Code</label>
+                  <%= text_field_tag "charge[zip_code]",nil,:value=>@charge.blank? ? "" : @charge.zip_code,:id=>"billing_info_zip"%>
+                </p>
+                <br>
+                <p>
+                  <label for="billing_info_email">Billing E-mail</label>
+                  <%= text_field_tag "charge[email]",nil,:value=>current_user.email,:id=>"billing_info_email"%>
+                  <span class="description">for your invoices</span>
+                </p>
+
+              <%end%>
+
+             <div class="row text-right">
+              <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+              <input type="submit" value="Submit" style="float:right" name="commit" class="update_button_setting save spin_on_click" id="stripe_button_submit">
+             </div>
+
+            <% else %>
+              <p class="flash flash_warning" style="width:auto !important;">
+                You must verify your e-mail before you enter your credit card. If you did not receive a Welcome Email, <%= link_to 'click here', new_user_confirmation_path, style: "color:blue;" %>.
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+stripeTokenGenerateTest()
+</script>

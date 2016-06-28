@@ -1,0 +1,65 @@
+<div class="container header_link">
+  <div class="client_index">
+    <div class="main_container">
+      <%= render "error_message_and_flash" %>
+      <div class="sidebar">
+        <%if @client.properties.count==0%>
+          <%= render "client_property_empty"%>
+        <%elsif @client.properties.count==1%>  
+          <%if set_view_permission_client_property_view(@team_member)%>  
+            <div class="show_view_button">
+              <%= render "action_dropdown",:locale=>{:params=>params,:@client=>@client}%>
+              <%= link_to 'Edit', edit_client_path(@client),:class=>"button_new_index icon-pencil save-new-btn1",:style=>"margin-right: 0.5%;"%><%end%>
+              <h3 class="main_heading"><%= @client.initial rescue "" %>&nbsp;<%= @client.first_name.titleize rescue "" %>&nbsp;<%= @client.last_name.titleize rescue "" %></h3>
+            </div>  
+            <%= render "client_billing_address"%>
+            <div class="col-8">
+              <%= render "client_single_property"%>
+              <%= render "work_tab"%>
+            </div>
+          <%else%>
+            <div class="show_view_button">
+              <%= render "action_dropdown",:locale=>{:params=>params,:@client=>@client}%>
+              <%if set_view_permission_client_property_view(@team_member)%>
+                <%= link_to 'Edit', edit_client_path(@client),:class=>"button_new_index icon-pencil save-new-btn1",:style=>"margin-right: 0.5%;" %>
+              <%end%>
+              <h3 class="main_heading"><%= @client.initial rescue "" %>&nbsp;<%= @client.first_name.titleize rescue "" %>&nbsp;<%= @client.last_name.titleize rescue "" %> </h3>
+            </div>   
+            <%= render "client_billing_address"%>
+            <div class="col-8">
+              <div class="fieldset">  
+                <div class="display_work_quote" id="line_items_head" style="padding: 5px 9px;">
+                  <h2 class="title1-font">Properties
+                    <% if params[:prop].nil? %>
+                      <%= link_to "New",new_property_path(:client_id=>@client.id,:value=>"client_show"),:class=>"button_new_index",:style=>"width: 64px;"%>
+                    <% elsif !params[:prop].nil? %>
+                      <%= link_to "New",new_property_path(:client_id=>@client.id,:value=>"client_show",:prop=>"prop",:prop_id=>params[:prop]),:class=>"button new btn btn-default",:style=>"margin-right: 2%; "%>
+                    <% elsif params[:invoice_id].blank? %>
+                      <%= link_to "New",new_property_path(:client_id=>@client.id),:class=>"button new btn btn-default",:style=>"margin-right: 2%; "%>
+                    <%else%>
+                      <%= link_to "New Property",new_property_path(:client_id=>@client.id,:invoice_id=>params[:invoice_id] ),:class=>"button_new_index",:style=>"float: right; margin-right: 1%; width: 20%;"%>
+                    <% end%>
+                  </h2>
+                </div>
+              <%= render "clients/clients_multiple_property"%>
+            </div></br>
+            <%= render "work_tab"%>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+
+<%= render "client_payment" %>
+
+<!--  -->
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    paymentClient();
+    ShowHide();
+    workClient();
+    attachmentAndDelete();
+    // tagValueBlank();
+  })
+</script>

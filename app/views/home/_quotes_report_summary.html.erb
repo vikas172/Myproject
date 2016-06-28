@@ -1,0 +1,40 @@
+<div id="summary" class="content_align">
+  <div data-dynamic="true" class="summary_bars">
+    <%= link_to("/reports/quotes?display_method=#{params[:display_method]}", :class=>"subsection_link #{get_selected_default}" ) do %>
+      <h3>
+        Total
+        <span class="count"><%= get_count_quotes("")rescue "" %></span>
+      </h3>
+       <span data-value="<%= get_quotes_report_data("") rescue "" %>" class="total" style="width: 330px;">$<%= get_quotes_report_data("") rescue "" %></span>
+    <% end %>
+    <div class="short_separator"></div>
+    <%= link_to("/reports/quotes/draft?display_method=#{params[:display_method]}", :class=>"subsection_link #{get_selected("draft")}" ) do %>
+      <h3>
+        Net Sent
+        <span class="count"><%= get_count_quotes("draft") rescue "" %></span>
+      </h3>
+       <span data-value="<%= get_quotes_report_data("draft")%>" class="total" style="width: 330px;">$<%= get_quotes_report_data("draft") rescue "" %></span>
+    <% end %>
+    <%= link_to("/reports/quotes/sent?display_method=#{params[:display_method]}", :class=>"subsection_link #{get_selected("sent")}" ) do %>
+      <h3>
+        Sent
+        <span class="count"><%= get_count_quotes("sent") rescue "" %></span>
+      </h3>
+       <span data-value="<%= get_quotes_report_data("sent") rescue "" %>" class="total" style="width: 330px;">$<%= get_quotes_report_data("sent") rescue "" %></span>
+    <% end %>
+    <%= link_to("/reports/quotes/pending?display_method=#{params[:display_method]}", :class=>"subsection_link #{get_selected("pending")}" ) do %>
+      <h3>
+        Outstanding
+        <span class="count"><%= get_count_quotes("pending") rescue "" %></span>
+      </h3>
+       <span data-value="<%= get_quotes_report_data("pending")%>" class="total" style="width: 330px;">$<%= get_quotes_report_data("pending") rescue "" %></span>
+    <% end %>
+    <%= link_to("/reports/quotes/won?display_method=#{params[:display_method]}", :class=>"subsection_link #{get_selected("won")}") do %>
+      <h3>
+        Won
+        <span class="count"><%= get_count_quotes("won") rescue "" %></span>
+      </h3>
+       <span data-value="<%= get_quotes_report_data("won") rescue "" %>" class="total" style="width: 330px;">$<%= get_quotes_report_data("won") rescue "" %></span>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,226 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<div id="app_wrapper">
+  <div class="client_index">
+  <div class="main_container">
+    <!-- <div id="content" style="height: auto;"> -->
+    <div style="height: auto;">
+      <div class="">
+       <%#= render "home/work_item_side_bar"%> 
+       <div id="settings_area">
+       <% unless current_user.confirmed? %>
+       
+          <div class="flash validation_email_reminder">
+            <img alt="Mail 64x64" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/mail_64x64-3799e5cced77ed6b9b09bb3705ab8c4b.png" style="float: left; margin-right: 25px; margin-top: -15px;">
+            <p style="margin: 0; padding: 0; line-height: 18px;">
+              <strong>Notice:</strong> You must verify your e-mail address by clicking the link included in the Welcome Email.
+              If you did not receive a Welcome Email <%= link_to "click here", new_user_confirmation_path, onclick: "", style: "color:blue;" %> .
+            </p>
+          </div>
+        <% end %>
+          <div id="head"></div>
+          <h2 class="title1-font">Your Personal Settings</h2>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= devise_error_messages! %>
+  
+            <div class="compressed_form form_section">
+              <h3 class="title2-font">
+                <i class="fa fa-cog"></i>
+                Member Info
+              </h3>
+
+              <div class="client-form-row">
+                <div class="col-4">
+                  <label for="user_name">Full Name*</label>
+                </div>
+                <div class="col-8">
+                  <%= f.text_field :full_name, autofocus: true ,:placeholder=>"John Doe",:class=>"large wide"%>
+                </div>
+              </div>
+
+              <div class="client-form-row">
+                <div class="col-4">
+                  <label for="user_email">E-mail*</label>
+                </div>
+                <div class="col-8">
+                  <%= f.email_field :email, autofocus: true ,:class=>"large wide"%>
+                </div>
+              </div>
+
+              <div class="client-form-row">
+                <div class="col-4">
+                  <label for="user_email">Phone Number*</label>
+                </div>
+                <div class="col-8">
+
+                  <%if @user.mobile_number.blank?%>
+                    <%= select_tag "initial_phone" ,options_for_select(country_phone_code),:style=>"vertical-align: middle; width: 12%;"%>
+                    <%= f.text_field :mobile_number, autofocus: true ,:class=>"large wide mobile_number_team_member",:style=>"width: 124px;", :maxLength=>12%>
+                  <%else%> 
+                  <%= f.text_field :mobile_number, autofocus: true ,:class=>"large wide mobile_number_team_member", :maxLength=>12,:style=>"width: 205px;"%>
+                  <%end%>
+                </div>
+              </div>
+
+              <span class="requires_login_access" id="login_credentials">
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_login">Username</label>
+                  </div>
+                  <div class="col-8">
+                    <%= f.text_field :full_name, autofocus: true ,:placeholder=>"John Doe",:class=>"large default_width"%>
+                  </div>
+                </div>
+
+                <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                  <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                <% end %>
+
+                <div class="client-form-row" id="change-password-link">
+                  <div class="col-4"></div> 
+                  <div class="col-8">
+                    <div class="inner button" style="cursor: pointer; margin-left: 51%;"><i class="fa fa-unlock"></i>change password</div>
+                  </div>
+                </div>
+                <div class="pwd"></div>  
+              </span>
+            </div>
+
+            <div class="compressed_form form_section">
+              <h3 class="title2-font">
+                <i class="fa fa-cog"></i>
+                Additional Details
+              </h3>
+
+              <div class="photo_upload_area">
+                <div class="col-4">
+                  <label for="user_photo">Photo</label>
+                </div>
+
+                <div class=" col-8" style=" margin-bottom: 15px; ">
+
+                  <div id="preview_image" class="upload-preview" style=""> 
+                    <%= image_tag @user.avatar.url ,:style=>" max-width:300px;" if !@user.avatar.blank?%>
+                  </div>
+                  <img id="blah" src="#"  style="display:none; height: 150px; width: 150px;"/>
+                  <%= hidden_field_tag "user_edit[crop_x]"%>
+                  <%= hidden_field_tag "user_edit[crop_y]"%>
+                  <%= hidden_field_tag "user_edit[crop_x2]"%>
+                  <%= hidden_field_tag "user_edit[crop_y2]"%>
+                  <%= hidden_field_tag "user_edit[crop_w]"%>
+                  <%= hidden_field_tag "user_edit[crop_h]"%>
+                  <%= hidden_field_tag "jcrop_holder_width"%>
+                  <%= hidden_field_tag "jcrop_holder_height"%>
+
+                  <div style=" margin-bottom: 15px; " class="col-8">
+                    <%= f.file_field :avatar ,:onchange=>"imagePreviewDisplay(this);" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="client-form-row">
+                <div class="col-4">
+                  <label for="user_street">Street Address</label>
+                </div>
+                <div class="col-8">
+                  <%= f.text_field :street ,:class=>"large"%> 
+                </div>
+              </div>
+
+
+              <div class="client-form-row">
+                <div class="col-4">
+                  <label for="user_city">City</label>
+                </div>
+                <div class="col-8">
+                  <%= f.text_field :city ,:class=>"large"%>
+                </div>
+              </div>
+
+              <div class="client-form-row">
+                <div class="col-4">
+                  <label for="user_province">State</label>
+                </div>
+                <div class="col-8">
+                  <%= f.text_field :state ,:class=>"large"%>
+                </div>
+              </div>
+
+              <div class="client-form-row">
+                <div class="col-4">
+                  <label for="user_pc">Zip Code</label>
+                </div>
+                <div class="col-8">
+                  <%= f.text_field :zipcode ,:class=>"large"%>
+                </div>
+              </div>
+
+<!--             <div class="client-form-row">
+              <div class="col-4">
+                <label for="user_sin">SSN</label>
+              </div>
+              <div class="col-8">
+                <%#= f.text_field :ssn ,:class=>"large"%>
+              </div>
+            </div>
+
+            <div class="client-form-row">
+              <div class="col-4">
+                <label for="user_start_date">Start Date</label>
+              </div>
+              <div class="col-8">
+                <%#= f.text_field :start_date,:id=>"datepicker", value: date_time_format %>
+              </div>
+            </div> -->
+            <div class="clearfix"></div>
+          </div>
+          
+          <div class="col-md-4">
+          <div class="cancel_own_account  ">
+            <%if current_user.cancel_account==false%>
+              <%= link_to "Cancel Account Request",cancel_account_path,:class=>"cancel_account_button",data: {confirm: "Are You Sure Account Cancel?"},:remote=>true%>
+             <%else%>
+              <%= link_to "Account cancel pending...",cancel_account_path,:class=>"cancel_account_button",data: {confirm: "Are You Sure Account Recancel?"},:remote=>true%>
+             <%end%>     
+          </div>
+        </div>
+        <div class="col-md-6">
+           <%= f.submit "Update",:class=>"update_button_setting pull-right save-new-btn1",:style=>""%>
+          <button class="model_cancel_button pull-right" href="javascript:history.back()">Cancel</button>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+    $("#blah").mouseover(function(){
+    $('#blah').Jcrop({
+                onSelect: showCoords,
+                onChange: showCoords
+            });
+            
+  })
+  
+  $( "#datepicker" ).datepicker({format: 'yyyy-mm-dd'});
+ 
+  $( ".inner" ).click(function() {
+  $( ".inner" ).html( '' );
+  $(".inner").removeClass("button");
+  $( ".pwd" ).html( '<div><%= label_tag :password %> <i>(leave blank if you dont want to change it)</i><br /><%= password_field_tag :password,'', autocomplete: "off" ,:style=>"margin-left: 6%;"%></div><div><%= label_tag :password_confirmation %><br /><%= password_field_tag :password_confirmation,'', autocomplete: "off" ,:style=>"margin-left: 6%;"%></div>' );
+  });
+
+
+ 
+$('.mobile_number_team_member').keyup(function() {
+  foo = $(this).val().split("-").join(""); // remove hyphens
+
+      foo = foo.match(new RegExp('.{1,4}$|.{1,3}', 'g')).join("-");
+
+      $(this).val(foo);
+ 
+  });
+
+</script>

@@ -1,0 +1,21 @@
+<div class="client_index invoice-index">
+	<div class="main_container">
+		<%= render "clients/error_message_and_flash" %>
+		<h4 class="title1-font">Invoice for 
+  		<%= @client.first_name rescue "" %>
+  		<%= @client.last_name rescue "" %>
+		</h4>
+		<%if params[:quote_id].blank?%>
+			<%= render 'form' %>
+			<%if params[:value]=="client_show" %>
+				<%= link_to 'Cancel',client_path(:id=>params[:client_id],:value=>params[:value]),:class=>"model_cancel_button"%>
+			<% else %>
+				<%= link_to 'Cancel', invoices_path,:class=>"model_cancel_button"%>
+			<% end %>
+		<%else%>
+		  <%= render "quote_invoice"%>
+			<%= link_to 'Cancel', quote_path(@quote),:class=>"model_cancel_button"%>
+		<%end%>	
+	</div>
+	</div>
+</div>

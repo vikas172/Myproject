@@ -1,0 +1,10 @@
+<div id="chart"></div>
+<script type="text/javascript">
+	<% if params[:any].blank? %>
+		pie_plot1("chart", <%= get_quotes_report_data("")%>, <%= get_quotes_report_data("won") %>, <%= get_quotes_report_data("won") %>, <%= raw get_date_array.flatten %>)
+	<% elsif params[:any] == "pending" %>
+		pie_plot1("chart", <%= get_quotes_report_data("")%>, <%= get_quotes_report_data("won") %>, <%= get_quotes_report_data("won") %>, <%= raw get_date_array.flatten %>)
+	<% else %>
+		pie_plot("chart", <%= get_quotes_report_data(params[:any]) %>,  <%= raw get_date_array.flatten %>, "<%= params[:any]%>")
+	<% end %>
+</script>

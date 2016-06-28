@@ -1,0 +1,17 @@
+
+<div id="report_time_picker" class="content_align">
+  <div class="popover-markup"> <a class=" button popoverThis trigger" data-toggle="popover">▼</a> 
+    <%= render "summary_popup", :locals => {:quotes_action => locals[:quotes_action]}%>
+    <span class="label">
+      Last 12 Months
+    </span>
+  </div>
+</div>
+<style type="text/css">
+.popover.fade.bottom.in {
+    left: 0 !important;
+}
+</style>
+<script type="text/javascript">
+popover_show();
+</script>

@@ -1,0 +1,162 @@
+<div id="app_wrapper">
+	<div class="client_index">
+		<div class="main_container">
+			<div style="height: auto;">
+				<%=render "home/work_item_side_bar" %>
+				<div id="settings_area">
+					<h4 class="title1-font">General Overview</h4>
+					
+					<div class="config_description">
+						The information specified here is used throughout your company's CopperService account. It applies to all users.
+					</div>
+					<div >
+						<div class="row charge_view1">
+							<div class="span2">
+								Company Name
+							</div>
+							<div class="span4 company">
+								<b style=" text-transform: capitalize;"><%= current_user.company_name%></b>
+							</div>
+							<div class="span3" id="company_name_show" style="display:none">
+								<%=text_field_tag "com_name",nil, :value=> current_user.company_name, :id=>"company_name"%>	
+								<%=hidden_field_tag "company_id",nil, :value=> current_user.id, :id=>"company_id"%>	
+							</div>
+							<div class="span3">
+								<button type="button" class="button pull-right change_company" id="change_company"><i class="fa fa-home"></i> Change Company
+								</button>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="payment-display">
+						<div class="row charge_view">
+							<div class="span2">General</div>
+							<div class="span4"> 
+								<h4 class="title2-font">Address:</h4>
+								Add your address and company phone number.
+							</div>
+							<div class="span3">
+								<button type="button" class="button pull-right" data-toggle="modal" data-target="#general_info"><i class="fa fa-home"></i> Change Address
+							</button>
+							</div>
+						</div>
+				
+						<div class="row charge_view">
+							<div class="span2">Tax Settings</div>
+							<div class="span4"> 
+								<h4 class="title2-font">Tax:</h4>
+								Add your taxes i.e. Service tax, Sale tax and Registration tax.
+							</div>
+							<div class="span3">
+								<button type="button" class="button pull-right" data-toggle="modal" data-target="#tax_info"><i class="fa fa-gear"></i> Change Tax
+								</button>
+							</div>
+						</div>
+			
+						<div class="row charge_view">
+							<div class="span2">Regional Settings</div>
+							<div class="span4"> 
+								<h4 class="title2-font">Regional:</h4> 
+								Set your Timezone, Date and Time format, First day of week. 
+							</div>
+							<div class="span3">
+								<button type="button" class="button pull-right" data-toggle="modal" data-target="#regional_info"><i class="fa fa-gear"></i> Change Regional
+								</button>
+							</div>
+						</div>
+
+						<div class="row charge_view">
+							<div class="span2">Setup Phone#</div>
+							<div class="span4"> 
+								<h4 class="title2-font">Service Number:</h4>
+								<%if !@general_info.blank?%>
+									<%if !@general_info.area_code.blank?%>
+										Code: <%= @general_info.area_code %></br>
+										Number: <%= @general_info.service_number %>
+									<%else%>	
+										Code: xxx</br>
+										Number: xxxxxxxxxx
+									<%end%>	
+								<%else%>
+									Code: xxx</br>
+									Number: xxxxxxxxxx
+								<%end%>
+							</div>
+							<div class="span3">
+								<button type="button" class="button pull-right" data-toggle="modal" data-target="#service_info"><i class="icon-phone"></i> Setup Service
+								</button>
+							</div>
+						</div>
+
+						<div class="row charge_view">
+							<div class="span2">Options</div>
+							<div class="span4"> 
+								<h4 class="title2-font"> Add-Ons:</h4>
+							</div>
+							<div class="span3">
+								<%= link_to 'Options', add_on_path,:remote=>true,:class=>"button pull-right" ,:data=>{toggle: "modal",:target=>"#add_on_display"} %>
+							</div>
+						</div>
+					</div>
+					</br>
+					<%= link_to "Delete Account",delete_account_document_path(current_user),:class=>"cancel_account_button",data: {confirm: "Are You Sure Account Delete And All Record Also Delete?"}%>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%= render "general_infos/general_info"%>
+<%= render "general_infos/general_tax"%>
+<%= render "general_infos/general_regional"%>
+<%= render "general_infos/general_service"%>
+
+
+<div class="modal fade" id="add_on_display" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<script type="text/javascript">
+phoneFormat();
+// $('#change_company').on('click', function () {
+//     // var input = $('.company');
+//     // var editableText = $("<textarea />");
+//     var editableText = $("<textarea />");
+//     $(".company").editableText();
+// })
+// $( "#change_company" ).click(function() {
+// $( ".company" ).replaceWith( $("<textarea />");
+// });
+// $(function () {
+//     $('#change_company').on('click', function () {
+//     	var input = $('.company').val();
+//         input.$("<textarea />");
+           
+//     });
+// });
+
+$(document).ready(function() {
+    $('#change_company').click(function () {
+    	$("#company_name_show").show();  
+    	$(".company").hide();
+    });
+});
+
+$(document).ready(function() {
+    $('.change_company').click(function () {
+    	element = document.getElementById("company_name_show");
+        if (element.style.display == '') {
+        	$.ajax({
+	    		type: "get",
+		        url: "/company_edit",
+		        data: { company_name: $("#company_name").val(), company_id: $("#company_id").val()}
+	    	});
+    	}
+    });
+ 
+});
+
+
+
+      
+ 
+ 
+</script>

@@ -1,0 +1,17 @@
+<div class="head hide">Select Employee</div>
+<div class="content hide">
+  <div id="popup">
+	  <p>
+	  	<input class="employee_check" id="team_memerb_0" name="assigned_to" onclick="myfunc(this.id, '<%= current_user.full_name %>')" type="checkbox" value="<%= current_user.id %>"><span class="add-member-team"><%= current_user.full_name %></span>
+	  </p>
+	  <% unless @members.blank? %>
+		 	<% @members.each_with_index do |member,i| %>
+		 		<% unless member.member_id.blank? %>
+			  	<p>
+				  	<input class="employee_check" id="team_memerb_<%= i+1%>" name="assigned_to" onclick="myfunc(this.id, '<%= member.full_name %>')" type="checkbox" value="<%= member.member_id %>"><%= member.full_name %>
+			  	</p>
+				<% end %>
+			<% end %>
+		<% end %>
+  </div>
+</div>

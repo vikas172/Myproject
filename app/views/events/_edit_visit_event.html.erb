@@ -1,0 +1,176 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Schedule a Visit</h4>
+    </div>
+    <div class="modal-body">
+      <div class="content_visits_job">
+        <%= form_for @visit, url: {controller: "events", action: "update_visit_event"}, method: "post", remote: true do |f| %>
+          <%= hidden_field_tag "visit_id", nil, value: @visit.id  %>
+
+          <div class="row">
+            <div class="span3 content_align">
+              
+              <%if @visit.start_date.nil?%>
+                <p style="margin-top:5px;">
+                  <%= f.text_field :title, :length => 100 ,:size=>"30", :style=>"width:60%", maxlength: 100%>
+                </p>
+                <a style="display: inline;" id="add_visit_schedule" href="#" class="schedule">
+                  <i class="icon-calendar"></i>
+                  <span>click to schedule</span>
+                </a>
+                <div id="to_do_scheduler" class="to_do_scheduler1"style="display:none;">
+                    <p style="font-size: 12px;">
+                      <a id="remove_unschedule1" href="#">Don't Schedule</a>
+                    </p>
+                    <p>
+                      <%= f.check_box :any_time%>
+                      <label for="to_do_all_day">Any Time</label>
+                    </p>
+                    <p>
+                      <label for="to_do_start_at_date">Start at</label>
+                      <%= f.text_field :start_date, :style=>"width:33%;",:class=>"datepicker start_date_visit" %>
+                       <b class="input-append toggle-append bootstrap-timepicker" style="width:30%;">
+                      <%= f.text_field :start_time, :style=>"width:85%;margin-left:3%;", :class=>"timepicker" %></b>
+                    </p>
+                    <p>
+                      <label for="to_do_end_at_date">End at</label>
+                      <%= f.text_field :end_date, :style=>"width:33%;",:class=>"datepicker end_date_visit" %>
+                       <b class="input-append toggle-append bootstrap-timepicker"  style="width:30%;">
+                      <%= f.text_field :end_time, :style=>"width:85%;margin-left:3%;", :class=>"timepicker" %></b>
+                    </p>
+                    <p style="cursor:pointer;" id="reminder">add a team reminder</p>
+                    <p style="display:none;" id="reminder_section">
+                      <label style="width:auto; margin-right:5px" for="to_do_reminder_offset">Team Reminder</label>
+                      <%=f.select :team_reminder, options_for_select([["-","-"],["at start of task","at_start_of_task"],["30 minutes before","30_minutes_before"],["1 hour before","1_hour_before"],["2 hours before","2_hours_before"],["5 hours before","5_hours_before"],["24 hours before","24_hours_before"]]) %>
+                    </p>
+                  </div>  
+                <%else%>
+                  <p style="margin-top:5px;">
+                    <%= f.text_field :title, :length => 100 ,:size=>"30", :style=>"width:60%", maxlength: 100%>
+                    <br>
+                    <%= @job.start_date rescue "" %> - <%= @job.try(:end_date) rescue "" %> : <%= @job.try(:description) rescue "" %>
+                  </p>
+                  <div style=" " id="to_do_scheduler">
+                    <p>
+                      <%= f.check_box :any_time%>
+                      <label for="to_do_all_day">Any Time</label>
+                    </p>
+                    <p>
+                      <label for="to_do_start_at_date">Start at</label>
+                      <%= f.text_field :start_date, :style=>"width:33%;",:class=>"datepicker start_date_visit" %>
+                       <b class="input-append toggle-append bootstrap-timepicker" style="width:30%;">
+                      <%= f.text_field :start_time, :style=>"width:85%;margin-left:3%;", :class=>"timepicker" %></b>
+                    </p>
+                    <p>
+                      <label for="to_do_end_at_date">End at</label>
+                      <%= f.text_field :end_date, :style=>"width:33%;",:class=>"datepicker end_date_visit" %>
+                       <b class="input-append toggle-append bootstrap-timepicker"  style="width:30%;">
+                      <%= f.text_field :end_time, :style=>"width:85%;margin-left:3%;", :class=>"timepicker" %></b>
+                    </p>
+                    <p style="cursor:pointer;" id="reminder">add a team reminder</p>
+                    <p style="display:none;" id="reminder_section">
+                      <label style="width:auto; margin-right:5px" for="to_do_reminder_offset">Team Reminder</label>
+                      <%=f.select :team_reminder, options_for_select([["-","-"],["at start of task","at_start_of_task"],["30 minutes before","30_minutes_before"],["1 hour before","1_hour_before"],["2 hours before","2_hours_before"],["5 hours before","5_hours_before"],["24 hours before","24_hours_before"]]) %>
+                    </p>
+                  </div>  
+
+                <%end%>        
+              </div>  
+
+            <div class="span2" style="float:right;">
+              <div>
+                <label style="color:#333; display:block;" class="strong">Assigned To:</label>
+                <div class="popover-markup">
+                  <a class="trigger" id="popoverThis" data-toggle="popover">
+                    Click to Assign
+                  </a>
+                  <div class="job_employee_show">
+                    <%if @user_employee.present?%>
+                      <% @user_employee.each do |user_employee|%>
+                        <span>-<%=user_employee%></span><br>
+                      <%end%>
+                    <%end%>
+                  </div>
+                  <div id="job_assign_user"></div>
+                  <%= render "jobs/select_job_employees" %>
+                </div>
+              </div>
+              <br>
+              <div class="attachments_holder">       
+                <div class="description attachments">
+                  <%= f.hidden_field :job_id %>
+                  <ul>
+                    <li class="strong"><i class="fa fa-legal"></i> &nbsp;<a href="/jobs/<%=@visit.job_id%>"> 
+                      Job #<%= @visit.job_id %> </a></li>
+                    <li class="strong"><i class="fa fa-user fa-2"></i> &nbsp;<a href="/clients/<%=@client.id%>">
+                    <%= @client.first_name rescue "" %> &nbsp; <%= @client.last_name rescue "" %> </a></li>
+                    <li class="phone"><%= @client.phone_number  %></li>
+                    <li class="strong"><i class="fa fa-home"></i>&nbsp; <a href="/properties/<%=@property.id%>?view=show&client_id=<%= @property.client.id%>">  <%= @property.try(:street) rescue "" %><br><%= @property.try(:street2) rescue "" %><br><%= @property.try(:city) rescue "" %>, <%= @property.try(:state) rescue "" %> &nbsp;  <%= @property.try(:zipcode) rescue "" %> </a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div> 
+
+          <div class="row"> 
+            <p>
+              <%= f.text_area :description, :style=>"width:98%", :rows=>"4", :placeholder=>"details..." %>
+            </p>
+          </div>  
+
+          <div class="row">
+            <p class="submit_holder">
+              <div id="popover_form_content">
+                <%= submit_tag "Update",:class=>"model_save_button save-new-btn1"%>
+                <a href="#" data-dismiss="modal" class="cancel model_cancel_button pull-right">Cancel</a>
+              </div>  
+            </p>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+popover_show();
+$("#reminder").click(function(){
+$("#reminder_section").show()
+})
+$('#visit_schedule_start_date').datepicker({ dateFormat: 'yy-mm-dd' })
+$('#visit_schedule_end_date').datepicker({ dateFormat: 'yy-mm-dd' })
+$('#visit_schedule_start_time').timepicker();
+$('#visit_schedule_end_time').timepicker();
+
+$("#add_visit_schedule").click(function(){
+    $(".to_do_scheduler1").css("display","block");
+    $("#add_visit_schedule").css("display","none");
+  })
+  $("#remove_unschedule1").click(function(){
+    $(".to_do_scheduler1").css("display","none");
+    $("#add_visit_schedule").css("display","block");
+  })
+  $("#popoverThis").click(function(){
+    $(".job_employee_show").hide();
+    var assign_user_id =  "<%=@selected_employee.to_json%>";
+    var user_assign = JSON.parse(assign_user_id.replace(/&quot;/g, ''));
+    var user_name = '<%=raw @user_employee.to_json%>';
+    var user_employee = JSON.parse(user_name.replace(/&quot;/g, ''));
+    $(user_assign,user_employee).each(function(i,value){
+      if($('#job_assign_user').text().indexOf(user_employee[i]) == -1){
+        $('#job_assign_user').append('<div id="crew_'+value+'"><span id='+i+'>- '+user_employee[i]+'</span><input id="member_selected_'+value+'" name="job[crew][]" type="hidden" value='+value+'><br/></div>')
+      }
+    })
+
+     
+  })
+  $(document).on("click", "#popoverThis",function(){
+  $(".employee_check").each(function(){ 
+      var employee_name =  this.parentElement.textContent.replace(/\s/g, "");
+      if($("#job_assign_user").text().indexOf(employee_name) > -1 ){
+        $(this).prop("checked",true);
+      }
+  })
+})
+</script>

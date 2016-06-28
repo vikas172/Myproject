@@ -1,0 +1,74 @@
+ <hr style="border: 1px solid #ccc ">
+  <div class="row">
+    <div class="span3">
+      <b for="work_configuration_invoice_default_email_message">Team Email#1</b>
+    </div>  
+    <div class="span6 notification_align">
+      <%= f.text_area :team_email,:value=>"
+Greetings {{CLIENT_NAME}},
+
+Just a reminder – we have a service call appointment {DATE} at {TIME}.
+
+If you need to CHANGE or CANCEL your appointment, please call {SERVICE NUMBER}. 
+
+Thanks for your attention.
+{{COMPANY_NAME}}
+" ,:rows=>"10",:style=>"width: 100%;"%>
+
+    </div> 
+  </div> 
+<hr style="border: 1px solid #ccc ">
+   <div class="row">
+    <div class="span3">
+      <b for="work_configuration_invoice_default_email_message">Team SMS#1</b>
+    </div>  
+    <div class="span6 notification_align">
+      <%= f.text_area :team_sms,:value=>"
+REMINDER – Service call appointment {DATE} at {TIME}.
+
+please call {SERVICE NUMBER} to CHANGE or CANCEL.
+
+Thanks.{{COMPANY_NAME}}
+" ,:rows=>"10",:style=>"width: 100%;"%>
+
+ </div> 
+</div> 
+  <hr style="border: 1px solid #ccc ">
+
+
+
+
+ <div class="row">
+    <div class="span3">
+      <b for="work_configuration_invoice_default_email_message">Customer Email#1</b>
+    </div>  
+    <div class="span6 notification_align">
+      <%= f.text_area :client_email,:value=>"
+Greetings {{CLIENT_NAME}},
+
+Just a reminder – we have a service call appointment {DATE} at {TIME}.
+
+If you need to CHANGE or CANCEL your appointment, please call {SERVICE NUMBER}. 
+
+Thanks for your attention.
+{{COMPANY_NAME}}
+" ,:rows=>"10",:style=>"width: 100%;"%>
+
+    </div> 
+  </div> 
+<hr style="border: 1px solid #ccc ">
+ <div class="row">
+    <div class="span3">
+      <b for="work_configuration_invoice_default_email_message">Customer SMS#1</b>
+    </div>  
+    <div class="span6 notification_align">
+      <%= f.text_area :client_sms,:value=>"
+REMINDER – Service call appointment {DATE} at {TIME}.
+
+please call {SERVICE NUMBER} to CHANGE or CANCEL.
+
+Thanks.{{COMPANY_NAME}}
+" ,:rows=>"10",:style=>"width: 100%;"%>
+
+    </div> 
+  </div> 

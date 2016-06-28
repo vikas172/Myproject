@@ -1,0 +1,136 @@
+<div class="row_holder extend_to_footer" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @today_event.blank? %> 
+        <h3 class="section_header complete" style="background-color: #FFFFCB!important; color: #b87333!important; font-size:14px; font-weight: bold;">Today Event</h3>
+        <% @today_event.each_with_index do |event| %>
+          <tr class="propert" onclick="editPropertyTask(<%=event.id%>,'event')">
+            <td  width="76%">
+              <span>
+                <%= @property.client.first_name%></br>
+                <%= event.title%>
+              </span>
+            </td>
+            <td> 
+              <%= event.start_date%>
+            </td>   
+          </tr>
+        <% end %>
+      <% end %>  
+    </table>
+  </div>
+</div>
+
+<div class="row_holder extend_to_footer" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @basic_task_unschedule.blank? %> 
+        <h3 class="section_header complete" style="background-color: #FFFFE0!important; color: #FF8C00!important; font-size:14px; font-weight: bold;">Unschedule</h3>
+        <% @basic_task_unschedule.each_with_index do |basic| %>
+          <tr class="propert"> 
+            <td width="1px"><%= check_box_tag "check",nil,false,:onclick=>"basicPropertyTask(#{basic.id}, true, '#{current_user.id}',#{@property.id})"%>
+            </td>
+            <td  onclick="editPropertyTask(<%=basic.id%>,'basic')">
+              <div style="width: 50%; float: left;">
+                <%= @property.client.first_name%></br>
+                <%= basic.title%>
+              </div>
+
+              <div style="float: right; width: 50%; text-align: right;">
+                <strong>Unscheduled</strong>
+                <br>
+                Assigned to <span><%=complete_basic_property(basic.user_id)%> </span>
+              </div>
+            </td>   
+          </tr>
+        <% end %>
+      <% end %>  
+    </table>
+  </div>
+</div>  
+
+
+<div class="row_holder extend_to_footer" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @upcoming_event.blank? %> 
+        <h3 class="section_header complete" style="background-color: #FFFFE0!important; color: #FF8C00!important; font-size:14px; font-weight: bold;">Upcoming Event</h3>
+        <% @upcoming_event.each_with_index do |event| %>
+          <tr class="propert" onclick="editPropertyTask(<%=event.id%>,'event')"> 
+            <td  width="76%">
+              <span>
+                <%= @property.client.first_name%></br>
+                <%= event.title%>
+              </span>
+            </td>
+            <td style="text-align: right;"> 
+              <%= event.start_date%>
+            </td>   
+          </tr>
+        <% end %>
+      <% end %>  
+    </table>
+  </div>
+</div> 
+
+<div class="row_holder extend_to_footer" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @complete_basic_task.blank? %> 
+        <h3 class="section_header complete" style="background-color: #DDEEDD!important; color: #447744!important;font-size:14px; padding:5px; font-weight: bold;">Completed Task</h3>
+        <% @complete_basic_task.each_with_index do |basic| %>
+          <tr class="propert" > 
+            <td width="1px"><%= check_box_tag "check",nil,true,:onclick=>"basicPropertyTask(#{basic.id}, false, '#{current_user.id}',#{@property.id})"%></td>
+            <td onclick="editPropertyTask(<%=basic.id%>,'basic')">
+              <div style="width: 50%; float: left;">
+                <%= basic.title%>
+              </div>
+
+              <div style="float: right; width: 50%; text-align: right;">
+                <strong>Completed on:</strong>
+                <%= basic.completed_date%></br>
+                <strong>Completed by</strong>
+                <span><%= complete_basic_property(basic.complete_by)%></span>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>  
+    </table>
+  </div>
+</div> 
+
+<div class="row_holder extend_to_footer" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @complete_event.blank? %> 
+        <h3 class="section_header complete" style="background-color: #FFFFE0!important; color: #333!important; font-size:14px; font-weight: bold;">Completed Event</h3>
+        <% @complete_event.each_with_index do |event| %>
+          <tr class="propert" onclick="editPropertyTask(<%=event.id%>,'event')"> 
+            <td  width="76%">
+              <span>
+                <%= @property.client.first_name%></br>
+                <%= event.title%>
+              </span>
+            </td>
+            <td style="text-align: right;"> 
+              <strong>Completed on:</strong><%= event.start_date%></br>
+              <strong>Completed by</strong>
+              <span>System</span>
+            </td>   
+          </tr>
+        <% end %>
+      <% end %>  
+    </table>
+  </div>
+</div>
+
+<script type="text/javascript">
+function editPropertyTask(type_id,type){
+  $.ajax({
+      type: "POST",
+      url: "/show_event_task",
+      data: {type_id: type_id, type: type}
+    });
+  }
+</script>

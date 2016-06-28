@@ -1,0 +1,40 @@
+<table id="email_scraper_table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Profession</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Address</th>
+    <th>Country</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @email_scrapers.each do |email_scraper| %>
+      <tr>
+        <td><%= email_scraper.name %></td>
+        <td><%= email_scraper.email %></td>
+        <td><%= email_scraper.profession %></td>
+        <td><%= email_scraper.city %></td>
+        <td><%= email_scraper.state %></td>
+        <td><%= email_scraper.address %></td>
+        <td><%= email_scraper.country %></td>
+        <td><%= link_to 'Show', email_scraper %></td>
+        <td><%= link_to 'Edit', edit_email_scraper_path(email_scraper) %></td>
+        <td><%= link_to 'Destroy', email_scraper, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+<br>
+
+<%= link_to 'New Email scraper', new_email_scraper_path , :class => "button radius" %>
+
+<br>

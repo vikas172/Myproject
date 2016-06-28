@@ -1,0 +1,54 @@
+<div class="dropdown_menu icon_drop">
+  <li class="dropdown" style="list-style: none; float:right;">
+    <a href="#" class="dropdown-toggle dropdown_button save-new-btn1" data-toggle="dropdown">Actions <span class="caret"></span></a>
+    <ul class="dropdown-menu edit_drop_menu" role="menu">
+      <span class="arrow_action"></span>
+      <li>
+        <% if @job.job_status.nil? %>
+          <%if @job.job_complete==false%>
+            <i class="fa fa-check-square-o"></i>
+            <%= link_to "Close Job","#" ,:id=>"mark_complete",:class=>"has_icon" ,:'data-toggle'=>"modal" ,:'data-target'=>"#close_job_model"%>
+          <%else%>
+            <i class="fa fa-check-square-o"></i>
+            <%= link_to "Re-Open Job",status_edit_job_path(:job_id=>@job.id,:job_status=>"complete") ,:id=>"mark_complete",:class=>"has_icon" , method: :post%>
+          <%end%>
+        <%elsif @job.job_required== "Require Invoice"%>
+          <i class="fa fa-check-square-o"></i>
+          <%= link_to "Re-Open Job",required_edit_job_path(:job_id=>@job.id,:require=>"Action Require") ,:id=>"mark_incomplete",:class=>"has_icon"%>
+        <%else%>
+          <i class="fa fa-check-square-o"></i>
+          <%= link_to "Close Job",required_edit_job_path(:job_id=>@job.id,:require=>"Require Invoice") ,:id=>"mark_complete",:class=>"has_icon"%>
+        <%end%>
+      </li>
+    
+      <li class="divider"></li>
+      <li>
+        <i class="fa fa-pencil-square-o"></i>
+        <%= link_to "Generate Invoice",genrate_job_invoice_path(:job_id=>@job.id) ,:id=>"new_invoice",:class=>"has_icon"%>
+      </li>
+
+      <li>
+        <i class="fa fa-file-pdf-o"></i>
+        <%= link_to "Download PDF",job_pdf_path(:job_id=>@job.id) ,:id=>"download_pdf",:class=>"has_icon", target: "_blank"%>
+      </li>
+
+      <li>
+        <i class="fa fa-pencil"></i>
+        <%= link_to "Collect Signature","#",:id=>"collect_signature",:class=>"has_icon",:'data-toggle'=>"modal" ,:'data-target'=>"#signature_model"%>
+      </li>
+
+      <li>
+        <%if current_user.user_type=="admin"%>
+          <li><i class="fa fa-minus-circle"></i>
+            <a rel="nofollow" id="" href="/jobs/<%=@job.id%>" data-method="delete" data-confirm="Are you sure you want to delete this job?" class="has_icon">Delete</a></li>
+        
+        <%else%>
+          <%if set_view_permission_action_view_delete(current_user.permission.permission_jobs)%>
+            <li><i class="fa fa-minus-circle"></i>
+              <a rel="nofollow" id="" href="/jobs/<%=@job.id%>" data-method="delete" data-confirm="Are you sure you want to delete this job?" class="has_icon">Delete</a></li>
+          <%end%>
+        <%end%>
+      </li>
+    </ul>
+  </li>
+</div>

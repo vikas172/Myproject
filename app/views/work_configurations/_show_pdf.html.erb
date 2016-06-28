@@ -1,0 +1,3 @@
+<%if !current_user.pdf_setting.blank?%>
+<%=link_to "Pdf Preview",current_user.pdf_setting.image.url,:target=>"_blank",:class=>"update_button_setting save-new-btn1"%>
+<%end%>

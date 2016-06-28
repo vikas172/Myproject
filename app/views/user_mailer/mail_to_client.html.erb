@@ -1,0 +1,8 @@
+<%= @message %>
+<%if  Rails.env.production?%>
+  <%= link_to "Pay Now" ,"http://45.55.157.4/invoice_payment_show/#{@invoice.id}?amount=#{@amount}",:style=>"background-color: #72c475;border: 0 none;color: white;display: block;font-size: 1.2em;font-weight: 400;margin: 1em auto 0;padding: 0.8em 0;text-align: center;
+          width: 200px;"%>
+<%else%>
+  <%= link_to "Pay Now" ,"http://localhost:3000/invoice_payment_show/#{@invoice.id}?amount=#{@amount}",:style=>"background-color: #72c475;border: 0 none;color: white;display: block;font-size: 1.2em;font-weight: 400;margin: 1em auto 0;padding: 0.8em 0;text-align: center;
+          width: 200px;"%>
+<%end%> 

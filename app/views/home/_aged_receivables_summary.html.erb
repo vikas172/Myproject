@@ -1,0 +1,40 @@
+<div id="summary" class="content_align">
+  <div data-dynamic="true" class="summary_bars">
+    <%= link_to("/reports/aged_receivables", :class=>"subsection_link #{get_selected("late")}" ) do %>
+      <h3>
+        Late
+        <span class="count"><%=  %></span>
+      </h3>
+       <span data-value="<%=  %>" class="total" style="width: 330px;">$<%=  %></span>
+    <% end %>
+    <div class="short_separator"></div><h4>Overdue By</h4>
+    <%= link_to("/reports/aged_receivables/within_30_days_late", :class=>"subsection_link #{get_selected("7_days")}" ) do %>
+      <h3>
+        < 30 days
+        <span class="count"><%=  %></span>
+      </h3>
+       <span data-value="<%=  %>" class="total" style="width: 330px;">$<%=  %></span>
+    <% end %>
+    <%= link_to("/reports/aged_receivables/within_60_days_late", :class=>"subsection_link #{get_selected("30_days")}" ) do %>
+      <h3>
+        30 - 60 days
+        <span class="count"><%=  %></span>
+      </h3>
+       <span data-value="<%=  %>" class="total" style="width: 330px;">$<%=  %></span>
+    <% end %>
+    <%= link_to("/reports/aged_receivables/within_90_days_late", :class=>"subsection_link #{get_selected("30_days")}" ) do %>
+      <h3>
+        60 - 90 days
+        <span class="count"><%=  %></span>
+      </h3>
+       <span data-value="<%=  %>" class="total" style="width: 330px;">$<%=  %></span>
+    <% end %>
+    <%= link_to("/reports/aged_receivables/over_90_days_late", :class=>"subsection_link #{get_selected("more_than_30")}" ) do %>
+      <h3>
+        <span style="color:red"> > 90 days</span>
+        <span class="count"><%=  %></span>
+      </h3>
+       <span data-value="<%=  %>" class="total" style="width: 330px;">$<%=  %></span>
+    <% end %>
+  </div>
+</div>

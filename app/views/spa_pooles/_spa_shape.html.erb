@@ -1,0 +1,38 @@
+<h6>Size </h6>
+<div class="depth">
+  <label>Depth1</label>
+  <%= text_field_tag "spa_data[depth]"%>
+</div>
+
+<div class="depth2">
+  <label>Depth2</label>
+  <%= text_field_tag "spa_data[depth2]"%>
+</div>
+
+<%if ((params[:shape] == "rectangular") || (params[:shape] == "oval") || (params[:shape] == "kidney")) %>
+  <div class="length">
+    <label>Length</label>
+    <%= text_field_tag "spa_data[length]"%>
+  </div>
+
+  <div class="width">
+    <label>Width</label>
+    <%= text_field_tag "spa_data[width]"%>
+  </div>
+  <%if (params[:shape] == "kidney")%>
+    <div class="width2">
+      <label>Width2</label>
+      <%= text_field_tag "spa_data[width2]"%>
+    </div>
+  <%end%>  
+<%end%>  
+<%if params[:shape] == "round"%>
+  <div class="diameter">
+    <label>Diameter</label>
+    <%= text_field_tag "spa_data[diameter]"%>
+  </div>
+<%end%>  
+
+<label>Gallonage:</label>
+<%= text_field_tag "spa_data[spa_gallonage]",nil,:value=>@spa_data.try(:spa_gallonage)%>
+

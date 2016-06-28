@@ -1,0 +1,33 @@
+<div id="summary" class="content_align">
+  <div data-dynamic="true" class="summary_bars">
+    <%= link_to("/reports/one_off_jobs", :class=>"subsection_link #{get_selected_default}" ) do %>
+      <h3>
+        Total
+        <span class="count"><%= get_count_job("")%></span>
+      </h3>
+       <span data-value="<%= get_job_report_data("")%>" class="total" style="width: 330px;">$<%= get_job_report_data("")%></span>
+    <% end %>
+    <div class="short_separator"></div>
+    <%= link_to("/reports/one_off_jobs/active", :class=>"subsection_link #{get_selected("active")}" ) do %>
+      <h3>
+        Active
+        <span class="count"><%= get_count_job("active")%></span>
+      </h3>
+       <span data-value="<%= get_job_report_data("active")%>" class="total" style="width: 330px;">$<%= get_job_report_data("active")%></span>
+    <% end %>
+    <%= link_to("/reports/one_off_jobs/in_progress", :class=>"subsection_link #{get_selected("in_progress")}" ) do %>
+      <h3>
+        In-Progress
+        <span class="count"><%= get_count_job("in_progress")%></span>
+      </h3>
+       <span data-value="<%= get_job_report_data("in_progress")%>" class="total" style="width: 330px;">$<%= get_job_report_data("in_progress")%></span>
+    <% end %>
+    <%= link_to("/reports/one_off_jobs/completed", :class=>"subsection_link #{get_selected("completed")}" ) do %>
+      <h3>
+        Completed
+        <span class="count"><%= get_count_job("completed")%></span>
+      </h3>
+       <span data-value="<%= get_job_report_data("completed")%>" class="total" style="width: 330px;">$<%= get_job_report_data("completed")%></span>
+    <% end %>
+  </div>
+</div>

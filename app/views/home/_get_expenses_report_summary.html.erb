@@ -1,0 +1,36 @@
+<div class="tables" style="width: 98%; margin: 10px;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="363px" class="item_name">Item Name</th>
+        <th width="280px" class="detail">Detail</th>
+        <th width="136px" class="dolller">$</th>
+        <th width="176px" class="entered_by">Entered By</th>
+        <th width="142px" class="reimburesable_to">Reimburesable To</th>
+        <th width="142px" class="job">Job #</th>
+        <th width="142px" class="date">date</th>
+        <th width="142px" class="act_code">Act-Code</th>
+        <th width="42px"  class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @expense_summary.blank?%>
+      <% @expense_summary.each_with_index do |expense,index| %>
+      <tr>
+        <td class="item_name"><%= expense.name %></td>
+        <td class="detail"><%= expense.note %></td>
+        <td class="doller"><%= expense.cost %></td>
+        <td class="entered_by"><%= expense.user.full_name %></td>
+        <td class="reimburesable_to"><%= expense.user.full_name %></td>
+        <td class="job"><%= expense.work_order_id %></td>
+        <td class="date"><%= expense.clean_date %></td>
+        <td class="act_code"><%= %></td>
+        <td class="open"><%= link_to 'open', edit_expense_path(expense), target: "_blank", class: "open ui-icon ui-icon-newwin", remote: true, data: {toggle: "modal", target: "#new_expenses"} %></td>
+      </tr>
+      <% end %>
+    <%end%> 
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

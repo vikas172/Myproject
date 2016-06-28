@@ -1,0 +1,207 @@
+<script type="text/javascript"
+      src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
+<%if current_user.user_type=="admin"%>
+  <div class="col-6 box map_display_dash">
+    <div class="box-header">
+      <div class="title title1-font" style="width:100%;">
+        <i class="icon-map-marker "></i>
+        Location
+        <%if !@job_schedules.blank?%>
+          <%=link_to "Zoom",zoom_maps_path, :target => "_blank",:class=>"button pull-right"%>
+        <%end%>
+        <%if !current_user.jobs.blank?%>
+          <%= link_to "Assign",assigned_team_maps_path,:target=>"_blank",:class=>"button pull-right save-new-btn1"%>
+        <%end%>
+        <%= link_to "Map Leads",lead_maps_path,:target=>"_blank",:class=>"button pull-right save-new-btn1",:style=>"margin-right: 5px;"%>
+        <%= link_to "ADD Markers",add_marker_maps_path,:target=>"_blank",:class=>"button pull-right save-new-btn1",:style=>"margin-right: 5px;"%>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 ">
+          <div class="location">
+            <%=image_tag "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png"%>
+             <h3>Preferred Vendors</h3></div>
+          </div>
+        <div class="col-md-3 "> 
+          <div class="location"><%=image_tag "http://maps.google.com/mapfiles/kml/paddle/red-circle.png"%></i><h3>User Location</h3></div>
+        </div>
+        <div class="col-md-3 ">
+          <div class="location"><%=image_tag "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png"%></i><h3>All Vendors Miles</h3></div>
+        </div>
+      </div>
+    <div class="box-content pull_content">
+      <div id="stats-chart2">
+        <div class="cell_wrapper">
+          <div id="current_map_address" style='width: 100%; height: 566px; position: relative; background-color: rgb(229, 227, 223);  overflow: hidden;'  >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<%else%>
+  <div class="box map_display_dash">
+    <div class="box-header">
+      <div class="title title1-font" style="width:100%;">
+        <i class="icon-map-marker "></i>
+        Location
+        <%=link_to "Route Optimize",optimize_maps_path,:class=>"button pull-right"%>
+      </div>
+    </div>
+    <div class="pull_content">
+      <div id="stats-chart2">
+        <div class="cell_wrapper">
+          <div id="current_map_address" style='width: 50%; height: 265px; position: relative; background-color: rgb(229, 227, 223);  overflow: hidden;'  >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<%end%>
+
+<%if current_user.user_type=="admin"%>
+  <div class="col-6 box">
+    <div class="box-header">
+      <div class="title title1-font">
+        <i class="fa fa-file-text"></i>
+        Summary
+      </div>
+    </div>
+    <div class="box-content pull_content">
+      <div id="stats-chart2">         
+        <div class="cell_wrapper" id="dashboard-summary-work">
+          <div class="align-center padding-10">
+            <i class="fa fa-cog fa-spin"></i>
+            Loading data...
+          </div> 
+          <%#= render "dashboards/dashboard_work"%>
+        </div>
+      </div>
+    </div>
+  </div>
+<%end%>
+
+
+
+<script type="text/javascript">
+   $(".email_notify").click(function(){
+     $.ajax({
+      type: "POST",
+      url: "/email_notifications/email_read"
+     });
+   })
+  $(".sms_notify").click(function(){
+    $.ajax({
+    type: "POST",
+    url: "/sms_notification_time"
+   });
+  })
+  ChangeSelectClientUser()
+
+function initialize() {
+  var i;
+  var address_active = <%=raw @address_active.to_json%>
+  var lead_address = <%=raw @address_lead.to_json%>
+  // var ventor_address = <%=raw @address.to_json%>;
+  <%if ((!@vendor.blank?) && (@vendor.vendor_type  == "enable"))%>
+    var ventor_address = <%=raw @address.to_json%>;
+  <%else%>
+    var ventor_address ="";
+  <%end%>
+  var myOptions = {
+    zoom: 10,
+    scrollwheel: false,
+    center: new google.maps.LatLng(<%=@lat%>,<%=@lng%>),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  
+  var map = new google.maps.Map(document.getElementById("current_map_address"), myOptions);
+  
+  var infowindow =  new google.maps.InfoWindow({
+    content: ''
+  });
+  
+   var activeimage = new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+   var leadimage = new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
+   var vndimage = new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
+   var vndimage1 = new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+
+  var marker = new google.maps.Marker({
+      icon:activeimage,
+      position: new google.maps.LatLng(<%=@lat%>,<%=@lng%>),
+      map: map
+    });
+  
+  // loop over our array
+  for (i = 0; i < address_active.length; i++) {
+    // create a marker
+    var marker = new google.maps.Marker({
+      icon:activeimage,
+      position: new google.maps.LatLng(address_active[i].lat, address_active[i].lon),
+      map: map
+    });
+    
+    // add an event listener for this marker
+    bindInfoWindow(marker, map, infowindow, "<p>" + address_active[i].description + "</p>");  
+  }
+
+  for (i = 0; i < lead_address.length; i++) {
+    // create a marker
+    var marker = new google.maps.Marker({
+      icon:leadimage,
+      position: new google.maps.LatLng(lead_address[i].lat, lead_address[i].lon),
+      map: map
+    });
+    
+    // add an event listener for this marker
+    bindInfoWindow(marker, map, infowindow, "<p>" + lead_address[i].description + "</p>");  
+  }
+   for (i = 0; i < ventor_address.length; i++) {
+    // create a marker
+    var marker = new google.maps.Marker({
+      <%if @vendor.present?%>
+        <%if @vendor.prefer_marker == "preference"%>
+          icon:vndimage1,
+        <%else%>
+          icon:vndimage,
+        <%end%>
+      <%end%>  
+      position: new google.maps.LatLng(ventor_address[i].latitude, ventor_address[i].longitude),
+      map: map
+    });
+    
+    // add an event listener for this marker
+    bindInfoWindow(marker, map, infowindow, "<p>" + ventor_address[i].name + "</p>");  
+  }
+}
+
+function bindInfoWindow(marker, map, infowindow, html) { 
+  google.maps.event.addListener(marker, 'click', function() { 
+    infowindow.setContent(html); 
+    infowindow.open(map, marker); 
+  }); 
+} 
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<style type="text/css">
+.location .fa{
+      float: left;
+    font-size: 35px;
+    margin-right: 6px; 
+
+    }
+    .location h3{
+      font-size: 15px;
+      vertical-align: middle;
+
+    }
+    .no-padding{
+      padding: 0px;
+    }
+    .location > img {
+    float: left;
+    width: 15px;
+    padding-top: 6px;
+    }
+</style>

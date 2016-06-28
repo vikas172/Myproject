@@ -1,0 +1,142 @@
+<div id="controls" class="hide_for_print pull-left"><!-- keep empty on purpose -->
+	<div id="route_header">
+		<div class="regular">
+		  <p>
+		  	<%if current_user.user_type=="admin"%>
+		      <a data-on-click="optimize" class="button save" data-toggle="modal" data-target="#myModal">Optimize</a>
+		      <%= link_to 'Reset Route', remove_at_route_path, :data=> {:confirm => 'Are you sure you wish to remove all default routing information?'} ,:class=>"button faded_remove"%>
+		    <%else%>
+		      <%if !@addons_admin.find_by_add_on("routing").blank?%>
+		      	<%if @addons_admin.find_by_add_on("routing").status%>
+		     	  	<a data-on-click="optimize" class="button save" data-toggle="modal" data-target="#myModal">Optimize</a>
+		    	  	<%= link_to 'Reset Route', remove_at_route_path, :data=> {:confirm => 'Are you sure you wish to remove all default routing information?'} ,:class=>"button faded_remove"%>
+		      	<%end%>
+		      <%end%>
+		    <%end%>
+		  </p>
+		</div>
+		<div class="active" style="display: none;">
+		  <p class="controls">
+		    <a data-on-click="save" class="button save large" href="#">Save</a>
+		    <a data-on-click="cancel" class="button faded_remove large" href="#">Cancel</a>
+		  </p>
+		  <p class="description instructions">
+		    Click on pins to insert them into your Master Route starting from this point.<br>
+		    If you select items already in the list, they will be moved to their new order.
+		  </p>
+		  <p class="description warning">
+		    That's a lot of work!<br>
+		    You may want to save your current changes.
+		  </p>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Route Optimization</h4>
+      </div>
+      <div class="modal-body">
+      	<%if current_user.user_type =="admin"%>
+	      	<%if !@active_addon.find_by_add_on("routing").blank?%>
+	    			<%if @active_addon.find_by_add_on("routing").status%>	
+		        	<%if $optimize_route.blank?%>
+		        		<div id="errors_display" class="error_messages_team_member" style="display:none;"></div>
+		          	<%= link_to "Optimize!","#",:class=>"button save larger spin_on_click spinning save-new-btn1",:remote=>true,:onclick=>"clicked();"%>
+		        	<%else%>
+		        		<div class="content optimizer">
+		          		<h3>Routes already Optimize</h3>
+		          		<br/> 
+		          		<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+		          	</div>
+		        	<%end%> 
+			    	<%else%>
+				    	<div class="content optimizer">
+					    	<h3>Add-on is not enabled</h3>
+					    	<p>
+					      	Once enabled for your account, this add-on will attempt to optimize your route to minimize your driving times.
+					    	</p>
+					    	<a href="/accounts/billing_info/addons">Go to add-ons page</a>
+							</div>
+	          	<br/>
+				  	<%end%>
+					<%else%>  
+				  	<div class="content optimizer">
+				    	<h3>Add-on is not enabled</h3>
+				    	<p>
+				      	Once enabled for your account, this add-on will attempt to optimize your route to minimize your driving times.
+				    	</p>
+				    	<a href="/accounts/billing_info/addons">Go to add-ons page</a>
+						</div>
+	        	<br/>
+					<%end%> 
+				<%else%>
+			  	<%if !@addons_admin.find_by_add_on("routing").blank?%>
+	    			<%if @addons_admin.find_by_add_on("routing").status%>	
+		        	<%if $optimize_route.blank?%>
+		        		<div id="errors_display" class="error_messages_team_member" style="display:none;"></div>
+		          		<%= link_to "Optimize!","#",:class=>"button save larger spin_on_click spinning save-new-btn1",:remote=>true,:onclick=>"clicked();"%>
+		        	<%else%>
+		        		<div class="content optimizer">
+		          		<h3>Routes already Optimize</h3>
+		          		<br/> 
+		          		<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+		          	</div>
+		        	<%end%> 
+			    	<%else%>
+				    	<div class="content optimizer">
+					    	<h3>Add-on is not enabled</h3>
+					    	<p>
+					      	Once enabled for your account, this add-on will attempt to optimize your route to minimize your driving times.
+					    	</p>
+					    	<a href="/accounts/billing_info/addons">Go to add-ons page</a>
+							</div>
+	          	<br/>
+				  	<%end%>
+					<%else%>  
+				  	<div class="content optimizer">
+				    	<h3>Add-on is not enabled</h3>
+				    	<p>
+				      	Once enabled for your account, this add-on will attempt to optimize your route to minimize your driving times.
+				    	</p>
+				    	<a href="/accounts/billing_info/addons">Go to add-ons page</a>
+						</div>
+	        	<br/>
+					<%end%>   
+				<%end%>	  	  
+      </div>
+      <!-- <div class="modal-footer">
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+function clicked() {
+  if (confirm('This will replace your current Master Route! Are you sure?')) 
+   	{
+   		var start=$("#start_point").val();
+    	var end=$("#end_point").val();
+    	var address=$('#address_point').val();
+    	if ((start != "") && (end != "") && (address.length < 8)) 
+    		{
+      	$('#route_plan').submit();
+    		}
+    	else
+      	{ 
+      		$("#errors_display").css("display","block");
+      		$("#errors_display").css("color","red");
+      		$("#errors_display").text("Please select start point and end point and select less than 8 point");
+      	}
+   	} 
+  else 
+  	{
+      return false;
+   	}
+}
+</script>

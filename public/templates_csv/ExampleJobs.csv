@@ -1,0 +1,4 @@
+description,scheduled,start_date,end_date,visits,start_time,end_time,crew,invoicing,invoice_period,first_invoice_on,property_id,job_type,number_of_invoice,invoice_type,user_id,job_status,job_required,job_complete,complete_on,quote_id,custom_field,job_order
+A new job for a new day,true,2015-07-24,2015-07-25,daily,2000-01-01 15:30:00 UTC,2000-01-01 15:30:00 UTC,"[""1"", ""2"", ""3""]",,,,1,one_off,,,1,,,false,,,,1
+A new job for a new day,true,2015-07-24,2015-07-26,daily,2000-01-01 15:30:00 UTC,2000-01-01 15:30:00 UTC,"[""2"", ""3"", ""1""]",,,,2,one_off,,,1,,,false,,,,2
+A new job for recurring,,2015-07-24,,Weekly on Fridays,2000-01-01 15:30:00 UTC,2000-01-01 15:30:00 UTC,"[""1"", ""2""]",Visit Based,Monthly on the last day of month,,3,recurring_contract,6,days,1,,,false,,,,3

@@ -1,0 +1,39 @@
+<div class="permission" style="overflow-y:auto;">
+  <%if @permission.permission_client_properties.count==1%>
+    <%if set_client_property_check_box_permission(@permission)%>
+
+      <div class="parent">
+        <input type="checkbox" id="user_permissions_clients" class="has_details" checked > 
+        <label for="user_permissions_clients">Clients &amp; Properties</label>
+      </div>
+      <div class="detail  diplay_client_properties_detail">
+        <%= select_tag("permission[permission_client_properties][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_clients_rwd") %>
+        <p>
+          <input type="checkbox" id="user_permissions_clients_index" class="" name="permission[permission_client_properties][]"> <label for="user_permissions_clients_index">List All Clients &amp; Properties</label>
+        </p>
+      </div>
+    <%else%>
+      <div class="parent">
+        <input type="checkbox" id="user_permissions_clients" class="has_details"> 
+        <label for="user_permissions_clients">Clients &amp; Properties</label>
+      </div>
+      <div class="detail invisible diplay_client_properties_detail">
+        <%= select_tag("permission[permission_client_properties][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_clients_rwd") %>
+        <p>
+          <input type="checkbox" id="user_permissions_clients_index" class="" name="permission[permission_client_properties][]"> <label for="user_permissions_clients_index">List All Clients &amp; Properties</label>
+        </p>
+      </div>
+    <%end%> 
+  <%else%>
+    <div class="parent">
+      <input type="checkbox" id="user_permissions_clients" class="has_details" checked> 
+      <label for="user_permissions_clients">Clients &amp; Properties</label>
+    </div>
+    <div class="detail diplay_client_properties_detail">
+      <%= select_tag("permission[permission_client_properties][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]],:selected=>@permission.permission_client_properties.first),:class=>"rwd",:id=>"user_permissions_clients_rwd") %>
+      <p>
+        <input type="checkbox" id="user_permissions_clients_index" class="" name="permission[permission_client_properties][]" checked> <label for="user_permissions_clients_index">List All Clients &amp; Properties</label>
+      </p>
+    </div>
+  <%end%>  
+</div>

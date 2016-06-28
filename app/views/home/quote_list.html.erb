@@ -1,0 +1,27 @@
+<div class="client_index">
+  <div class="main_container">
+    <div id="head">
+      <h1>Estimate Report <%= "- #{params[:any]}" unless params[:any].blank?%></h1>
+    </div>
+    <%= render "report_summary_time_picker", :locals => {:quotes_action => "quotes_report_summary"}%>
+    <%= render "quotes_report_summary"%>
+    </br></br>
+    <div id="reports_p_c" style="width: 20%; width: 98%; margin: 10px;">
+      <%= link_to "List", "/reports/quotes/#{params[:any]}?display_method= ",:class=>"btn current"%>
+      <%= link_to "Growth", "/reports/quotes/#{params[:any]}?display_method=growth ", :class=>"btn"%>
+      <%= link_to "Cumulative","/reports/quotes/#{params[:any]}?display_method=cumulative",:class=>"btn"%>
+    </div>
+    <% if params[:display_method] == "growth" %>
+      <%= render partial: "quotes_list_growth_graph" %>  
+    <% elsif params[:display_method] == "cumulative" %>
+      <%= render partial: "quotes_list_growth_graph" %>
+    <% else %>
+      <%= render partial: "quotes_list_show" %>
+    <% end %>
+  </div>
+</div>
+<%= render "services_and_work_reports_column_edit"%>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

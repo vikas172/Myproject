@@ -1,0 +1,8 @@
+<ul id="tabs_display">
+	<li class="<%=@invoice_pdf%>" onclick="$('#quo,#jo').removeClass('selected');$(this).addClass('selected'); $('#style,#quotes,#work_orders').css('display', 'none'); $('#invoices').css('display', 'block'); checkMarked(this.id,'invoices');" id="inv"><a  data-tab-opens="invoices">INVOICES</a>
+	</li>
+	<li  class="<%=@quote_pdf%>" onclick=" $('#inv,#jo').removeClass('selected');$(this).addClass('selected');$('#style,#invoices,#work_orders').css('display', 'none'); $('#quotes').css('display', 'block'); checkMarked(this.id,'quotes');" id="quo"><a  data-tab-opens="quotes">ESTIMATES</a>
+	</li>
+	<li class="<%=@job_pdf%>" onclick="$('#inv,#quo').removeClass('selected');$(this).addClass('selected'); $('#style,#quotes,#invoices').css('display', 'none'); $('#work_orders').css('display', 'block'); checkMarked(this.id,'jobs');" id="jo"><a data-tab-opens="work_orders" >WORK ORDERS</a>
+	</li>
+</ul>

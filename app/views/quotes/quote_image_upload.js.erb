@@ -1,0 +1,8 @@
+$(".quote_image").html("<%= escape_javascript(  render :partial => 'show_quotes_notes',  :locals => {:@quote => @quote} ) %> ")
+   
+var delay=1000;//1 seconds
+setTimeout(function(){
+
+$('.progress_div').hide();
+$('.save').val('');
+},delay); 

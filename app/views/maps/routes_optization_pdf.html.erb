@@ -1,0 +1,32 @@
+<ul>
+	<%if !@property.blank?%>
+		<%@property.each_with_index do |property,index|%>
+			<li><p style="font-size:18px;">
+				&nbsp;<%= property.street rescue ""%>
+				<%= property.street2 rescue ""%>,
+				<%= property.city rescue ""%> 
+				<%= property.state rescue ""%>,
+				<%= property.zipcode rescue ""%>,
+				<%if !property.country.blank?%>
+					<%= get_carmen_country_code(property.country).name rescue "" %>
+				<%else%>
+					<%= property.country rescue ""%>
+				<%end%></p>	
+			</li>
+			</br>
+		<%end%>
+	<%else%>
+		<%if !current_user.street.blank?%>
+			<li><p style="font-size:18px;"><%= current_user.try(:street)%><%= current_user.try(:city)%><%= current_user.try(:state)%><%= current_user.try(:zipcode)%></li>
+		<%end%>
+		<%if !current_user.company.blank?%>
+			<li><%= current_user.company.try(:street)%><%= current_user.company.try(:city)%><%= current_user.company.try(:state)%><%= current_user.company.try(:zipcode)%></li>
+		<%end%>		
+	<%end%>		
+</ul>
+
+<style type="text/css">
+ul {
+	list-style-type: upper-alpha;
+}
+</style>

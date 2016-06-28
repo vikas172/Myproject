@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: MyString
+  vehicle_id: 1
+  odometer: MyString
+  mark_as_void: false
+  services_completed: MyString
+  vendor: MyString
+  reference: MyString
+  comment: MyText
+  labor: 1.5
+  parts: 1.5
+  tax: 1.5
+  total: 1.5
+
+two:
+  date: MyString
+  vehicle_id: 1
+  odometer: MyString
+  mark_as_void: false
+  services_completed: MyString
+  vendor: MyString
+  reference: MyString
+  comment: MyText
+  labor: 1.5
+  parts: 1.5
+  tax: 1.5
+  total: 1.5

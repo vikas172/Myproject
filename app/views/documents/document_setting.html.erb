@@ -1,0 +1,54 @@
+<div id="app_wrapper">
+	<div class="client_index">
+		<div class="main_container">
+			<div style="height: auto;">
+				<div>
+					<%=render "home/work_item_side_bar" %>
+					<div id="settings_area"> 
+						<h1 class="title1-font">Document Setting For Team Members</h1>
+						<%= form_tag document_check_documents_path do %>
+							<div class="span12">
+								<div class="row">
+									<div class="span3">
+										Hr Document
+									</div>
+									<div class="span7">
+										<%= hidden_field_tag :hr_document, 'false' %>
+										<%#= check_box_tag :hr_document,"true"%> 
+										<input id="hr_document" name="hr_document" type="checkbox" value="true"  <%= "checked" if current_user.hr_document == true %>>
+									</div>
+								</div>
+								<div class="row">
+									<div class="span3">
+										Contract Document
+									</div>
+									<div class="span7">
+										<%= hidden_field_tag :contract_document, 'false' %>
+										<%#= check_box_tag :contract_document, "true" %>
+										<input id="contract_document" name="contract_document" type="checkbox" value="true"  <%= "checked" if current_user.contract_document == true %>>
+									</div>
+								</div>
+								<div class="row">
+									<div class="span3">
+										Company Document
+									</div>
+									<div class="span7">
+										<%= hidden_field_tag :company_document, 'false' %>
+										<%#= check_box_tag :company_document, "true" ,:checked=>( ? true: false)%>
+										<input id="company_document" name="company_document" type="checkbox" value="true"  <%= "checked" if current_user.company_document == true %>>
+										
+									</div>
+								</div>
+								</br>
+								</br>
+								<div class="row">
+									<%= submit_tag "save",:class=>"update_button_setting save-new-btn1"%>
+								</div>
+							</div>
+						<%end%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

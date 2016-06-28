@@ -1,0 +1,156 @@
+<div class="work_area" id="work_order">
+  <div class="work_order_header top clearfix">
+    <% @client=@job.property.client %>
+      <table style="float:right;">
+      <tr>
+        <td><span class="label">Work Order</span></td>
+        <td><span>#<%=@job.id%></span></td>
+      </tr>
+
+      <tr>
+        <td><b><span class="label">From</span></b></td>
+       <td> <span><%=@client.company_name%></span></td>
+      </tr>
+
+      <tr>
+        <td><span class="label">Bill To</span> </td>          
+        <td><%= @job.property.try(:street) %><br> <%= @job.property.try(:street2) %><br> <%= @job.property.try(:city) %>,  <%= @job.property.try(:state) %>  <%@job.property.try(:zipcode) %></td>
+        
+      </tr>
+
+      <tr>
+        <td><span class="label" style="margin-right:30%">Schedule</span></td>
+        <td><span><%=@job.visits%></span></td>
+      </tr>
+    </table>
+
+    <div style="float:left;">
+      <h3><%=@client.company_name%></h3>
+      <h3 style="margin-top:4%;"><%= @client.initial %>&nbsp;<%= @client.first_name.titleize %>&nbsp;<%= @client.last_name.titleize%></h3>
+      <p>
+        &nbsp;&nbsp;<%= @job.property.try(:street) %><br> &nbsp;&nbsp;<%= @job.property.try(:street2) %><br> &nbsp;&nbsp;<%= @job.property.try(:city) %>,  <%= @job.property.try(:state) %>  <%@job.property.try(:zipcode) %>
+        <br>
+      </p>
+      <p>
+        <%if !@client.phones.first.blank?%>
+        <%= @client.phones.first.phone_number.first %><%end%><br>
+        <%if !@client.emails.first.blank?%>
+        <%=@client.emails.first.email.first%><%end%>
+      </p>
+    </div>
+  </div> 
+  <div id="line_items">
+    <div id="line_items_head">
+     <span class="Service short"> Service/Product</span>
+      <span class="description_job_pdf short">Description</span>
+      <span class="centered_job_pdf hours_column">Qty.</span>
+    </div>
+    <table class="table table-hover">
+      <%if !@job.job_works.blank?%>
+        <%@job.job_works.each do |job_work|%>
+          <tbody>
+            <tr>
+              <td><%=job_work.name%></td>
+              <td><%= job_work.description%></td>
+              <td><%= job_work.quantity%></td>
+            </tr>
+          </tbody>
+        <%end%>
+      <%end%>
+    </table>
+  </div>
+  
+  <div style="margin-top:40%; width:30%; float:left;">
+     We can be called for touch-ups and small changes for the next 3 days. After that
+    all work is final.
+  </div>
+  <div style="float:right; margin-top:40%; width:30%;"> 
+    Client Signature
+      <img src='<%=Rails.root.join("public/signature/#{current_user.id}.png")%>' alt="Smiley face" ><hr><br/>
+      Date: <%= get_date_today.strftime("%d/%m/%Y")%>
+      <br>  
+  </div>
+</div> 
+
+<style>
+  .table {
+      margin-bottom: 20px;
+      width: 100%;
+  }
+  table {
+      border-spacing: 0;
+      position: relative;
+  }
+
+  table {
+      width: 50%;
+  }
+  table {
+      background-color: transparent;
+      border-collapse: collapse;
+      border-spacing: 0;
+      max-width: 100%;
+  }
+  .description_job_pdf{
+    margin-left: 20%!important;
+  }
+  .centered_job_pdf{
+    margin-left: 30%!important;
+  }
+  div.work_area div#line_items {
+      clear: both;
+      padding: 0;
+  }div.work_area div#line_items div#line_items_head {
+      background: none repeat scroll 0 0 #555555;
+      padding: 4px 15px;
+  }div.work_area div#totals {
+      float: right;
+      margin: 0 15px 20px 0;
+      text-align: right;
+  }
+  div.work_area div#totals div {
+      clear: right;
+      float: right;
+      margin: 3px 0;
+  }
+  div.work_area div#line_items .right_items {
+      float: right;
+  }
+  .clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+  }
+
+  div#work_order div.work_order_header {
+      margin-bottom: 10px;
+  }
+  .show div.work_area div.top {
+      
+      padding-top: 15px;
+  }div#work_order div.work_order_header ul.right {
+      display: table;
+      float: right;
+  }div#work_order div.work_order_header ul.right li {
+      display: table-row;
+  }div#work_order div.work_order_header ul.right li > span.label, div#work_order div.work_order_header ul.right li > span.description {
+      color: #555555;
+      padding-right: 10px;
+      text-align: right;
+  }
+
+  div#work_order div.work_order_header ul.right li > span {
+      display: table-cell;
+      font-size: 13px;
+      line-height: 20px;
+      max-width: 210px;
+      text-align: left;
+  }div.work_area div.top .left {
+      clear: left;
+  }div#work_order div.work_order_header div.left h3 {
+      margin-top: 0;
+      padding-top: 0;
+  }
+</style>

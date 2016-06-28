@@ -1,0 +1,81 @@
+<div class="client_index">
+  <div class="main_container">
+    <% unless flash[:notice].blank? %>
+      <div class="flash_team_member">
+        <div id="flash_notice_team_member" class="flash_team_member flash_notice_team_member clearfix hide_for_print">
+          <%= flash[:notice] %><i class="fa fa-check" style="float:right;"></i>
+        </div>
+      </div>
+    <%end%> 
+   
+    <div class="show_view_button"> 
+      <%if current_user.user_type=="admin" && !current_user.clients.blank?%>
+        <%= link_to "Export","#", "data-toggle" => "modal", 'data-target' => '#client_export','data-backdrop'=>"static" ,'data-keyboard'=>"false",:class=>"button_new_index save-new-btn1",:style=>"margin-right:10px;"%>
+        <%= link_to "Import","#", "data-toggle" => "modal", 'data-target' => '#client_import','data-backdrop'=>"static" ,'data-keyboard'=>"false",:class=>"button_new_index save-new-btn1",:style=>"margin-right:10px;"%>
+      <%end%>  
+      <%if set_view_permission_client_property_view(@team_member)%>
+        <%= link_to 'New Customer', new_client_path,:class=>"button_new_index save-new-btn1"%>
+      <%end%>
+    </div>
+
+    <div>
+      <div class="col-8">
+        <div class="main_column" >
+          <div class="thicklist index_thicklist" data-thicklist="true" data-thicklist-remote="true" data-thicklist-headers="null">
+            <div class="row toolbar clearfix no_hover" id="content">
+              <div class="order_by">
+                <%= text_field_tag :q, nil, :class=>"form-control search_input1",:placeholder=>"Search Clients...",:require=>true,:id=>"search_input_client_index",:onkeyup => "searchClient($(this).val())" %>&nbsp;&nbsp;&nbsp;&nbsp;
+                Sort by <%= select_tag("products_per_page", options_for_select([["First Name",'First Name'],["Last Name",'Last Name'],["Recently Active",'Recently Active']]),:class=>"form-control input-sm sort_select_clients",:id=>"sort_select_client_index" ,:onchange=>"sortClientFLName($(this).val())") %>
+              </div>
+            </div>
+            <div class="client_show">
+              <ul id="client_list_display" class="thicklist ">
+              <%= render "client"%>
+            </ul>
+            </div>  
+          </div> 
+        </div>
+      </div>
+      <div class="tag_display_client col-4 empty_client_display">
+        <%if !@tags.blank?%>
+          <div class="sidebar">
+            <div class="clearfix side_box" id="tags_container">
+              <i class="fa fa-tags"></i>
+              <div id="explanation">
+                <strong style="color: #333;">Click a tag to filter the Client list</strong>
+                <p>
+                  <input type="checkbox" value="0" onchange="if($(this).is(':checked')) { $('#multiple_tags_info').show();$('.tag_selectors_all').show(); $('.tab1').hide();} else { $('#multiple_tags_info').hide(); $('.tag_selectors_all').hide(); $('.tab1').show();}" name="multiple_tag_selector" id="multiple_tag_selector">
+                  <label for="multiple_tag_selector">Select multiple tags at once?</label><br/>
+                </p>
+              </div>
+              <span style="display: none;" id="multiple_tags_info">Multiple tags will display Customers that have <strong>all</strong> of the selected tags
+              <br><br></span>
+
+              <div id="tag_selectors1" class="tag_selectors_all" style="display:none">
+                <div id="start">
+                  <%@tags.uniq.each_with_index do |name,index|%>
+                    <a id="tag_<%=index%>" value="<%=name%>" class= "tags_pointer" onclick='getAllTag("<%=index%>");'><%= name%></a>
+                  <%end%>
+                </div>
+              </div>
+              <div id="tag_selectors" class="tab1">
+                <%@tags.uniq.each_with_index do |name,index|%>
+                  <a id="tag1_<%=index%>" value="<%=name%>" class= "tags_pointer" onclick='getTag("<%=index%>","<%=name%>");'><%= name%></a>
+                <%end%>
+              </div>
+            </div>
+          </div>
+        <% end %>   
+      </div>
+    </div>
+  </div>
+  <div style="float:bottom;">
+    <%= render "client_export" %>
+    <%= render "client_import" %>
+  </div>
+</div>
+<style>
+.button_new_index{
+  margin: 5px;
+}
+</style>

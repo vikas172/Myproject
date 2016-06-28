@@ -1,0 +1,106 @@
+<div class="permission indent pad-top">
+  <%if @permission.permission_client_properties.count==1%>
+    <%if set_client_property_check_box_permission(@permission)%>
+      <%if @permission.permission_quotes.count==2%>
+        <div class="parent">
+          <input type="checkbox" id="user_permissions_quotes" class="has_details require_clients check_box_unselect" checked> <label for="user_permissions_quotes" class="check_box_unselect">Estimate</label>
+        </div>
+        <div class="detail diplay_quotes_detail">
+          <!-- This is for permission when show pricing is check or not -->
+          <%if @permission.permission_show_pricing==true%>
+            <span class="has_pricing">
+              <%= select_tag("permission[permission_quotes][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]],:selected=>@permission.permission_quotes.first),:class=>"rwd",:id=>"user_permissions_quotes_rwd") %>
+            </span>
+            <span class="not_has_pricing" style="display:none;">
+              Read Only
+            </span>
+          <%else%>
+            <span style="display:none;" class="has_pricing">
+              <%= select_tag("permission[permission_quotes][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_quotes_rwd") %>
+            </span>
+            <span class="not_has_pricing">
+              Read Only
+            </span>
+          <%end%>  
+          <p>
+            <input type="checkbox" id="user_permissions_quotes_index" class="" name="permission[permission_quotes][]" checked> <label for="user_permissions_quotes_index">List All Estimate</label>
+          </p>
+        </div>
+      <%else%>
+        <div class="parent">
+          <input type="checkbox" id="user_permissions_quotes"  class="has_details require_clients check_box_unselect"> <label for="user_permissions_quotes" class="check_box_unselect">Estimate</label>
+        </div>
+        <div class="detail invisible diplay_quotes_detail">
+          <span style="display:none;" class="has_pricing">
+            <%= select_tag("permission[permission_quotes][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_quotes_rwd") %>
+          </span>
+          <span class="not_has_pricing">
+            Read Only
+          </span>
+          <p>
+            <input type="checkbox" id="user_permissions_quotes_index" class="" name="permission[permission_quotes][]"> <label for="user_permissions_quotes_index">List All Estimate</label>
+          </p>
+        </div>
+      <%end%>
+    <%else%>
+      <div class="parent">
+        <input type="checkbox" id="user_permissions_quotes" disabled="disabled" class="has_details require_clients check_box_unselect"> <label for="user_permissions_quotes" class="disabled check_box_unselect">Estimate</label>
+      </div>
+      <div class="detail invisible diplay_quotes_detail">
+        <span style="display:none;" class="has_pricing">
+          <%= select_tag("permission[permission_quotes][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_quotes_rwd") %>
+        </span>
+        <span class="not_has_pricing">
+          Read Only
+        </span>
+        <p>
+          <input type="checkbox" id="user_permissions_quotes_index" class="" name="permission[permission_quotes][]"> <label for="user_permissions_quotes_index">List All Estimate</label>
+        </p>
+      </div>
+    <%end%>  
+  <%else%>
+  <!-- This is permission when list all quotes is checked -->
+    <%if @permission.permission_quotes.count==2%>
+      <div class="parent">
+        <input type="checkbox" id="user_permissions_quotes" class="has_details require_clients check_box_unselect" checked> <label for="user_permissions_quotes" class="check_box_unselect">Estimate</label>
+      </div>
+      <div class="detail diplay_quotes_detail">
+        <!-- This is for permission when show pricing is check or not -->
+        <%if @permission.permission_show_pricing==true%>
+          <span class="has_pricing">
+            <%= select_tag("permission[permission_quotes][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]],:selected=>@permission.permission_quotes.first),:class=>"rwd",:id=>"user_permissions_quotes_rwd") %>
+          </span>
+          <span class="not_has_pricing" style="display:none;">
+            Read Only
+          </span>
+        <%else%>
+          <span style="display:none;" class="has_pricing">
+            <%= select_tag("permission[permission_quotes][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_quotes_rwd") %>
+          </span>
+          <span class="not_has_pricing">
+            Read Only
+          </span>
+        <%end%>  
+        <p>
+          <input type="checkbox" id="user_permissions_quotes_index" class="" name="permission[permission_quotes][]" checked> <label for="user_permissions_quotes_index">List All Estimate</label>
+        </p>
+      </div>
+    <%else%>
+    <!-- This is permission when list all quotes are not checked -->
+      <div class="parent">
+        <input type="checkbox" id="user_permissions_quotes"  class="has_details require_clients check_box_unselect"> <label for="user_permissions_quotes" class=" check_box_unselect">Estimate</label>
+      </div>
+      <div class="detail invisible diplay_quotes_detail">
+        <span style="display:none;" class="has_pricing">
+          <%= select_tag("permission[permission_quotes][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_quotes_rwd") %>
+        </span>
+        <span class="not_has_pricing">
+          Read Only
+        </span>
+        <p>
+          <input type="checkbox" id="user_permissions_quotes_index" class="" name="permission[permission_quotes][]"> <label for="user_permissions_quotes_index">List All Estimate</label>
+        </p>
+      </div>
+    <%end%>  
+  <%end%>
+</div>

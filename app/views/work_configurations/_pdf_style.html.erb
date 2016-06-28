@@ -1,0 +1,51 @@
+<!-- Modal -->
+<div class="modal fade" id="open_pdf_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Pdf Style</h4>
+      </div>
+      <div class="modal-body">
+        <div class="content pdf_settings">
+         
+          <%= render "style_menu"%>
+          <div class="tab_content" id="style" style="display: block;">
+            <%#= render "styles_pdf_setting"%>
+          </div>
+          <div class="tab_content display_whole" id="invoices" style="<%= display_pdf_content(@invoice_pdf)%>">   
+            <%= render "invoices_pdf_setting"%>
+          </div>
+
+          <div class="tab_content display_whole" id="quotes" style="<%= display_pdf_content(@quote_pdf)%>">
+            <%= render "quotes_pdf_setting"%>
+          </div>
+
+          <div class="tab_content display_whole" id="work_orders" style="<%= display_pdf_content(@job_pdf)%>">
+            <%= render "jobs_pdf_setting"%>
+          </div>
+
+          <div id="mydiv_loader" style="float: right; margin-top: -54%; margin-right: 10%; display:none;">
+            <img src="/assets/loader.gif" class="ajax-loader"/>
+          </div> 
+           
+          <div id="live_preview" style="float: right; margin-top: -33%; border:1px solid #ccc;">
+            <%if !current_user.pdf_setting.blank?%>
+              <%=link_to "Pdf Preview",current_user.pdf_setting.image.url,:target=>"_blank",:class=>"update_button_setting"%>
+            <%end%>
+          </div> 
+        </div>
+      </div>
+    <!--   <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#open_pdf_modal{
+  width: 700px !important;
+}
+</style>

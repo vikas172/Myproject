@@ -1,0 +1,239 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <div id="content" style="height: auto;">
+        <div class="padding">
+          <%=render "home/work_item_side_bar" %>
+          <div id="settings_area">                
+            <%=form_tag member_update_path,:class=>"user_form edit" do %>
+             <!--  <div class="login_access clearfix form_section">
+                <h3 class="title2-font">
+                  <i class="icon-user"></i>
+                  Grant Login Access?
+                </h3>
+
+                <div>
+                  <%#= check_box_tag :login_access,nil,@team_member.login_access,:class=>"login_access",:style=>"float:left;margin:0px 10px 0px 0px;"%>
+                  <div id="flash_warning" class="useless_login_access login_access_disclaimer useless flash no_login_access_permission" style="display:none;" >
+                    <h4 class="title2-font">No Login Access</h4>
+                    <p>
+                      This Team Member can be used by users with login access to manage scheduling and timesheets. They will not be able to track their own information.
+                    </p>
+                  </div>
+                  <div id="flash_notice" class="login_access_disclaimer payment flash payment_login_access login_access_sucess"  style="display:none;">
+                      <h4>$9 Per Month for Login Access</h4>
+                      <p>Full login access to all features of CopperService.</p>
+                  </div>
+                </div>
+                <br style="clear:both">
+              </div> -->
+
+              <div class="compressed_form form_section">
+                <h3 class="title2-font">
+                  <i class="fa fa-gear"></i>
+                  Member Info
+                </h3>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_name">Full Name*</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :full_name,nil,:value=>@team_member.full_name, autofocus: true ,:class=>"large wide"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_email">E-mail*</label>
+                  </div>
+                  <div class="col-8">
+                   <%= email_field_tag :email,nil,:value=>@team_member.email ,autofocus: true ,:class=>"large wide",:style=>"width: 54%;"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_email">Mobile Number*</label>
+                  </div>
+                  <div class="col-8">
+          
+                    <%= text_field_tag :mobile_number,nil,:value=>@team_member.mobile_number,:placeholder=> "Mobile Number...",:class=>"mobile_number_team_member",:maxlength=>"12"%>
+                  </div>
+                </div>
+                <div class="client-form-row" id="change-password-link">
+                  <div class="col-4"></div> 
+                  <div class="col-8">
+                    <div class="inner button" style="cursor: pointer; margin-left: 51%;"><i class="fa fa-unlock"></i>change password</div>
+                  </div>
+                </div>
+                <div class="pwd"></div>  
+                <span class="requires_login_access" id="login_credentials"></span>
+              </div>
+
+              <div class="compressed_form form_section">
+                <h3 class="title2-font">
+                 <i class="fa fa-gear"></i>
+                  Additional Details
+                </h3>
+
+                <div class="photo_upload_area">
+                  <div class="col-4">
+                  	<label for="user_photo">Photo</label>
+                  </div>
+                  <div style=" margin-bottom: 15px; " class="col-8">
+                    <%= file_field_tag :photo %>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_phone">Phone Number</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :phone_number,nil,:value=>@team_member.phone_number ,:class=>"large"%> 
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_street">Street Address</label>
+                  </div>
+                  <div class="col-8">
+                   <%= text_field_tag :street ,nil,:value=>@team_member.street,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_city">City</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :city ,nil,:value=>@team_member.city,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_province">State</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :state ,nil,:value=>@team_member.state,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_pc">Zip Code</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :zipcode ,nil,:value=>@team_member.zipcode,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_sin">SSN</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :ssn_number ,nil,:value=>@team_member.ssn_number,:class=>"large"%>
+                  </div>
+                </div>
+
+                <div class="client-form-row">
+                  <div class="col-4">
+                    <label for="user_start_date">Start Date</label>
+                  </div>
+                  <div class="col-8">
+                    <%= text_field_tag :start_date ,nil,:value=>@team_member.start_date,:class=>"large"%>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <%= render "clients/edit_custom_field_display"%>
+              <div class="clearfix"></div>
+              <div class="form_section requires_login_access">
+                <h4 class="title2-font">
+                 <i class="icon-lock"></i>
+                  Permissions
+                  <!-- <a target="_docs" href="#">Learn about permissions</a> -->
+                </h4>
+
+                <div class="compressed_form">
+                  <div class="client-form-row">
+                    <div class="col-4 content_align">
+                      <label for="user_company_admin">Administrator</label>
+                    </div>
+                    <div class="span5 content_align" style="float:right;">
+                      <%if @team_member.is_admin%>
+                        <input id="permission_company_admin" name="permission[company_admin]" type="checkbox" onclick="$(this).is(':checked') ? $('#detailed_permissions').hide() : $('#detailed_permissions').show()" checked>
+                      <%else%>
+                        <input id="permission_company_admin" name="permission[company_admin]" type="checkbox" onclick="$(this).is(':checked') ? $('#detailed_permissions').hide() : $('#detailed_permissions').show()">
+                      <%end%>  
+                      <p class="inline-paragraph desc" style="margin-left: 18% ! important; margin-top: -4% ! important;">
+                        Company Administrators have access to all of the data for this account. Only Company Administrators can add, remove, or edit other member profiles.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="detailed_permissions">
+                  <%if !@team_member.is_admin%> 
+                    <%= render "edit_team_member_permission"%>
+                  <%end%>
+                </div>
+              </div>
+
+              <div class="form_section">
+				        <h3 class="title2-font">Deactivate Member</h3>
+				        <div style="float: right; margin-left:60px; margin-bottom:20px">
+				          <%= link_to "Deactivate User",deactive_path(:id=>params[:id]),:class=>"button remove",data: {:confirm=>"Are you sure you wish to deactivate #{@team_member.full_name} ?"}%>
+				        </div>
+
+				        <p class="desc">
+				          This will unassign <%= @team_member.full_name %>  from <strong>0</strong> incomplete tasks and assignments, but maintain a record of past activity. 
+				        </p>
+				        <br>
+				      </div>
+
+              <div class="form_section save_button_holder">
+                <%= submit_tag "Update Employee",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+              </div>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>  
+<style type="text/css">
+  .form_section.requires_login_access > div {
+    margin-top: 22px;
+  }
+  .view-detail label{
+    font-size: 13px !important;
+    font-weight: normal !important;
+    margin-right: 9px !important;
+  }
+</style>
+<script>
+$(document).ready(function(){
+  $(window).on('click', '#permission_company_admin', function(){
+  if($(this).prop('checked')){
+    $('#detailed_permissions').html('<%= j render partial: "admin_permission_added" %>');
+  }else{
+    $('#detailed_permissions').html('<%= j render partial: "admin_permission_removed" %>');
+  }
+})
+  teamAdd()
+  checkCustomBox()
+})
+$( ".inner" ).click(function() {
+  $( ".inner" ).html( '' );
+  $(".inner").removeClass("button");
+  $( ".pwd" ).html( '<div><%= label_tag :password %> <i>(leave blank if you dont want to change it)</i><br /><%= password_field_tag :password,'', autocomplete: "off" ,:style=>"margin-left: 6%;"%></div><div><%= label_tag :password_confirmation %><br /><%= password_field_tag :password_confirmation,'', autocomplete: "off" ,:style=>"margin-left: 6%;"%></div>' );
+});
+
+</script>

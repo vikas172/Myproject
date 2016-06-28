@@ -1,0 +1,402 @@
+<div class="wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="content text-center">
+          <h2 id="back-shadow">Simplify Your Service Business.<br>
+            <span style="font-size:18px;">Manage your Estimates, Work Orders, schedules, expenses, invoices and field staff in real time. 30-day FREE trial. No Contracts. Cancel at any time.</span> 
+          </h2>
+        </div>
+
+        <div class="alert falert"></div>
+<!--         <form role="form" class="subscribe-form" action="javascript:;" method="POST" accept-charset="utf-8">
+          <div class="input-group input-group-lg"> <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+            <input type="text" class="form-control semail" placeholder="Enter your email">
+            <span class="input-group-btn">
+            <button class="btn btn-default sbtn" type="button">Subscribe</button>
+            </span> 
+          </div>
+        </form> -->
+        <div class="descs">
+          <div class="row desc">
+            <div class="col-md-2 col-xs-12 icon"> <i class="fa fa-calendar fa-4x"></i> </div>
+            <div class="col-md-10 col-xs-12 text">
+              <h3>Work Order Scheduling</h3>
+              <p id="p1"> Schedule Work Orders to available staff, optimize work load. Easily reassign existing Work Orders and schedule recurring Work Orders on calender. 
+              </p>
+            </div>
+          </div>
+          <div class="row desc">
+            <div class="col-md-2 col-xs-12 icon"> <i class="fa fa-credit-card fa-4x"></i> </div>
+            <div class="col-md-10 col-xs-12 text">
+              <h3>Estimates, Work Orders & Invoicing</h3>
+              <p id="p1"> Create estimates for approval, convert to Work Orders and email invoice to customer for payment. 
+              </p>
+            </div>
+          </div>
+          <div class="row desc">
+            <div class="col-md-2 col-xs-12 icon"> <i class="fa fa-tasks fa-4x"></i> </div>
+            <div class="col-md-10 col-xs-12 text">
+              <h3>Field Staff Tracking</h3>
+              <p id="p1"> Easily manage field staff for additional Work Orders based on their location. 
+              </p>
+            </div>
+          </div>
+          <div class="row desc">
+            <div class="col-md-2 col-xs-12 icon"> <i class="fa fa-cogs fa-4x"></i> </div>
+            <div class="col-md-10 col-xs-12 text">
+              <h3>Instant Notifications</h3>
+              <p id="p1"> Instant notification to field staff via SMS, email and PUSH technology. 
+              </p>
+            </div>
+          </div>
+          <div class="row desc">
+            <div class="col-md-2 col-xs-12 icon"> <i class="fa fa-map-marker fa-4x "></i> </div>
+        
+            <div class="col-md-10 col-xs-12 text">
+              <h3>Route Optimization</h3>
+              <p id="p1"> Route Optimization cuts miles driven reducing time on the road, fleet costs and co2 emissions. 
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="line">
+    <div class="boxes">
+      <div class="box"> <i class="fa fa-calendar fa-2x"></i> </div>
+      <div class="box"> <i class="fa fa-credit-card fa-2x"></i> </div>
+      <div class="box"> <i class="fa fa-tasks fa-2x"></i> </div>
+      <div class="box"> <i class="fa fa-cogs fa-2x"></i> </div>
+      <div class="box"> <i class="fa fa-map-marker fa-2x"></i> </div>
+    </div>
+    <div class="pb">
+      <div class="pb-item"></div>
+    </div>
+  </div>
+</div>
+
+<div class="press">
+  <div class="container text-center">
+    <div class="row">
+      <ul class="list-unstyled">
+        <li class="col-md-2 col-sm-4 col-xs-6"><a href="#"><img class="img-responsive" src="../assets/press/press-1.png" alt=""></a></li>
+        <li class="col-md-2 col-sm-4 col-xs-6"><a href="#"><img class="img-responsive" src="../assets/press/press-2.png" alt=""></a></li>
+        <li class="col-md-2 col-sm-4 col-xs-6 xs-break"><a href="#"><img class="img-responsive" src="../assets/press/press-3.png" alt=""></a></li>
+        <li class="col-md-2 col-sm-4 col-xs-6 sm-break"><a href="#"><img class="img-responsive" src="../assets/press/press-4.png" alt=""></a></li>
+        <li class="col-md-2 col-sm-4 col-xs-6 xs-break"><a href="#"><img class="img-responsive" src="../assets/press/press-5.png" alt=""></a></li>
+        <li class="col-md-2 col-sm-4 col-xs-6"><a href="#"><img class="img-responsive" src="../assets/press/press-6.png" alt=""></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--//press--> 
+<!-- ******WHY****** -->
+<section id="why" class="why section">
+  <div class="container">
+    <h2 class="title text-center">Why Use CopperService</h2>
+    <p class="intro text-center">More than 300,000 happy customers are using CopperService around the world</p>
+    <div class="row">
+      <div class="benefits col-md-12 col-sm-12 col-xs-12">
+        <div class="item clearfix">
+          <div class="icon col-md-1 col-xs-12 text-center"> <img src="../assets/img/shedule.png" width="90" height="90"></div>
+          <!--//icon-->
+          <div class="content col-md-3 col-xs-12">
+            <h3 class="title">Work Order Scheduling</h3>
+            <h4 class="after-title">Schedule Work Orders to available staff, optimize work load. Easily reassign existing Work Orders and schedule recurring Work Orders on calender.  </h4>
+          </div>
+          <!--//content-->
+          <div class="icon col-md-1 col-xs-12 text-center"> <img src="../assets/img/Mastercard-128.png" width="90" height="90"> </div>
+          <!--//icon-->
+          <div class="content col-md-3 col-xs-12">
+            <h3 class="title">Invoicing & Payments</h3>
+            <h4 class="after-title">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been </h4>
+          </div>
+          <!--//content-->
+          <div class="icon col-md-1 col-xs-12 text-center"> <img src="../assets/img/location.png" width="90" height="90"> </div>
+          <!--//icon-->
+          <div class="content col-md-3 col-xs-12">
+            <h3 class="title">Customer Tracking</h3>
+            <h4 class="after-title">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been </h4>
+          </div>
+          <!--//content--> 
+        </div>
+        <div class="item clearfix">
+          <div class="icon col-md-1 col-xs-12 text-center"> <img src="../assets/img/Customization.png" width="90" height="90"> </div>
+          <!--//icon-->
+          <div class="content col-md-3 col-xs-12">
+            <h3 class="title">Customization</h3>
+            <h4 class="after-title">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been </h4>
+          </div>
+          <!--//content-->
+          <div class="icon col-md-1 col-xs-12 text-center"> <img src="../assets/img/Flexible.png" width="90" height="90"> </div>
+          <!--//icon-->
+          <div class="content col-md-3 col-xs-12">
+            <h3 class="title">Flexible Reporting</h3>
+            <h4 class="after-title">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been </h4>
+          </div>
+          <!--//content-->
+          <div class="icon col-md-1 col-xs-12 text-center"> <img src="../assets/img/phone-128.png" width="90" height="90"> </div>
+          <!--//icon-->
+          <div class="content col-md-3 col-xs-12">
+            <h3 class="title">Mobile Access</h3>
+            <h4 class="after-title">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been </h4>
+          </div>
+          <!--//content--> 
+        </div>
+        <!--//item-->
+        <div class="clearfix"></div>
+        <div class="text-center"> <a class="btn btn-cta btn-cta-secondary" href="tour.html" >Learn how it works</a> </div>
+      </div>
+    </div>
+    <!--//row-->  
+  </div>
+  <!--//container--> 
+</section>
+<!--//why-->
+<!---------TESTIMONIALS------>
+<section class="testi section " id="why">
+  <div class="container">
+    <h2 class="title text-center">Testimonials</h2>
+    <p class="intro text-center">More than 300,000 happy customers are using CopperService around the world</p>
+    <div class="row">
+      <div class="testimonials col-md-12">
+        <div class="col-md-4">
+          <div class="item">
+            <div class="quote-box">
+              <blockquote class="quote">Love it! vehicula consequat cursus. Morbi bibendum cursus urna, quis rhoncus arcu. Curabitur vel sollicitudin leo. </blockquote>
+              <!--//quote-->
+              <p class="details"> <span class="name">Steven Turner</span> <span class="title">Bristol, UK</span> </p>
+              <i class="fa fa-quote-right"></i> 
+            </div>
+            <!--//quote-box-->
+            <div class="people text-center"> <img class="img-rounded user-pic" src="../assets/people/people-1.png" alt=""> </div>
+            <!--//people--> 
+          </div>
+        </div>
+        <!--//item-->
+        <div class="col-md-4">
+          <div class="item">
+            <div class="quote-box">
+              <blockquote class="quote">Great vehicula consequat cursus. Pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim! </blockquote>
+              <!--//quote-->
+              <p class="details"> <span class="name">Michelle Cheung</span> <span class="title">San Francisco, US</span> </p>
+              <i class="fa fa-quote-right"></i> 
+            </div>
+            <!--//quote-box-->
+            <div class="people text-center"> <img class="img-rounded user-pic" src="../assets/people/people-2.png" alt=""> </div>
+            <!--//people--> 
+          </div>
+        </div>
+        <!--//item-->
+        <div class="col-md-4">
+          <div class="item last">
+            <div class="quote-box">
+              <blockquote class="quote">Excellent Vivamus sit amet tortor id orci interdum CopperServicer sed sit amet ante, pretium quis, sem. Nulla consequat massa quis enim! </blockquote>
+              <!--//quote-->
+              <p class="details"> <span class="name">James Lee</span> <span class="title">London, UK</span> </p>
+              <i class="fa fa-quote-right"></i> 
+            </div>
+            <!--//quote-box-->
+            <div class="people text-center"> <img class="img-rounded user-pic" src="../assets/people/people-3.png" alt=""> </div>
+            <!--//people--> 
+          </div>
+        </div>
+        <!--//item--> 
+      </div>
+    </div>
+    <!--//row--> 
+  </div>
+</section>
+<!---------//TESTIMONIALS------>
+<section class="why section " id="why">
+  <div class="container">
+    <div class="col-md-8 col-xs-12">
+      <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInLeft delayp1" style="opacity: 0;">
+        <h2 class="title text-center"> Additional Tools to Help Your Workflow</h2>
+        <p class="intro text-center">More than 300,000 happy customers are using CopperService around the world</p>
+      </div>
+    </div>
+    <div class="col-md-4 col-xs-12">
+      <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInLeft delayp1" style="opacity: 0;"> <a class="btn btn-cta btn-cta-secondary" href="tour.html" >View The Complete Feature Tour</a> </div>
+    </div>
+  </div>
+</section>
+<!-- ******VIDEO****** -->
+<section id="video" class="video section">
+  <div class="container">
+    <h2 class="title">Grow your business, start today!</h2>
+    <p class="summary">If you have a promo video, you can put it in this block. Vitae dapibus elit viverra. Praesent ullamcorper dignissim arcu, at vulputate ligula suscipit eu.</p>
+    <div class="control text-center">
+      <button class="play-trigger" data-toggle="modal" data-target="#tour-video"><i class="fa fa-play"></i></button>
+      <p>Watch Video</p>
+      <!-- Video Modal -->
+      <div class="modal fade modal-video" id="tour-video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 id="videoModalLabel" class="modal-title">Video Tour</h4>
+            </div>
+            <div class="modal-body">
+              <div class="video-container">
+                <iframe src="//player.vimeo.com/video/32424882?color=ffffff&amp;wmode=transparent" width="720" height="405" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+              </div>
+              <!--//video-container--> 
+            </div>
+            <!--//modal-body--> 
+          </div>
+          <!--//modal-content--> 
+        </div>
+        <!--//modal-dialog--> 
+      </div>
+      <!--//modal--> 
+    </div>
+    <!--//control--> 
+  </div>
+</section>
+<!--//video--> 
+<!-- ******FAQ****** -->
+
+<section id="faq" class="faq section has-bg-color">
+  <div class="container">
+    <h2 class="title text-center">Frequently Asked Questions</h2>
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a data-parent="#accordion"
+              data-toggle="collapse" class="panel-toggle" href="#faq1"><i class="fa fa-plus-square"></i>Why is CopperService the best time solution for us?</a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="faq1">
+            <div class="panel-body">Our field service solution helps manage your customers and field staff, schedule and dispatch field staff, send estimates and email invoices. You get also get instant notifications vial SMS to better manage your staff and project. Our solution helps increase your productivity and efficiency and provide complete visibility to Work Orders, invoices and improves your cash flow and eliminate paperwork.
+            </div>
+          </div>
+        </div>
+        <!--//panel-->
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a data-parent="#accordion"
+              data-toggle="collapse" class="panel-toggle" href="#faq2"><i class="fa fa-plus-square"></i>Which methods of payment do you accept?</a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="faq2">
+            <div class="panel-body"> We take our payments through Credit Card or Paypal. So, if you have a Paypal account, you can just use that. If you don't have a Paypal account, you can quickly and easily pay using Visa, Mastercard or AMEX. 
+            </div>
+          </div>
+        </div>
+        <!--//panel-->
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a data-parent="#accordion"
+              data-toggle="collapse" class="panel-toggle" href="#faq3"><i class="fa fa-plus-square"></i>Can I cancel my account at any time?</a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="faq3">
+            <div class="panel-body"> Yes. You can cancel your account at any time without penalty.
+            </div>
+          </div>
+        </div>
+        <!--//panel-->
+<!--         <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a data-parent="#accordion"
+              data-toggle="collapse" class="panel-toggle" href="#faq4"><i class="fa fa-plus-square"></i>Can I ipsum dolor sit amet nascetur ridiculus?</a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="faq4">
+            <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life
+              accusamus terry richardson ad squid. 3 wolf moon officia
+              aute, non cupidatat skateboard dolor brunch. Food truck
+              quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon CopperServicer,
+              sunt aliqua put a bird on it squid single-origin coffee
+              nulla assumenda shoreditch et. Nihil anim keffiyeh
+              helvetica, craft beer labore wes anderson cred nesciunt
+              sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+              Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them
+              accusamus labore sustainable VHS. 
+            </div>
+          </div>
+        </div> -->
+        <!--//panel--> 
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a data-parent="#accordion"
+              data-toggle="collapse" class="panel-toggle" href="#faq5"><i class="fa fa-plus-square"></i>Is there a discount for yearly payment?</a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="faq5">
+            <div class="panel-body">Yes. We offer a 20% discount to our yearly prepaid accounts.
+            </div>
+          </div>
+        </div>
+        <!--//panel-->
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a data-parent="#accordion"
+              data-toggle="collapse" class="panel-toggle" href="#faq6"><i class="fa fa-plus-square"></i>Can we sign up for free trial?</a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="faq6">
+            <div class="panel-body">Yes. We provide the 30-day free trial to give our users the chance to try out the full features with their team. We will only charge your credit card after the trial has ended.
+            </div>
+          </div>
+        </div>
+        <!--//panel-->
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a data-parent="#accordion"
+              data-toggle="collapse" class="panel-toggle" href="#faq7"><i class="fa fa-plus-square"></i>How much do SMS messages cost?</a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="faq7">
+            <div class="panel-body"> SMS messages are currently included of your monthly subscription. 
+            </div>
+          </div>
+        </div>
+        <!--//panel-->
+<!--         <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a data-parent="#accordion"
+              data-toggle="collapse" class="panel-toggle" href="#faq8"><i class="fa fa-plus-square"></i>Can I imperdiet massa ut?</a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="faq8">
+            <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life
+              accusamus terry richardson ad squid. 3 wolf moon officia
+              aute, non cupidatat skateboard dolor brunch. Food truck
+              quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon CopperServicer,
+              sunt aliqua put a bird on it squid single-origin coffee
+              nulla assumenda shoreditch et. Nihil anim keffiyeh
+              helvetica, craft beer labore wes anderson cred nesciunt
+              sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+              Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them
+              accusamus labore sustainable VHS. 
+            </div>
+          </div>
+        </div> -->
+        <!--//panel--> 
+      </div>
+    </div>
+    <!--//row-->
+    <div class="more text-center">
+      <h4 class="title">More questions?</h4>
+      <a class="btn btn-cta btn-cta-secondary" href="contact.html">Get in touch</a> 
+    </div>
+  </div>
+  <!--//container--> 
+</section>
+<!--//faq--> 
+<!-- ******SIGNUP****** -->
+<section id="signup" class="signup">
+  <div class="container text-center" id="back-shadow2">
+    <h2 class="title">Ready to kickstart your business with CopperService?</h2>
+    <p class="summary">Sign up to try CopperService FREE for 30 days! No credit card needed.</p>
+    <form class="signup-form">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Enter your email address">
+      </div>
+      <button type="submit" class="btn btn-cta btn-cta-primary">SIGN UP</button>
+    </form>
+    <!--//signup-form--> 
+  </div>
+</section>
+<!--//signup--> 

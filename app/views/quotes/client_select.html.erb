@@ -1,0 +1,16 @@
+<div class="client_index">
+  <div class="main_container">
+    <div class ="search-div row" style="margin-top: 30px;">
+      <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Clients...",:require=>true,:id=>"search_input_job_client_model",:style=>"width: 20%; float: left; height: 27px;",:onkeyup => "searchClientQuoteModel($(this).val())" %>
+      <span class="or" style="margin: 7px 35px; float:left;">or</span>      
+      <%= link_to 'Create New Customer', new_client_path(:id=>"quote"),:style=> "float: left;" ,:class=>"button_new_create"%></div><br/><br/>
+    	<div data-thicklist="true" data-thicklist-remote="true" data-thicklist-headers="true" class="thicklist index_thicklist index_quote quotes_sort">
+    	  <div class="row_holder extend_to_footer " style="overflow: auto; height: 400px;">
+    	 <h4>Some Recently Used Customers:</h4>
+      </br>
+  	  <ul class="thicklist quotes_client" id="client_list_display"> 
+        <%= render "search_quote_client"%>
+      </ul>
+    </div>
+  </div>
+</div>

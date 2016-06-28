@@ -1,0 +1,45 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">view preference vendors</h4>
+    </div>
+    <div class="modal-body">
+      <%if !@vendors.blank?%>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Location Name</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zipcode</th>
+          </tr>
+          </thead>
+          <%@vendors.each do |vendor|%>
+            <tr>
+              <td><%= vendor.location_name%></td>
+              <td><%= vendor.street%></td>
+              <td><%= vendor.city%></td>
+              <td><%= vendor.state%></td>
+              <td><%= vendor.zipcode%></td>
+            </tr>
+          <%end%>
+        </table>
+      <%else%>
+        <div class="clearfix"></div>
+        <i style="padding:10px; border: 1px solid #dadada;">No Vendors Preference added.</i>
+      <%end%>  
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default model_cancel_button" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#prefer-view{
+  left:40%;
+  width: 60%;
+}
+</style>

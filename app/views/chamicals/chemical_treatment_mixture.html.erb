@@ -1,0 +1,50 @@
+<div class="client_index">
+  <div class="main_container">
+    <div id="head">
+      <div class="breadcrumbs hide_for_print">Back to: <%= link_to 'Chemical Tracking Setup', chemical_treatment_setting_path %> &gt; 
+      </div>
+      <h1>New Mixture</h1>
+    </div>
+
+    <%= form_for @chemical_treatment_mixture,  :url => url_for(:controller => 'chamicals', :action => 'create_mixture'), class: "compressed_form chemical_treatment_mixture" do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <p class="clear">
+        <label class="large" for="chemical_treatment_mixture_name">Name</label>
+        <%= f.text_field :name, class: "large" %>
+      </p>
+      <%= f.hidden_field :chemical_treatment_setting_id, value: "", class: "large" %>
+      <p class="clear">
+        <label for="chemical_treatment_mixture_targeted_pest">Targeted pest</label>
+        <%= f.text_field :targeted_pest, class: "large" %>
+      </p>
+      <div class="clear">
+        <ul class="mixture_chemical">
+          <li>Chemical</li>
+            <li>Concentration</li>
+        </ul>
+      </div>
+
+      <div class="clear">
+        <ul id="chemicals" class="mixture_chemical_new">
+          <li></li>
+          <li>
+            <%= select_tag "chemical_treatment_mixture[chemicals][0][name]", options_for_select(get_chemicals_mixture_name(@chemical_treatment_setting)) %>
+              <%= text_field_tag "chemical_treatment_mixture[chemicals][0][concentration]" %>
+            <a class="cancel" href="#" onclick="$(this).parent().remove();; return false;">Remove</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="clear">
+        <a href="#" id="add_chemical" onclick="add_mixture(); return false;" class="add_button_setting" style="margin-left: 0;"> + Add a Chemical</a>
+      </div>
+
+      </br></br>
+      
+      <p class="submit_holder">
+        <input class="add_button_setting" name="commit" type="submit" value="Save Mixture" style="float:right;">
+        <a class="model_cancel_button cancel" href="<%= chemical_treatment_setting_path%>">Cancel</a>
+      </p>
+    <%end%>
+  </div>
+</div>

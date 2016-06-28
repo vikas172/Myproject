@@ -1,0 +1,70 @@
+<div class="tables" style="margin-top:4px!important;">
+  <table class="sortable wide" cellspacing="0" cellpadding="0" id="report_jobs">
+    <thead class="thead">
+      <tr>
+        <th width="116px" class="client_name">Customer Name</th>
+        <th width="169px" class="job">job #</th>
+        <th width="151px" class="create_date">Create Date</th>
+        <th width="186px" class="issue_date">Issue Date</th>
+        <th width="166px" class="due_date">Due Date</th>
+        <th width="186px" class="marked_paid_date">Marked Paid Date</th>
+        <th width="169px" class="hash"># </th>
+        <th width="169px" class="status_s">Status</th>
+        <th width="169px" class="doller">$</th>
+        <th width="180px" class="tax">Tax %</th>
+        <th width="169px" class="deposit">Deposit</th>
+        <th width="89px" class="discount">Discount</th>
+        <th width="169px" class="tax_amount">Tax Amount</th>
+        <th width="169px" class="billing_city">Billing City</th>
+        <th width="169px" class="billing_state">Billing State</th>
+        <th width="42px" class="open">Open</th>
+      </tr>
+    </thead>
+    <% unless @invoice.blank?%>
+      <% @invoice.each_with_index do |invoice,i| %>
+        <tr> 
+          <td class="client_name" ><%= invoice.client.first_name %></td>
+          <td class="job">
+            <% unless invoice.jobs_id.blank?%>
+              <% invoice.jobs_id.each do |id|%>
+                <%= link_to "##{id.to_i rescue "--"}", job_path(id), :target=>"_blank"%>
+              <%end%>
+            <%else%>
+              --
+            <%end%>
+          </td>
+          <td class="create_date" ><%= invoice.created_at.strftime("%d/%m/%Y") rescue "--" %></td>
+          <td class="issue_date"><%= invoice.try(:issued_date).strftime("%d/%m/%Y") rescue "--" %></td>
+          <td class="due_date"><%= invoice.try(:due_date).strftime("%d/%m/%Y") rescue "--" %></td>
+          <td class="marked_paid_date"><%= invoice.try(:issued_date).strftime("%d/%m/%Y") rescue "--" %></td>
+          <td class="hash"><%= invoice.id rescue "" %></td>
+          <td class="status_s">
+            <%if invoice.mark_sent == false%>
+              <span>Draft</span>
+            <%elsif invoice.invoice_bad_debt== false%>
+              <%if invoice.invoice_paid==false%>
+                <span >Outstanding</span>
+              <%else%>
+                <span >Paid</span>
+              <%end%>
+            <%else%>
+              <span >Bad Debt</span>
+            <%end%>
+          </td>
+          <td class="doller"><%= calulate_job_amount(invoice) rescue "" %></td>
+          <td class="tax"><%= invoice.tax rescue "" %></td>
+          <td class="deposit"><%= invoice.deposite_amount rescue "" %></td>
+          <td class="discount"><%= invoice.discount_amount rescue "" %></td>
+          <td class="tax_amount"><%= get_tax_amount(invoice) rescue "" %></td>
+          <td class="billing_city"><%= invoice.client.city rescue "" %></td>
+          <td class="billing_state"><%= invoice.client.city rescue "" %></td>
+          <td class="open"><a target="_blank" href="/invoices/<%=invoice.id%>" class="open ui-icon ui-icon-newwin">open</a></td>
+        </tr>  
+      <% end %>
+    <%end%> 
+  </table>
+</div>
+<script type="text/javascript">
+  table_sort_function()
+  table_column_select()
+</script>

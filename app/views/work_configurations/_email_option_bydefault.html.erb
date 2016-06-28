@@ -1,0 +1,120 @@
+<div>
+  <div class="config_description">
+    Customize the e-mail subject line and body for Invoices, Quotes, Payment and Deposit Receipts, and Statements that you send through CopperService. <br><br> You can use the {{VARIABLES}} as placeholders for values that change. <br> Check out <a target="_blank" href="https://learn.getcopperservice.com/hc/en-us/articles/200705904">our documentation</a> for a list of all available variable tags. 
+  </div>
+
+  <h4 class="title2-font">Invoices</h4>
+  <p>
+    <label for="work_configuration_invoice_default_email_subject">Subject Line</label>
+    <input type="text" value="Invoice from {{COMPANY_NAME}} - {{INVOICE_SUBJECT}}" name="work_configuration[invoice_default_email_subject]" id="work_configuration_invoice_default_email_subject" class="set_text_width">
+  </p>
+  <p>
+    <label for="work_configuration_invoice_default_email_message">Message</label>
+    <textarea rows="10" name="work_configuration[invoice_default_email_message]" id="work_configuration_invoice_default_email_message" class="set_text_width">
+Greetings {{CLIENT_NAME}},
+
+Thank you for your recent business with us. Please find attached a detailed copy of Invoice {{INVOICE_NUMBER}} for '{{INVOICE_SUBJECT}}'.
+
+The total amount due is {{INVOICE_TOTAL}}, to be paid by {{INVOICE_DUE_DATE}}.
+
+If you have any questions or concerns with this invoice, please don't hesitate to get in touch with us at {{DEFAULT_EMAIL}}.
+
+Sincerely,
+{{COMPANY_NAME}}
+</textarea></p>
+  <p></p>
+
+<hr style="border-color:#ccc;">
+
+  <h4 class="title2-font">Estimate</h4>
+  <p>
+<label for="work_configuration_quote_default_email_subject">Subject Line</label>
+<input type="text" value="Quote from {{COMPANY_NAME}} - {{CURRENT_DATE}}" name="work_configuration[quote_default_email_subject]" id="work_configuration_quote_default_email_subject" class="set_text_width">
+  </p>
+  <p>
+<label for="work_configuration_quote_default_email_message">Message</label>
+<textarea rows="10" name="work_configuration[quote_default_email_message]" id="work_configuration_quote_default_email_message" class="set_text_width">
+Greetings {{CLIENT_NAME}},
+
+Thank you for asking us to Estimate on your project. Please find a detailed copy of our Estimate attached to this e-mail.
+
+The Estimate total is {{QUOTE_TOTAL}} as of {{QUOTE_SENT_DATE}}.
+
+If you have any questions or concerns regarding this Estimate, please don't hesitate to get in touch with us at {{DEFAULT_EMAIL}}.
+
+Sincerely,
+{{COMPANY_NAME}}
+</textarea>
+    </p>
+  <p></p>
+
+<hr style="border-color:#ccc;">
+
+  <h4 class="title2-font">Payment and Deposit Receipts</h4>
+  <p>
+<label for="work_configuration_balance_adjustment_default_email_subject">Subject Line</label>
+<input type="text" value="Receipt from {{COMPANY_NAME}} - {{CURRENT_DATE}}" name="work_configuration[balance_adjustment_default_email_subject]" id="work_configuration_balance_adjustment_default_email_subject" class="set_text_width">
+</p>
+<p>
+<label for="work_configuration_balance_adjustment_default_email_message">Message</label>
+<textarea rows="10" name="work_configuration[balance_adjustment_default_email_message]" id="work_configuration_balance_adjustment_default_email_message" class="set_text_width">
+Greetings {{CLIENT_NAME}},
+
+Please find attached a receipt for your {{PAYMENT_OR_DEPOSIT}} of {{PAYMENT_AMOUNT}}.
+If you have any questions or concerns, please don't hesitate to get in touch with us at {{DEFAULT_EMAIL}}.
+
+Sincerely,
+{{COMPANY_NAME}}
+</textarea>
+</p>
+<p></p>
+
+<hr style="border-color:#ccc;">
+
+  <h4 class="title2-font">Statements</h4>
+  <p>
+<label for="work_configuration_statement_default_email_subject">Subject Line</label>
+<input type="text" value="Statement from {{COMPANY_NAME}} - {{CURRENT_DATE}}" name="work_configuration[statement_default_email_subject]" id="work_configuration_statement_default_email_subject" class="set_text_width">
+  </p>
+  <p>
+<label for="work_configuration_statement_default_email_message">Message</label>
+<textarea rows="10" name="work_configuration[statement_default_email_message]" id="work_configuration_statement_default_email_message" class="set_text_width">
+Greetings {{CLIENT_NAME}},
+
+Please find attached a detailed statement attached. It is valid as of {{CURRENT_DATE}}.
+If you have any questions or concerns with this statement, please don't hesitate to get in touch with us at {{DEFAULT_EMAIL}}.
+
+Sincerely,
+{{COMPANY_NAME}}
+</textarea>
+    </p>
+<p></p>
+
+<hr style="border-color:#ccc;">
+<h4 class="title2-font">Signed Documents</h4>
+<p>
+<label for="work_configuration_note_default_email_subject">Subject Line</label>
+<input type="text" value="Signed document from {{COMPANY_NAME}} - {{CURRENT_DATE}}" name="work_configuration[note_default_email_subject]" id="work_configuration_note_default_email_subject" class="set_text_width">
+</p>
+<p>
+<label for="work_configuration_note_default_email_message">Message</label>
+<textarea rows="10" name="work_configuration[note_default_email_message]" id="work_configuration_note_default_email_message" class="set_text_width">
+Greetings {{CLIENT_NAME}},
+
+Attached is a signed document for your records.
+
+If you have any questions or concerns, please don't hesitate to get in touch with us at {{DEFAULT_EMAIL}}.
+
+Sincerely,
+{{COMPANY_NAME}}
+</textarea>
+</p>
+  <p></p>
+
+
+
+  <br>
+
+</div>
+
+<style type="text/css"> .set_text_width {width:700px;}</style>

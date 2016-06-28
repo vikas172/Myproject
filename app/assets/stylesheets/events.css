@@ -1,0 +1,108 @@
+.fc-event{
+	border-radius: 0px!important;
+	border-left-width: 5px!important;
+/*	color: white!important;*/
+	/*background-color: white;*/
+}
+.popover-content {
+padding: 0px!important;
+}
+.copperservice-popup .innerFrame .header .title {
+text-transform: capitalize;
+padding: 5px 5px 5px 5px;
+border-bottom: 1px solid #DDDDDD;
+}
+.copperservice-popup .innerFrame .header {
+color: #333333;
+font-size: 13px;
+font-weight: bold;
+padding: 2px 5px;
+position: relative;
+text-transform: capitalize;
+z-index: 41;
+}
+.modal-body{
+	overflow-y: auto !important;
+  /*max-height: 100% !important;*/
+}
+.copperservice-popup.arrow{
+	top: 6%!important;
+}
+
+
+
+#unscheduled {
+    background-color: #f9fafb;
+    border: 1px solid #c4c4bc;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    margin: 80px 0 20px;
+    position: relative;
+}
+#unscheduled h3#unscheduled_header.thead {
+    background-color: #e0e0e0;
+    background-image: none;
+    border-bottom: 1px solid #c4c4bc;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 0;
+    padding: 7px 10px;
+    text-align: left;
+    color: #1a1a1a;
+    font-weight: bold;
+}
+
+#unscheduled #unscheduled_list {
+  padding: 8px 0;
+}
+
+#unscheduled_list .popover-markup {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #FF4500;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px 3px;
+    margin: 2px;
+    padding: 2px 5px;
+    display: inline-block;
+}
+#unscheduled_list .popover-markup a{
+  color: #333;
+  font-size: 0.85em;
+}
+
+#unscheduled_list > ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+.fc-button.fc-button-today.fc-state-default.fc-corner-left.fc-corner-right.fc-state-disabled {
+   position: absolute!important;
+    top: 105px;
+    z-index: 999;
+   /* display: none !important; */
+}
+.fc-button.fc-button-today.fc-state-default.fc-corner-left.fc-corner-right {
+    position: absolute!important;
+    top: 120px;
+    z-index: 999;
+}
+.fc-state-default:hover{
+  background: #1f518b;
+  color: #fff;
+  border-radius: 2px;
+  background-image: none;
+}
+.fc-state-default{
+  border-radius: 2px;
+  background-image: none;
+}
+.fc-header-title {
+    display: none !important;
+}
+.fc-event {
+    color: black !important;
+}

@@ -1,0 +1,11 @@
+ <%= form_for :job_works, url: job_work_path ,method: "post" , :html=> {:id => "1",:class=>'clas row_div work_order_line_item'},:remote=>true do |f|%>
+  <%=f.hidden_field :job_id,:value=>@job.id %>
+  <%= f.text_field :name,:placeholder=>"name...",:style=>"margin-left: -3%; width: 14%;",:id=>"p_name_1",:required=>true,:class=>"work_name"%>
+  <%= f.text_area :description,:placeholder=>"description...",:style=>"height: 47px; width: 14%; margin-left: 10%;",:id=>"p_description_1" ,:class=>"work_description"%>
+  <%= f.text_field :quantity,:value=>"1",:style=>"width: 4%; margin-left: 23%;",:id=>"p_quantity_1",:onchange=>"AddjobQuantity($(this).val(),1)"%>$
+  <%= f.text_field :unit_cost,:placeholder=>"0.00",:style=>"width: 4%; margin-left: 8%;",:id=>"p_unit_cost_1" ,:onchange=>"AddJobUnitCost($(this).val(),1)"%>$
+  <%= f.text_field :total,:placeholder=>"0.00",:style=>"width: 4%; margin-left: 9%;",:id=>"p_total_1",:class=>"p_total" ,:readonly => true%>
+  <div class="clear"></div>
+  <%=f.submit "Save" ,:style=>"float:right; margin-top: 0.2%; margin-right: 4%;",:class=>"save btn btn-success" %>
+  <span style="float:right;" class="remScnt btn btn">cancel</span>
+<% end %>

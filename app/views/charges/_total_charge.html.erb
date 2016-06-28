@@ -1,0 +1,30 @@
+<div class="container">
+  <div id="cost_breakdown" class="clearfix" style="margin-top: 25px;">
+    <div class="bar clearfix" style=" display: inline;">
+      <div class="cost_type sum_for_total" >
+        <h5>Base Cost<small>?</small></h5>
+        <div>
+          <sup class="amount_sign">$</sup><%= @base_charge.to_f/100 rescue 0 %>
+        </div>
+      </div>
+      <div class="cost_type sum_for_total" >
+        <h5>Additional Logins <small>?</small></h5>
+        <div>
+          <sup class="amount_sign">$</sup>0
+        </div>
+      </div>
+      <div id="addons_summary" class="cost_type sum_for_total" >
+        <h5>Add-ons<small>?</small></h5>
+        <div>
+          <sup class="amount_sign">$</sup><%= @active_addon %>
+        </div>
+      </div>
+      <div class="cost_type" id="monthly_charge_amount" >
+        <h5>Estimated Monthly Total <small>?</small></h5>
+        <div>
+          <sup class="amount_sign">$</sup><%= @base_charge.to_f/100 + @active_addon.to_i %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

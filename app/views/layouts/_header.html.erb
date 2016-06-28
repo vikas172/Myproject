@@ -1,0 +1,308 @@
+<div class="navbar navbar-fixed-top" >
+  <div class="navbar-inner">
+    <div class="">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <div class="nav-collapse">
+        <!--    <ul class="nav"> -->
+        <% if user_signed_in? %>
+          <nav class="dashboard-header">
+            <div id="primary_nav">
+              <div class="content">
+                <div class="tabs">
+                  <div class="col-md-8" style="margin:0 !important; padding:0 !important;">
+                    <%= link_to dashboard_path ,:class=>"logo-image" do %>
+                      <%= image_tag "logo333.png",:width=>"24"%>
+                    <% end %>
+                   <li><%#= link_to "Chat Box", chat_popup_email_notifications_path%>
+                    <%= link_to "DASHBOARD", dashboard_path, class: "#{get_dashboard_active("dashboards", "dashboard")}" %>
+                    <%= link_to "SCHEDULER", events_path, class: "#{get_calendr_active("events", "index")}" %>
+                    <%if set_view_permission_client_property(@team_member)%>
+                      <%= link_to "POOLS", properties_path, class: "#{get_prop_active(params[:controller], "index")}" %>
+                    <%end%>
+                    <%if set_view_permission_client_property(@team_member)%>
+                      <%= link_to "CUSTOMERS", clients_path, class: "#{get_client_active(params[:controller], "index")}" %>
+                    <%end%> 
+                    <%if set_view_permission_work(@team_member)%>
+                      <%= link_to "JOBS", quotes_path, class: "#{get_work_active(params[:controller], "work")}" %>
+                    <%end%>
+                    <%if current_user.user_type=="admin"%>
+                      <%= link_to "EXPENSES", expenses_path, class: "#{get_expense_active("expenses", "index")}" if get_add_on_status(@active_addon, "expenses") %>
+                    <%end%>
+                      <%= link_to "TIMESHEETS", timesheets_path, class: "#{get_time_active(params[:controller],"index")}"%>
+
+                    <%= link_to "ROUTING", routes_path, class: "#{get_subtab_active("home", "routes")}" %>
+
+                    <%if current_user.user_type == "admin" %> 
+                      <ul class="nav" style="float: left ! important;">
+                        <li class="dropdown admin-text">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="border-left:none;">ADMIN<span class="caret" style="margin-top: 14px;"></span></a>
+                          <ul class="dropdown-menu admin_dropdown admin-drop adminss" role="menu">
+                            <li><%= link_to 'Settings', accounts_edit_path %></li>
+                             <li><%= link_to "Vendors",vendor_setting_vendors_path %></li>
+                            <li><%= link_to 'Change Plan',plan_subscriptions_path %></li>
+                            <li><%= link_to "Billing",charges_new_path %></li>
+                            <li><%= link_to "Payroll", payroll_timesheets_path %></li>
+                            <li><%= link_to "QuickBooks",accounts_syncer_qb_show_path, class: "sync_icon", title: "Sync with QuickBooks" %></li>
+                            <li><%= link_to "Stripe Connect", "/users/auth/stripe_connect" %></li>
+                            <li><%= link_to "CallManager",ivrs_path, class: "sync_icon", title: "Call Manager" if get_add_on_status(@active_addon, "call")%></li>
+                            <li><%= link_to "Ads", classifieds_path %></li>
+                            <li><%= link_to "Leads",leads_path %></li>
+                            <li><%= link_to "Communication", communication_path %></li>
+                            <li><%= link_to "Files",document_box_documents_path ,:id=>"new_document_show",:class=>"has_icon",:remote=>true, data: {toggle: "modal", target: '#file_document_show'} ,:style=>"border-style:none;width: 89%;"%></li> 
+                            <li><%= link_to "Inventory", items_path  if get_add_on_status(@active_addon, "item")%></li>
+                            <li><%= link_to "Reports", reports_path %></li>
+                            
+                              <li><%= link_to "Manage Data",manage_data_path %>
+                            </li>
+                            <li><%= link_to "Fleet Management", vehicles_path(static_data:"static_vehicle") %></li>
+                            <li><%= link_to "Payment Terminal", payment_terminal_path,:id=>"payment_terminal_box",:class=>"has_icon",:remote=>true, data: {toggle: "modal", target: '#payment_terminal'} %></li>
+                          </ul>
+                        </li>  
+                      </ul>
+                    <%end%>
+                  </div>  
+
+                  <div class="col-md-4 pull-right" style="margin:0 !important; padding:0 !important;">
+                    <ul class="nav pull-right header-iconss">
+                      <!-- <li style="color: white;font-size: 20px;line-height: 38px;margin-right: 0px; cursor:pointer;" id="communication-center"> -->
+                      <li  id="chat_show">
+                        <a >
+                          <i class="fa fa-comments-o fa-lg" title='Messages'></i>
+                          <%= @unread_message_show.count rescue "0"%>
+                        </a>
+                      </li>
+                      <li  id="communication-center" class="email-data">
+                        <a >
+                          <i class="fa fa-envelope-o" title='Mail'></i>
+                          <%= @notifications.count rescue "0"%>
+                        </a>
+                      </li>
+                      <%if current_user.user_type=="admin"%>
+                      <li id="communication-center" class="message-data">
+                        <a >
+                          <!-- <span class="imagess" title='Sms'></span> -->
+                          <i class="fa fa-comment-o" title='Sms'></i>
+                          <%= @message_notifications.count rescue "0"%>
+                        </a>
+                      </li>
+                      <%end%>
+
+                      <li id="update_notify"  >
+                        <a href="#">
+                          <i class="fa fa-bell-o fa-3"  title='Notifications'>
+                            <span id="count_notification">0</span>
+                          </i>
+                        </a>
+                      </li>
+
+                      <li class="dropdown admin-text help">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="border-left:none;">HELP<span class="caret" style="margin-top: 14px;"></span>
+                        </a>
+                        <ul class="dropdown-menu admin-drop" role="menu">
+                          <li> 
+                            <%= link_to "Docs & Support","#" %>
+                          </li>
+
+                          <li> 
+                            <%= link_to "Documentation","#" %>
+                          </li>
+
+                          <li class="divider"  ></li>
+
+                          <li> 
+                            <%= link_to "How to Videos","#"  %>
+                          </li>
+
+                          <li>
+                            <%= link_to "Contact Support",new_support_path,:remote=>true ,:data=>{toggle: "modal",:target=>"#support_new"} %>
+
+                          </li>     
+                        </ul>
+                      </li>
+
+                      <li class="dropdown admin-text">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="border-right:none;">
+                          <i class="fa fa-gear"></i><%=truncate(current_user.full_name, :length => 5)%>
+                          <span class="caret" style="margin-top: 14px;"></span>
+                        </a>
+
+                        <ul class="dropdown-menu admin-drop setting-box" role="menu">
+                          
+                          <% if user_signed_in? %>
+                            <li>
+                              <%= link_to "Edit Profile",edit_user_registration_path %>
+                            </li>
+
+                            <li>  
+                              <%= link_to "Log out",destroy_user_session_path,:method=>:get %>
+                            </li>
+                          <%else%>
+                            <li> 
+                              <%= link_to "Login",new_user_session_path %>
+                            </li>
+        
+                            <li>  
+                              <%= link_to "Signup",new_user_registration_path %>
+                            </li>
+                         <%end%>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>  
+                </div>
+              </div>
+            </div>
+
+            <% if get_subnav %>
+              <div id="sub_nav"  style="float: left; width: 127%;">
+                <div class="content">
+                  <%if current_user.user_type=="admin" %>
+                    <%= link_to "ESTIMATES", quotes_path, class: "#{get_subtab_active("quotes", params[:action])}" %>
+                    <%= link_to "WORK ORDERS", jobs_path, class: "#{get_subtab_active("jobs", params[:action])}" %>
+                    <%= link_to "INVOICES", invoices_path, class: "#{get_subtab_active("invoices", params[:action])}" %>
+                    <%#= link_to "PAYMENTS", payment_invoice_path , class: "#{get_subtab_active("pay_invoices", "payment_invoice")}"%>
+                    <%#= link_to "CHEMICALS", chamicals_path, class: "#{get_chemical_active("chamicals", "")}" if get_add_on_status(@active_addon, "chemical_treatments") %>
+                  <%else%>
+                    <%if set_view_permission_for_work_client_property(current_user.permission.permission_quotes)%>
+                      <%= link_to "ESTIMATES", quotes_path, class: "#{get_subtab_active("quotes", params[:action])}" %>
+                    <%end%>
+
+                    <%if set_view_permission_for_work_client_property(current_user.permission.permission_jobs)%>
+                      <%= link_to "WORK ORDERS", jobs_path, class: "#{get_subtab_active("jobs", params[:action])}" %>
+                    <%end%> 
+                    
+                    <%if set_view_permission_for_work_client_property(current_user.permission.permission_invoices)%>
+                      <%= link_to "INVOICES", invoices_path, class: "#{get_subtab_active("invoices", params[:action])}" %>
+                    <%end%>
+                  <%end%>
+                </div>
+              </div>
+            <%end%>
+          </nav>
+          <div>
+            <%if get_add_on_status(@active_addon, "quickbooks_ids")%>
+              <%if current_user%>
+                <%if !current_user.qb_token.blank?%>
+                  <ipp:bluedot></ipp:bluedot>
+                <%end%>
+              <%end%>
+            <%end%>
+          </div>
+        <% end %>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+<%= render "conversations/notify_show"%>
+<%= render "email_notifications/chat_popup"%>
+<div class="modal fade" id="file_document_show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;"></div>
+<div class="modal fade" id="payment_terminal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;"></div>
+<div class="modal fade" id="communication-centers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;"></div>
+
+<div class="modal fade" id="backup_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;"></div>
+<script type="text/javascript">
+  $(function () {
+        $("[rel='tooltip']").tooltip();
+    });
+  $(document).ready(function()
+  {
+    $("#update_notify").click(function()
+    {
+      $.ajax({
+           type: "get",
+           url: "/conversations/update_notify"
+           }); 
+      $("#mydiv_notify").css("display","block");
+      $("#notificationContainer").fadeToggle(300);
+      $("#notification_count").fadeOut("slow");
+      return false;
+    });
+
+    //Document Click hiding the popup 
+    $(document).click(function()
+      {
+      $("#notificationContainer").hide();
+      });
+
+    //Popup on click
+    $("#notificationContainer").click(function()
+      {
+      // return false;
+      });
+  });
+
+  $("body").on("click","#communication-center",function(){
+    $(".comm-loader").css("display","block");
+    $.ajax({
+         type: "get",
+         url: "/communication_header"
+         }); 
+  })
+  var myVar;
+  $(".email-data").click(function()
+    {
+      myVar = setTimeout(function(){$(".add-enblop").click();}, 1500);
+     
+  });
+
+var newVar;
+  $(".message-data").click(function()
+    {
+      newVar = setTimeout(function(){$(".add-sms").click();}, 1500);
+     
+  });
+$(document).ready(function()
+  {
+    $("#chat_show").click(function()
+    {
+      $.ajax({
+           type: "get",
+           url: "/email_notifications/chat_popup"
+           });
+      $("#chatboxContainer").fadeToggle(300);
+      // return false;
+    });
+
+    //Document Click hiding the popup 
+    $(document).click(function()
+      {
+      $("#chatboxContainer").hide();
+      });
+
+    //Popup on click
+    $("#chatboxContainer").click(function()
+      {
+      // return false;
+      });
+  });
+</script>
+<style type="text/css">
+.header-iconss .fa{
+  margin-right: 3px;
+
+}
+.imagess{
+  background-image: url(/assets/sms.png);
+  background-position: left 0;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 23px;
+  line-height: 26px;
+  vertical-align: middle;
+  width: 27px;
+  background-size: 23px auto;
+}
+.header-iconss a:hover .imagess{
+   background-image: url(/assets/sms.png);
+  background-position: left -22px;
+  background-repeat: no-repeat;
+  height: 23px;
+
+
+}
+
+</style>

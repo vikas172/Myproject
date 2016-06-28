@@ -1,0 +1,270 @@
+<div class="container" style="margin-top:3%;">
+<div id="print_override" class="work_area quote">
+  <div class="stamp"><span>DRAFT</span></div>
+    <div class="top clearfix">
+    	<br><br>
+      <table class="right">
+        <tbody>
+          <tr>
+            <td class="label">Estimate</td>
+            <td>#<%= @quote.id %></td>
+          </tr>
+
+          <tr>
+            <td class="label">Rating</td>
+            <td><span data-tooltip="Likely">
+              <span id="show_rating" value="<%=@quote.raty_score %>"></span></span></td>
+          </tr>
+
+          <tr>
+            <td class="label">Created On</td>
+            <td><%= @quote.created_at.strftime("%m/%d/%Y")%></td>
+          </tr>
+            <%if !@quote.discount.blank? && @quote.discount != 0.00%>
+          <tr>
+            <td class="label">Discount</td>
+            <td>$<%= @quote.discount%> </td>
+          </tr>
+          <%end%>
+          <%if !@quote.require_deposit.blank? && @quote.require_deposit != 0.00%>
+          <tr>
+            <td class="label">Deposit</td>
+            <td>$<%= @quote.require_deposit %></td>
+          </tr>
+          <%end%>
+        </tbody>
+      </table>
+
+      <%@client=@quote.property.client%>
+      <div class="left">
+        <h3>
+          <a href="/clients/<%= @client.id%>?link=client&quote_id=<%=@quote.id%>"><%= @client.initial %> <%= @client.first_name %> <%= @client.last_name %></a>
+        </h3>
+
+        <p class="property_address">
+         <%= @quote.property.street %><br> <%= @quote.property.street2 %><br> <%= @quote.property.city%>,  <%= @quote.property.state %>  <%= @quote.property.zipcode %>
+        </p>
+      </div><!-- end of left -->
+    </div> <!-- end of top -->
+
+    <div id="line_items">
+      <div id="line_items_head">
+        <span class="name">Work Item</span>
+        <span class="description short">Area or Description</span>
+
+        <div style="float: right;">
+          <span class="centered hours_column">Qty.</span>
+            <span class="centered cost_column">Unit Cost</span>
+            <span class="centered cost_column">Total</span>
+        </div>
+      </div>
+
+      <div id="line_items_body">
+        <%@total_value=0%>
+        <% if !@quote.quote_works.blank? %>
+          <%@quote.quote_works.first.name.each_with_index do |value,index|%>
+            <div class="line_item">  
+              <span class="name" style="margin-left: 8%;">
+                <%= @quote.quote_works.first.name[index]%>
+              </span>
+              
+              <span class="description short" style="margin-left: 8%;">
+                <%= @quote.quote_works.first.description[index]%>
+              </span>
+
+              <div class="right_items">
+                <span class="hours_column ">
+                 <%= @quote.quote_works.first.quantity[index].to_f%>
+                </span>
+                <span class="cost_column ">
+                  $<%= @quote.quote_works.first.unit_cost[index].to_f%>
+                </span>
+                <span class="cost_column ">
+                 $<%= @quote.quote_works.first.total[index]%>
+                </span>
+                <%@total_value= @quote.quote_works.first.total[index].to_i+ @total_value%>
+              </div>
+            </div>
+          <%end%> 
+        <%end%>    
+      </div>
+    </div>
+    <%if !@quote.require_deposit.blank?%>
+			<div>A deposit of $<%= @quote.require_deposit%> will be required to begin.
+			</div>
+    <%end%>
+    <div class="page_breaker" style="margin-top:20%;"></div>
+    <div class="clearfix" id="bottom">
+      <div class="" id="totals">
+        <%if @total_value!=0%>
+        <%if ((@quote.tax!=0.00) && (@quote.discount!=0.00))%>
+          <div>
+            <span>Subtotal: </span>
+            <span class="cost_column important">$<%=@total_value%></span>
+          </div><%end%>
+        <%end%>  
+        <div>
+        
+        <% if !@quote.discount.nil?%> 
+          <% if @quote.discount!=0.0 %> 
+            <span>Discount: </span>
+            <span class="cost_column">- $<%=@quote.discount%></span> </div>
+          <%end%>
+        <%end%>
+        
+        <% if !@quote.tax.nil? %>
+          <% if @quote.tax!= 0.00 %>
+            <div id="total_tax"> 
+              <span class="description">(<%=@quote.tax%>%) Tax: </span>
+              <%@tax=show_tax(@quote,@total_value)%>       
+              <span class="cost_column">$<%=@tax %></span> 
+            </div>
+          <%end%>  
+        <%end%>
+
+        <div>
+         
+          <span>Total </span>
+         
+          <%if !@tax.nil?%>
+            <span class="cost_column very_important">$<%=(@tax_calculate+@tax).round(2)%></span>
+          <%elsif @tax_calculate.nil?%>
+          <%if !@total_value.nil?%>
+
+            <span class="cost_column very_important">$ <%= @total_value.round(2)%></span>
+          <%else%>
+            <span class="cost_column very_important">$ 0.00</span>
+          <%end%>
+          <%else%>
+            <span class="cost_column very_important">$<%=@tax_calculate.round(2)%></span>
+          <%end%>
+      
+        </div>
+
+      </div>
+  </div>
+      <p style="display:none;" id="nontaxable_footnote">
+        <span class="tax_asterisk">*</span>
+        Non-taxable
+      </p>
+
+      <div id="message">
+        <h3>Client Message</h3>
+        <%=@quote.client_message%><br>
+        This quote is valid for the next 30 days, after which values may be subject to change.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+div.work_area {
+    border-top: 1px solid #DCDCDC;
+    margin-top: 25px;
+    min-height: 100%;
+    position: relative;
+}div.work_area div#line_items div span.name {
+    width: 280px;
+}span.description {
+    vertical-align: top;
+    width: 450px;
+}
+
+.stamp {
+    color: #AAAAAA;
+    font-size: 27px;
+    font-weight: bold;
+    left: 150px;
+    line-height: 27px;
+    position: absolute;
+    right: 150px;
+    text-align: center;
+    top: -15px;
+}.stamp span {
+    background-color: #FFFFFF;
+    padding: 0 20px;
+}
+span {
+    margin-right: 20px;
+}.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+div.work_area div.top table.right {
+    float: right;
+}table {
+    border-spacing: 0;
+    position: relative;
+}table {
+    width: 50%;
+}
+table {
+    background-color: transparent;
+    border-collapse: collapse;
+   
+    max-width: 100%;
+}
+div.work_area div.top .left {
+    clear: left;
+}div.work_area div.top .left h3 {
+    margin: 0 0 5px;
+}a {
+    color: #000000;
+}
+a {
+   
+    text-decoration: none;
+}
+ ol, ul, td {
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+}
+/*p {
+    margin: 0 0 7px !important;
+}
+p {
+    margin: 0 0 10px;
+}*/label {
+    display: block;
+    margin-bottom: 5px;
+}
+label, input, button, select, textarea {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+}
+label, select, button, input[type="button"], input[type="reset"], input[type="submit"], input[type="radio"], input[type="checkbox"] {
+    cursor: pointer;
+}div.work_area div#line_items {
+    clear: both;
+    padding: 0;
+}div.work_area div#line_items div#line_items_head {
+    background: none repeat scroll 0 0 #555555;
+    padding: 4px 15px;
+}div.work_area div#totals {
+    float: right;
+    margin: 0 15px 20px 0;
+    text-align: right;
+}
+div.work_area div#totals div {
+    clear: right;
+    float: right;
+    margin: 3px 0;
+}
+div.work_area div#line_items .right_items {
+    float: right;
+}
+</style>
+

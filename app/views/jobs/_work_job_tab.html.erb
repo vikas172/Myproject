@@ -1,0 +1,61 @@
+<div class="row_holder extend_to_footer" >
+  <div class="tables">
+    <table class="sortable wide" cellspacing="0" cellpadding="0" id="tblData">
+      <% unless @jobs_all.blank? %> 
+        <div id="output"></div> 
+          <% @jobs_all.each_with_index do |job,index| %>
+            <tr data-link="/jobs/<%=job.id%>" class="propert" > 
+              <td style="width: 28%;"> Job #<%= index+1%> 
+                <br> 
+                <span class="status active">
+                 <%if job.job_status.nil? && !job.try(:start_date).blank?%>
+                  <%if job.start_date > get_date_today %>
+                    <span style="background-color: #1f518b; color:white" class="status upcoming"> Upcoming</span>
+                  <%elsif job.start_date == get_date_today %>
+                    <span  style="background-color: #1f518b; color:white" class="status"> Today </span>
+                  <%elsif !job.end_date.nil?%>
+                    <%if ((job.end_date < get_date_today) || (job.start_date < get_date_today))%>
+                      <span style=" background-color: #B22F23; color:white" class="status"> Late </span>
+                    <%end%>
+                  <%elsif (job.start_date < get_date_today)%> 
+                    <span style=" background-color: #B22F23; color:white" class="status"> Late </span>   
+                  <%end%> 
+                <%elsif job.job_required== "Require Invoice"%> 
+                  <%@count=check_job_invoice_genrate(job)%>
+                  <%if @count== 0%>
+                    <span style=""  class="status send">Requires Invoicing</span>
+                  <%else%>
+                    <span  style=" background-color: #888888; color: #FFFFFF;" class="status">Archived</span>
+                  <%end%>
+                <%else%>
+                  <span  style="" class="status send">Action Required</span>
+                <%end%> 
+                </span>  
+              </td>
+              <td>
+                <%if job.job_required== "Require Invoice"%> 
+                  <%@count=check_job_invoice_genrate(job)%>
+                  <%if @count!= 0%>
+                    <small>Completed</small><br/>
+                    <%= job.complete_on%>
+                  <%else%>
+                    <small>Scheduled for</small><br/>
+                    <%= job.start_date%><br/><%= job.end_date%>
+                  <%end%>
+                <%else%>
+                  <small>Scheduled for</small><br/>
+                  <%= job.start_date%><br/><%= job.end_date%>
+                <%end%>  
+              </td>
+
+              <td>   
+                $<%if job_requires_amount_show(job).nil?%>0.00<%else%><%=job_requires_amount_show(job)%><%end%>
+              </td>
+            </tr>
+          <% end %>
+      <% else %>
+        <b>No matches found</b>
+      <% end %>  
+    </table>
+  </div>
+</div>

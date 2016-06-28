@@ -1,0 +1,40 @@
+<div id="summary" class="content_align">
+  <div data-dynamic="true" class="summary_bars">
+    <%= link_to("/reports/invoice", :class=>"subsection_link #{get_selected_default}" ) do %>
+      <h3>
+        Total
+        <span class="count"><%= get_count_invoice("")%></span>
+      </h3>
+       <span data-value="<%= get_report_data("")%>" class="total" style="width: 330px;">$<%= get_report_data("")%></span>
+    <% end %>
+    <div class="short_separator"></div>
+    <%= link_to("/reports/invoice/draft", :class=>"subsection_link #{get_selected("draft")}" ) do %>
+      <h3>
+        Drafts
+        <span class="count"><%= get_count_invoice("draft")%></span>
+      </h3>
+       <span data-value="<%= get_report_data("draft")%>" class="total" style="width: 330px;">$<%= get_report_data("draft")%></span>
+    <% end %>
+    <%= link_to("/reports/invoice/pending", :class=>"subsection_link #{get_selected("pending")}" ) do %>
+      <h3>
+        Outstanding
+        <span class="count"><%= get_count_invoice("pending")%></span>
+      </h3>
+       <span data-value="<%= get_report_data("pending")%>" class="total" style="width: 330px;">$<%= get_report_data("pending")%></span>
+    <% end %>
+    <%= link_to("/reports/invoice/paid", :class=>"subsection_link #{get_selected("paid")}" ) do %>
+      <h3>
+        Paid
+        <span class="count"><%= get_count_invoice("paid")%></span>
+      </h3>
+       <span data-value="<%= get_report_data("paid")%>" class="total" style="width: 330px;">$<%= get_report_data("paid")%></span>
+    <% end %>
+    <%= link_to("/reports/invoice/bad_debt", :class=>"subsection_link #{get_selected("bad_debt")}") do %>
+      <h3>
+        Bad Debt
+        <span class="count"><%= get_count_invoice("bad_debt")%></span>
+      </h3>
+       <span data-value="<%= get_report_data("bad_debt")%>" class="total" style="width: 330px;">$<%= get_report_data("bad_debt")%></span>
+    <% end %>
+  </div>
+</div>

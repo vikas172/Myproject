@@ -1,0 +1,228 @@
+<div id="print_override" class="work_area quote">
+  <div class="top clearfix">
+    <table class="right">
+      <tbody>
+        <tr>
+          <td class="label">Estimate</td>
+          <td>#<%= @quote.id%></td>
+        </tr>
+
+        <tr>
+          <td class="label">From</td>
+          <td><%= @quote.property.client.company_name %></td>
+        </tr>
+
+        <tr>
+          <td class="label">Bill To</td>
+          <td><%= @quote.property.client.try(:street1)%>
+              <br>
+              <%= @quote.property.client.try(:street2)%>
+              <br>
+              <%= @quote.property.client.try(:city)%>
+              <%if !@quote.property.client.state.nil?%>
+              ,<%= @quote.property.client.try(:state)%><%end%>
+              <%if !@quote.property.client.zip_code.nil?%>
+              ,<%= @quote.property.client.try(:zip_code)%><%end%>
+          </td>
+        </tr>
+
+         
+        <%if !@quote.discount.blank? && @quote.discount != 0.00%>
+        <tr>
+          <td class="label">Discount</td>
+          <td>$<%= @quote.discount%> </td>
+        </tr>
+        <%end%>
+        <%if !@quote.require_deposit.blank? && @quote.require_deposit != 0.00%>
+        <tr>
+          <td class="label">Deposit</td>
+          <td>$<%= @quote.require_deposit %></td>
+        </tr>
+        <%end%>
+      </tbody>
+    </table>
+
+    <%@client=@quote.property.client%>
+    <div class="left">
+
+      <h3><%=@client.company_name%></h3>
+      <h3>
+        <%= @client.try(:initial) %> <%= @client.first_name %> <%= @client.last_name %>
+      </h3>
+
+      <p>
+        <label>Phone</label>  
+      </p>
+
+      <p class="property_address">
+       <%= @quote.property.street %><br> <%= @quote.property.street2 %><br> <%= @quote.property.city%>,  <%= @quote.property.state %>  <%= @quote.property.zipcode %>
+      </p>
+    </div><!-- end of left -->
+  </div> <!-- end of top -->
+
+  <div id="line_items">
+    <div id="line_items_head">
+      <span class="name">Work Item</span>
+      <span class="description short">Area or Description</span>
+
+      <div style="float: right;">
+        <span class="centered hours_column">Qty.</span>
+          <span class="centered cost_column">Unit Cost</span>
+          <span class="centered cost_column">Total</span>
+      </div>
+    </div>
+
+    <div id="line_items_body">
+      <%@total_value=0%>
+      <% if !@quote.quote_works.blank? %>
+        <%@quote.quote_works.first.name.each_with_index do |value,index|%>
+          <div class="line_item">  
+            <span class="name">
+              <%= @quote.quote_works.first.name[index]%>
+            </span>
+            
+            <span class="description short">
+              <%= @quote.quote_works.first.description[index]%>
+            </span>
+
+            <div class="right_items">
+              <span class="hours_column ">
+               <%= @quote.quote_works.first.quantity[index].to_f%>
+              </span>
+              <span class="cost_column ">
+                $<%= @quote.quote_works.first.unit_cost[index].to_f%>
+              </span>
+              <span class="cost_column ">
+               $<%= @quote.quote_works.first.total[index]%>
+              </span>
+              <%@total_value= @quote.quote_works.first.total[index].to_i+ @total_value%>
+            </div>
+          </div>
+        <%end%> 
+      <%end%>    
+    </div>
+  </div>
+
+  <div class="page_breaker" style="margin-top:40%;"></div>
+  <div class="clearfix" id="bottom">
+    <div class="" id="totals">
+      <div>
+        <span>Total Estimate: </span>
+        <%if !@tax.nil?%>
+          <span class="cost_column very_important">$<%=@tax_calculate+@tax%></span>
+        <%elsif @tax_calculate.nil?%>
+          <%if !@total_value.nil?%>
+            <span class="cost_column very_important">$ <%= @total_value%></span>
+          <%else%>
+            <span class="cost_column very_important">$ 0.00</span>
+          <%end%>
+        <%else%>
+          <span class="cost_column very_important">$<%=@tax_calculate%></span>
+        <%end%>
+      </div>
+
+      <div>
+        <span>Estimate Created: </span>
+        <span style="font-weight:normal" class="cost_column"><%=@quote.created_at.strftime("%m/%d/%Y")%></span>
+      </div>
+    </div>
+  </div>
+     
+ 
+
+  <div id="message" style="width:50%; float:left;">
+    <%=@quote.client_message%><br>
+    This quote is valid for the next 30 days, after which values may be subject to change.
+  </div>
+
+
+
+   <div style="width:30%;" style="float:right;"> 
+    Customer Signature
+      <img src='<%=Rails.root.join("public/signature/#{current_user.id}.png")%>' alt="Smiley face" ><hr><br/>
+      Date: <%= Date.today.strftime("%d/%m/%Y")%>
+      <br>  
+  </div>
+</div>
+
+
+
+<style>
+  div.work_area {
+      border-top: 1px solid #DCDCDC;
+      margin-top: 25px;
+      min-height: 100%;
+      position: relative;
+  }div.work_area div.top table.right {
+      float: right;
+  }table {
+      border-spacing: 0;
+      position: relative;
+  }table {
+      width: 50%;
+  }table {
+      background-color: transparent;
+      border-collapse: collapse;
+      max-width: 100%;
+  }div.work_area div.top .left {
+    clear: left;
+  }div.work_area div.top .left h3 {
+      margin: 0 0 5px;
+  }label {
+      display: block;
+      margin-bottom: 5px;
+  }div.work_area div.top .left .property_address {
+      color: #333333;
+      font-size: 12px;
+  }div.work_area div#line_items {
+      clear: both;
+      padding: 0;
+  }
+  div.work_area div#line_items div#line_items_head {
+    background: none repeat scroll 0 0 #555555;
+    padding: 4px 15px;
+  }
+  div.work_area div#line_items div#line_items_head span {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  div.work_area div#line_items div span.name {
+      width: 150px;
+  }
+  div.work_area div#line_items div span {
+
+      display: inline-block;
+      float: none;
+      position: relative;
+  }
+  span {
+    margin-right: 20px;
+  }
+  div.work_area div#line_items div span.description {
+    vertical-align: top;
+    width: 200px;
+  }
+  div.work_area div#line_items div#line_items_body div.line_item:first-child {
+    border-top: medium none;
+  }
+  div#line_items div#line_items_body div.line_item {
+    padding: 10px 15px;
+  }div.work_area div#line_items .right_items {
+    float: right;
+  }
+  div.work_area div#totals {
+    float: right;
+    margin: 0 15px 20px 0;
+    text-align: right;
+  }
+  div.work_area div#totals div {
+    clear: right;
+    float: right;
+    margin: 3px 0;
+  }
+  div.work_area div#totals span {
+    color: #555555;
+    font-size: 14px;
+  }
+</style>

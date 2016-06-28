@@ -1,0 +1,17 @@
+<div id="display-marker-address" style="font-size:12px;">
+	<%if !@address.blank?%>
+		<%@address.each_with_index do |address,index|%>
+			<%= index+1 %>). <%= address%> <br/>
+		<%end%>
+	<%end%>
+</div>
+<%if !@address.blank?%>
+  <%= form_tag add_lead_maps_path,:id=>"create-lead" do %>
+    <% @address.each do |key,value| %>
+			<%= hidden_field_tag "filters[#{key}]",value %> 
+		<% end %>
+		<%= text_field_tag "tags",nil,:placeHolder=>"Tags",:style=>"width: 80%"%>
+		<%= text_field_tag "source",nil,:placeHolder=>"Source",:style=>"width:80%"%>
+   <%= submit_tag "Create Lead",:class=>"button_new_index"%>
+  <%end%>
+<%end%>

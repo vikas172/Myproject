@@ -1,0 +1,7 @@
+class ChangeFieldsTypeToJobWorks < ActiveRecord::Migration
+  def change
+  	change_column :job_works, :quantity, :integer 
+  	change_column :job_works, :unit_cost, :integer
+  	change_column :job_works, :total, :integer 
+  end
+end

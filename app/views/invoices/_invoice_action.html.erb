@@ -1,0 +1,60 @@
+<div class="dropdown_menu icon_drop">
+  <li class="dropdown" style="list-style: none; float:right; margin-top: 0%;">
+    <a href="#" class="dropdown-toggle dropdown_button save-new-btn1" data-toggle="dropdown">Actions <span class="caret"></span></a>
+    <ul class="dropdown-menu edit_drop_menu" role="menu"><span class="arrow_action"></span>
+      
+        <%if @invoice.mark_sent==false%>
+          <li>
+            <i class="fa fa-envelope-o"></i>
+            <%= link_to "Mark As Sent",mark_sent_invoice_path(:invoice_id=>@invoice.id) ,:id=>"mark_sent",:class=>"has_icon"%>
+          </li>
+        <%elsif @invoice.invoice_bad_debt==false%>
+          <%if @invoice.invoice_paid== false%>
+          <li>
+            <i class="fa fa-envelope-o"></i>
+              <%= link_to "Mark As Paid","#" ,:id=>"mark_received",:class=>"has_icon",:'data-toggle'=>"modal" ,:'data-target'=>"#payment_record"%></li>
+          <li>
+            <i class="fa fa-envelope-o"></i>
+            <%= link_to "Mark As Bad Debt",bad_debt_invoice_path(:invoice_id=>@invoice.id,:bad_debt=>true),:id=>"mark_bad_debt",:class=>"has_icon"%>
+          </li>
+          <%else%>
+          <li>
+            <i class="fa fa-pencil-square-o"></i>
+            <%= link_to "Re-open Invoice",reopen_invoice_path(:invoice_id=>@invoice.id),:id=>"reopen_bad_debt",:class=>"has_icon"%>
+          </li>
+          <%end%>
+        <%else%>
+        <li>
+          <i class="fa fa-envelope-o"></i>
+          <%= link_to "Unmark as Bad Debt",bad_debt_invoice_path(:invoice_id=>@invoice.id,:bad_debt=>false),:id=>"reopen_bad_debt",:class=>"has_icon"%>
+        </li>  
+        <%end%>
+      <li>
+        <i class="fa fa-envelope-o"></i>
+        <%= link_to email_link_name(@invoice), invoice_email_action_path(email_send: 1, mail_by: 'invoices', id: params[:id]) , class: "has_icon", remote: true, id: "" %>
+      </li>
+      <li class="divider"></li>
+      <li>
+        <i class="fa fa-file-pdf-o"></i>
+        <%= link_to "Download PDF",invoice_pdf_path(:invoice_id=>@invoice.id),:id=>"download_pdf",:class=>"has_icon", target: "_blank"%>
+      </li>
+      <li>
+      </li>
+      <li>
+        <i class="fa fa-pencil"></i>
+        <%= link_to "Collect Signature","#",:id=>"collect_signature",:class=>"has_icon",:'data-toggle'=>"modal" ,:'data-target'=>"#signature_model_invoice"%>
+      </li>
+      <li>
+        <%if current_user.user_type=="admin"%>
+          <li><i class="fa fa-minus-circle"></i>
+            <%= link_to 'Delete',"#",:id=>"",:class=>"has_icon" ,:'data-toggle'=>"modal" ,:'data-target'=>"#delete_model_invoice"%></li>
+        <%else%>
+          <%if set_view_permission_action_view_delete(@team_member.permission.permission_invoices)%>
+            <li><i class="fa fa-minus-circle"></i>
+              <%= link_to 'Delete',"#",:id=>"",:class=>"has_icon" ,:'data-toggle'=>"modal" ,:'data-target'=>"#delete_model_invoice"%></li>
+          <%end%>
+          <%end%>
+      </li>
+    </ul>
+  </li>
+</div>

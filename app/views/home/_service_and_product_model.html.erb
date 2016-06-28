@@ -1,0 +1,53 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header new-modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Work Item</h4>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <%= form_tag({:action=>"product_service",:controller=>"home"},:class=>"compressed_form work_item") do %>
+            <p></p>
+            <p>
+            <label for="work_item_category">Item Type</label>
+              <%= select_tag("work_item[item_type]", options_for_select([["Service","service"],["Product","product"]]))%>
+            </p>
+            <p>
+              <label for="work_item_name" class="large">Name</label>
+              <%= text_field_tag "work_item[name]",nil,:class=>"large name", :id=>"work_item_name"%>
+            </p>
+
+            <p>
+              <label for="work_item_description">Description</label>
+              <%= text_area_tag "work_item[description]",nil,:cols=>"50",:id=>"work_item_description" %>
+            </p>
+
+            <p>
+            <label for="work_item_default_unit_cost">Default Unit Cost ₹</label>
+              <%= text_field_tag "work_item[unit_cost]",nil,:class=>"large name", :placeholder=>"0.00", :id=>"work_item_default_unit_cost"%>
+            </p>
+
+            <p>
+              <%= check_box_tag 'work_item[non_taxable]', true-%>
+              <label for="work_item_nontaxable">Non-taxable?</label>
+              <span class="description">Should this item be exempt from tax?</span>
+            </p>
+
+            <p>
+              <input type="hidden" value="1" name="work_item[active]">
+            </p>
+            <p>
+              <%= hidden_field_tag "work_item[user_id]",current_user.id%>
+            </p>
+            <div class="row text-right">
+              <%= submit_tag "Create",:class=>"model_save_button save-new-btn1 pull-righ"%>
+              <button type="button" class="model_cancel_button pull-righ" data-dismiss="modal">Cancel</button>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

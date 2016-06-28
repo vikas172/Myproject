@@ -1,0 +1,457 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+      <h4 class="modal-title" id="myModalLabel">Options</h4>
+    </div>
+    <div class="modal-body">
+			<%= form_for @add_on, url: {action: "addon_active"}, id: "addons_form" do |f| %>
+			  <section class="notice header" style="background-color:#888888;">
+			    <h3 class="title2-font" style="color:#fff;">Options</h3>
+			    <h4 class="title3-font">Customize your CopperService account with these great optional features.</h4>
+			  </section>
+				<div id="addons-page-container">
+				 	<ul class="list_addon span5">
+						<li>
+							<span class="span2">Expenses</span>
+							<div class="btn-group btn-status_expenses"> 
+							   <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							   <%= hidden_field_tag "add_on_status[status[expenses]]", get_add_on_status(@user_add_on,"expenses") ,:data=>{:price=>0,:value=>"expenses"}%>
+                            </div>
+                            
+							<!-- <span class="span2">Expenses</span>
+							<span class="span1">
+								<%#= f.radio_button("status[:expenses]" ,true,:checked=>get_add_on_status(@user_add_on,"expenses"),:data=>{:price=>0,:value=>"expenses"}) %>Enable
+							</span>
+							
+							<span class="span1">
+								<%#= f.radio_button("status[:expenses]" ,false,:checked=>!get_add_on_status(@user_add_on,"expenses"),:data=>{:price=>0,:value=>"expenses"})%>Disable
+							</span> -->
+						</li>
+
+						<li>
+							<span class="span2">Customer Reminders</span>
+							<div class="btn-group btn-status_client_reminders"> 
+				               <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							</div>
+							<%= hidden_field_tag "add_on_status[status[client_reminders]]", get_add_on_status(@user_add_on,"client_reminders") ,:data=>{:price=>0,:value=>"client_reminders"}%>
+							<!-- <span class="span1">
+								<%#= f.radio_button("status[:client_reminders]",true,:checked=>get_add_on_status(@user_add_on,"client_reminders"), data: {price: "0", value: "client_reminders"})%>Enable
+							</span>
+							<span class="span1">
+								<%#= f.radio_button("status[:client_reminders]",false,:checked=>!get_add_on_status(@user_add_on,"client_reminders"), data: {price: "0", value: "client_reminders"})%>Disable
+							</span> -->
+						</li>
+
+						<li>
+							<span class="span2">GPS Waypoints</span>
+							<div class="btn-group btn-status_gps_waypoints"> 
+				               <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							</div>
+							<%= hidden_field_tag "add_on_status[status[gps_waypoints]]", get_add_on_status(@user_add_on,"gps_waypoints") ,:data=>{:price=>0,:value=>"gps_waypoints"}%>
+							<!-- <span class="span1">
+								<%#= f.radio_button("status[:gps_waypoints]",true, checked: get_add_on_status(@user_add_on,"gps_waypoints") ,data: {price: "9", value: "gps_waypoints"}) %>Enable
+							</span>
+							<span class="span1">
+								<%#= f.radio_button("status[:gps_waypoints]",false, checked: !get_add_on_status(@user_add_on,"gps_waypoints"), data: {price: "9", value: "gps_waypoints"}) %>Disable
+							</span> -->
+						</li>
+
+						<li>
+							<span class="span2">ePayments</span>
+							<div class="btn-group btn-status_direct_chargers"> 
+				               <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							</div>
+							<%= hidden_field_tag "add_on_status[status[direct_chargers]]", get_add_on_status(@user_add_on,"direct_chargers") ,:data=>{:price=>0,:value=>"direct_chargers"}%>
+							<!-- <span class="span1">
+								<%#= f.radio_button("status[:direct_chargers]",true, checked: get_add_on_status(@user_add_on,"direct_chargers"), data: {price: "5", value: "direct_chargers"}) %>Enable
+							</span>
+							<span class="span1">
+								<%#= f.radio_button("status[:direct_chargers]",false, checked: !get_add_on_status(@user_add_on,"direct_chargers"), data: {price: "5", value: "direct_chargers"}) %>Disable
+							</span> -->
+						</li>
+
+						<li>
+							<span class="span2">Chemical Tracking</span>
+							<div class="btn-group btn-status_chemical_treatments"> 
+				               <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							</div>
+							<%= hidden_field_tag "add_on_status[status[chemical_treatments]]",get_add_on_status(@user_add_on,"chemical_treatments") ,:data=>{:price=>0,:value=>"chemical_treatments"}%>
+							<!-- <span  class="span1">
+								<%#= f.radio_button("status[:chemical_treatments]",true ,checked: get_add_on_status(@user_add_on,"chemical_treatments"), data: {price: "3", value: "chemical_treatments"}) %>Enable
+							</span>
+							<span class="span1">
+								<%#= f.radio_button("status[:chemical_treatments]",false ,checked: !get_add_on_status(@user_add_on,"chemical_treatments"), data: {price: "3", value: "chemical_treatments"})%>Disable
+							</span> -->
+						</li>
+
+						<li>
+							<span class="span2">QuickBooks Sync</span>
+							<div class="btn-group btn-status_quickbooks_ids"> 
+				               <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							</div>
+							<%= hidden_field_tag "add_on_status[status[quickbooks_ids]]",get_add_on_status(@user_add_on,"quickbooks_ids"),:data=>{:price=>0,:value=>"quickbooks_ids"}%>
+							<!-- <span class="span1">
+								<%#= f.radio_button("status[:quickbooks_ids]",true, checked: get_add_on_status(@user_add_on,"quickbooks_ids"), data: {price: "9", value: "quickbooks_ids"}) %>Enable
+							</span>
+							<span class="span1">
+								<%#=  f.radio_button("status[:quickbooks_ids]",false, checked: !get_add_on_status(@user_add_on,"quickbooks_ids"), data: {price: "9", value: "quickbooks_ids"})  %>Disable
+							</span> -->
+						</li>
+
+						<li>
+							<span class="span2">Route Optimization</span>
+							<div class="btn-group btn-status_routing"> 
+				               <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							</div>
+							<%= hidden_field_tag "add_on_status[status[routing]]",get_add_on_status(@user_add_on,"routing"),:data=>{:price=>0,:value=>"routing"}%>
+							<!-- <span  class="span1">
+								<%#= f.radio_button("status[:routing]",true, checked: get_add_on_status(@user_add_on,"routing"), data: {price: "0", title: "Route Optimization", value: "routing"}) %>Enable
+							</span>
+							<span  class="span1">
+								<%#=f.radio_button("status[:routing]",false, checked: !get_add_on_status(@user_add_on,"routing"), data: {price: "0", title: "Route Optimization", value: "routing"}) %>Disable
+							</span> -->
+						</li>
+						<li>
+							<span class="span2">Inventory</span>
+							<div class="btn-group btn-status_item"> 
+				               <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							</div>
+							<%= hidden_field_tag "add_on_status[status[item]]",get_add_on_status(@user_add_on,"item"),:data=>{:price=>0,:value=>"item"}%>
+							<!-- <span  class="span1">
+								<%#=f.radio_button("status[:item]",true, checked: get_add_on_status(@user_add_on,"item"), data: {price: "0", title: "Inventory", value: "item"}) %>Enable
+							</span>
+							<span  class="span1">
+								<%#=f.radio_button("status[:item]",false, checked: !get_add_on_status(@user_add_on,"item"), data: {price: "0", title: "Inventory", value: "item"}) %>Disable
+							</span> -->
+						</li>
+						<li>
+							<span class="span2">Call Manager</span>	
+							<div class="btn-group btn-status_call_manager"> 
+				               <button class="btn btn-default" style="margin: 0px;">ON</button>
+							   <button class="btn btn-primary active">OFF</button>
+							</div>
+							<%= hidden_field_tag "add_on_status[status[call_manager]]",get_add_on_status(@user_add_on,"call"),:data=>{:price=>0,:value=>"call"}%>
+							<!-- <span  class="span1">
+								<%#=f.radio_button("status[:call_manager]",true, checked: get_add_on_status(@user_add_on,"call"), data: {price: "0", title: "Call Manager", value: "call"}) %>Enable
+							</span>
+							<span  class="span1">
+								<%#=f.radio_button("status[:call_manager]",false, checked: !get_add_on_status(@user_add_on,"call"), data: {price: "0", title: "Call Manager", value: "routing"}) %>Disable
+							</span> -->
+						</li>
+				 	</ul>
+				</div><!-- end of addons-container -->
+				<div class="row text-right">
+					<button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+			    </div>
+			<% end %>
+	  </div>
+	</div>
+</div>
+<style>
+#addons-page-container .btn-primary.active{
+	background-color: #1f518b;
+}
+</style>
+<script>
+// $(function(){
+//   $('input[type="radio"]').on('click', function(){
+//   	var status = $(this).val();
+//    	$.ajax({
+//       url    : '<%#= addon_active_path %>',
+//       type   : 'POST',
+//       data   : {'status': status, 'price': $(this).data('price'), 'value' : $(this).data('value')},
+//     });
+//   });
+// });
+
+
+$(".btn-status_expenses").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_expenses").val(true);
+	}
+	else{
+		$("#add_on_status_status_expenses").val(false);
+	}
+    var status = $("#add_on_status_status_expenses").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_expenses").attr("data-price"), 'value' : $("#add_on_status_status_expenses").attr("data-value")},
+    });
+
+   $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+$(".btn-status_client_reminders").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_client_reminders").val(true);
+	}
+	else{
+		$("#add_on_status_status_client_reminders").val(false);
+	}
+	var status = $("#add_on_status_status_client_reminders").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_client_reminders").attr("data-price"), 'value' : $("#add_on_status_status_client_reminders").attr("data-value")},
+    });
+   $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+$(".btn-status_gps_waypoints").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_gps_waypoints").val(true);
+	}
+	else{
+		$("#add_on_status_status_gps_waypoints").val(false);
+	}
+	var status = $("#add_on_status_status_gps_waypoints").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_gps_waypoints").attr("data-price"), 'value' : $("#add_on_status_status_gps_waypoints").attr("data-value")},
+    });
+   $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+$(".btn-status_direct_chargers").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_direct_chargers").val(true);
+	}
+	else{
+		$("#add_on_status_status_direct_chargers").val(false);
+	}
+	var status = $("#add_on_status_status_direct_chargers").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_direct_chargers").attr("data-price"), 'value' : $("#add_on_status_status_direct_chargers").attr("data-value")},
+    });
+    $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+$(".btn-status_chemical_treatments").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_chemical_treatments").val(true);
+	}
+	else{
+		$("#add_on_status_status_chemical_treatments").val(false);
+	}
+	var status = $("#add_on_status_status_chemical_treatments").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_chemical_treatments").attr("data-price"), 'value' : $("#add_on_status_status_chemical_treatments").attr("data-value")},
+    });
+    $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+$(".btn-status_quickbooks_ids").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_quickbooks_ids").val(true);
+	}
+	else{
+		$("#add_on_status_status_quickbooks_ids").val(false);
+	}
+	var status = $("#add_on_status_status_quickbooks_ids").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_quickbooks_ids").attr("data-price"), 'value' : $("#add_on_status_status_quickbooks_ids").attr("data-value")},
+    });
+    $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+$(".btn-status_routing").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_routing").val(true);
+	}
+	else{
+		$("#add_on_status_status_routing").val(false);
+	}
+	var status = $("#add_on_status_status_routing").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_routing").attr("data-price"), 'value' : $("#add_on_status_status_routing").attr("data-value")},
+    });
+    $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+$(".btn-status_item").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_item").val(true);
+	}
+	else{
+		$("#add_on_status_status_item").val(false);
+	}
+	var status = $("#add_on_status_status_item").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_item").attr("data-price"), 'value' : $("#add_on_status_status_item").attr("data-value")},
+    });
+    $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+$(".btn-status_call_manager").click(function(){	
+	if($(this).find('.btn-primary').text() == "OFF"){
+		$("#add_on_status_status_call_manager").val(true);
+	}
+	else{
+		$("#add_on_status_status_call_manager").val(false);
+	}
+	var status = $("#add_on_status_status_call_manager").val();
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $("#add_on_status_status_call_manager").attr("data-price"), 'value' : $("#add_on_status_status_call_manager").attr("data-value")},
+    });
+    $(this).find('.btn').toggleClass('active');  
+   
+   if ($(this).find('.btn-primary').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-primary');
+   }
+   if ($(this).find('.btn-danger').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-danger');
+   }
+   if ($(this).find('.btn-success').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-success');
+   }
+   if ($(this).find('.btn-info').size()>0) {
+   	$(this).find('.btn').toggleClass('btn-info');
+   }
+   
+   $(this).find('.btn').toggleClass('btn-default');
+   return false;
+});
+</script>

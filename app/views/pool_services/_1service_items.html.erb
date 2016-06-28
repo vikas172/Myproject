@@ -1,0 +1,95 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header new-modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Service Items</h4>
+		</div>
+		<div class="modal-body">
+			<%= form_for(@service_items,:url=>service_items_create_pool_services_path) do |f| %>
+				<table border="0" class="service-items">
+					<tr>
+						<td><label>Filter Cleaned</label></td>
+						<td ><%= f.check_box :filter_cleaned%></td>
+					</tr>
+
+					<tr>
+						<td><label>Netted Surface Debris</label></td>
+						<td><%= f.check_box :netted_surface_debris%></td>
+					</tr>
+
+					<tr>
+						<td><label>Brushed Walls and Steps</label></td>
+						<td><%= f.check_box :brushed_walls_steps%></td>
+					</tr>	
+					
+					<tr>
+						<td><label>Cleaned Skimmer Baskets</label></td>
+						<td><%= f.check_box :cleaned_skimmer_baskets%></td>
+					</tr>
+
+					<tr>
+						<td><label>Cleaned Pump Basket</label></td>
+						<td><%= f.check_box :cleaned_pump_basket%></td>
+					</tr>	
+
+					<tr>
+						<td><label>Vacuumed Pool</label></td>
+						<td><%= f.check_box :vacuumed_pool%></td>
+					<tr>
+
+					<tr>
+						<td><label>Checked Water Level</label></td>
+						<td><%= f.check_box :checked_water_level%></td>
+					</tr>
+
+					<tr>
+						<td><label>Inspected Pump</label></td>
+						<td><%= f.check_box :inspected_pump%></td>
+					</tr>
+
+					<tr>
+						<td><label>Notes to Customer</label></td>
+						<td><%= f.text_area :notes_to_customer%></td>
+					</tr>
+
+					<tr>
+						<td><label>Complete</label></td>
+						<td><%= f.radio_button :status, 'complete'%></td>
+					</tr>
+
+					<tr>
+						<td><label>InComplete</label></td>
+						<td><%= f.radio_button :status, 'incomplete'%></td>
+					</tr>
+
+					<tr>
+						<td><label>Waiting for parts</label></td>
+						<td><%= f.radio_button :status, 'waiting_parts'%></td>
+					</tr>
+
+					<tr>
+						<td>SMS</td>
+						<td><%= radio_button_tag "send" ,"sms"%></td>
+					</tr>
+
+					<tr>
+						<td>Email</td>
+						<td><%= radio_button_tag "send","email"%></td>
+					</tr>
+					<%= f.hidden_field :user_id ,:value=>current_user.id%>
+					<%= f.hidden_field :property_id ,:value=>params[:property_id]%>
+					<%= hidden_field_tag "service_type",nil,:value=>"service_items"%>
+				</table>
+				<br>
+				<button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>	
+				<%= f.submit "submit",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+			<% end %>
+		</div> 		
+	</div>
+</div>
+
+<style type="text/css">
+.service-items{
+width: 80% !important;
+}
+</style>

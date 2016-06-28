@@ -1,0 +1,8 @@
+
+<p> Hello <%= @to %></p>
+<%= @body%>
+<%if  Rails.env.production?%>
+<%= link_to "Reply Message","http://45.55.157.4/email_notifications/reply_message?from=#{@from}&to=#{@to}&user_id=#{@user_id}", target: '_blank'%>
+<%else%>
+<%= link_to "Reply Message","http://localhost:3000/email_notifications/reply_message?from=#{@from}&to=#{@to}&user_id=#{@user_id}", target: '_blank'%>
+<%end%>

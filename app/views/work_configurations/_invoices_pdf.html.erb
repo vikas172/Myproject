@@ -1,0 +1,131 @@
+<div class="textLayer" style="width: 1019px; height: 1250px; margin:0 auto;">
+  <div style="font-size: 16.6667px; font-family: sans-serif;">
+    <div style="overflow-y:auto;">
+      <div style="width:600px; float:left;">
+        <div style="font-size: 25px; font-family: sans-serif; margin-bottom:10px; color:#545454">Wipro</div>
+        <div style="font-size: 16.6667px; font-family: sans-serif;margin-bottom:5px;color:#545454;"><b>Bob Guy</b></div>
+        <div style="font-size: 15px; font-family: sans-serif;margin-bottom:5px;">#8142 2nd St.</div>
+        <div style="font-size: 15px; font-family: sans-serif;margin-bottom:5px;">Anytown, California</div>
+        <div style="font-size: 15px; font-family: sans-serif;margin-bottom:5px;color:#545454;"><b>For Services Rendered</b></div>
+      </div>
+      <div style="width:300px; float:right;">
+        <div style="font-size: 20px; font-family: sans-serif; color:#545454;">Invoice #1</div>
+        <div style="font-size: 20px; font-family: sans-serif; width:265px; float:right; margin:10px 0px;">
+          <table width="100%" border="0" cellpadding="3"  cellspacing="0" style="font-size: 15px; font-family: sans-serif;">
+            <tr>
+              <td>From</td>
+              <td>Wipro</td>
+            </tr>
+            <tr>
+              <td>Bill To</td>
+              <td>#123 Main St</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>Springfield, California, 90210</td>
+            </tr>
+            <tr>
+              <td>Issued</td>
+              <td>Not Yet Sent</td>
+            </tr>
+            <tr>
+              <td>Due</td>
+              <td>Net 30 days</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:30px; margin-bottom:30px;">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Service / Product</th>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Description</th>
+          <%if @pdf_setting.invoice_show_line_item_qty%>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Qty</th><%end%>
+          <%if @pdf_setting.invoice_show_line_item_unit_costs%>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Unit Cost</th><%end%>
+          <%if @pdf_setting.invoice_show_line_item_total_costs%>
+          <th style="background-color:#333; border:1px solid #666l;color:#fff;">Total</th><%end%>
+        </tr>
+        <tr>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Clean Pool</td>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Go and do lot's of good stuff</td>
+          <%if @pdf_setting.invoice_show_line_item_qty%>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">1</td><%end%>
+          <%if @pdf_setting.invoice_show_line_item_unit_costs%>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">$50</td><%end%>
+          <%if @pdf_setting.invoice_show_line_item_total_costs%>
+          <td style="color:#000; padding:5px;border-bottom:1px solid #DDDDDD;">$50</td><%end%>
+        </tr>
+        <tr>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Mow Lawn</td>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">More good stuff</td>
+          <%if @pdf_setting.invoice_show_line_item_qty%>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">2</td><%end%>
+          <%if @pdf_setting.invoice_show_line_item_unit_costs%>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">$50</td><%end%>
+          <%if @pdf_setting.invoice_show_line_item_total_costs%>
+          <td style="color:#000; padding:5px;border-bottom:1px solid #DDDDDD;">$100</td><%end%>
+
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div style="overflow-y:auto;margin-top:700px;">
+    <div style="font-size: 15px; font-family: sans-serif; float:left; width:740px;">Thank you for your business. Please contact us with any questions regarding this invoice.<br />
+    </div>
+    <%if @pdf_setting.invoice_show_account_balance%>
+    <div style="font-size: 15px; font-family: sans-serif; float:right; width:270px;">
+      <table cellpadding="5" cellspacing="0" align="right" width="100%" style="font-weight:bold;color:#545454;">
+        <tr>
+          <td align="right"><b>Invoice Total</b></td>
+          <td style="border:1px solid #999;" align="right">$150.00</td>
+        </tr>
+        <tr>
+          <td align="right"><b>Due By </b></td>
+          <td style="border:1px solid #999;" align="right">Net 30 days</td>
+        </tr>
+        <tr>
+          <td align="right"><b>Account Balance</b></td>
+          <td style="border:1px solid #999;" align="right">$350.00</td>
+        </tr>
+      </table>
+    </div>
+  <%end%>
+  </div>
+  <%if @pdf_setting.pdf_return_stub%>
+  <div style="font-size: 16.6667px; font-family: sans-serif; border-top:2px dashed #999; padding:50px; margin:50px 0px;">
+    <div style="width:400px; float:left">
+      <div style="font-size: 16.6667px; font-family: sans-serif;color:#545454;"><b>Bob Guy</b></div>
+      <div style="font-size: 15px; font-family: sans-serif;">#123 Main St.</div>
+      <div style="font-size: 15px; font-family: sans-serif;">Springfield, California, 90210</div>
+      <div style="font-size: 15px; font-family: sans-serif; margin-top:100px;">Mail To:</div>
+      <div style="font-size: 15px; font-family: sans-serif;color:#545454;"><b>Wipro</b></div>
+    </div>
+    <div style="width:400px; float:left">
+      <div style="font-size: 16.6667px; font-family: sans-serif;">For Services Rendered</div>
+      <div style="overflow-y:auto;">
+        <table width="100%" border="0" cellpadding="0" cellspacing="5">
+          <tr>
+            <td>Invoice #:</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Due Date:</td>
+            <td>10/19/2014</td>
+          </tr>
+          <tr>
+            <td>Amount Due:</td>
+            <td>$350.00</td>
+          </tr>
+          <tr>
+            <td>Amount Enclosed:</td>
+            <td>______________</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <%end%>
+</div>

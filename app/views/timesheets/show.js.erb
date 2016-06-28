@@ -1,0 +1,3 @@
+$('#time_sheet_entry_<%= @timesheet.id %>').html("<%= escape_javascript(  render :partial => 'add_timesheet') %> ")
+$("#duration_sum").html("<%= (@total_hours) %>");
+$("#<%=@timesheet.day%>").html("<%=get_total_hours(@timesheet.day,current_user)%>")

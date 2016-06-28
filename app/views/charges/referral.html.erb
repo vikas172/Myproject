@@ -1,0 +1,104 @@
+<div class="client_index">
+  <div class="main_container">
+  <div style="height: auto;">
+       <div id="head">
+        <h1>CopperService Referral Program</h1>
+      </div>
+      <div id="referrals">
+        <div id="referral_description">
+          <img height="150" style="float: left; width: 190px !important;" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/app/images/referral-fd19a411a25a83ede44340ab5aaf4761.jpg" alt="Referral" >
+          <p>
+            Earn <strong>cold hard credits</strong> for referring your friends to CopperService, and feel good knowing you're helping to improve their business! They'll owe you one!
+          </p>
+          <p>
+            We'll give you a <strong>$100 credit</strong>
+            for every customer you refer!
+          </p>
+          <h4 style="clear: both; font-weight: 400;">How it Works</h4>
+          <ol>
+            <li>Tell someone you know about CopperService</li>
+            <p>Do you have friends the own businesses similar to yours? Tell them all about this great new Business Management Software you're using called CopperService!</p>
+            <li>Have them sign up using your Referral Link</li>
+            <p>Give your friends your Referral Link to the right, or tell them to use your Referral Code when entering their billing information into CopperService. This
+              allows us to track who you've referred to us.
+            </p>
+            <li>Monitor your Referral Statistics</li>
+            <p>Visit this section of your CopperService account periodically to monitor the status of your referrals. You can see which ones sign up, which ones convert, and how
+              much longer until you get paid.
+            </p>
+          </ol>
+        </div>
+        <div id="sharing">
+          <%= form_tag charges_account_referral_update_path do %>
+            <div class="fieldset">
+              <h2>
+                Your Personal Referral Code
+              </h2>
+              <div class="content">
+                <div id="referral_code">
+                  <a onclick="$(this).closest('form').find('p').toggle(); $('div#referral_code strong').toggle(); $(this).toggle();; return false;" href="#" class="button smaller fr">Click to Change</a>
+                  <strong>
+                    <%if current_user.referral_code.blank?%>
+                      <%= current_user.full_name%>
+                    <%else%>
+                      <%= current_user.referral_code%>
+                    <%end%>  
+                    </strong>
+                  <p style="display:none;">
+                    <label for="referral_details_referral_code">New Referral Code:</label>
+                    <%if current_user.referral_code.blank?%>
+                      <input type="text" value="<%= current_user.full_name%>" name="referral_details[referral_code]" id="referral_details_referral_code">
+                    <%else%>
+                      <input type="text" value="<%= current_user.referral_code%>" name="referral_details[referral_code]" id="referral_details_referral_code">
+                    <%end%>  
+                    <%= submit_tag "Update",:class=>"button_new_create",:style=>"float:right; margin-right:130px;"%>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <%end%>
+          <div class="fieldset sending">
+            <h2>Your Personal Referral Link</h2>
+            <div class="content">
+              <div id="share_links">
+                <p class="description no_spam">
+                  This is your Personal Referral Link unique to you. Share it with your friends and other business owners to make sure you get the credit when
+                  they sign up! Copy the following link to your clipboard:
+                </p>
+                <div id="personal_link" class="clipboard">
+                  <a id="clipboard70136019678060" href="#" data-tooltip="Copy to Clipboard" data-clipboard-target="clipboard70136019678060"><span>http://peaceful-taiga-7787.herokuapp.com/?thank=
+                  <%if current_user.referral_code.blank?%>
+                    <%=current_user.username%>
+                  <%else%>
+                    <%=current_user.referral_code%>
+                  <%end%>  
+                  </span></a>
+                  <div style="display:none" class="copy_message flash flash_notice">Text was copied to your clipboard.</div>
+                  <input type="text" value="http://peaceful-taiga-7787.herokuapp.com/?thank=<%=current_user.username%>" style="display:none" name="clipboard70136019678060_no_flash" id="clipboard70136019678060_no_flash" data-onclick-select="true" class="large wide">
+                </div>
+                <hr>
+                <p class="description no_spam">
+                  Tell your friends about CopperService using these handy links! They don't auto-post anything &mdash; we hate that too!
+                  They just open a message you can edit with your referral link already added.
+                </p>
+                <ul class="socialicons color">
+                  <li><a href="#" class="email">E-Mail</a></li>
+                  <li><a target="twitter" href="#"></a></li>
+                  <li><a target="facebook" href="#" class="facebook">Facebook</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="the_fine_print">
+          <strong>The Fine Print &mdash; Just a few rules to keep in mind</strong>
+          <ul>
+            <li>New users only, please.</li>
+            <li>Credit is awarded for paying accounts that are active for a minimum of 2 months.</li>
+            <li>Credit is non-transferable, has no cash value, and is awarded at the sole discretion of CopperService.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

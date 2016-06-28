@@ -1,0 +1,4 @@
+$("#search-vendors").html("<%= escape_javascript(  render :partial => 'search_vendors') %> ");
+<%if !@vendors.blank?%>
+	$("#pref-vendors").css("display","block");
+<%end%>

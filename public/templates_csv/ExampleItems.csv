@@ -1,0 +1,4 @@
+name,description,product_model_number,vendor_part_number,vendor_name,quantity,unit_value,value,vendor_url,category,location,image_file_name,image_content_type,image_file_size,image_updated_at,user_id,l_name,l_description,l_product_model,l_vendor_part,l_vendor_name,l_quantity,l_unit,l_value,l_vendor_url,l_category,l_location,l_image
+pipe,Bent pipe,XD-TUH,XD-TUH144,George Smith,12,250.0,,google.co.in,Kits & Projects,"Bayside, NY ",,,,,1,,,,,,,,,,,,
+Door,Wooden Door,FG-312,FG-312145,Amanda Goudie,20,500.0,242.0,google.co.in,Tools,"3511B Farrington St Flushing, NY",,,,,1,,,,,,,,,,,,
+Screw,Small Screw,HUO3214,HUO3214145,John Park,100,6.0,600.0,google.co.in,Tools,"Little Neck, NY ",,,,,1,,,,,,,,,,,,

@@ -1,0 +1,31 @@
+
+<div class="cell_wrapper">
+  <div id="customer_balance_summary" class="fieldset">
+    <!-- <h2>Outstanding Balances</h2> -->
+    <div class="">
+      <div class="overpaid"><%= count_outstanding_clients(@clients) rescue 0 %> Customers owe you</div>
+      <h2 class="outstanding"><span>$</span><%= get_client_balance_data("pending",@clients) rescue 0%></h2>
+      <%if !@clients.blank?%>
+        <%@clients.each do |client|%>
+          <% if dashboard_current_client_balance(client)!=0%>
+            <ul>
+              <li>
+                <a href="/clients/<%=client.id%>?value=client_show">
+                <span>
+                <%= client.first_name %>
+                </span>
+                <span class="balance">
+                $<%= dashboard_current_client_balance(client) rescue 0%>
+                </span>
+                </a>          
+              </li>
+            </ul>
+          <%end%>
+        <%end%>
+      <%end%>
+      <a href="/reports/client_balance" class="report" style="color:#1f518b;">
+      View Detailed Report...
+      </a>
+    </div>
+  </div>
+</div>

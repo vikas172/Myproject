@@ -1,0 +1,108 @@
+<div class="col-4 box horizontal">
+  <div class="">
+      <div class="title work-summary">
+        <i class="icon-quote-left"></i>
+        Estimates
+      </div>
+    </div>
+  <div class="work-boxnew">
+  <div class="module border_top">               
+    <div class="column_thirds">
+      <a href="/quotes?type_filter=Draft">
+        <div class="summary">
+          <div class="numbers">
+            <div class="button set_width inactive_quote summary-work">
+              <span class="inactive" style="font-size: 14px;">
+                Drafts 
+                <span>
+                  <%if !@quotes_draft.blank?%>
+                    <%=@quotes_draft.count %>
+                  <%else%>
+                    0
+                  <%end%>
+                </span> 
+              </span> 
+              <p>
+                Unsent <span style=" line-height: 150%; " class=" ">$<%@total=0%>
+                <%if !@quotes_draft.blank?%>
+                  <%@quotes_draft.each do |quote|%>
+                    <%@total= @total+total_amount(quote)%>
+                  <%end%>
+                <%end%>  
+                <%= @total.round(2) rescue 0.00%>
+                </span>
+              </p>
+            </div>   
+          </div><!-- end of column left <-->
+        </div> <!-- end of summary -->
+      </a>
+    </div>
+
+    <div class="column_thirds">
+      <a href="/quotes?type_filter=Sent">
+        <div class="summary">
+          <div class="numbers">
+            <div class="button set_width pending requires_quote summary-work">
+              <span class="pending inactive" style="font-size: 14px;">
+                Pending 
+                <span>
+                  <%if !@quotes_sent.blank?%>
+                    <%if !@quotes_draft.blank?%>
+                      <%=@quotes_sent.count+ @quotes_draft.count%>
+                    <%else%>
+                      <%=@quotes_sent.count%>
+                    <%end%>
+                  <%elsif !@quotes_draft.blank?%> 
+                    <%=@quotes_draft.count%>
+                  <%else%>
+                    0
+                  <%end%> 
+                </span> 
+              </span> 
+              <p>
+                Prospect <span style=" line-height: 150%; " class=" ">$
+                <%@total_sent=@total%>
+                <%if !@quotes_sent.blank? %>
+                  <%@quotes_sent.sort.pop(3).each do |quote|%>
+                    <%@total_sent= @total_sent+total_amount(quote)%>
+                  <%end%>
+                <%end%>  
+                  <%=@total_sent.round(2) rescue 0.00%>
+                </span>
+              </p>
+            </div>   
+          </div><!-- end of column left <-->
+        </div><!-- end of summary -->
+      </a>
+  </div>
+                    
+    <div class="column_thirds">
+      <div class="summary">
+        <div class="numbers">
+          <a href="/quotes?type_filter=Won">
+            <div class="button set_width active_quote summary-work">
+              <span class="active" style="font-size: 14px;">
+                Convert Work Orders
+                <span>
+                <% if !@convert_job.blank?%>
+                  <%=@convert_job.count%>
+                <%else%>
+                    0
+                <%end%>
+                </span>
+                </span>
+                <p>
+                  Converted <span style=" line-height: 150%; " class=" "><% if !@convert_job.blank?%> 
+                  $<%=@covert_job_total%></span>
+                  <%else%>
+                    $0
+                  <%end%>
+               </p>
+            </div>
+          </a>    
+        </div><!-- end of column left <-->
+      </div><!-- end of summary -->
+    </div>
+  </div>
+</div>
+</div>

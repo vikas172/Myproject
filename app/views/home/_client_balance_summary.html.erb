@@ -1,0 +1,18 @@
+<div id="summary" class="content_align">
+  <div data-dynamic="true" class="summary_bars">
+    <%= link_to("/reports/client_balance/credit", :class=>"subsection_link #{get_selected("credit")}" ) do %>
+      <h3>
+        Credit Balance
+        <span class="count"><%= get_count_client_balance("credit", @client_balance_summary) %></span>
+      </h3>
+       <span data-value="<%= get_client_balance_data("credit", @client_balance_summary)%>" class="total" style="width: 330px;">$<%= get_client_balance_data("credit", @client_balance_summary).round(2) %></span>
+    <% end %>
+    <%= link_to("/reports/client_balance/pending", :class=>"subsection_link #{get_selected("pending")}" ) do %>
+      <h3>
+        Outstanding
+        <span class="count"><%= get_count_client_balance("pending", @client_balance_summary) %></span>
+      </h3>
+       <span data-value="<%= get_client_balance_data("pending", @client_balance_summary)%>" class="total" style="width: 330px;">$<%= get_client_balance_data("pending", @client_balance_summary) %></span>
+    <% end %>
+  </div>
+</div>

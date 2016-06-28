@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Untitled Document</title>
+  </head>
+  <body style="margin:0; padding:0;">
+    <div style="width:960px; margin:0 auto;">
+      <div style=" width:760px; margin: 0 auto;">
+        <div style="text-align:center; padding:20px 0; margin-top:50px;">
+          <%#if current_user.company.blank?%>
+           <!--  <img style="width:120px;" src="http://peaceful-taiga-7787.herokuapp.com/assets/default_company.png" alt="Default company"> -->
+          <%#elsif !current_user.company.company_logo.blank?%>
+            <%#= image_tag current_user.company.company_logo ,:style=>"width:120px;" rescue ""%>
+          <%#else%>
+           <!--  <img style="width:120px;" src="http://peaceful-taiga-7787.herokuapp.com/assets/default_company.png" alt="Default company"> -->
+          <%#end%>  
+        </div>
+        <p style="font-size:17px; font-weight:normal; color:#333; line-height:24px; font-family:Arial, Helvetica, sans-serif;">We've received your payment for your GitHub subscription. You can keep this receipt for your
+          records. For questions, contact us anytime at support@github.com.
+        </p>
+        <div style=" margin:30px 0px;">
+          <table width="100%" border="0" style="font-size:18px; color:#333; font-family:Arial, Helvetica, sans-serif;" cellpadding="0" cellspacing="0">
+            <tr style="border-bottom:1px solid #666;">
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" width="30%">Date</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;"><b>
+                <%= Time.at(@payment.created)%>
+              </b></td>
+            </tr>
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;">Account billed</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;"><b><%= Time.at(@payment.created)%></b></td>
+            </tr>
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;">Plan</td>
+
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;"><b><%= params[:type]%> Account</b> ( ends on <%= plan_last_date(current_user)%>)</td>
+            </tr>
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;">Amount charged</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;"><b>USD $<%= plan_type(current_user).to_f/100%>*</b></td>
+            </tr>
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;">Charged</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;"><b>American Express</b> (3*** ****** *<%= @payment.card.last4%>)</td>
+            </tr>
+            <tr>
+          
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;">Transaction</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;"><b><%= @payment.id.last(6) %></b></td>
+            </tr>
+          </table>
+        </div>
+        <div style=" margin:30px 0px;">
+          <table width="100%" border="0" style="font-size:18px; color:#333; font-family:Arial, Helvetica, sans-serif;" cellpadding="0" cellspacing="0">
+            <tr style="border-bottom:1px solid #666;">
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" width="50%" align="left">Discription</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" align="right"><b>Price</b></td>
+            </tr>
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" align="left">Account billed</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" align="right"><b>$<%=@payment.amount.to_f/100%></b></td>
+            </tr>
+            
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px; color:#90959a;" align="right">Subtotal</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" align="right"><b>$<%=@payment.amount.to_f/100%></b></td>
+            </tr>
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px; color:#90959a;" align="right">Coupons</td>
+
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" align="right"><b><%=@payment.amount_refunded.to_f/100%></b><br /><span style="color:#90959a; font-size:14px;">OFF <%= @payment.amount_refunded/100 rescue 0%> <i>(10% off)</i></span></td>
+            </tr>
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px; color:#90959a;" align="right">Total</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" align="right"><b><%if @payment.amount_refunded==0%>
+                $<%= @payment.amount.to_f/100 rescue ""%>
+              <%else%>
+                $<%= find_total_payment(@payment).round(2) rescue 0%>
+              <%end%></b></td>
+            </tr>
+            <tr>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" align="right">Paid</td>
+              <td  style="border-bottom:1px solid #ddd; padding:10px 0px;" align="right"><b><%if @payment.amount_refunded==0%>
+                $<%= @payment.amount.to_f/100 rescue ""%>
+              <%else%>
+                $<%= find_total_payment(@payment).round(2) rescue 0%>
+              <%end%></b></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

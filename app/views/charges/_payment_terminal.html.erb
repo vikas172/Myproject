@@ -1,0 +1,173 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+      <h4 class="modal-title" id="myModalLabel">Payment Terminal</h4>
+    </div>
+    <div class="modal-body">
+    	<%= form_tag payment_terminal_set_path,:id=>"payment_terminal_set" do %>
+	  		<div style="width:100%;">
+	  			<div style="width:45%;float:left;">
+						<h2>Payment Detail</h2>
+						
+						<div class="row">
+							<div class="span_new">Customers</div>
+							<div class="span_text"><%= select_tag "payment_terminal[client_id]", options_for_select(current_user.clients.collect{ |u| [u.first_name, u.id]}), {:class =>"select_combobox"} %>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="span_new">Amount</div>
+							<div class="span_text"><%= text_field_tag "payment_terminal[amount]"%></div>
+						</div>
+						<div class="row">
+							<div class="span_new">Description</div>
+							<div class="span_text"><%= text_area_tag "payment_terminal[description]" ,nil,:style=>"line-height: 78%;"%></div>
+						</div>
+<!-- 						<div class ="row"> 
+							<div class="span_new">Payment Type</div>
+							<div class="span_new"><%#= radio_button_tag "payment_terminal[payment_type]", "one_off"%> One Off</div>
+							<div class="span_new"><%#= radio_button_tag "payment_terminal[payment_type]","recurring"%> Recurring </div>
+						</div> -->
+						<h2>Your Information</h2>
+						<div class ="row"> 
+							<div class="span_new">Name</div>
+							<div class="span_text"><%= text_field_tag "payment_terminal[name]"%></div>
+						</div>
+						<div class ="row"> 
+							<div class="span_new">Email</div>
+							<div class="span_text"><%= email_field_tag "payment_terminal[email]"%></div>
+						</div>						
+	  			</div>
+	  			<div style="width:45%; float:right;">
+						<h2>Billing Address</h2>
+						<div class ="row"> 
+							<div class="span_new">Address</div>
+							<div class="span_text"><%= text_field_tag "payment_terminal[street]"%></div>
+						</div>
+						<div class ="row"> 
+							<div class="span_new">City</div>
+							<div class="span_text"><%= text_field_tag "payment_terminal[city]"%></div>
+						</div>
+						<div class ="row"> 
+							<div class="span_new">State/Zipcode</div>
+							<%= text_field_tag "payment_terminal[state]",nil,:style=>"width: 38%;"%>
+							<%= text_field_tag "payment_terminal[zipcode]",nil,:style=>"width:18%;"%>
+						</div>
+						<div class ="row"> 
+							<div class="span_new">Country</div>
+							<div class="span_text"><%= text_field_tag "payment_terminal[country]"%></div>
+						</div>
+					
+						<h2>Payment Method</h2>
+
+						<div class ="row"> 
+							<div class="span_new">Name on card</div>
+							<div class="span_text"><%= text_field_tag "payment_terminal[name_on_card]"%></div>
+						</div>
+						<div class ="row"> 
+							<div class="span_new">Card Number</div>
+							<div class="span_text"><%= text_field_tag "payment_terminal[card_number]"%></div>
+						</div>
+						<div class ="row"> 
+							<div class="span_new">Expiration</div>
+							<div>
+							<!-- MM<%#= text_field_tag "payment_terminal[exp_month]" ,nil,:style=>"width:10%;"%> -->
+							<!-- YYYY<%#= text_field_tag "payment_terminal[exp_year]" ,nil,:style=>"width:10%;"%> -->
+						  <%= select_tag("payment_terminal[exp_month]", options_for_select([["1","1"],["2","2"], ["3","3"], ["4","4"],["5","5"], ["6","6"], ["7","7"], ["8","8"],["9","9"],["10","10"],["11","11"],["12","12"]]))%>
+              <%= select_year(Date.today,  :start_year => Time.now.year, :end_year => Time.now.year + 15, :field_name => "exp_year", :prefix => :payment_terminal)  %>
+              <%= text_field_tag "payment_terminal[cvc]",nil,:placeholder=>"cvc",:style=>"width:13%;"%>	
+						</div>
+						<!-- <div class ="row"> 
+							<div class="span_new">CVC</div>
+							<%#= text_field_tag "payment_terminal[cvc]",nil,:style=>"width:10%;"%>
+						</div> -->
+
+						</div>
+						<%= submit_tag "Submit Payment",:class=>"button_new_create save-new-btn1 pull-right",:id=>"payment-terminal"%>
+						<button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>
+	  			</div>
+	  		</div>
+
+	  	<%end%>	
+    </div>
+  </div>
+</div>
+
+
+
+<style type="text/css">
+	h2{
+		font: 20px/26px Helvetica-normal !important;
+	}
+	.span_new{
+		width: 30%;
+		margin-left: 0px;
+	}
+	.span_text{
+		width: 65%;
+		margin-left: 0px;
+	}
+	.span_text input{
+		width: 94%;
+		margin-left: 0px;
+	}
+	#payment_terminal{
+	 	left: 40%;
+	  width: 60%;
+	}
+	.span_text_exp{
+		width: 10%;
+	}
+	.span_text_exp input{
+		width: 10%;
+		float: right;
+	}
+	#payment_terminal_exp_year{
+		width: 26% !important;
+	}
+	#payment_terminal_exp_month{
+		width: 20% !important;
+	}
+	#payment_terminal{
+		top: 10px !important;
+	}
+</style>
+
+<script type="text/javascript">
+stripeTokenPaymentTerminal()
+function stripeTokenPaymentTerminal(){
+
+ $(document).ready(function() {
+   Stripe.setPublishableKey('pk_test_lyYYz5ObfjV7rWasjyxGjIHm');
+
+	  $("#payment-terminal").click(function() {
+	    // $('#payment-terminal').attr("disabled", "disabled");
+	    
+	    Stripe.createToken({
+	        number: $('#payment_terminal_card_number').val(),
+	        cvc: $('#payment_terminal_cvc').val(),
+	        exp_month: $('#payment_terminal_exp_month').val(),
+	        exp_year: $('#payment_terminal_exp_year').val()
+	    }, stripeResponseHandler);
+	    // prevent the form from submitting with the default action
+	    return false;
+	  });
+  });
+
+	function stripeResponseHandler(status, response) {
+
+    if (response.error) {
+    	$(".payment-errors").css('display', 'block');
+        $(".payment-errors").text(response.error.message);
+    } 
+    else {
+        var form$ = $("#payment_terminal_set");
+        var token = response['id'];
+        form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+        form$.get(0).submit();
+    }
+  }
+}
+
+</script>

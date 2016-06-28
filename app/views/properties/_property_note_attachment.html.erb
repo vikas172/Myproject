@@ -1,0 +1,227 @@
+<div class="new-smen">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab"> <i class="fa fa-comment" style="  margin-top: 3px;"></i> Notes</a></li>
+    <li role="presentation"><a href="#email" aria-controls="email" role="tab" data-toggle="tab"><i class="fa fa-share"></i> Email</a></li>
+    <li role="presentation"><a href="#sms" aria-controls="sms" role="tab" data-toggle="tab"> <i class="icon-envelope"></i> Sms</a></li>
+    <li role="presentation" class="call-status"><a href="#call" aria-controls="call" role="tab" data-toggle="tab"> <i class="fa fa-phone"></i> Call</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="notes">
+      <div class="property-attachment">
+        <%= form_tag(property_note_path, :multipart => true, id: "property_note_attachment_create") do %>
+          <%= text_area_tag :note, nil, :class=>"form-control property_note",:placeholder=>"new note...",:style=>"width:97%; height:60px;"%>   <br/> <br/> 
+          <%= hidden_field_tag :property_id,@property.id %>
+          <div class="attach_files" style="text-decoration: -moz-anchor-decoration; cursor: pointer">Attach Files</div> 
+          <div id="attachment_field" style="display:none;">
+            <%= file_field_tag "file[]",:id=>"inputattachment",:class=>"form-control",:multiple=>true %>
+          </div>
+        <% end %>
+        <%= submit_tag "Save",:class=>"button_new_index", id: "property_note_submit", style: "display: none;", onclick: "$('form#property_note_attachment_create').submit();" %>
+        <div class="model_cancel_button cancel" id="property_attach" style="display: none;">Cancel</div>
+      </div>
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane" id="email">
+      <%= form_tag property_email_path do %>
+        <div class="input-prepend prepend-form">
+          <span class="add-on">To:</span>
+          <%= text_field_tag "email_notification[to]",nil,:value=>@property.client.personal_email%>
+        </div>
+        <span class="add-cc-bcc add-prepend">
+          <p class="add-cc" style="float:left; cursor:pointer;">Add CC</p> &nbsp; &nbsp;
+          <p class="add-bcc" style="float:right; cursor:pointer;">Add BCC</p>
+        </span>
+        <div class="input-prepend cc-field prepend-form" style="display:none;">
+          <span class="add-on">Cc:</span>
+          <%= text_field_tag "email_notification[cc]"%>
+        </div>
+        <div class="input-prepend bcc-field prepend-form" style="display:none;">
+          <span class="add-on">Bcc:</span>
+          <%= text_field_tag "email_notification[bcc]"%>
+        </div>
+        <div class="clearfix"></div> 
+        <div class="prepend-form">
+          <%= text_field_tag "email_notification[subject]" ,nil,:placeholder => "Subject"%>
+        </div>
+        <div class="clearfix"></div> 
+        <%=text_area_tag "email_notification[body]",nil,:class=>"email-message"%>
+        <div class="clearfix"></div> 
+        <%= hidden_field_tag "email_notification[user_id]",nil,:value=>current_user.id%>
+        <%= hidden_field_tag "email_notification[from]",nil,:value=>current_user.email%>
+        <%= hidden_field_tag "email_notification[email_type]",nil,:value=>"sent" %>
+        <%= hidden_field_tag "property_id",nil,:value=>@property.id %>
+        <%= submit_tag "send",:class=>"button"%>
+      <% end %>
+    </div>
+    
+    <div role="tabpanel" class="tab-pane" id="sms">
+      <%= form_tag property_sms_path  do %>
+        <div class="input-prepend prepend-sms-form">
+          <span class="add-on">To:</span>
+          <%= text_field_tag "sms[to]",nil,:value=>@property.client.mobile_number%>
+        </div>
+
+        <span class="add-cc-bcc add-prepend">
+          <!-- <p class="add-other" style="float:left; cursor:pointer;">Add Other</p> -->
+        </span>
+
+        <div class="input-prepend other-number-add prepend-form" style="display:none;">
+          <span class="add-on">Other:</span>
+          <%= text_field_tag "sms[other_number]"%>
+        </div>
+
+        <div class="clearfix"></div> 
+        Remaining characters: <span id="count"></span>
+        <div class="clearfix"></div> 
+        <%=text_area_tag "sms[body]",nil,:class=>"sms-body",:style=>"width: 97%; height: 60px;"%>
+        
+        <div class="clearfix"></div> 
+        <%= hidden_field_tag "sms[property_id]",nil,:value=>@property.id %>
+        <%= hidden_field_tag "sms[user_id]",nil,:value=>current_user.id %>
+        <%= submit_tag "send",:class=>"button"%>
+      <%end%>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="call">
+      <div class="input-prepend prepend-sms-form">
+        <span class="add-on">Call:</span>
+        <%= text_field_tag "call-client",nil,:value=>@property.client.mobile_number%>
+      </div>
+
+      <div class="row">
+        <%if !@token.blank?%>
+          <button class="call_twilio" onclick="call();" id="<%=current_user.id%>" name="<%= @property.client.mobile_number%>" value="<%= @property.id%>">
+              <i class="icon-phone"></i> Call
+            </button>
+                                
+            <button class="twilio_hangup" onclick="hangup();">
+              <img src="/assets/hangup.png" >Hangup
+            </button>
+            <div id="twilio_log" class="display-ready">Loading pigeons...</div>
+        <%end%>
+    </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(".call-status").click(function(){
+    if ($("#twilio_log").html() == "Ready"){
+      $("#twilio_log").css("background","#1f518b");
+    }
+    else
+    {
+    $("#twilio_log").css("background","#1f518b");
+    }
+  })
+
+  $(".add-cc").click(function(){
+    $(".cc-field").css("display","block");
+    $(".add-cc").css("display","none");
+  })
+  $(".add-bcc").click(function(){
+    $(".bcc-field").css("display","block");
+    $(".add-bcc").css("display","none");
+  })
+  $(".add-other").click(function(){
+    $(".add-other").css("display","none");
+    $(".other-number-add").css("display","block");
+  })
+
+var maxchar = 160;
+var i = document.getElementById("sms_body");
+var c = document.getElementById("count");
+c.innerHTML = maxchar;
+    
+i.addEventListener("keydown",count);
+
+function count(e){
+    var len =  i.value.length;
+    
+    if (len >= maxchar){
+       e.preventDefault();
+    } else{
+      if (len != 0){
+       c.innerHTML = maxchar - len-1;}
+       else
+       {c.innerHTML = maxchar -len;}   
+    }
+}
+
+
+  Twilio.Device.setup("<%= @token %>", {debug: true});
+ 
+      Twilio.Device.ready(function (device) {
+        $("#twilio_log").text("Ready");
+      });
+ 
+      Twilio.Device.error(function (error) {
+        $("#twilio_log").text("Error: " + error.message);
+      });
+ 
+      Twilio.Device.connect(function (conn) {
+        $("#twilio_log").text("Successfully established call");
+      });
+ 
+      Twilio.Device.disconnect(function (conn) {
+        $("#twilio_log").text("Call ended");
+      });
+ 
+      Twilio.Device.incoming(function (conn) {
+        $("#twilio_log").text("Incoming connection from " + conn.parameters.From);
+        // accept the incoming connection and start two-way audio
+        conn.accept();
+      });
+ 
+      function call() {
+        var phone = $(".call_twilio").attr("name"); 
+        var id = $(".call_twilio").attr("id"); 
+        var property_id = $(".call_twilio").val();
+        addActivity(phone, id,property_id);
+        // get the phone number to connect the call to
+        var params = $("#call-client").val();
+        Twilio.Device.connect({phone_number: params});
+      }
+ 
+      function hangup() {
+        Twilio.Device.disconnectAll();
+      }
+
+      function addActivity(phone,id,property_id){
+      $.ajax({
+          type: "POST",
+          url: "/call_activity",
+          data: {mobile: phone,property_id: property_id,user_id: id}
+        }) 
+      }
+</script>
+
+<style type="text/css">
+
+.display-ready{
+  width: 212px !important;
+}
+.digits p sup {
+  text-transform: uppercase;
+  color: #fff;
+}
+.pad-action {
+  background: #093;
+}
+.digits p {
+  font-weight: 600;
+}
+.digits p strong {
+  margin-right: 8px;
+  color: #fff;}
+li {
+  list-style: none;
+}
+#call-but{
+  padding: 10px;
+  width: 65px;
+  cursor: pointer;
+}
+</style>

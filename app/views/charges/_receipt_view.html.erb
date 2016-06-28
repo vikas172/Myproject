@@ -1,0 +1,56 @@
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Payment Detail</h4>
+      </div>
+      <div class="modal-body">
+ 
+        <h3 style="text-align:center; line-height: 20px;">Receipt</h3>
+        <%= link_to  charges_receipt_pdf_path(@payment.id,:type=>@account_type) do %>
+        <%=image_tag "pdf_view_receipt.png"%>
+        <%end%>
+        
+        <div class="rec-box">
+          <h3>$<%= @payment.amount.to_f/100 rescue ""%> &nbsp;</h3>
+          <h4><%= @payment.card.brand rescue ""%> <%= @payment.card.last4 rescue ""%></h4>
+          <div class="rec-box-date">
+            <span style="float:left;"><%= Time.at(@payment.created).strftime("%B %d ,%Y") rescue ""%></span>
+            <span style="float:right;"><% if @payment.receipt_number%>#<%= @payment.receipt_number%><%end%></span>
+          </div>
+        </div>
+
+        <table class="table payment-display">
+          <tr>
+            <td style="width:80%"><b>Description</b></td>
+            <td><b>Price</b></td>
+          </tr>
+
+
+          <tr>
+            <td><%= @payment.description rescue ""%></td>
+            <td>$ <%= @payment.amount.to_f/100 rescue ""%></td>
+          </tr>
+
+          <tr>
+            <td>Refund Amount</td>
+            <td>$ <%=@payment.amount_refunded.to_f/100 rescue 0%></td>
+          </tr>
+
+          <tr>
+            <%if @payment.amount_refunded==0%>
+              <td>Total</td>
+              <td>$<%= @payment.amount.to_f/100 rescue ""%></td>
+            <%else%>
+              <td>  Adjusted total </td>
+              <td>$<%= find_total_payment(@payment).round(2) rescue 0%></td>
+            <%end%>  
+          </tr>
+          
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>

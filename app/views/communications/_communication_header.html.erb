@@ -1,0 +1,84 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Communication Center</h4>
+    </div>
+    <div class="modal-body">
+      <%if current_user.user_type == "admin"%>
+      <%= render "dashboards/dashboard_communication"%>
+      <%else%>
+      <%= render "dashboards/team_communication"%>
+      <%end%>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+  div#communication-centers {
+      width: 53%;
+  }  
+</style>
+<script type="text/javascript">
+
+  Twilio.Device.setup("<%= @token %>", {debug: true});
+
+    Twilio.Device.ready(function (device) {
+      $("#twilio_log").text("Ready");
+    });
+
+    Twilio.Device.error(function (error) {
+      $("#twilio_log").text("Error: " + error.message);
+    });
+
+    Twilio.Device.connect(function (conn) {
+      $("#twilio_log").text("Successfully established call");
+    });
+
+    Twilio.Device.disconnect(function (conn) {
+      $("#twilio_log").text("Call ended");
+    });
+
+    Twilio.Device.incoming(function (conn) {
+      $("#twilio_log").text("Incoming connection from " + conn.parameters.From);
+      // accept the incoming connection and start two-way audio
+      conn.accept();
+    });
+
+    function call() {
+
+      // get the phone number to connect the call to
+      var dail1 = $(".number").html();
+      var dail2 = $("#number").val();
+      
+       if (dail1==""){
+        params = {"PhoneNumber":dail2};
+       }
+       else
+       {
+        params = {"PhoneNumber":"+1"+dail1};
+       }
+     
+      Twilio.Device.connect(params);
+    }
+
+    function hangup() {
+      Twilio.Device.disconnectAll();
+    }
+
+    var connection=null;
+    $.each(['0','1','2','3','4','5','6','7','8','9','star','pound'], function(index, value) { 
+        $('#button' + value).click(function(){ 
+        if(connection) {
+          if (value=='star')
+            connection.sendDigits('*')
+          else if (value=='pound')
+            connection.sendDigits('#')
+          else
+            connection.sendDigits(value)
+          return false;
+        } 
+        });
+    });
+
+</script>

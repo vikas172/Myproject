@@ -1,0 +1,52 @@
+<%unless params[:display_method].blank?%>
+	<div id="column_selector_model" class=" modal fade column_selector_model click_focus" tabindex="-1" role="tool-tip" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+		<label>
+			<input type="checkbox" checked="checked" name="name"> Name
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="street1"> Street1
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="street2"> Street2
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="city"> City
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="state"> State
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="country"> Country
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="zip_code"> Zip Code
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="open"> Open
+		</label>
+	</div>
+<% else %>
+	<div id="column_selector_model" class=" modal fade click_focus" tabindex="-1" role="tool-tip" aria-labelledby="myModalLabel" aria-hidden="true">
+		<label>
+			<input type="checkbox" checked="checked" name="contact"> Contact
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="company"> Company
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="phone"> Phone
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="e-mail"> E-mail
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="billing-address"> Billing Address
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="created-date"> Created Date
+		</label>
+		<label>
+			<input type="checkbox" checked="checked" name="open"> Open
+		</label>
+	</div>
+<% end %>

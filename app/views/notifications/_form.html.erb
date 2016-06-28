@@ -1,0 +1,134 @@
+<%= form_for(@notification) do |f| %>
+  <% if @notification.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@notification.errors.count, "error") %> prohibited this notification from being saved:</h2>
+
+      <ul>
+        <% @notification.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h4 class="tilte1-font">Notification Overview</h4>
+  <p>What conditions you notify customer?</p>
+
+  <div class="row">
+    <div class="span3">
+      Appointment Notification
+    </div>
+    <div class="span6 notification_align">
+      <%= f.radio_button :notification_day ,"same_day" ,:style=>"margin: 0px 2px 0px 1px;"%> Same day 
+      <%= f.radio_button :notification_day ,"day_before",:style=>"margin: 0px 2px 0px 1px;"%> Prior day
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span3">
+     Select Time
+    </div>
+    <div class="span6">
+      <span class="input-append toggle-append bootstrap-timepicker">
+        <%if !@notification.notification_time.blank?%>
+          <%= f.text_field :notification_time,:value=>@notification.notification_time.strftime("%I:%M%p"),:id=>"timepicker" %>
+          <%else%>
+          <%= f.text_field :notification_time,:id=>"timepicker" %>
+          <%end%>
+      </span>  
+    </div>
+  </div>
+<hr style="border: 1px solid #ccc ">
+  Team Send Options:
+<!--   <div class="row">
+    <div class="span3">
+      <b>Mobile Number</b>
+    </div>
+    <div class="span6">
+      <%#= f.text_field :team_mobile_number  %>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="span3">
+      SMS Notification
+      <%= f.radio_button  :team_notification_by ,"sms",:class=>"notifiy-btns" %>
+    </div> 
+   
+     <div class="span3">
+      Email Notification
+      <%= f.radio_button  :team_notification_by ,"email",:class=>"notifiy-btns" %>
+    </div> 
+     
+  </div>
+
+  <div class="row">
+   
+  </div>
+
+ <!--  <div class="row">
+    <div class="span3">
+      <b>Opted Preference</b>
+    </div> 
+    <div class="span6 notification_align"> 
+      <%#= f.radio_button  :team_notification_preference ,"sms" ,:style=>"margin: 0px 2px 0px 1px;"%> SMS 
+      <%#= f.radio_button  :team_notification_preference ,"email" ,:style=>"margin: 0px 2px 0px 1px;"%> Email 
+    </div>  
+  </div> -->
+<br>
+  Customer Send Options:
+<!--   <div class="row">
+    <div class="span3">
+      <b>Mobile Number</b>
+    </div>
+    <div class="span6">
+      <%#= f.text_field :client_mobile_number  %>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="span3">
+      SMS Notification
+      <%= f.radio_button  :client_notification_by ,"sms",:class=>"notifiy-btns" %>
+    </div> 
+     <div class="span3">
+      Email Notification
+       <%= f.radio_button  :client_notification_by ,"email",:class=>"notifiy-btns" %>
+    </div> 
+    
+  </div>
+
+  
+
+<!--   <div class="row">
+    <div class="span3">
+      <b>Opted Preference</b>
+    </div> 
+    <div class="span6 notification_align"> 
+      <%#= f.radio_button  :client_notification_preference ,"sms" ,:style=>"margin: 0px 2px 0px 1px;"%> SMS 
+      <%#= f.radio_button  :client_notification_preference ,"email" ,:style=>"margin: 0px 2px 0px 1px;"%> Email 
+    </div>  
+  </div>
+ -->
+
+  <%if @notification.team_email.blank?%>
+    <%= render partial: "default_template" ,:locals=>{:f=>f}%>
+  <%else%>
+    <%= render partial: "update_template" ,:locals=>{:f=>f}%>
+    
+  <%end%>
+  <br>
+  <br>
+  <div class="actions">
+    <%= f.submit :class=>"update_button_setting save-new-btn1",:id=>"create_notification"%>
+  </div>
+<%end%>  
+<style type="text/css">
+  .notification_align{
+    margin-bottom: 10px;
+  }
+  .notifiy-btns{
+    margin-top: 0px !important;
+    margin-left: 5px !important;
+  }
+</style>

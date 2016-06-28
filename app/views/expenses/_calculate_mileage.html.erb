@@ -1,0 +1,25 @@
+<%if @custom_expense.blank?%>
+  <span id="per-unit">at $0.575  per mi.</span>
+<%elsif @custom_expense.default_unit.blank?%>
+  <%if @custom_expense.mileage.blank?%>
+    <%if @custom_expense.km.blank?%>
+      <span id="per-unit" data-value="0.575">at $0.575  per mi.</span>
+    <%else %>
+      <span id="per-unit" data-value="<%= @custom_expense.km%>">at $<%= @custom_expense.km%>  per mi.</span>
+    <%end%>
+  <%else %>
+    <span id="per-unit" data-value="<%= @custom_expense.mileage%>">at $<%= @custom_expense.mileage%>  per mi.</span>
+  <%end%>  
+<%elsif @custom_expense.default_unit == "km"%>
+  <%if @custom_expense.km.blank? %>
+    <span id="per-unit" data-value="0.357">at $ 0.357  per km.</span>
+  <%else%>
+    <span id="per-unit" data-value="<%= @custom_expense.km%>">at $ <%= @custom_expense.km%>  per km.</span>
+  <%end%>
+<%else%>
+  <%if @custom_expense.mileage.blank? %>
+    <span id="per-unit" data-value="0.575">at $0.575  per mi.</span>
+  <%else%>
+    <span id="per-unit" data-value="<%= @custom_expense.mileage%>">at $ <%= @custom_expense.mileage%>  per mi.</span>
+  <%end%>
+<%end%>

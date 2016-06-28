@@ -1,0 +1,171 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Chemical Used</h4>
+    </div>
+    <div class="modal-body">
+      <%= form_for(@chemical_used,:url=>chemical_used_create_pool_services_path) do |f|%>
+        <table width="50%" border="0" class="pool-test">
+          <%if @check_used.try(:liquid_chlorine_select) %>
+            <tr>
+              <td colspan="2" align="center"><label>Liquid Chlorine</label></td>
+            </tr>
+            <tr>
+              <td ><%= f.text_field :liquid_chlorine_gal%></td>
+              <td class="icons"></td>
+            </tr>
+          <%end%>  
+          <%if @check_used.try(:di_chlor_select) %>
+          <tr>
+            <td colspan="2" align="center"><label>Di Chlor Ib</label></td>
+          </tr>
+          <tr>
+            <td ><%= f.text_field :di_chlor_ib%></td>
+            <td class="icons"></td>
+          </tr>
+          <%end%>  
+          <%if @check_used.try(:tri_chlor_select) %>
+          <tr>
+            <td colspan="2" align="center"><label>Tri Chlor Ib</label></td>
+          </tr>
+          <tr>
+            <td ><%= f.text_field :tri_chlor_ib%></td>
+            <td class="icons"></td>
+          </tr>
+          <%end%>  
+          <%if @check_used.try(:muriatic_acid_select) %>
+          <tr>
+            <td colspan="2" align="center"><label>Muriatic Acid gal</label></td>
+          </tr>
+          <tr>
+            <td ><%= f.text_field :muriatic_acid_gal%></td>
+            <td class="icons"></td>
+          </tr>
+          <%end%>  
+          <%if @check_used.try(:dry_muriatic_acid_select) %>
+          <tr>
+            <td colspan="2" align="center"><label>Dry Muriatic Acid lb</label></td>
+          </tr>
+          <tr>
+            <td ><%= f.text_field :dry_muriatic_acid_lb%></td>
+            <td class="icons"></td>
+          </tr>
+          <%end%>  
+          <%if @check_used.try(:bromine_tans_select) %>
+          <tr>
+            <td colspan="2" align="center"><label>Bromine tans</label></td>
+          </tr>
+          <tr>
+            <td ><%= f.text_field :bromine_tans%></td>
+            <td class="icons"></td>
+          </tr>
+          <%end%>  
+          <%if @check_used.try(:soda_ash_select) %>
+          <tr>
+            <td colspan="2" align="center"><label>Soda Ash lb</label></td>
+          </tr>
+          <tr>
+            <td ><%= f.text_field :soda_ash_lb%></td>
+            <td class="icons"></td>
+          </tr>
+          <%end%>  
+          <%if @check_used.try(:sodium_bicarbonate_select) %>
+          <tr>
+            <td colspan="2" align="center"><label>Sodium Bicarbonate lb</label></td>
+          </tr>
+          <tr>
+            <td ><%= f.text_field :sodium_bicarbonate_lb%></td>
+            <td class="icons"></td>
+          </tr>    
+                    <%end%>  
+          <%if @check_used.try(:salt_bags_select) %>
+          <tr>
+            <td colspan="2" align="center"><label>Salt bags</label></td>
+          </tr>
+          <tr>
+            <td><%= f.text_field :salt_bags%></td>
+            <td class="icons"></td>
+          </tr> 
+          <%end%> 
+
+          <%if @check_used.try(:water_clarifier_select) %>
+            <tr>
+              <td colspan="2" align="center"><label>Water Clarifier oz</label></td>
+            </tr>
+            <tr>
+              <td><%= f.text_field :water_clarifier_oz%></td>
+              <td class="icons"></td>
+            </tr> 
+          <%end%>
+
+          <%if @check_used.try(:algacide_oz_select) %>
+            <tr>
+              <td colspan="2" align="center"><label>Algacide oz</label></td>
+            </tr>
+            <tr>
+              <td ><%= f.text_field :algacide_oz%></td>
+              <td class="icons"></td>
+            </tr> 
+          <%end%> 
+
+          <%if @check_used.try(:phosphate_remover_select) %>      
+            <tr>
+              <td colspan="2" align="center"><label>Phosphate remover</label></td>
+            </tr>
+            <tr>
+              <td ><%= f.text_field :phosphate_remover%></td>
+              <td class="icons"></td>
+            </tr> 
+          <%end%>      
+
+        </table>
+        <%= f.hidden_field :user_id ,:value=>current_user.id%>
+        <%= f.hidden_field :property_id ,:value=>params[:property_id]%>
+        <%= f.hidden_field :source ,:value=>"Desktop"%>
+        <%= f.hidden_field :date ,:value=>Date.today%>
+        <%=f.submit "Submit",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+        <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Close</button>
+      <%end%>
+    </div>  
+  </div>
+</div>
+<style type="text/css">
+
+.pool-test td{
+  display: inline-block;
+  width: auto;
+}
+.pool-test label{
+  text-align: center !important;
+  width: 153px;
+}
+.pool-test input{
+  margin-left: 8px;
+  margin-right: 8px;
+  text-align: center;
+}
+.range{
+  text-align: center;
+  width: auto !important;
+  min-width: 35%;
+}
+.pool-test tr{
+  margin-bottom: 20px;
+}
+.icons{
+  padding-top: 10px;
+
+}
+
+.icons img{
+  width: 25px;
+}
+
+form.new_chemical_item {
+  text-align: center;
+}
+form.edit_chemical_item{
+  text-align: center;
+}
+</style>

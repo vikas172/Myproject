@@ -1,0 +1,310 @@
+<div class="client_index">
+  <div class="main_container">
+	  <div style="height: auto;">
+	    <div>
+				<div id="head">
+				</div>
+				<%= form_for @add_on, url: {action: "addon_active"}, id: "addons_form" do |f| %>
+				  <section class="notice header">
+				    <h1>Add-ons</h1>
+				    <h2>Customize your CopperService account with these great Add-On features.</h2>
+				  </section>
+				  <section id="addon_price_notice" class="notice header">
+				    <h2>Prices are a flat monthly rate, <i>not</i> per user.</h2>
+				  </section>
+					<div id="addons-page-container">
+					  <div class="addon">
+				  		<div class="addon-inner-element">
+				    		<div class="addon-left">
+				      		<img alt="Expenses icon" src="/assets/expenses-icons.png">
+						      <div class="addon-description">
+						        <h2>Expenses</h2>
+						        <p>Track company &amp; reimbursable expenses from the office or in the field. <a href="" target="_blank">More Info</a></p>
+						      </div>
+				    		</div><!-- end of addon-left -->
+
+						    <div class="addon-right">
+					        <p class="pricing">FREE</p>
+					        <label class="checkbox toggle android">
+					        	<%= f.check_box :status, id: "billing_info_addons_", data: {price: "0", title: "Expenses", value: "expenses"}, checked: get_add_on_status(@user_add_on,"expenses") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label>
+						    </div><!-- end of addon-right -->
+						  </div><!-- end of addon-inner-element -->
+						</div><!-- end of addon -->
+					  <div class="addon">
+					  	<div class="addon-inner-element">
+						    <div class="addon-left">
+						      <img alt="Reminder icon" src="/assets/Client-Reminders.png">
+						      <div class="addon-description">
+						        <h2>Client Reminders</h2>
+						        <p>Automatically remind clients of upcoming visits <a href="" target="_blank">More Info</a></p>
+						      </div>
+				    		</div><!-- end of addon-left -->
+
+						    <div class="addon-right">
+					        <p class="pricing">FREE</p>
+					        <label class="checkbox toggle android">
+					          <%= f.check_box :status, id: "billing_info_addons_", data: {price: "0", title: "Client Reminders", value: "client_reminders"}, checked: get_add_on_status(@user_add_on,"client_reminders") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label>
+						    </div><!-- end of addon-right -->
+						  </div><!-- end of addon-inner-element -->
+						</div><!-- end of addon -->
+
+			<!-- 		  <div class="addon">
+					  	<div class="addon-inner-element">
+						    <div class="addon-left">
+						      <img alt="Timesheets icon" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/addons/timesheets-icon-563873f536ae6396c2b4a241f40a11fe.jpg">
+						      <div class="addon-description">
+						        <h2>Timers &amp; Timesheets</h2>
+						        <p>Timesheet management for you and your employees. <a href="" target="_blank">More Info</a></p>
+						      </div>
+						    </div> --><!-- end of addon-left -->
+
+					    	<!-- <div class="addon-right">
+					        <p class="pricing">
+					          $5<span class="month">/</span><span class="month">MONTH</span>
+					        </p> -->
+
+					    <!--     <label class="checkbox toggle android">
+					          <%#= f.check_box :status, id: "billing_info_addons_", data: {price: "5", title: "Timers Timesheets", value: 'time_sheets'}, checked: get_add_on_status(@user_add_on,"time_sheets") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label> -->
+					    	<!-- </div> --><!-- end of addon-right -->
+						  <!-- </div> --><!-- end of addon-inner-element -->
+						<!-- </div> --><!-- end of addon -->
+
+					  <div class="addon">
+					  	<div class="addon-inner-element">
+						    <div class="addon-left">
+						      <img alt="Gps" src="/assets/Gps_icon.png">
+						      <div class="addon-description">
+						        <h2>GPS Waypoints</h2>
+						        <p>See where and when actions were performed in the field. <a href="https://www.youtube.com/watch?v=Yop8VpwkmRE" target="_blank">More Info</a></p>
+						      </div>
+						    </div><!-- end of addon-left -->
+					    	<div class="addon-right">
+					        <p class="pricing">
+					          $9<span class="month">/</span><span class="month">MONTH</span>
+					        </p>
+
+					        <label class="checkbox toggle android">
+					        	<%= f.check_box :status, id: "billing_info_addons_", data: {price: "9", title: "GPS Waypoints", value: "gps_waypoints"}, checked: get_add_on_status(@user_add_on,"gps_waypoints") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label>
+					    	</div><!-- end of addon-right -->
+						  </div><!-- end of addon-inner-element -->
+						</div><!-- end of addon -->
+
+					  <div class="addon">
+					  	<div class="addon-inner-element">
+						    <div class="addon-left">
+						      <img alt="Epayments icon2" src="/assets/ePayments.png">
+						      <div class="addon-description">
+						        <h2>ePayments</h2>
+						        <p>Process payments electronically through PayPal or Stripe. <a href="" target="_blank">More Info</a></p>
+						      </div>
+						    </div><!-- end of addon-left -->
+
+					    	<div class="addon-right">
+					        <p class="pricing">
+					          $5<span class="month">/</span><span class="month">MONTH</span>
+					        </p>
+
+					        <label class="checkbox toggle android">
+					          <%= f.check_box :status, id: "billing_info_addons_", data: {price: "5", title: "ePayments", value: "direct_chargers"}, checked: get_add_on_status(@user_add_on,"direct_chargers") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label>
+					    	</div><!-- end of addon-right -->
+						  </div><!-- end of addon-inner-element -->
+						</div><!-- end of addon -->
+
+					  <div class="addon">
+					  	<div class="addon-inner-element">
+						    <div class="addon-left">
+						      <img alt="Chemical treatment icon" src="/assets/Chemical-treatment-icon.png">
+						      <div class="addon-description">
+						        <h2>Chemical Tracking</h2>
+						        <p>For Landscaping Professionals: Track your pesticide and chemical treatments. <a href="" target="_blank">More Info</a></p>
+						      </div>
+						    </div><!-- end of addon-left -->
+
+					   		<div class="addon-right">
+					        <p class="pricing">
+					          $3<span class="month">/</span><span class="month">MONTH</span>
+					        </p>
+
+					        <label class="checkbox toggle android">
+					        	<%= f.check_box :status, id: "billing_info_addons_", data: {price: "3", title: "Chemical Tracking", value: "chemical_treatments"}, checked: get_add_on_status(@user_add_on,"chemical_treatments") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label>
+					    	</div><!-- end of addon-right -->
+						  </div><!-- end of addon-inner-element -->
+						</div><!-- end of addon -->
+
+					  <div class="addon">
+					  	<div class="addon-inner-element">
+						    <div class="addon-left">
+						      <img alt="Intuit online icon" src="/assets/QuickBooks-icon.png">
+						      <div class="addon-description">
+						        <h2>QuickBooks Sync</h2>
+						        <p>Sync clients, invoices and line-items with QuickBooks. <a href="" target="_blank">More Info</a></p>
+						      </div>
+						    </div><!-- end of addon-left -->
+					    	<div class="addon-right">
+					        <p class="pricing">
+					          $9<span class="month">/</span><span class="month">MONTH</span>
+					        </p>
+
+					        <label class="checkbox toggle android">
+					        	<%= f.check_box :status, id: "billing_info_addons_", data: {price: "9", title: "QuickBooks Sync", value: "quickbooks_ids"}, checked: get_add_on_status(@user_add_on,"quickbooks_ids") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label>
+					    	</div><!-- end of addon-right -->
+						  </div><!-- end of addon-inner-element -->
+						</div><!-- end of addon -->
+
+				<!-- 	  <div class="addon">
+					  	<div class="addon-inner-element"> -->
+						    <!-- <div class="addon-left">
+						      <img alt="Xero" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/addons/xero-30638f24068236d12709474c1f365e11.png">
+						      <div class="addon-description">
+						        <h2>Xero</h2>
+						        <p>Sync clients, invoices and line-items with Xero. <a href="" target="_blank">More Info</a></p>
+						      </div>
+						    </div> --><!-- end of addon-left -->
+
+					    <!-- 	<div class="addon-right">
+					        <p class="pricing">
+					          $9<span class="month">/</span><span class="month">MONTH</span>
+					        </p> -->
+
+<!-- 					        <label class="checkbox toggle android">
+					        	<%#= f.check_box :status, id: "billing_info_addons_", data: {price: "9", title: "Xero", value: "xero"}, checked: get_add_on_status(@user_add_on,"xero") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label> -->
+					    <!-- 	</div> --><!-- end of addon-right -->
+						  <!-- </div> --><!-- end of addon-inner-element -->
+						<!-- </div> --><!-- end of addon -->
+
+					  <div class="addon">
+					 		<div class="addon-inner-element">
+						    <div class="addon-left">
+						      <img alt="Routing icon" src="/assets/Route-Optimization-icon.png">
+						      <div class="addon-description">
+						        <h2>Route Optimization</h2>
+						        <p>CopperService will attempt to come up with the best master route around your city. <a href="" target="_blank">More Info</a></p>
+						      </div>
+						    </div><!-- end of addon-left -->
+					    	<div class="addon-right">
+					        <div class="circle"><p class="beta">BETA</p></div>
+					        <label class="checkbox toggle android beta">
+					        	<%= f.check_box :status, id: "billing_info_addons_", data: {price: "0", title: "Route Optimization", value: "routing"}, checked: get_add_on_status(@user_add_on,"routing") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label>
+					    	</div><!-- end of addon-right -->
+						  </div><!-- end of addon-inner-element -->
+						</div><!-- end of addon -->
+<!-- 
+					  <div class="addon">
+					  	<div class="addon-inner-element">
+						    <div class="addon-left">
+						      <img alt="Web form icon" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/addons/web-form-icon-fff94b1a107749e8bbbba5a3c3085361.jpg">
+						      <div class="addon-description">
+						        <h2>Website Integration</h2>
+						        <p>Connect your website directly to CopperService with a Quote Request form. <a href="" target="_blank">More Info</a></p>
+						      </div>
+						    </div> --><!-- end of addon-left -->
+
+					    	<!-- <div class="addon-right">
+					        <div class="circle"><p class="beta">BETA</p></div>
+
+					        <label class="checkbox toggle android beta">
+					        	<%#= f.check_box :status, id: "billing_info_addons_", data: {price: "0", title: "Website Integration", value: "webforms"}, checked: get_add_on_status(@user_add_on,"webforms") %>
+					          <p>
+					            <span class="ad_on">On</span>
+					            <span class="ad_off">Off</span>
+					          </p>
+					          <a class="slide-button"></a>
+					        </label> -->
+					    	<!-- </div> --><!-- end of addon-right -->
+						  <!-- </div> --><!-- end of addon-inner-element -->
+						<!-- </div> --><!-- end of addon -->
+
+<!-- 					  <div class="addon">
+					  	<div class="addon-inner-element">
+
+						    <div class="addon-left">
+						      <img alt="Franchise icon" src="//d3ey4dbjkt2f6s.cloudfront.net/assets/addons/franchise-icon-a66f8f3ce2eb79e8a7e38d59dfa89cd0.jpg">
+						      <div class="addon-description">
+						        <h2>Franchise Features</h2>
+						        <p>Manage multiple accounts in CopperService </p>
+						      </div>
+						    </div> --><!-- end of addon-left -->
+						    <!-- <div class="addon-right">
+						        <p class="contact"><a href="">Contact Us</a></p>
+						    </div> --><!-- end of addon-right -->
+						 <!--  </div> --><!-- end of addon-inner-element -->
+						<!-- </div> --><!-- end of addon -->
+
+					</div><!-- end of addons-container -->
+
+					<section class="notice footer">
+					  <h2>Beta Notice</h2>
+					  <p>Beta Add-ons are works in progress. You will notice new features, enhancements (and occasionally bugs) while using them.</p>
+					</section>
+
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+  $('input[type="checkbox"]').on('click', function(){
+  	var status = $(this).prop("checked");
+   	$.ajax({
+      url    : '<%= addon_active_path %>',
+      type   : 'POST',
+      data   : {'status': status, 'price': $(this).data('price'), 'value' : $(this).data('value')},
+    });
+  });
+});
+</script>

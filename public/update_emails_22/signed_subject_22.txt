@@ -1,0 +1,1 @@
+Signed document from {{COMPANY_NAME}} - {{CURRENT_DATE}}

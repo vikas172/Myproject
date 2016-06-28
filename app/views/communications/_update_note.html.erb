@@ -1,0 +1,17 @@
+<div class="edit-view" style="width:65%; float:left;">
+	<% note = get_property_note(@activity.note_id)%>
+	<i class="fa fa-comment" style="float:left;"></i>
+	<div class="row">
+		<!--             <%#if !note.attachments.blank?%>
+		<div class="notes_images">
+		<img src=<%#=note.attachments.last.image(:medium)%> alt="Image1s" style="width:15%!important;"><br>
+		<%#=note.attachments.count%> files</a>
+		</div>
+		<%#end%> -->
+		<div class="span1"> Note </div>
+		<div style="width:40%; float:left;">
+			<div class="span3"><%= note.note%></div>
+		</div>
+	</div> 
+	<%= link_to "",edit_note_activity_path(:id=>@activity.id),:class=>"fa fa-pencil-square-o fa-6",:remote=>true %> 
+</div>	

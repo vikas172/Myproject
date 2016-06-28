@@ -1,0 +1,65 @@
+<div class="permission indent pad-top">
+  <%if @permission.permission_client_properties.count==1%>
+    <%if set_client_property_check_box_permission(@permission)%>
+      <%if @permission.permission_jobs.count==2%>
+        <div class="parent">
+          <input type="checkbox" name="" id="user_permissions_work_orders"  class="require_clients has_details check_box_unselect" checked>
+           <label for="user_permissions_work_orders">Work Orders</label>
+        </div>
+        <div class="detail display_work_orders_detail">
+          <%= select_tag("permission[permission_jobs][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]],:selected=>@permission.permission_jobs.first),:class=>"rwd",:id=>"user_permissions_work_orders_rwd") %>
+          <p>
+            <input type="checkbox" id="user_permissions_work_orders_index" name="permission[permission_jobs][]" class="" checked> <label for="user_permissions_work_orders_index">List All Work Orders</label>
+          </p>
+        </div>
+      <%else%>
+        <div class="parent">
+          <input type="checkbox" name="" id="user_permissions_work_orders"  class="require_clients has_details check_box_unselect">
+           <label for="user_permissions_work_orders">Work Orders</label>
+        </div>
+        <div class="detail invisible display_work_orders_detail">
+          <%= select_tag("permission[permission_jobs][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_work_orders_rwd") %>
+          <p>
+            <input type="checkbox" id="user_permissions_work_orders_index" name="permission[permission_jobs][]" class=""> <label for="user_permissions_work_orders_index">List All Work Orders</label>
+          </p>
+        </div> 
+      <%end%>
+    <%else%>
+      <div class="parent">
+        <input type="checkbox" name="" id="user_permissions_work_orders" disabled="disabled" class="require_clients has_details check_box_unselect">
+         <label for="user_permissions_work_orders" class="disabled">Work Orders</label>
+      </div>
+      <div class="detail invisible display_work_orders_detail">
+        <%= select_tag("permission[permission_jobs][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_work_orders_rwd") %>
+        <p>
+          <input type="checkbox" id="user_permissions_work_orders_index" name="permission[permission_jobs][]" class=""> <label for="user_permissions_work_orders_index">List All Work Orders</label>
+        </p>
+      </div>
+    <%end%>
+  <%else%>
+    <%if @permission.permission_jobs.count==2%>
+      <div class="parent">
+        <input type="checkbox" name="" id="user_permissions_work_orders"  class="require_clients has_details check_box_unselect" checked>
+         <label for="user_permissions_work_orders">Work Orders</label>
+      </div>
+      <div class="detail display_work_orders_detail">
+        <%= select_tag("permission[permission_jobs][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]],:selected=>@permission.permission_jobs.first),:class=>"rwd",:id=>"user_permissions_work_orders_rwd") %>
+        <p>
+          <input type="checkbox" id="user_permissions_work_orders_index" name="permission[permission_jobs][]" class="" checked> <label for="user_permissions_work_orders_index">List All Work Orders</label>
+        </p>
+      </div>
+    <%else%>
+      <div class="parent">
+        <input type="checkbox" name="" id="user_permissions_work_orders"  class="require_clients has_details check_box_unselect">
+         <label for="user_permissions_work_orders">Work Orders</label>
+      </div>
+      <div class="detail invisible display_work_orders_detail">
+        <%= select_tag("permission[permission_jobs][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_work_orders_rwd") %>
+        <p>
+          <input type="checkbox" id="user_permissions_work_orders_index" name="permission[permission_jobs][]" class=""> <label for="user_permissions_work_orders_index">List All Work Orders</label>
+        </p>
+      </div> 
+    <%end%>
+  <%end%>   
+
+</div>

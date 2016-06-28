@@ -1,0 +1,9 @@
+<tr>
+  <td class="name"><%= client.first_name rescue "" %>&nbsp;<%= client.last_name rescue "" %></td>
+  <td class="balance"><%= get_total_invoice(client) - get_paid_balance(client) rescue "" %></td>
+  <td class="paid_to_date"><%= get_paid_balance(client) rescue "" %></td>
+  <td class="invoiced"><%= get_total_invoice(client) rescue "" %></td>
+  <td class="phone"><%= client.phones.first.phone_number.first rescue "" %></td>
+  <td class="email"><%= client.emails.first.email.first rescue "" %></td>
+  <td class="open"><a target="_blank" href="/clients/<%= client.id %>" class="open ui-icon ui-icon-newwin">open</a></td>
+</tr>

@@ -1,0 +1,52 @@
+<div id="app_wrapper">
+	<div class="client_index">
+		<div class="main_container">
+			<div style="height: auto;">
+			<%=render "home/work_item_side_bar" %>
+			<div id="settings_area">
+				<div class="number_display"></div>	
+				</br>
+				<h4>Buy a Twilio number by area code</h4>
+				</br>
+				<div id="buy_a_number" style="border: 1px solid #ccc; height: 200px;">
+					<br>
+					<%if @general_info.blank?%>
+						<%=form_tag buy_a_number_path,:remote=>true do %>
+							<div class="row">
+								<div class="span2">
+									Enter a US area code: 
+								</div>
+								<div class="span3">
+									<%= text_field_tag "area_code",nil,:size=>"3"%>
+								</div>
+							</div>
+							<%= submit_tag "OBTAIN" ,:class=>"button_new_index",:style=>"float: none; padding: 6px 25px ! important; margin-left: 325px;"%>
+						<%end%>
+					<%end%>	
+
+					<%if !@general_info.blank?%>
+						<%if !@general_info.area_code.blank?%>	
+							<div style="float: left; margin-left: 20px;" class="service_phone_number">
+								<b>Area Code:-</b> &nbsp;&nbsp;&nbsp;<%= @general_info.area_code %><br>
+								<b>Service Phone Number:-</b> &nbsp;&nbsp;<%=@general_info.service_number %>
+							</div>
+						<%else%>
+							<%=form_tag buy_a_number_path,:remote=>true do %>
+								<div class="row">
+									<div class="span2">
+										Enter a US area code: 
+									</div>
+									<div class="span3">
+										<%= text_field_tag "area_code",nil,:size=>"3"%>
+									</div>
+								</div>
+								<%= submit_tag "OBTAIN" ,:class=>"button_new_index",:style=>"float: none; padding: 6px 25px ! important; margin-left: 325px;"%>
+							<%end%>
+						<%end%>
+					<%end%>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>				
+</div>				

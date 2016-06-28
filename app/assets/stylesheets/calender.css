@@ -1,0 +1,101 @@
+
+.rounded{
+    border-radius: 0 !important;
+    display: inline-block !important;
+    height: 21px !important;
+    position: relative !important;
+    margin-top: 15px !important;
+}
+.rounded .next{
+border: 1px solid #ddd !important;
+  border-radius: 0px 5px 5px 0px !important;
+  box-shadow: 0 1px 0 #b3b3b3 !important;
+  color: #333 !important;
+  padding:5px 8px 8px !important;
+  background: #eeeeee !important; /* Old browsers */
+background: -moz-linear-gradient(top,  #eeeeee 0%, #eeeeee 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #eeeeee 0%,#eeeeee 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+
+
+}
+.rounded #current_date{
+border: 1px solid #ddd !important;
+  box-shadow: 0 1px 0 #b3b3b3 !important;
+  color: #333 !important;
+  padding:5px 8px 12px !important;
+  background: #eeeeee !important; /* Old browsers */
+background: -moz-linear-gradient(top,  #eeeeee 0%, #eeeeee 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #eeeeee 0%,#eeeeee 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+
+
+}
+.rounded .prev{
+  border: 1px solid #ddd !important;
+  border-radius: 5px 0px 0px 5px !important;
+  box-shadow: 0 1px 0 #b3b3b3 !important;
+  color: #333 !important;
+  padding:5px 8px 8px !important;
+  background: #eeeeee !important; /* Old browsers */
+background: -moz-linear-gradient(top,  #eeeeee 0%, #eeeeee 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #eeeeee 0%,#eeeeee 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+
+
+}
+.fc-header .fc-button-prev,.fc-button-next,.fc-button-month,.fc-button-agendaWeek,.fc-button-agendaDay{
+  display: none !important;
+}
+.header_date_picker{
+  position: absolute !important;
+  z-index: 999 !important;
+  margin-top: 13px !important;
+}
+#calendar .fc-header{
+  width: 78% !important;
+  float: right !important;
+  margin-top: 0px !important;
+}
+#calendar .fc-header .fc-header-left {
+    width: 8% !important;
+}
+#calendar .fc-day-header {
+    background-color: #1f518b !important;
+    padding: 5px !important;
+    text-align: center !important;
+}
+.fc-grid .fc-day-number {
+    float: none !important;
+    padding: 0 2px !important;
+}
+#calender_popover li .fa{
+  margin-right: 10px !important;
+}
+#calender_popover li .fa:hover{
+  color: #1f518b !important;
+}
+#calender_popover li{
+  margin-bottom: 5px !important;
+}
+#calender_popover li:hover{
+  color: #1f518b !important;
+}
+#calender_popover li a:hover{
+  color: #1f518b !important;
+}
+.add-member-team{
+  padding:0 5px !important;
+}

@@ -1,0 +1,57 @@
+<div class="textLayer" style="width: 1019px; height: 1319px; margin:0 auto;">
+  <div style="font-size: 16.6667px; font-family: sans-serif;">
+    <div style="overflow-y:auto;">
+      <div style="width:600px; float:left;">
+        <div style="font-size: 25px; font-family: sans-serif; margin-bottom:10px;">Wipro</div>
+        <div style="font-size: 16.6667px; font-family: sans-serif;margin-bottom:5px;">Bob Guy</div>
+        <div style="font-size: 15px; font-family: sans-serif;margin-bottom:5px;">#8142 2nd St.</div>
+        <div style="font-size: 15px; font-family: sans-serif;margin-bottom:5px;">Anytown, California</div>
+      </div>
+      <div style="width:300px; float:right;">
+        <div style="font-size: 20px; font-family: sans-serif;">Job #1</div>
+        <div style="font-size: 20px; font-family: sans-serif; width:265px; float:right; margin:10px 0px;">
+          <table width="100%" border="0" cellpadding="3"  cellspacing="0" style="font-size: 15px; font-family: sans-serif;">
+            <tr>
+              <td>From</td>
+              <td><%=current_user.company_name%></td>
+            </tr>
+            <tr>
+              <td>Bill To</td>
+              <td>#123 Main St</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>Springfield, California, 90210</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:30px; margin-bottom:30px;">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Service / Product</th>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Description</th>
+          <th style="background-color:#333;color:#fff; padding:5px; border-right:1px solid #DDDDDD;">Qty</th>
+        </tr>
+        <tr>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Clean Pool</td>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Go and do lot's of good stuff </td>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">1</td>
+        </tr>
+        <tr>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">Mow Lawn</td>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">More good stuff</td>
+          <td style="color:#000; padding:5px; border-right:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;">2</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div style="overflow-y:auto;margin-top:780px;">
+    <div style="font-size: 15px; font-family: sans-serif; float:left; width:800px;">We can be called for touch-ups and small changes for the next 3 days. After that all work is final.
+    </div>
+  </div>
+  <%if @pdf_setting.require_work_order_signature%>
+  <div style="position: absolute;top: 1126.63px; font-size: 16.6667px; font-family: sans-serif;">Signature: _____________________      Date: _____________</div><%end%>
+
+</div>

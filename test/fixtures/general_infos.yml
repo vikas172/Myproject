@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  default_tax: 1
+  tax_reg_type: MyString
+  tax_reg_number: MyString
+  regional_setting: MyText
+
+two:
+  default_tax: 1
+  tax_reg_type: MyString
+  tax_reg_number: MyString
+  regional_setting: MyText

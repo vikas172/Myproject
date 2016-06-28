@@ -1,0 +1,10 @@
+development:
+ server: "http://localhost:9292/faye"
+ secret_token: "secret"
+test:
+ server: "http://localhost:9292/faye"
+ secret_token: "secret"
+production:
+ server: "https://whispering-garden-3017.herokuapp.com/faye"
+ secret_token: "6d977d08b23f8164eb742ac5f3416e582907d1642496b4c752839e754042c42c"
+ signature_expiration: 86400 # one day

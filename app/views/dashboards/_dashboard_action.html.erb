@@ -1,0 +1,61 @@
+<div style="float: right; margin-right: 7%;">
+	<div class=" dropdown dropdown_menu icon_drop" style="list-style: none; float:right;margin-right: -20%; margin-top: 0%;" id="drop_down_button">
+	  <a href="#" class="dropdown_button" data-toggle="dropdown" style="margin-top: -5%;">+ New <span class="caret"></span></a>
+	  <div class="dropdown-menu quick-create dropdown_menu icon_drop show_less group" id="show_less" role="menu" style="border-radius: 0px;">
+	    <ul class="edit_drop_menu" style="width:188px;">
+	      <li class="show-list">
+	      	 <i class="fa fa-user fa-2"></i>
+	        <%= link_to "Customer",new_client_path,:id=>"new_client" ,:class=>"has_icon click_ignore"%>
+	      </li>
+	      <li class="show-list">
+	      	<i class="fa fa-quote-left"></i>
+	        <%= link_to "Estimate","#",:id=>"new_quote" ,:class=>"has_icon click_ignore" ,:'data-toggle'=>"modal" ,:'data-target'=>".client_select_model_quote"%>
+	      </li>
+	      <li class="show-list">
+	      	<i class="fa fa-legal"></i>
+	        <%= link_to "Work Order","#",:id=>"new_job" ,:class=>"has_icon click_ignore" ,:'data-toggle'=>"modal" ,:'data-target'=>"#job_model_open"%>
+	      </li>
+	      <li class="show-list">
+	      	  <i class="fa fa-pencil-square-o"></i>
+	        <%= link_to "Invoice","#",:id=>"new_invoice" ,:class=>"has_icon click_ignore" ,data: {toggle: "modal", target: "#invoiceModal"}%>
+	      </li>
+	      <li class="show-list">
+	        <%= link_to 'Show More', '#', class: "has_icon show-more", id: "show-more", onclick: "$('#drop_down_button').addClass('open'); $('#show_more').css('display', 'block'); $('#show_less').css('display', 'none'); $('#drop_down_button').addClass('open'); return false;" %>
+	      </li>
+	    </ul>
+	  </div>
+	  <div class="dropdown-menu quick-create dropdown_menu icon_drop show_more group" role="menu" id="show_more" style="display: none;">
+	    <ul class="edit_drop_menu" style="width:188px;">
+	      <li><i class="fa fa-male"></i>
+	        <%= link_to "Customer",new_client_path,:id=>"new_client" ,:class=>"has_icon click_ignore"%>
+	      </li>
+	    </ul>
+			<ul class="edit_drop_menu" style="width:188px;">
+				<li><i class="fa fa-quote-left"></i>
+					<%= link_to "Estimate","#",:id=>"new_quote" ,:class=>"has_icon click_ignore" ,:'data-toggle'=>"modal" ,:'data-target'=>".client_select_model_quote"%>
+				</li>
+				<li><i class="fa fa-pencil-square-o"></i>
+					<%= link_to "Invoice","#",:id=>"new_invoice" ,:class=>"has_icon click_ignore" ,data: {toggle: "modal", target: "#invoiceModal"}%>
+				</li>
+				<li><i class="fa fa-credit-card"></i>
+					<%= link_to "payment","#",:id=>"new_payment",:class=>"has_icon click_ignore",:'data-toggle'=>"modal" ,:'data-target'=>"#paymentModal"%>
+				</li>
+			</ul>
+			<ul  class="edit_drop_menu" style="width:188px;">
+				<li><i class="fa fa-legal"></i>
+					<%= link_to "Work Order", "#", :id=>"new_job", :class=>"has_icon click_ignore" , :'data-toggle' => "modal", :'data-target'=>"#job_model_open"%>
+				</li>
+				<li><i class="fa fa-check-square-o"></i>
+					<%= link_to "Basic Task", "/basic_tasks/to_dos?todo[start_at]=#{Date.today}&todo[end_at]=#{Date.today}&todo[all_day]=true&todo[plugin_type]=basic_task", :id=>"new_basic_task" , :class=>"has_icon click_ignore", :'data-toggle'=>"modal", :'data-target'=>"", remote: true %>
+				</li>
+				<li><i class="fa fa-calendar"></i>
+					<%= link_to "Calendar Event", "/events/to_dos?todo[start_at]=#{Date.today}&todo[end_at]=#{Date.today}&todo[all_day]=true&todo[plugin_type]=event", :id=>"new_event" , :class=>"has_icon click_ignore", :'data-toggle'=>"modal", :'data-target'=>"", remote: true %>
+				</li>
+				<li>
+					<%= link_to 'Show Less', '#', class: "has_icon click_ignore", id: "show-less", onclick: "$('#drop_down_button').addClass('open'); $('#show_more').css('display', 'none'); $('#show_less').css('display', 'block');  return false;" %>
+				</li>
+			</ul>
+	  </div>
+  </div>
+</div>
+<div id="myModalBox"></div>

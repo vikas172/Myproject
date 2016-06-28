@@ -1,0 +1,78 @@
+<div class="fieldset">
+  <%if set_view_permission_client_property_view(@team_member)%>
+    <%if set_view_permission_client_property_view_work(@team_member)%>
+      <%= render "work_active_head" , :locals=>{:@client=> @client,:params=>params}%> 
+      <div style="max-height:400px; min-height:100px;" class="content border_contain">
+        <div style="" class="thicklist" id="tab1">
+          <%if current_user.user_type=="user"%>
+            <%if set_view_permission_for_work_client_property(@team_member.permission.permission_jobs)%>
+              <%if !@active_jobs.blank?%>
+                <%= render "jobs/work_job_active", :locals=>{:@jobs=> @active_jobs} %>
+              <%end%>
+            <%end%>
+          <%else%>
+            <%if !@active_jobs.blank?%>
+              <%= render "jobs/work_job_active", :locals=>{:@jobs=> @active_jobs} %>
+            <%end%>
+          <%end%>   
+
+          <%if current_user.user_type=="user"%>
+            <%if set_view_permission_for_work_client_property(@team_member.permission.permission_quotes)%>
+              <%if !@active_quotes.blank?%>
+                <%= render "quotes/work_quote_active", :locals=>{:@quotes=> @active_quotes} %>
+              <%end%>
+            <%end%>
+          <%else%>
+            <%if !@active_quotes.blank?%>
+              <%= render "quotes/work_quote_active", :locals=>{:@quotes=> @active_quotes} %>
+            <%end%>
+          <%end%>  
+          <%if current_user.user_type=="user"%>
+            <%if set_view_permission_for_work_client_property(@team_member.permission.permission_invoices)%>
+              <%if !@active_invoices.blank?%>
+                <%= render "invoices/work_invoice_active",:locals=>{:@invoices=> @active_invoices}%>
+              <%end%>
+            <%end%>
+          <%else%>
+            <%if !@active_invoices.blank?%>
+              <%= render "invoices/work_invoice_active", :locals=>{:@invoices=> @active_invoices} %>
+            <%end%>
+          <%end%>  
+          
+          <!-- <div class="emptyList">No Active Work</div> -->
+        </div>
+
+        <% if !@quotes_all.blank? %>
+          <div style="display:none" class="thicklist" id="tab2">
+            <%= render "quotes/work_quote_tab", :locals=>{:@quotes=> @quotes_all} %>
+          </div> 
+        <% else %>
+          <div style="display:none" class="thicklist" id="tab2">
+            <div class="emptyList">No Quotes</div>
+          </div>
+        <% end%>
+
+        <%if !@jobs_all.blank?%>
+          <div style="" class="thicklist" id="tab3">
+            <%= render "jobs/work_job_tab", :locals=>{:@jobs=> @jobs_all} %>
+          </div>
+        <%else %>
+          <div style="display:none" class="thicklist" id="tab3">
+            <div class="emptyList">No Work Order</div>
+          </div>
+        <%end%>
+        
+        <% if !@invoices_all.blank? %>
+          <div style="display: block;" class="thicklist" id="tab4">
+            <%= render "invoices/work_invoice_tab",:locals=>{:@invoices=> @invoices_all}%>
+          </div>
+        <% else %>
+          <div style="display:none" class="thicklist" id="tab4">
+              <div class="emptyList">No Invoices</div>
+          </div>
+        <%end%>
+        
+      </div>
+    <%end%>  
+  <%end%>
+</div>

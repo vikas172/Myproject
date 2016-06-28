@@ -1,0 +1,199 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="margin-right: 0px!important;">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">New Service</h4>
+    </div>
+    <div class="modal-body">
+      <div class="">
+        <div class="">
+          <%= form_for(@service) do |f| %>
+            <% if @service.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@service.errors.count, "error") %> prohibited this service from being saved:</h2>
+
+                <ul>
+                <% @service.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :date %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :date %>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :vehicle_id %></div>
+              <div class="col-md-6 no-padding">
+                <%#= f.number_field :vehicle_id %>
+                <%#= f.select(:vehicle_id, Vehicle.try(:all).collect {|u| [u.vehicle_name, u.id]},{})%>
+                <%=f.select(:vehicle_id, current_user.vehicles.try(:all).collect {|u| [u.vehicle_name, u.id]},{})%>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :odometer %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :odometer %>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :mark_as_void %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.check_box :mark_as_void %>
+              </div>
+            </div>
+              <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :services_completed %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :services_completed %>
+              </div>
+            </div>
+              <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :labor %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :labor ,:onkeypress=>"return isNumberKey(event)"%>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :reference %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :reference %>
+              </div>
+            </div>
+              <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :parts %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :parts ,:onkeypress=>"return isNumberKey(event)"%>
+              </div>
+            </div>
+              <div class="clearfix"></div>
+              <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :vendor %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :vendor %>
+              </div>
+            </div>
+             <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :service_image %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.file_field :service_image%>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :tax %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :tax ,:onkeypress=>"return isNumberKey(event)"%>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :comment %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_area :comment %>
+              </div>
+            </div>
+            <div class="field ">
+              <div class="col-md-3">
+                <%= f.label :total %></div>
+              <div class="col-md-6 no-padding">
+                <%= f.text_field :total ,:readonly=>"readonly"%>
+              </div>
+            </div>
+              <div class="clearfix"></div>
+            <div class="actions">
+              <% if params[:action] == "edit" %>
+                <%= link_to "Delete Service", service_path(@service), method: "delete", class: "button remove delete_expense pull-left" %>
+              <% end %>
+              <%= f.submit "SAVE", class: "model_save_button pull-right save-new-btn1"%>
+              <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}    
+
+
+
+// $("#service_labor").change(function(){
+//   var labor_value = $("#service_labor").val()
+//   if (labor_value !=0.00){
+//     $("#service_total").html()}
+//   }
+ $("#service_labor, #service_parts, #service_tax").change(function() {
+        var sum = 0;
+        var labor_value = $("#service_labor").val()
+        var service_value = $("#service_parts").val()
+        var tax_value = $("#service_tax").val()
+          if(service_value !="")
+          {
+            if(!isNaN(parseFloat(labor_value))){
+            sum = parseFloat(labor_value) + parseFloat(service_value)
+            }
+            else{
+              sum = parseFloat(service_value)
+            }
+          }
+          else{
+            if(!isNaN(parseFloat(labor_value)))
+
+          {
+            sum = parseFloat(labor_value)
+          }
+          else{
+            sum = 0.0
+          }
+         }
+         if (tax_value !="")
+         {
+           if((service_value !="")||(labor_value !="")){
+             if (sum != 0.0){
+              tax = ((sum * parseFloat(tax_value))/100)
+              sum = sum+tax
+              }
+           }
+         }
+         else{
+
+         }
+          $("#service_total").val(sum);
+
+ })
+
+</script>
+<style>
+  .button.remove {
+    padding: 7px;
+    margin-right: 13px;
+  }
+</style>

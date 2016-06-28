@@ -1,0 +1,97 @@
+<%= form_for(@part) do |f| %>
+  <% if @part.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@part.errors.count, "error") %> prohibited this part from being saved:</h2>
+
+      <ul>
+      <% @part.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="span12 new-form-design">
+    <div class="row">
+      <div class="span2">
+        <%= f.label :item_code %>
+      </div>
+      <div class="span7">
+        <%= f.text_field :item_code %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :description %> 
+      </div>
+      <div class="span7">
+        <%= f.text_area :description %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :purchase_price %>
+      </div>
+      <div class="span7">
+        <%= f.text_field :purchase_price %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :purchase_code %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :purchase_code %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :sales_price %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :sales_price %>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :sales_code %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :sales_code %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :profit %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :profit %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <%= f.label :margin %> 
+      </div>
+      <div class="span7">
+        <%= f.text_field :margin %>
+      </div>
+    </div>
+
+   
+    <div>
+        <%=render "items/custom_new"%>
+    </div>
+    <div class="clearfix"></div>
+    <div class="actions">
+      <%= link_to 'Back', parts_path,:class=>"model_cancel_button",:style=>"margin: -1px 23px -1px -1px;" %>
+      <%= f.submit "Create Part",:class=>"button_new_create save-new-btn1 pull-right"%>
+    </div>
+  </div>  
+<% end %>

@@ -1,0 +1,120 @@
+<style type="text/css">
+.bootstrap-datetimepicker-widget {
+    left: 26% !important;
+    top: 176px !important;
+    width: 285px !important;
+}
+
+.bootstrap-datetimepicker-widget th.switch {
+   text-align: center !important;
+}
+
+</style>
+
+<link href="assets/jquery/jquery_ui.css" media="all" rel="stylesheet" type="text/css" />
+<link href="assets/demo.css" media="all" rel="stylesheet" type="text/css" />
+<link href="assets/light-theme.css" media="all" rel="stylesheet" type="text/css" />
+
+<div class="dashboard_conatin">
+<div class="client_index1">
+<div class="main_container dashboard_container mains-container ">
+  <body class='contrast-red '>
+    <div id='wrapper'>
+      <div id='main-nav-bg'></div>
+      <%= render 'clients/error_message_and_flash' %>
+      <section>
+        <div class='container'>
+          <div class='row' id='content-wrapper'>
+            <div class='col-xs-12'> 
+              <% barometer = current_barometer %>
+              <% weather = find_current_weather(barometer.query)%>   
+              <div class='row box box-transparent'>
+              	<%= render "top_address", :@barometer => barometer, :@weather => weather %>
+              </div>
+
+              <%= render "dashboards/dashboard_schedule", :@barometer => barometer, :@weather => weather %>
+
+              <div class='row'>
+                <%= render "dashboards/dashboard_message_center", :@barometer => barometer, :@weather => weather %>
+              </div> 
+              
+            </div> 
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="job_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+
+<div class="modal fade" id="message_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+</div>
+
+<div class="modal fade" id="message_show_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+</div>
+
+
+<div class="modal fade" id="message_receive_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+</div>
+<!-- ###Modal for today work###-->
+<div class="modal fade" id="today_work" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Today Work</h4>
+      </div>
+      <div class="modal-body">
+        <%= render "today_schedule"%> 
+      <div class="row text-right" style="margin-buttom:20px;">
+        <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ###Modal for work-load###-->
+<div class="modal fade" id="work_load" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Actions</h4>
+      </div>
+      <div class="modal-body">
+        <%= render "outstanding_balance"%>
+        <div class="row text-right">
+          <button type="button" class="model_cancel_button" data-dismiss="modal">CANCEL</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="assets/jquery/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="assets/jquery/jquery-ui.min.js" type="text/javascript"></script>
+
+</body>
+<%= render "document_file"%>
+<%= render "job_client_search" %>
+<%= render "invoice_job_search" %>
+<%= render "quotes/client_select_model" %>
+
+<style>
+.mains-container{
+  padding: 0px 20px 12px !important;
+}
+</style>
+
+

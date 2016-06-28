@@ -1,0 +1,10 @@
+ffaafafaf
+
+Thank you for asking us to quote on your project. Please find a detailed copy of our quote attached to this e-mail.
+
+The quote total is {{QUOTE_TOTAL}} as of {{QUOTE_SENT_DATE}}.
+
+If you have any questions or concerns regarding this quote, please don't hesitate to get in touch with us at {{DEFAULT_EMAIL}}.
+
+Sincerely,
+{{COMPANY_NAME}}

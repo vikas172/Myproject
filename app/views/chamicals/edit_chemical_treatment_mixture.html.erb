@@ -1,0 +1,49 @@
+<div class="footer_spacer">
+  <div id="content" style="height: auto;">
+    <div class="padding">
+      <div id="head">
+        <div class="breadcrumbs hide_for_print">Back to: <%= link_to 'Chemical Tracking Setup', chemical_treatment_setting_path %> &gt; </div>
+        <h1>New Mixture</h1>
+      </div>
+
+      <%= form_for @chemical_treatment_mixture,  :url => url_for(update_mixture_path(params[:id])), class: "compressed_form chemical_treatment_mixture", method: "post" do |f| %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <p>
+          <label class="large" for="chemical_treatment_mixture_name">Name</label>
+          <%= f.text_field :name, class: "large" %>
+        </p>
+        <%= f.hidden_field :chemical_treatment_setting_id, value: "", class: "large" %>
+        <p>
+          <label for="chemical_treatment_mixture_targeted_pest">Targeted pest</label>
+          <%= f.text_field :targeted_pest, class: "large" %>
+        </p>
+
+        <ul id="chemicals">
+          <li>
+            <label>Chemical</label>
+            <label>Concentration</label>
+          </li>
+          <li>
+            <%= select_tag "chemical_treatment_mixture[chemicals][0][name]", options_for_select(get_chemicals_mixture_name(@chemical_treatment_setting)) %>
+            <%= text_field_tag "chemical_treatment_mixture[chemicals][0][concentration]" %>
+            <a class="cancel" href="#" onclick="$(this).parent().remove();; return false;">Remove</a>
+          </li>
+        </ul>
+        <a href="#" id="add_chemical" onclick="add_mixture(); return false;">Add a Chemical</a>
+        <br>
+        <br>
+        <p class="submit_holder">
+          <%= f.submit "Update Mixture", class: "button save spin_on_click" %>
+          <%= link_to 'Cancel', chemical_treatment_setting_path, class: "button cancel" %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  function add_mixture(){
+    var j = $('#chemicals li').length-1;
+    var a = ('<li><select id="chemical_treatment_mixture_chemicals_'+j+'_name" name="chemical_treatment_mixture[chemicals]['+j+'][name]"><option value="a">A</option><option value="b">B</option></select> <input id="chemical_treatment_mixture_chemicals_'+j+'_concentration" name="chemical_treatment_mixture[chemicals]['+j+'][concentration]" type="text"> <a class="cancel" href="#" onclick="$(this).parent().remove();; return false;">Remove</a></li>');
+    $(a).appendTo("#chemicals");
+  }
+</script>

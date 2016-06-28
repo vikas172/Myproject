@@ -1,0 +1,28 @@
+<div id="job_work_-9-">
+  <%= form_for :job_works, url: job_work_path ,method: "post" , :html=> {:id => "-9-",:class=>'clas row_div work_order_line_item'},:remote=>true do |f|%>
+    <%= hidden_field_tag "work_id", nil, value: "job_work_-9-" %>
+    <%=f.hidden_field :job_id,:value=>@job.id %>
+    <span class="work_job_name">
+      <%= f.text_field :name,:placeholder=>"name...",:style=>"",:id=>"p_name_-9-",:required=>true,:class=>"work_name"%>
+    </span>
+    <span class="work_job_description">
+      <%= f.text_area :description,:placeholder=>"description...",:style=>"",:id=>"p_description_-9-" ,:class=>"work_description"%>
+    </span>
+
+    <div class="work_job_right">
+      <span class="work_job_cost">
+        <%= f.text_field :quantity,:value=>"1",:style=>"",:id=>"p_quantity_-9-",:onchange=>"AddjobQuantity($(this).val(),-9-)"%>$
+      </span>
+      <span class="work_job_column">
+        <%= f.text_field :unit_cost,:placeholder=>"0.00",:style=>"",:id=>"p_unit_cost_-9-" ,:onchange=>"AddJobUnitCost($(this).val(),-9-)"%>$
+      </span>
+
+      <span class="work_job_column">
+        <%= f.text_field :total,:placeholder=>"0.00",:style=>"",:id=>"p_total_-9-",:class=>"p_total" ,:readonly => true%>
+      </span>
+    </div>
+    <div class="clear"></div>
+    <%=f.submit "Save" ,:style=>"float:right;",:class=>"save button_new_index", onclick: "$(this).submit(); $(this).hide();" %>
+    <span class="remScnt model_cancel_button" style="float:right; margin-right:10px;" onclick="$('#job_work_-9-').remove();">cancel</span>
+  <% end %>
+</div>

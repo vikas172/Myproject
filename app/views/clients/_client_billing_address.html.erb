@@ -1,0 +1,63 @@
+<div class="col-4 empty_client_display">
+  <div class="border_contain">
+    Company Name <b><%= @client.company_name %></b><br>
+      Mobile Number   <b><%= @client.mobile_number%></b><br>
+      Personal Number <b><%= @client.personal_email%></b><br>
+    <table class="single_client_custom">
+    <%= render "custom_field_show"%>
+    </table>
+    <br>
+
+    <%if !@client.street1.blank? || !@client.street2.blank? || !@client.city.blank? || !@client.state.blank? || !@client.zip_code.blank? %>
+      Billing Address<br>
+      <%= @client.street1 rescue "" %><br>
+      <%= @client.street2 rescue "" %><br> 
+      <%if !@client.city.blank? %>
+      <%= @client.city rescue "" %>, &nbsp;<%end%>
+      <%= @client.state rescue "" %><br> 
+      <%if !@client.zip_code.blank? %>
+      <%= @client.zip_code rescue "" %>,&nbsp;<%end%>
+      <%if !@client.country.blank?%>
+        <%= get_carmen_country_code(@client.country).name rescue "" %>
+      <%else%>
+        <%= @client.country rescue "" %>
+      <%end%> <br>
+    <%else%>
+      No Billing Contact Info...
+    <%end%>
+  </div>  
+  </br>
+  <div class="border_contain">
+    <br/>
+    <i class="fa fa-tags"></i>
+    <div class="show_tags">
+      <div id="tag_list">
+        <%@client.tags.each do |tag|%>               
+          <span class="removable_tag" tag_label="<%= tag.name%>">
+            <%= tag.name%>
+             <a value="<%=tag.name%>" class= "tags_pointer remove_tag" onclick='deleteTag("<%=tag.name%>","<%=@client.id%>");'>x</a>
+          </span>
+        <%end%>
+      </div>
+    </div>
+
+    <%= form_tag client_tag_path,:method=>"post" ,:remote=>true do %>
+      <div class="form-group" style="float: right; width: 330px">
+        <div class="icon-addon ">
+          <%= text_field_tag :client_tag, nil, :class=>"form-control",:placeholder=>"New Tag",:require=>true,:style=>"width:52%;" %>
+          <%= hidden_field_tag "client_id",@client.id%>
+          <%= submit_tag "Save Tag",:class=>"button_new_index save-new-btn1"%>
+          <label for="email" class="glyphicon glyphicon-search" rel="tooltip" title="email"></label>
+        </div>
+      </div>
+    <% end %>
+  </div> 
+  </br>
+ <%if current_user.user_type=="admin"%>
+    <%=render "client_note_attachment" %>
+  <%else%>
+    <%if set_permission_for_attachment(@team_member)%>
+      <%=render "client_note_attachment" %>
+    <%end%>
+  <%end%>
+</div> 

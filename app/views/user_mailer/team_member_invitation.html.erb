@@ -1,0 +1,12 @@
+<%= @member_full_name%>
+<br>
+<%= @member_email%>
+<br>
+All you need to do, to get started is 
+<%if  Rails.env.production?%>
+	<%= link_to "Accept the Invitation","http://45.55.157.4/users/first_login?full_name=#{
+	@member_full_name}&email=#{@member_email}&inviter_id=#{@team_member}&company=#{@company_name}&marker=#{@marker_color}", target: '_blank'%>
+<%else%>
+		<%= link_to "Accept the Invitation","http://localhost:3000/users/first_login?full_name=#{
+	@member_full_name}&email=#{@member_email}&inviter_id=#{@team_member}&company=#{@company_name}&marker=#{@marker_color}", target: '_blank'%>
+<%end%>

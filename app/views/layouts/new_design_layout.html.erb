@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+    <html lang="en">
+      <!--<![endif]-->
+      <head>
+        <%= javascript_include_tag 'new_design_application' %>
+        <title>CopperService</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%= stylesheet_link_tag   'new_design_application' %>
+        <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+        <!--<......new css add here.........>-->
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans+Caption' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Exo+2:400,500italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+      </head>
+
+      <body>
+
+        <%= render 'layouts/home_new_header' %>
+        <%= yield %>
+
+        <!--//wrapper--> 
+        <!-- ******FOOTER****** -->
+        <%= render 'layouts/home_new_footer' %>
+      </body>
+    </html>
+    

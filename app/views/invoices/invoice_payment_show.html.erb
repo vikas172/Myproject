@@ -1,0 +1,30 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<%= form_tag('/payment_done/')%>
+<%= hidden_field_tag :amount,params[:amount].to_i%>
+<%= hidden_field_tag :id,params[:id]%>
+
+<style>
+.stripe-button-el{
+  display: none;
+}
+</style>
+<script>
+  $(document).ready(function(){ 
+   $(".stripe-button-el").trigger("click");
+  })
+</script>
+
+<script
+ src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+ data-key="pk_test_lyYYz5ObfjV7rWasjyxGjIHm"
+ data-image="/assets/pool1236.png"
+ data-name="Copperservice"
+ data-description=""
+ data-amount="<%= (params[:amount].to_i)*100%>"
+ data-currency="usd"
+ data-bitcoin="false">
+</script>

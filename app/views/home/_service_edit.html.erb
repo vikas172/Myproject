@@ -1,0 +1,118 @@
+<!-- Modal -->
+<div class="modal fade" id="product_service_<%=service_name.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+	<% if service %>
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header new-modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Edit <%= service_name.name rescue '' %></h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="content">
+					  <%= form_tag update_service_path(service_name) ,:class=>"compressed_form work_item" do%>
+
+					    <p>
+					      <label for="work_item_name" class="large">Name</label>
+					      <%= text_field_tag "work_item[name]",nil,:value=>service_name.name,:class=>"large name", :id=>"work_item_name"%>
+					    </p>
+
+					    <p>
+					      <label for="work_item_description">Description</label>
+					      <%= text_area_tag "work_item[description]",service_name.description,:cols=>"50",:id=>"work_item_description" %>
+					    </p>
+
+					    <p>
+					    	<label for="work_item_default_unit_cost">Default Unit Cost $</label>
+					      <%= text_field_tag "work_item[unit_cost]",nil,:value=>service_name.unit_cost,:class=>"large name", :placeholder=>"0.00", :id=>"work_item_default_unit_cost"%>
+					    </p>
+
+					    <p>
+					    	<% if service_name.non_taxable %>
+						      <input type="hidden" value="0" name="work_item[non_taxable]"><input type="checkbox" value="1" name="work_item[non_taxable]" id="work_item_nontaxable" checked="checked">
+						      <label for="work_item_nontaxable">Non-taxable?</label>
+						      <span class="description">Should this item be exempt from tax?</span>
+						    <%else%>
+						   	 	<input type="hidden" value="0" name="work_item[non_taxable]"><input type="checkbox" value="1" name="work_item[non_taxable]" id="work_item_nontaxable">
+						      <label for="work_item_nontaxable">Non-taxable?</label>
+						      <span class="description">Should this item be exempt from tax?</span>
+						    <%end%>  
+					    </p>
+
+					    <p>
+					    	<% if service_name.active %>
+						      <input type="hidden" value="0" name="work_item[active]"><input type="checkbox" value="1" name="work_item[active]" id="work_item_visible" checked="checked">
+						      <label for="work_item_visible">Active?</label>
+						      <span class="description">Should this be an option for Estimate, Work Orders &amp; Invoices?</span>
+						    <%else%>
+						    	<input type="hidden" value="0" name="work_item[active]"><input type="checkbox" value="1" name="work_item[active]" id="work_item_visible">
+						      <label for="work_item_visible">Active?</label>
+						      <span class="description">Should this be an option for Estimate, Work Orders &amp; Invoices?</span>
+						    <%end%> 
+					    </p>
+					    <p style="">
+					    	<%= link_to "Delete Work Item",delete_service_path(service_name),:class=>"button remove",:data=> {confirm: "Are you sure you wish to delete #{service_name.name}?"}%>
+					       <%= submit_tag "Update",:class=>"model_save_button save save-new-btn1"%>
+					      <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Cancel</button>
+					    </p>					    
+					  <%end%>
+					</div>
+				</div>
+			</div>
+		</div>
+	<% else %>
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header new-modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Edit <%= service_name.name rescue '' %></h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="content">
+					  <%= form_tag update_service_path(service_name) ,:class=>"compressed_form work_item" do%>
+					   
+					    <p>
+					      <label for="work_item_name" class="large">Name</label>
+					      <%= text_field_tag "work_item[name]",nil,:value=>service_name.name,:class=>"large name", :id=>"work_item_name"%>
+					    </p>
+					    <p>
+					      <label for="work_item_description">Description</label>
+					      <%= text_area_tag "work_item[description]",service_name.description,:cols=>"50",:id=>"work_item_description" %>
+					    </p>
+					    <p>
+					    	<label for="work_item_default_unit_cost">Default Unit Cost $</label>
+					      <%= text_field_tag "work_item[unit_cost]",nil,:value=>service_name.unit_cost,:class=>"large name", :placeholder=>"0.00", :id=>"work_item_default_unit_cost"%>
+					    </p>
+					    <p>
+					    	<% if service_name.non_taxable %>
+						      <input type="hidden" value="0" name="work_item[non_taxable]"><input type="checkbox" value="1" name="work_item[non_taxable]" id="work_item_nontaxable" checked="checked">
+						      <label for="work_item_nontaxable">Non-taxable?</label>
+						      <span class="description">Should this item be exempt from tax?</span>
+						    <%else%>
+						   	 	<input type="hidden" value="0" name="work_item[non_taxable]"><input type="checkbox" value="1" name="work_item[non_taxable]" id="work_item_nontaxable">
+						      <label for="work_item_nontaxable">Non-taxable?</label>
+						      <span class="description">Should this item be exempt from tax?</span>
+						    <%end%>  
+					    </p>
+					    <p>
+					    	<% if service_name.active %>
+						      <input type="hidden" value="0" name="work_item[active]"><input type="checkbox" value="1" name="work_item[active]" id="work_item_visible" checked="checked">
+						      <label for="work_item_visible">Active?</label>
+						      <span class="description">Should this be an option for Estimate, Work Orders &amp; Invoices?</span>
+						    <%else%>
+						    	<input type="hidden" value="0" name="work_item[active]"><input type="checkbox" value="1" name="work_item[active]" id="work_item_visible">
+						      <label for="work_item_visible">Active?</label>
+						      <span class="description">Should this be an option for Estimate, Work Orders &amp; Invoices?</span>
+						    <%end%>  
+					    </p>
+					    <p>
+					    	<%= link_to "Delete Work Item",delete_service_path(service_name),:class=>"button remove",:data=> {confirm: "Are you sure you wish to delete #{service_name.name}?"}%>
+					       <%= submit_tag "Update",:class=>"model_save_button save save-new-btn1"%>
+					      <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">Cancel</button>
+					    </p>
+					  <%end%>
+					</div>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>

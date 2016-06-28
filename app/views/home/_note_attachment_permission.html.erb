@@ -1,0 +1,66 @@
+<div class="permission indent pad-top">
+  <%if @permission.permission_client_properties.count==1%>
+    <%if set_client_property_check_box_permission(@permission)%>
+      <%if @permission.permission_note_attachment.count==2%>
+        <div class="parent">
+          <input type="checkbox" id="user_permissions_notes" class="require_clients has_details check_box_unselect" name="permission[permission_note_attachment][]" checked>
+          <label for="user_permissions_notes">Note &amp; Attachments</label>
+          <div class="description">On Customers, Estimate, Invoices &amp; Work Orders.</div>
+        </div>
+        <div class="detail display_attachment_notes_detail">
+          <%= select_tag("permission[permission_note_attachment][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]],:selected=>@permission.permission_note_attachment.second),:class=>"rwd",:id=>"user_permissions_notes_rwd") %>
+           <p>
+          </p>
+        </div>
+      <%else%>
+        <div class="parent">
+          <input type="checkbox" id="user_permissions_notes" class="require_clients has_details check_box_unselect" name="permission[permission_note_attachment][]">
+          <label for="user_permissions_notes">Note &amp; Attachments</label>
+          <div class="description">On Customers, Estimate, Invoices &amp; Work Orders.</div>
+        </div>
+        <div class="detail invisible display_attachment_notes_detail">
+          <%= select_tag("permission[permission_note_attachment][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_notes_rwd") %>
+           <p>
+          </p>
+        </div>
+      <%end%>  
+
+    <%else%>
+      <div class="parent">
+        <input type="checkbox" id="user_permissions_notes" disabled="disabled" class="require_clients has_details check_box_unselect">
+        <label for="user_permissions_notes" class="disabled">Note &amp; Attachments</label>
+        <div class="description">On Customers, Estimate, Invoices &amp; Work Orders.</div>
+      </div>
+      <div class="detail invisible display_attachment_notes_detail">
+        <%= select_tag("permission[permission_note_attachment][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_notes_rwd") %>
+         <p>
+          <input type="hidden" id="user_permissions_work_orders_index" name="permission[permission_note_attachment][]" class="" value="on">
+        </p>
+      </div>
+    <%end%>
+  <%else%>
+    <%if @permission.permission_note_attachment.count==2%>
+      <div class="parent">
+        <input type="checkbox" id="user_permissions_notes" class="require_clients has_details check_box_unselect" name="permission[permission_note_attachment][]" checked>
+        <label for="user_permissions_notes">Note &amp; Attachments</label>
+        <div class="description">On Customers, Estimate, Invoices &amp; Work Orders.</div>
+      </div>
+      <div class="detail display_attachment_notes_detail">
+        <%= select_tag("permission[permission_note_attachment][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]],:selected=>@permission.permission_note_attachment.second),:class=>"rwd",:id=>"user_permissions_notes_rwd") %>
+         <p>
+        </p>
+      </div>
+    <%else%>
+      <div class="parent">
+        <input type="checkbox" id="user_permissions_notes" class="require_clients has_details check_box_unselect" name="permission[permission_note_attachment][]">
+        <label for="user_permissions_notes">Note &amp; Attachments</label>
+        <div class="description">On Customers, Estimate, Invoices &amp; Work Orders.</div>
+      </div>
+      <div class="detail invisible display_attachment_notes_detail">
+        <%= select_tag("permission[permission_note_attachment][]", options_for_select([["Read","1"],["Read Write","2"],["Read, Write Delete","3"]]),:class=>"rwd",:id=>"user_permissions_notes_rwd") %>
+         <p>
+        </p>
+      </div>
+    <%end%>  
+  <%end%>
+</div>

@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vehicle_name: MyString
+  vin_no: MyString
+  type: 
+  year: MyString
+  make: MyString
+  model: MyString
+  trim: MyString
+  license_plate: MyString
+  registation: MyString
+  status: MyString
+  group: MyString
+  driver: MyString
+  ownership: MyString
+  color: MyString
+  body_type: MyString
+  body_subtype: MyString
+  msrp: 1.5
+
+two:
+  vehicle_name: MyString
+  vin_no: MyString
+  type: 
+  year: MyString
+  make: MyString
+  model: MyString
+  trim: MyString
+  license_plate: MyString
+  registation: MyString
+  status: MyString
+  group: MyString
+  driver: MyString
+  ownership: MyString
+  color: MyString
+  body_type: MyString
+  body_subtype: MyString
+  msrp: 1.5

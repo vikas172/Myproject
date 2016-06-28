@@ -1,0 +1,60 @@
+<div class="cell_wrapper">
+  <div id="work_orders_widget" class="fieldset">
+    <div class="content summary_widget" style="border-width:0">
+      <div data-tooltip="Jobs with incomplete visits&lt;br/&gt;from today to August 26" class="visit_scheduling_row week">
+        <span>This Week</span>
+        <h3 style="font-size:14px">
+          <%if  !@jobs_today.blank?%>
+          	<%= @jobs_today.count rescue 0 %><% else %>0<% end %>
+          -
+          $<%@total_amount=0%>
+          <%@jobs_today.each do |job|%>
+              <%if !job_requires_amount_show(job).nil?%>
+              	<% @total_amount=@total_amount+job_requires_amount_show(job) rescue 0 %>
+              <%end%>
+          <%end%>
+          <%= @total_amount rescue 0 %>
+        </h3>
+      </div>
+      <div data-tooltip="Jobs with incomplete visits&lt;br/&gt;between August 1 - 31" class="visit_scheduling_row month">
+        <span>This Month</span>
+        <h3 style="font-size:14px">
+          <%if  !@jobs_month.blank?%>
+          	<%= @jobs_month.count rescue 0 %><% else %>0<% end %>
+          -
+          $
+          <%@total_amount1=0%>
+          <%if !@jobs_month.blank?%>
+            <%@jobs_month.each do |job|%>
+              <%if !job_requires_amount_show(job).nil?%>
+                <% @total_amount1=@total_amount1+job_requires_amount_show(job) rescue 0 %>
+              <%end%>
+            <%end%>
+          <%end%>
+          <%= @total_amount1 %>
+        </h3>
+      </div>
+      <%if  !@jobs_month.blank?%>
+        <%@jobs_month.sort.pop(3).each do |job|%>
+          <ul>
+            <li>
+              <a href="/jobs/<%= job.id%>">
+              <span>
+              <%= job.property.client.first_name rescue "" %> &nbsp; <%= job.property.client.last_name rescue "" %>
+              </span>
+              <span class="balance">
+              <time datetime="<%= job.start_date %>">Today</time>
+              </span>
+              </a>                     
+            </li>
+          </ul>
+        <%end%>
+      <%else%>
+      	No Upcoming Work Orders
+      <%end%>  
+      <a href="/jobs" style="color:#B87333;">
+      Full List...
+      </a>
+    </div>
+  </div>
+</div>

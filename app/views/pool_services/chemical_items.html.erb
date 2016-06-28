@@ -1,0 +1,78 @@
+<div id="app_wrapper">
+	<div class="client_index">
+		<div class="main_container">
+			<div style="height: auto;">
+				<div>
+					<%=render "home/work_item_side_bar" %>
+					<div id="settings_area">
+						<b><h1 class="title2-font"> Chemical Items</h1></b>
+						<%= form_for(@chemical_items ,:url => chemical_items_create_pool_services_path) do |f|%>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Chemical Items</th>
+										<th>Select</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><%= f.label :liquid_chlorine_gal%></td>
+										<td><%=f.check_box :liquid_chlorine_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :di_chlor_ib%></td>
+										<td><%=f.check_box :di_chlor_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :tri_chlor_ib%></td>
+										<td><%=f.check_box :tri_chlor_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :muriatic_acid_gal%></td>
+										<td><%=f.check_box :muriatic_acid_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :dry_muriatic_acid_lb%></td>
+										<td><%=f.check_box :dry_muriatic_acid_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :bromine_tans%></td>
+										<td><%=f.check_box :bromine_tans_select%></td>
+									</tr>																	
+									<tr>
+										<td><%= f.label :soda_ash_lb%></td>
+										<td><%=f.check_box :soda_ash_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :sodium_bicarbonate_lb%></td>
+										<td><%=f.check_box :sodium_bicarbonate_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :salt_bags%></td>
+										<td><%=f.check_box :salt_bags_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :water_clarifier_oz%></td>
+										<td><%=f.check_box :water_clarifier_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :algacide_oz%></td>
+										<td><%=f.check_box :algacide_oz_select%></td>
+									</tr>
+									<tr>
+										<td><%= f.label :phosphate_remover%></td>
+										<td><%=f.check_box :phosphate_remover_select%></td>
+									</tr>									
+								</tbody>
+							</table>	
+							<%= f.hidden_field :user_id,:value=>current_user.id%>
+							<div class="row">	
+								<%= f.submit "save",:class=>"update_button_setting save-new-btn1",:style=>"float:right;"%>
+							</div>
+						<%end%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

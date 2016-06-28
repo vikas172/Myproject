@@ -1,0 +1,59 @@
+<h2><font face="Verdana, Verdana, Geneva, sans-serif" style="font-weight:100;font-size:18px;font-style:normal;color:#565656" align="left">A Job Has Been Assigned to You</font></h2>
+
+
+<table width="100%" border="0"><tbody><tr>
+  <td>
+    <font align="left"><strong><%= @job.description%></strong></font>
+  </td>
+  <td align="right">
+    <font align="right">
+<br>  <%if  Rails.env.production?%>
+        <%= link_to "View In CopperService","http://45.55.157.4/jobs/#{@job.id}",:style=>"font-size:14px;background-color:#55ae3a;color:#ffffff"%>
+        <%else%>
+        <%= link_to "View In CopperService","http://localhost:3000/jobs/#{@job.id}",:style=>"font-size:14px;background-color:#55ae3a;color:#ffffff"%>
+        <%end%>
+        </font>
+      </a>
+    </font>
+  </td></tr></tbody></table>
+
+  <p>
+    Client: <%= @job_client.initial %> <%= @job_client.first_name%> <%= @job_client.last_name%><br>
+    Address: <%= @job_property.try(:street)%> / <%= @job_property.try(:street2)%> / <%= @job_property.try(:city)%>, <%= @job_property.try(:state)%> <%= @job_property.try(:zipcode)%>
+  </p>
+
+
+  <p>
+    <font align="left">
+      Scheduled: <strong><%= @job.start_date%></strong>
+
+      to <strong>
+      <%if !@job.end_date.nil?%>
+        <%= @job.end_date%>
+      <%else%>
+        <%= Date.today%>
+      <%end%>
+      </strong>
+
+      <br>
+        Visit Schedule: <%= @job.visits%>
+
+        <br>
+        First Visit:<%= @job.start_date%> Anytime
+    </font>
+  </p>
+
+<p>
+  Assigned to: 
+    <strong>
+      <%if !@job.crew.blank?%>
+        <%@job.crew.first.split(',').each_with_index do |crew,index|%>
+          <%if index==0 %>
+          <%= @job.get_crew_member(crew).full_name%>
+          <%else%>
+          , <%= @job.get_crew_member(crew).full_name%>
+          <%end%>
+        <%end%>
+      <%end%>
+    </strong>
+</p>

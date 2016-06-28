@@ -1,0 +1,248 @@
+#settings_area div.config_description {
+border: 1px solid #ddd;
+color: #555;
+font-size: 14px;
+margin-bottom: 15px;
+padding: 7px 20px;
+ margin-top: 10px;
+}
+#chemical_settings h4 {
+margin-top: 40px;
+margin-bottom: 15px;
+}
+#settings_area {
+float: left;
+width: 690px;
+padding: 10px 0 0 20px;
+margin-left: -1px;
+border-left: 1px solid #ddd;
+}
+#settings_area form input[type='text'].wide {
+width: 350px;
+}
+#chemical_settings ul#chemicals{
+padding: 0 0 0 40px;
+margin: 0px;
+list-style: none;
+}
+#chemical_settings ul#chemicals li:first-child label {
+text-align: left!important;
+width:270px !important;
+margin-right: 5px;
+}
+#chemical_settings ul#chemicals li input{
+width: 240px !important;
+}
+#chemical_settings a#add_chemical{
+margin-left: 40px;
+}
+#chemical_settings ul#mixtures {
+padding: 0 0 0 40px;
+margin: 0px;
+list-style: none;
+}
+
+/**/
+.compressed_form label {
+display: block;
+float: left;
+width: 160px;
+text-align: right;
+margin-right: 10px;
+line-height: 22px;
+}
+form.chemical_treatment_mixture ul#chemicals {
+margin-left: 180px!important;
+list-style: none!important;
+padding: 0px!important;
+}
+form.chemical_treatment_mixture ul#chemicals label {
+width: 140px;
+text-align: left;
+}
+form.chemical_treatment_mixture ul#chemicals input[type=text] {
+width: 140px;
+text-align: left;
+}
+
+/**/
+
+form.chemical_treatment .chemical_header, #show.chemical_treatment .chemical_header {
+float: left;
+max-width: 35%;
+margin-top: 15px;
+padding: 10px;
+font-size: 15px;
+background-color: #F5F6F8;
+border: 1px solid #a3a3a3;
+max-width: 330px;
+overflow: hidden;
+overflow: ellipsis;
+}
+
+form.chemical_treatment .chemical_header .property_confirmation{
+overflow-y: auto; 
+clear: left;
+margin-bottom: 10px;
+}
+form.chemical_treatment .chemical_header .work_order_selector{
+clear: left;
+margin-top: 20px;
+padding: 0 0 5px 0;
+line-height: 24px;
+font-size: 15px;
+overflow-y: auto; 
+}
+form.chemical_treatment .chemical_header .applicator_selector, form.chemical_treatment .chemical_header .application_datetime{
+overflow-y: auto; 
+clear: left;
+margin-top: 20px;
+padding: 0 0 5px 0;
+line-height: 24px;
+font-size: 15px;
+}
+form.chemical_treatment .details, #show.chemical_treatment .details {
+float: right;
+width: 60%;
+margin-top: 15px;
+font-size: 16px;
+}
+form.chemical_treatment .details ul#chemicals, #show.chemical_treatment .details ul#chemicals {
+margin-right: 40px;
+list-style: none;
+padding: 0px;
+}
+form.chemical_treatment .details ul#chemicals label{
+width: 140px;
+text-align: left;
+}
+form.chemical_treatment .details ul#chemicals select{
+width: 145px;
+text-align: left;
+margin-right: 10px;
+}
+form.chemical_treatment .details ul#chemicals input[type=text]{
+width: 140px;
+text-align: left;
+margin-top: 10px;
+}
+.minus_icon {
+background-color: #af0000;
+}
+.circle_icon {
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+position: relative;
+display: inline-block;
+height: 22px;
+width: 22px;
+line-height: 22px;
+text-align: center;
+text-decoration: none;
+position: relative;
+font-weight: bold;
+color: white;
+margin-top: 6px;
+text-shadow: -1px -1px 0px #555555;
+}
+
+/**/
+.dropdown_button .caret{
+	 margin-left: 2px;
+    margin-top: 12px !important;
+}
+.dropdown_button span{
+    margin-right: 10px !important;
+}
+.dropdown_menu ul {
+margin: 0px;
+padding: 0px;
+list-style: none;
+text-align: left;
+}
+.dropdown_menu.icon_drop a#email {
+background-image: url(//d3ey4dbjkt2f6s.cloudfront.net/assets/app/icons/envelope-7a6916789c6ca894ac908a8c935e6610.svg);
+}
+#head #controls .button {
+	margin-right: 8px;
+}
+a img {
+border: medium none;
+}
+#show.chemical_treatment .chemical_header {
+float: left;
+max-width: 35%;
+padding: 25px 35px;
+font-size: 15px;
+background-color: #F5F6F8;
+border: 1px solid #a3a3a3;
+max-width: 260px;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+#show.chemical_treatment .chemical_header .property_confirmation {
+float: left;
+clear: left;
+margin-bottom: 10px;
+}
+#show.chemical_treatment .chemical_header a {
+font-size: 90%;
+color: #B87333;
+}
+
+#show.chemical_treatment .chemical_header .applicator_selector, #show.chemical_treatment .chemical_header .application_datetime, #show.chemical_treatment .chemical_header .work_order_selector{
+float: left;
+clear: left;
+margin-top: 20px;
+padding: 0 0 5px 0;
+line-height: 24px;
+font-size: 15px;
+}
+#show.chemical_treatment .details {
+float: right;
+width: 60%;
+margin-top: 15px;
+font-size: 16px;
+}
+#show.chemical_treatment .details {
+float: right;
+width: 65%;
+font-size: 16px;
+}
+p {
+font-weight: 400;
+}
+#show.chemical_treatment .details label {
+    color: #333333;
+    display: inline-block;
+    font-weight: bold;
+    width: 30%;
+}
+#show.chemical_treatment .details #current_chemicals h3 span {
+font-weight: normal;
+color: #333;
+}
+#head #controls .button.edit img{
+height: 14px;
+margin: 0 3px -3px 3px;
+}
+
+/**/
+form .order_by {
+	float: left;
+}
+.chemical_treatment{
+	margin-left: 0px!important;
+}
+h3 {
+	line-height: 30px!important;
+}
+.row span.top_right {
+float: right;
+margin: 0px;
+padding: 0px;
+}
+#content h3 {
+margin: 0px!important;
+}

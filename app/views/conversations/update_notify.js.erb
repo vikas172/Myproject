@@ -1,0 +1,5 @@
+
+$("#notification_li").html("<%= escape_javascript(  render :partial => 'notify_show',  :locals => {:@unread_notify=>@unread_notify,:@unread_job=>@unread_job,:@sent_message=>@sent_message} ) %> ");
+$("#notificationContainer").css("display","block");
+$(".notificationLink-not").css("display","block");
+$("#mydiv_notify").css("display","none");

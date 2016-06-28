@@ -1,0 +1,36 @@
+<%if !@categories.blank? %>
+	<%@categories.each_with_index do |c,index|%>
+		<div class="row">
+			<div id="popover_form_content">
+				<div class="span2" id="popover_left">
+				</div>
+				<div class="span2"  id="popover_left">
+					<%= index+1 %>. &nbsp;&nbsp;<%= c.category%>
+				</div>
+				<div class="span2"  id="popover_left">
+					<%= link_to "Edit",category_edit_timesheet_path(c)%> &nbsp;
+					<%= link_to "Delete",category_delete_timesheet_path(c), :data => {:confirm => 'Are you sure?'}%>
+				</div>
+			</div>
+		</div>
+	<%end%>
+<%end%>
+
+<%= form_tag  category_create_expenses_path ,:class=>"edit_work_configuration compressed_form",:remote=>true do %>
+	<div class="row">
+		<div id="popover_form_content">
+			<div class="span2" id="popover_left">
+				<label for="expense_cost">Category</label>
+			</div> 
+			<div class="span3"  id="popover_left">
+				<%= text_field_tag "custom[category]", nil,class: "large strong", autofocus: "autofocus" ,:required=>true,:placeholder=>"category"%>
+				<%= hidden_field_tag "custom[user_id]",nil,value: current_user.id%>
+				<%= hidden_field_tag "custom[category_type]",nil,value: "timesheets"%>
+			</div>
+		</div>
+	</div> 
+	<div class="row">
+		<%= submit_tag "save",:class=>"button_new_create save-new-btn1",:style=>"margin-left: 36%;"%>	
+	</div>
+<%end%>
+

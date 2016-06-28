@@ -1,0 +1,18 @@
+<br>
+<p class="checkbox_holder">
+  <input type="hidden" value="0" name="require_work_order_signature">
+  <%if current_user.pdf_setting.blank? || current_user.pdf_setting.require_work_order_signature %>  
+    <%= check_box_tag 'require_work_order_signature', 'yes', true,:onclick=>"checkMarked(this.id,'jobs')" ,:value=>"1"%>
+  <%else%>
+    <%= check_box_tag 'require_work_order_signature', 'no', false,:onclick=>"checkMarked(this.id,'jobs')" ,:value=>"1"%>
+  <%end%>
+  <b for="pdf_settings_require_work_order_signature">Include client signature line?</b>
+</p>
+
+<p style="padding: 10px; border: 1px solid #ccc; clear:both; overfow-y:auto;">
+  <label for="work_configurations_work_order_contract" style="text-align: left;">
+    Contract/Disclaimer<br></label>
+  <span class="description">This message will appear at the bottom of every work order</span>
+</p>
+<%= text_area_tag "work_order_contract" ,"We can be called for touch-ups and small changes for the next 3 days. After that all work is final.",:rows=>"4",:style=>"width:98%;"%>
+

@@ -1,0 +1,120 @@
+<div class="client_index">
+  <div class="main_container">
+    <div class="content">
+      <div class="container">
+        <section>
+          <div class="col-12">
+            <%if current_user.user_type=="admin"%>
+              <%= render "work_job_show"%>
+            <%else%>
+              <%if set_view_permission_for_work_client_property(@team_member.permission.permission_jobs)%>
+                <%= render "work_job_show"%>
+              <%end%>
+            <%end%>  
+            <%if current_user.user_type=="admin"%>
+              <%= render "work_invoice_show"%>
+            <%else%>
+              <%if set_view_permission_for_work_client_property(@team_member.permission.permission_invoices)%>
+                <%= render "work_invoice_show"%>
+              <%end%>
+            <%end%>
+            <%if current_user.user_type=="admin"%>
+              <%= render "work_quote_show"%>
+            <%else%>
+              <%if set_view_permission_for_work_client_property(@team_member.permission.permission_quotes)%>
+                <%= render "work_quote_show"%>
+              <%end%>
+            <%end%>
+          </div><!-- end of column right -->
+        </section>
+      </div>
+
+    <div class="modal fade" id="newinvoice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">New Invoice</h4>
+          </div>
+          <div class="modal-body">
+            <div id="client_selector">
+            Which Customer would you like to use for this Invoice? 
+            <br/>
+            </div>
+            <div class ="search-div row">
+              <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Customers...",:require=>true,:id=>"search_input_job_client_model",:style=>"width:48%;",:onkeyup => "searchClientJobModel($(this).val())" %>
+              <span class="or">or</span>     
+              <%= link_to 'Create New Customer', new_client_path(:id=>"invoice",:work=>"work"),:style=> "float: right;" ,:class=>"button_new_create"%>
+            </div>
+            <br/>
+            <h4>Some Recently Used Customers:</h4><br/>
+
+            <ul class="thicklist" id="client_list_display"> 
+              <%= render "invoices/search_client_invoice"%>
+            </ul>
+          </div>  
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newqoute" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">New Estimate</h4>
+          </div>
+          <div class="modal-body">
+            <div id="client_selector">
+              <p>Which Customer would you like to use for this Estimate?</p>
+              <br/>
+
+              <div class ="search-div row">
+                <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Clients...",:require=>true,:id=>"search_input_job_client_model",:style=>"width: 48%;",:onkeyup => "searchClientQuoteModel($(this).val())" %>
+                <span class="or">or</span>
+                <%= link_to 'Create New Customer', new_client_path(:id=>"quote",:work=>"work"),:style=> "float: right;" ,:class=>"button_new_create"%>
+             </div>
+              <br/>
+              <h4>Some Recently Used Customers:</h4><br/>
+              <ul class="thicklist quotes_client" id="client_list_display"> 
+                <%= render "quotes/search_quote_client"%>
+              </ul>
+            </div>  
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header new-modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">New Work Order</h4>
+        </div>
+        <div class="modal-body">
+          <div id="client_selector">
+            <p>Which Customer would you like to use for this Work Order?</p> 
+            <br/>
+
+            <div class ="search-div row">        
+              <%= text_field_tag :search, nil, :class=>"form-control search_input",:placeholder=>"Search Clients...",:require=>true,:id=>"search_input_job_client_model",:style=>"width: 48%;",:onkeyup => "searchClientJobModel($(this).val())" %>
+              <span class="or">or</span>
+              <%= link_to 'Create New Customer', new_client_path(:id=>"job",:work=>"work"),:style=> "float: right;" ,:class=>"button_new_create save-new-btn1"%>
+            </div>  
+            <br/>
+            <h4>Some Recently Used Customers:</h4><br/>
+            <ul class="thicklist " id="client_list_display"> 
+              <%= render "search_client_job",:locals => {:text_1 => "work"}%>
+            </ul>
+          </div>  
+        </div>
+        <!-- <div class="modal-footer"></div>
+      </div> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<%if !@clients.blank?%>
+  <% @clients.reverse.each do |client| %> 
+    <li>
+      <div class="popover_user">
+        <i class="fa fa-user fa-2"></i>
+      </div>
+       <div class="user_contain_search">
+      <%if params[:action]=="work" %>
+        <a href="/jobs/new?client_id=<%= client.id %>&job_create=job&work=work&date=<%=@start_date%>" class="row ">
+      <%else%>
+        <a href="/jobs/new?client_id=<%= client.id %>&job_create=job&date=<%=@start_date%>" class="row ">
+      <%end%>
+        <h3 class="client_name individual">
+          <%= client.initial rescue "" %>
+          <%= client.first_name.titleize rescue "" %>
+          <%= client.last_name.titleize rescue "" %>&nbsp;(<%=client.company_name.titleize rescue "" %>)
+        </h3>
+        <span class="last_active" style="float: right;">
+          Activity &nbsp;<%= time_ago_in_words(client.created_at, include_seconds: true) rescue "" %>&nbsp; ago
+        </span>
+        <span style="display:inline-block; width:120px; padding-left:25px;"><%= client.properties.count rescue "" %> Pool</span>
+        <span><%= client.phone_number rescue "" %></span>
+      </a>
+    </div>
+    </li>
+  <% end %>
+<% else %>
+  No Customer present
+<%end%>

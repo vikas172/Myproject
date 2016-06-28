@@ -1,0 +1,65 @@
+<h4 class="title2-font">Invoices</h4>
+<p>
+  <label for="work_configuration_invoice_default_email_subject">Subject Line</label>
+  <%= text_area_tag "work_configuration[invoice_default_email_subject]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/invoices_subject_#{current_user.id}.txt")),:style=>"width:400px;",:class=>"email_text_box"%>  
+</p>
+
+<p>
+  <label for="work_configuration_invoice_default_email_message">Message</label>
+  <%= text_area_tag "work_configuration[invoice_default_email_message]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/invoices_message_#{current_user.id}.txt")),:style=>"width:400px;",:rows=>9,:class=>"email_text_box"%>
+</p>
+
+<hr style="border-color:#ccc;">
+<h4 class="title2-font">Estimate</h4>
+
+<p>
+  <label for="work_configuration_quote_default_email_subject">Subject Line</label>
+  <%= text_area_tag "work_configuration[quote_default_email_subject]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/quotes_subject_#{current_user.id}.txt")),:style=>"width:400px;",:class=>"email_text_box"%>
+</p>
+
+<p>
+  <label for="work_configuration_quote_default_email_message">Message</label>
+  <%= text_area_tag "work_configuration[quote_default_email_message]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/quotes_message_#{current_user.id}.txt")),:style=>"width:400px;",:rows=>9,:class=>"email_text_box"%>
+</p>
+
+<hr style="border-color:#ccc;">
+<h4 class="title2-font">Payment and Deposit Receipts</h4>
+
+<p>
+  <label for="work_configuration_balance_adjustment_default_email_subject">Subject Line</label>
+  <%= text_area_tag "work_configuration[balance_adjustment_default_email_subject]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/payment_subject_#{current_user.id}.txt")),:style=>"width:400px;",:class=>"email_text_box"%>
+</p>
+
+<p>
+  <label for="work_configuration_balance_adjustment_default_email_message">Message</label>
+  <%= text_area_tag "work_configuration[balance_adjustment_default_email_message]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/payment_message_#{current_user.id}.txt")),:style=>"width:400px;",:rows=>9,:class=>"email_text_box"%>
+</p>
+
+<hr style="border-color:#ccc;">
+<h4 class="title2-font">Statements</h4>
+<p>
+  <label for="work_configuration_statement_default_email_subject">Subject Line</label>
+  <%= text_area_tag "work_configuration[statement_default_email_subject]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/statement_subject_#{current_user.id}.txt")),:style=>"width:400px;",:class=>"email_text_box"%>
+</p>
+
+<p>
+  <label for="work_configuration_statement_default_email_message">Message</label>
+  <%= text_area_tag "work_configuration[statement_default_email_message]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/statement_message_#{current_user.id}.txt")),:style=>"width:400px;",:rows=>9,:class=>"email_text_box"%>
+</p>
+
+<hr style="border-color:#ccc;">
+<h4 class="title2-font">Signed Documents</h4>
+<p>
+  <label for="work_configuration_note_default_email_subject">Subject Line</label>
+  <%= text_area_tag "work_configuration[note_default_email_subject]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/signed_subject_#{current_user.id}.txt")),:style=>"width:400px;",:class=>"email_text_box"%>
+</p>
+
+<p>
+  <label for="work_configuration_note_default_email_message">Message</label>
+  <%= text_area_tag "work_configuration[note_default_email_message]" ,File.read(Rails.root.join("public/update_emails_#{current_user.id}/signed_message_#{current_user.id}.txt")),:style=>"width:400px;",:rows=>9,:class=>"email_text_box"%>
+</p>
+<br>
+
+
+
+ 

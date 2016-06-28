@@ -1,0 +1,24 @@
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <div >
+        <%=render "home/work_item_side_bar" %>
+        <div id="settings_area">
+          <h4 class="title1-font">Email Overview</h4> 
+          <%=form_tag  work_configuration_edit_emails_path do %>
+            <%if Dir.exists?("public/update_emails_#{current_user.id}")%>
+              <%= render "update_email_option"%>
+            <%elsif Dir.exists?("public/default_emails_#{current_user.id}")%>
+              <%= render "default_email_option"%>
+            <%else%>
+              <%= render "email_option_bydefault"%>
+            <%end%>
+            <p style="text-align:right;"> 
+              <input type="submit" value="Update Settings" name="commit" data-disable-with="Updating..." class="update_button_setting save-new-btn1" style="float: right; margin-bottom: 3%;">
+            </p>
+          <%end%>               
+      	</div>
+      </div>
+    </div>
+  </div>
+</div>

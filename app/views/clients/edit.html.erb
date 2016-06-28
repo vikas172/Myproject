@@ -1,0 +1,9 @@
+<div class="client_index">
+	<div class="main_container">
+		<%= render "error_message_and_flash" %>
+		<h3 style="margin-bottom: 20px; color:#1f518b;">Editing client</h3>
+
+		<%= render 'form' %>
+		<%= link_to 'Cancel', "/clients/#{@client.id}?value=client_show",:class=>"model_cancel_button pull-right"%>
+	</div>
+</div>

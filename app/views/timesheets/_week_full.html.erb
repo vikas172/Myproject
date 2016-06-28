@@ -1,0 +1,31 @@
+<%if current_user.company.blank?%>
+  <% date= Date.today.beginning_of_week(start_day = :monday)%>
+<%else%>
+  <% date= Date.today.beginning_of_week(start_day = (current_user.company.start_week_on).to_sym)%>
+<%end%>
+<div class="day-view-table test-entries-of-user-1006620">
+  <ul class="day-view-week-nav">
+    <% @hour_total=[]%>
+    <% (0..6).each do |i| %>
+      <li>
+       <%date1= date + i.day%>
+        <%if Date.today == date1%>
+          <a class="selected" href="#" tabindex="-1" title="" >  
+        <%else%>
+          <a class="" href="#" tabindex="-1" title="" >  
+        <%end%>
+          <%= date1.strftime("%a")%>
+          <%= date1%>
+          <% @hour_total << get_total_hours(date1,current_user)%>
+          <span class="js-sum-for-day" id="<%=date1%>"><%=get_total_hours(date1,current_user) rescue 0.0%></span>
+        </a>
+      </li>
+    <% end %>
+    <li>
+      <div id="day-view-week-nav-total" class="js-day">
+        Total:
+        <b class="day-view-week-nav-total"><%=get_week_hours(@hour_total) rescue "0:0"%></b>
+      </div>
+    </li>
+  </ul>
+</div>

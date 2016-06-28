@@ -1,0 +1,46 @@
+<div class="client_index1">
+  <div class="main_container">
+    <div id="content" style="height: auto;">
+      <div class="padding">
+        <div id="head">
+          <h3 class="main_heading">New Estimate</h3>
+        </div>
+        <p class="description">
+          Which property would you like to use for this Estimate?
+        </p>
+
+        <h2 class="title2-font">Properties belonging to <%= client_name_display(@client)%>
+        or &nbsp;
+        <%= link_to "create a new property", {:controller => "properties", :action => "new", :client_id => @client.id, :quote_create => "quote" }%></h2>
+
+        <div id="select_property_list">
+          <br>
+          <% if params[:value]=="client_show" %>
+            <h3 class="main_heading">Choose a property:</h3>
+            <% @client_properties.reverse.each do |property|%>
+              <ul style="overflow:visible" class="thicklist chemical_property_select">
+                <li>
+                  <a class="row clearfix" href="/quotes/new?property_id=<%= property.id%>">
+                    <span><%= property.street%> <%= property.street2 %> <%= property.city %>,<%= property.state %></span>
+                  </a>
+                </li>
+              </ul>
+            <% end %>
+          <% else %>
+             <h3 class="title1-font">Choose a property:</h3>
+              <% @client_properties.reverse.each do |property|%>
+                <ul style="overflow:visible" class="thicklist chemical_property_select">
+                  <li>
+                    <a class="row clearfix" href="/quotes/new?property_id=<%= property.id%>">
+                      <span><%= property.street %> <%= property.street2 %> <%= property.city %>,<%= property.state %></span>
+                    </a>
+                  </li>
+                </ul>
+              <% end %>
+          <% end %>
+        </div>
+      </div>       
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,118 @@
+<div class="client_index invoice-index">
+  <div class="main_container"> 
+  <%= link_to "Back",properties_path,:class=>"button"%> 
+  <%= link_to "Import Leads",import_lead_path,:class=>"button_new_index pull-right",:style=>"margin-right: 5px;",data: {toggle: "modal", target: '#lead-import'},:remote=>true%>
+  <%= link_to "Direct Mail",lead_mailer_properties_path,:id=>"market-mailer",:style=>"margin-right:5px",:class=>"button_new_index",data: {toggle: "modal", target: '#lead-mailer'} %> 
+  <%= link_to "Campaign",lead_message_properties_path,:id=>"market-lead",:style=>"margin-right:5px",:class=>"button_new_index",data: {toggle: "modal", target: '#lead-message'}%> 
+  <%= link_to "Map Leads",lead_maps_path,:target=>"_blank",:class=>"button_new_index pull-right",:style=>"margin-right: 5px;"%>
+  
+    </br>
+    <div class="tabbable">
+      <div id="properties" class="tab-pane">
+        <div class="tables">
+          <div class="filter-by-column column-filter"> Filter By Columns </div>
+          <table class="sortable wide" cellspacing="0" cellpadding="0" id="property_index_view" width="99%" style="top: 50px;">    
+            <tfoot class="filter-top">
+              <tr>
+                <th width="9%" class="filter-check" style="padding:0;"></th>
+                <th width="5%">ID</th>
+                <th width="12%">Owner</th>
+                <th width="12%">Street</th>
+                <th width="12%">City</th>
+                <th width="12%">State</th>
+                <th width="9%">Zip Code</th>
+                <th width="9%">Status</th>
+                <th width="10%">Source</th>
+                <th width="10%">Tags</th>
+              </tr>
+            </tfoot>    
+            <thead class="thead">
+              <tr>
+                <th width="2%"><input type="checkbox" name="check_all" value="all" id="check-all"></th>
+                <th width="5%">ID</th>
+                <th width="15%">Owner</th>
+                <th width="15%">Street</th>
+                <th width="12%">City</th>
+                <th width="12%">State</th>
+                <th width="10%">Zip Code</th>
+                <th width="9%">Status</th>
+                <th width="10%">Source</th>
+                <th width="10%">Tags</th>
+              </tr>
+            </thead>
+          
+            <% unless @clients.blank?%>
+              <% @clients.each do |client| %>
+                <%if !client.properties.where(:lead=>true).blank?%>
+                  <%client.properties.where(:lead=>true).each do |property|%>
+                    <tr>
+                      <td><input type="checkbox" class ="lead-check"name="check_all_<%=property.id%>" value="<%= property.id%>" id="<%= property.id%>"></td>
+                      <td><%= property.id %></td>
+                      <td><%=  property.client.try(:initial) rescue "" %> &nbsp;<%= property.client.try(:first_name) rescue "" %>&nbsp; <%= property.client.try(:last_name) rescue "" %></td>
+                      <td><%=  property.try(:street) rescue "" %></br><%=property.try(:street2) rescue "" %></td>
+                      <td><%=  property.try(:city) rescue "" %></td>
+                      <td><%=  property.state rescue "" %></td>
+                        
+                      
+                      <td><%= property.zipcode rescue "" %></td>   
+                      <td><%= property.try(:pool_activity)%></td>
+                      <td><%= property.try(:source)%></td>
+                      <td>
+                        <%property.tags.each do |tag|%>
+                          <%= tag.name%>
+                        <%end%>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %> 
+              <% end %>
+            <% end %>  
+          </table>
+        </div>
+      </div>
+    </div><!-- /.tab-content -->
+  </div>
+</div>
+<div class="modal fade" id="lead-message" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<div class="modal fade" id="lead-mailer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<div class="modal fade" id="lead-import" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" display="none"></div>
+<script type="text/javascript">
+  $("#check-all").click(function(){
+    if($(this).is(':checked'))
+      {
+        $(".lead-check").prop('checked', true);
+      }
+    else
+      {
+       $(".lead-check").prop('checked', false);
+      }
+  })
+
+  $(".lead-check").click(function(){
+    $("#check-all").prop('checked', false);
+  })
+
+  $("#market-lead").click(function(){
+    var properties = new Array();
+    $("input:checkbox:checked").each(function () {
+       properties.push( $(this).attr("id"));
+    });
+    $.ajax({
+      type: "GET",
+      url: "/properties/lead_message",
+      data: {properties: properties}
+     });
+  })
+
+  $("#market-mailer").click(function(){
+    var properties = new Array();
+    $("input:checkbox:checked").each(function () {
+       properties.push( $(this).attr("id"));
+    });
+    $.ajax({
+      type: "GET",
+      url: "/properties/lead_mailer",
+      data: {properties: properties}
+     });
+  })
+</script>

@@ -1,0 +1,130 @@
+<!-- <div class="invoice-index vehicle-table">
+  <div class="col-md-10 col-md-offset-1">
+<p id="notice"><%#= notice %></p>
+
+<h1 class="list-heding">Listing Vehicles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Type</th>
+      <th>Group</th>
+      <th>Driver/Operator</th>
+      <th>Current Meter</th>
+      <th>Actions</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <%# @vehicles.each do |vehicle| %>
+      <tr>
+        <td><%#= vehicle.vehicle_name %></td>
+        <td><%#= vehicle.status %></td>
+        <td><%#= vehicle.vehicle_type %></td>
+        <td><%#= vehicle.group %></td>
+        <td><%#= vehicle.driver %></td>
+        <td><%#= vehicle.msrp %></td>
+        <td>
+          <div class="dropdown_menu icon_drop">
+           <li class="dropdown" style="list-style: none; float:left; margin-top: 0%;">
+           <a href="#" class="dropdown-toggle dropdown_button" data-toggle="dropdown"><i class="fa fa-gear"></i> <span class="caret"></span></a>
+           <ul class="dropdown-menu edit_drop_menu" role="menu">
+            <span class="arrow_action"></span>
+           <li>
+            <li>
+              <i class="fa fa-map-marker"></i>
+                <%#= link_to 'Show', vehicle %>
+            </li>
+            <li>
+              <i class="fa icon-pencil"></i>
+              <%#= link_to 'Edit', edit_vehicle_path(vehicle) %>
+            </li>
+            <li>
+              <i class="fa fa-minus-circle"></i>
+              <%#= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </li>
+          <td><%#= link_to 'Show', vehicle %></td>
+          <td><%#= link_to 'Edit', edit_vehicle_path(vehicle) %></td>
+          <td><%#= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </td>
+        <td><%#= vehicle.year %></td>
+        <td><%#= vehicle.make %></td>
+        <td><%#= vehicle.model %></td>
+        <td><%#= vehicle.trim %></td>
+        <td><%#= vehicle.license_plate %></td>
+        <td><%#= vehicle.registation %></td>
+        <td><%#= vehicle.vin_no %></td>
+        <td><%#= vehicle.ownership %></td>
+        <td><%#= vehicle.color %></td>
+        <td><%#= vehicle.body_type %></td>
+        <td><%#= vehicle.body_subtype %></td>
+
+        
+      </tr>
+    <%# end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to 'Add Vehicle', new_vehicle_path, :class=>"button_new_create"%>
+<%#= link_to 'fuel', new_fuel_path, :class=>"button_new_create"%>
+<%#= link_to 'service', new_service_path, :class=>"button_new_create"%>
+<%#= link_to 'service_remainder', new_service_reminder_path, :class=>"button_new_create"%>
+
+</div>
+</div>
+ -->
+<div class="client_index">
+  <div class="main_container">
+    <div class="communication-center">
+      <div class="msg_box col-10 box" id="msg_box">
+        <div class="">
+          <div class="row">
+            <div class="bs-docs-example">
+              <div class="col-md-10 col-md-offset-1">
+              <ul id="myTab" class="nav nav-tabs">
+
+                <li role="presentation" class=" <%='active' if params[:static_data] == 'static_vehicle' || params[:static_data].blank? %>"><a href="#Vehicle" role="tab" data-toggle="tab">Vehicles</a></li>
+                <li role="presentation" class=" <%='active' if params[:static_data] == 'static_fuel'%>"><a href="#fuel" role="tab" data-toggle="tab">Fuel</a></li>
+                <li role="presentation" class=" <%='active' if params[:static_data] == 'static_service'%>" ><a href="#service" role="tab" data-toggle="tab">Service</a></li>
+                <li role="presentation" class=" <%='active' if params[:static_data] == 'static_reminder'%>"><a href="#remainder" role="tab" data-toggle="tab">Remainders</a></li>
+              </ul>
+            </div>
+            <div class="clearfix"></div>
+              <div id="myTabContent" class="tab-content ">
+                <div class="tab-pane fade <%='in active' if params[:static_data] == 'static_vehicle' || params[:static_data].blank?%>" id="Vehicle">
+                  <%= render "index" , :locals=>{:@vehicle=> @vehicle}%>
+                </div>
+                <div class="tab-pane fade  <%='in active' if params[:static_data] == 'static_fuel'%>" id="fuel">
+                  <%= render "fuels/index" , :locals=>{:@fuel=> @fuel}%>
+                </div>
+                <div class="tab-pane fade <%='in active' if params[:static_data] == 'static_service'%>" id="service">
+                  <%= render "services/index" , :locals=>{:@service=> @service}%>
+                </div>
+                <div class="tab-pane fade <%='in active' if params[:static_data] == 'static_reminder'%>" id="remainder">
+                  <%= render "service_reminders/index" , :locals=>{:@service_reminder=> @service_reminder}%>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// $('#myTab a').click(function (e) {
+//     if($(this).parent('li').hasClass('active')){
+//         $( $(this).attr('href') ).hide();
+//     }
+//     else {
+//         e.preventDefault();
+//         $(this).tab('show');
+//     }
+// });
+</script>

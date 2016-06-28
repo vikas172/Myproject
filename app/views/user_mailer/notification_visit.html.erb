@@ -1,0 +1,2 @@
+
+<%= @notification.team_email.to_s.gsub("{{CLIENT_NAME}}", @user.full_name ).gsub("{{COMPANY_NAME}}", @user.company_name ).gsub("{SERVICE NUMBER}", @service_number).gsub("{DATE}",@schedule.start_date.to_s).gsub("{TIME}",@notification.notification_time.strftime("%I:00%p")) %>

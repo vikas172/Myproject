@@ -1,0 +1,28 @@
+
+<link rel="stylesheet" type="text/css" href="/assets/register/form-style.css" />
+<%= javascript_include_tag 'new_application' %>
+<%= stylesheet_link_tag   'new_application' %>
+<%= render 'layouts/home_header' %>
+
+<div id="form_wrapper" class="form_wrapper">
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+  <%= devise_error_messages! %>
+	<h2>Resend confirmation instructions</h2>
+	<div class="column">
+	  <div><%= f.label :email %>
+	  	<%= f.email_field :email, autofocus: true %>
+		</div>
+
+	  <div class="bottom" style="overflow-y:auto;">
+	  	<div class="remember">
+	  	 	<%= f.submit "Resend confirmation" ,:class=>"btn btn-primary btn-lg"%><div class="clear"></div>
+	  	</div>
+	  </div>
+	</div>
+<% end %>
+<style type="text/css">
+.form_wrapper form{
+	display:block;
+	background:#fff;
+}
+</style>

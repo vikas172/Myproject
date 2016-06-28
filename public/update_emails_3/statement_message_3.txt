@@ -1,0 +1,7 @@
+Greetings {{CLIENT_NAME}},
+
+Please find attached a detailed statement attached. It is valid as of {{CURRENT_DATE}}.
+If you have any questions or concerns with this statement, please don't hesitate to get in touch with us at {{DEFAULT_EMAIL}}.
+
+Sincerely,
+{{COMPANY_NAME}}

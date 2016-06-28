@@ -1,0 +1,46 @@
+<div id="search-vendors">
+	<%if !@vendors.blank?%>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th><input type="checkbox" name="check_all" value="all" id="check-all-vendors"></th>
+					<th>Location Name</th>
+					<th>Street</th>
+					<th>City</th>
+					<th>State</th>
+					<th>Zipcode</th>
+				</tr>
+			</thead>
+			<%@vendors.each do |vendor|%>
+				<tr>
+					<td><input type="checkbox" class ="vendor-pref-check"name="check_all_<%=vendor.id%>" value="<%= vendor.id%>" id="<%= vendor.id%>"></td>
+					<td><%= vendor.location_name%></td>
+					<td><%= vendor.street%></td>
+					<td><%= vendor.city%></td>
+					<td><%= vendor.state%></td>
+					<td><%= vendor.zipcode%></td>
+				</tr>
+			<%end%>
+		</table>
+	<%else%>
+		<div class="clearfix"></div>
+		<i style="padding:10px; border: 1px solid #dadada;">Please Enter Validate City or Zip code.</i>
+	<%end%>
+</div>
+
+<script type="text/javascript">
+	$("body").on("change","#check-all-vendors" ,function(){
+		if($(this).is(':checked'))
+			{
+			$(".vendor-pref-check").prop('checked', true);
+			}
+		else
+			{
+			$(".vendor-pref-check").prop('checked', false);
+			}
+	})
+
+	$("body").on("click",".vendor-pref-check" ,function(){
+		$("#check-all-vendors").prop('checked', false);
+	})
+</script>

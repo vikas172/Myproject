@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="large-6 large-centered columns">
+    <%= form_for(@number) do |f| %>
+        <% if @number.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@number.errors.count, "error") %> prohibited this number from being saved:</h2>
+
+              <ul>
+                <% @number.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="field">
+          <%= f.label :account_sid %>
+          <br>
+          <%= f.text_field :account_sid ,:class=>"sales"%>
+        </div>
+        <div class="field">
+          <%= f.label :auth_token %>
+          <br>
+          <%= f.text_field :auth_token ,:class=>"sales"%>
+        </div>
+        <div class="field">
+          <%= f.label :phone_number %>
+          <br>
+          <%= f.text_field :phone_number , :placeholder => "+14153001575" ,:class=>"sales"%>
+        </div>
+        <div class="field">
+          <%= f.label :phone_sid %>
+          <br>
+          <%= f.text_field :phone_sid , :placeholder => "PN4097ddd2808aaffdfe34cec2ac6e4f51" ,:class=>"sales"%>
+        </div>
+        <div class="field">
+          <%= f.label :voice %>
+          <br>
+          <%= f.text_field :voice ,:class=>"sales"%>
+        </div>
+
+        <div class="actions">
+          <%= f.submit :class => "button success radius" , :value => "Submit "%>
+        </div>
+    <% end %>
+  </div>
+</div>
+<style type="text/css">
+
+.sales{width: 98%;
+  border-radius: 1px;
+  box-shadow: none;}
+</style>

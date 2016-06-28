@@ -1,0 +1,127 @@
+<script type="text/javascript">$.LiveAddress("2676492808779544509");</script>
+
+<div id="app_wrapper">
+  <div class="client_index">
+    <div class="main_container">
+      <div style="height: auto;">
+        <div>
+          <%=render "home/work_item_side_bar" %>
+          <div id="settings_area">
+            <h4 class="title1-font">Company Overview</h4>
+            <%= form_tag({:action=>"company_brand_create",:controller=>"home"},:class=>"compressed_form edit_work_configuration", :multipart => true) do %>
+              <div>
+                <div class="config_description">
+                  This information will be displayed on the Customer copies of all Estimate, Work Orders, and Invoices.
+                </div>
+                <p>
+                  <label for="account_name">Company Name</label>
+                  <%= text_field_tag "company[company_name]",current_user.company_name, autofocus: true ,:class=>"large wide",:readOnly=>true%>
+                </p>
+                
+                <p>
+                  <label for="work_configuration_phone">Phone</label>
+                  <%= text_field_tag "company[company_phone]",nil,:value=>@company.blank? ? @general_info.try(:company_phone) : @company.try(:company_phone), autofocus: true ,:class=>"large medium"%>
+                </p>
+
+                <p>
+                  <label for="work_configuration_email">Email</label>
+                  <%= email_field_tag "company[company_email]",nil,:value=>@company.try(:company_email), autofocus: true ,:class=>"large wide"%>
+                  <br style="clear:left">
+                  <span style="display:block; margin-left:180px" class="brand_company">Used for both PDF branding and the reply-to address on all outgoing Customer E-mails</span>
+                </p>
+
+                <p>
+                  <label for="work_configuration_website_url">Website</label>
+                  <%= text_field_tag "company[company_website]",nil,:value=>@company.try(:company_website), autofocus: true ,:class=>"large wide"%>
+                </p>
+                <p>
+                  <label for="work_configuration_start_week_on">Week Start on</label>
+                  <%= select_tag "company[start_week_on]",options_for_select([["Monday","monday"],["Tuesday","tuesday"],["Wednesday","wednesday"],["Thursday","thursday"],["Friday","friday"],["Saturday","saturday"]],:selected=>@company.try(:start_week_on))%>
+                </p>
+                <!-- <p>
+                  <label for="work_configuration_address">Address</label>
+                  <%#= text_area_tag "company[company_address]",@company.blank? ? find_company_address(@general_info) : @company.try(:company_address), autofocus: true ,:class=>"large wide", :rows=>"4"%>
+                </p>
+                 or -->
+                 <p>
+                <label for="work_configuration_address">Street</label>
+                  <%= text_field_tag "street",@company.try(:street), autofocus: true %>
+                 </p>
+
+                   <p>
+                <label for="work_configuration_address">City</label>
+                  <%= text_field_tag "city",@company.try(:city), autofocus: true %>
+                 </p>
+                   <p>
+                <label for="work_configuration_address">State</label>
+                  <%= text_field_tag "state",@company.try(:state), autofocus: true%>
+                 </p>
+                   <p>
+                <label for="work_configuration_address">ZipCode</label>
+                  <%= text_field_tag "zipcode",@company.try(:zipcode), autofocus: true %>
+                 </p>
+
+                <hr style="border-color:#ccc;">
+                <div style="clear:both; padding-top:10px" class="clearfix">
+                  <label for="work_configuration_logo">Logo</label>
+                  <div style="float:left;">
+                    <p class="description">This image is used for Estimate, invoices, web forms, and epayments forms.</p>
+
+                    <div id="preview_image"> 
+                      <%if !@company.blank?%>
+               
+                      <%= image_tag @company.company_logo.url(:medium) ,:style=>" max-width:300px;" %> <%end%>
+                    </div>
+                    <img id="blah" src="#"  style="display:none; height: 150px; width: 150px;"/>
+
+                    <%= hidden_field_tag "user_edit[crop_x]"%>
+                    <%= hidden_field_tag "user_edit[crop_y]"%>
+                    <%= hidden_field_tag "user_edit[crop_x2]"%>
+                    <%= hidden_field_tag "user_edit[crop_y2]"%>
+                    <%= hidden_field_tag "user_edit[crop_w]"%>
+                    <%= hidden_field_tag "user_edit[crop_h]"%>
+                    <%= hidden_field_tag "jcrop_holder_width"%>
+                    <%= hidden_field_tag "jcrop_holder_height"%>
+
+                    <%=file_field_tag "company[company_logo]",:onchange=>"imagePreviewDisplay(this);"%> 
+                  </div>
+                </div>
+                <%= hidden_field_tag "company[user_id]",current_user.id%>
+                <br>
+                <p style="padding-left:180px; margin-top:10px" class="clearfix">
+                  <%if !@company.blank?%> 
+                    <%if @company.company_logo_show==true%>
+                      <input type="checkbox" name="company[company_logo_show]" id="company_company_logo_show"  checked>
+                    <%else%>
+                      <input type="checkbox" name="company[company_logo_show]" id="company_company_logo_show">
+                    <%end%> 
+                  <%end%>
+                  <label for="work_configuration_show_company_name_on_pdfs" style="display: inline; float:none; width:auto;">Show company name with my logo</label><br>
+                  <span class="description">
+                    If your logo includes your company name, you may wish to hide the official title to avoid duplication.<br>
+                    * Only applies to some templates.
+                  </span>
+                </p>
+              </div>
+              <hr style="border-color:#ccc;">
+              <br/>
+              <p style="text-align:right;">
+                <%=submit_tag "Update Settings",:class=>"update_button_setting save-new-btn1" %>
+              </p>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>              
+</div>
+<script type="text/javascript">
+  
+  
+    $("#blah").mouseover(function(){
+    $('#blah').Jcrop({
+                onSelect: showCoords,
+                onChange: showCoords
+            });})
+
+</script>

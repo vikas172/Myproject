@@ -1,0 +1,120 @@
+/*lead message or marketing click model popup START*/
+.new-saves{
+  clear: both; 
+  float: right;
+  width: 8%;
+}
+#edit_user .update_button_setting {
+  padding:6px 15px;
+}
+
+.actions{
+    clear: both;
+    text-align: right;
+    width: 96%;
+}
+#lead-message{
+  width: 80%;
+  left: 30%;
+}
+.personalizate{
+  border: 1px solid #ccc;
+  padding: 5px 20px;
+}
+
+.templates-lead{
+  border: 1px solid #ccc;
+  padding: 5px 20px;
+}
+.templates-email{
+  border: 1px solid #ccc;
+  padding: 5px 20px;
+}
+
+
+.phone-hidden{
+  width:125px;
+}
+
+#lead-message{
+  top:5%;
+}
+.go-button{
+  background: none;
+  margin-top: -10px;
+  margin-left: -6px;
+}
+.filter-check input[type="text"]{
+  display: none;
+}
+.filter-top{
+  top: -70px;
+  margin-top: 30px;
+  position: absolute;
+}
+#properties table.dataTable tfoot th, table.dataTable tfoot td{
+  border-top: none !important;
+}
+ #properties #property_index_view_info{
+  margin-top: 50px;
+}
+#properties .dataTables_filter{
+  float: left !important;
+}
+#properties #property_index_view_filter{
+  margin-left: 5px!important;
+}
+.filter-by-column{
+  top: 122px;
+  position: absolute;
+  margin-left: 6px;
+}
+
+/*END*/
+
+/*INDEX VIEW POOL ADD CHECKBOX*/
+.filter-index-check input[type="text"]{
+  display: none;
+}
+
+#email-message{
+  width: 80%;
+  left: 30%;
+}
+
+
+/*Property Show view communication part start*/
+  input#sms_other_number {
+    width: 28%;
+  }
+
+.new-smen .add-cc-bcc{
+  float: right;
+  line-height: 30px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+.new-smen .prepend-form{
+  width: 80%;
+}
+.new-smen .prepend-form input[type="text"]{
+  width: 91%;
+}
+.new-smen .prepend-form #subject{
+  width: 97%;
+}
+
+.new-smen .add-prepend p{
+  padding: 0 5px;
+  color: #1f518b;
+}
+.new-smen .email-message{
+  width: 78%;
+}
+.new-smen .prepend-form #bcc{
+  width: 90%;
+}
+.new-smen .prepend-sms-form input[type="text"] {
+  width: 80%;
+}
+/*property show end*/

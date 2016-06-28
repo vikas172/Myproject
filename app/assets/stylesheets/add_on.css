@@ -1,0 +1,237 @@
+	form {
+display: block;
+margin-top: 0em;
+}
+section.notice.header {
+color: #868686;
+border: 1px solid #dfdfdd;
+}
+section.notice {
+margin-bottom: 0px;
+padding: 0px 10px 8px;
+}
+section {
+overflow: hidden;
+}
+#addon_price_notice {
+background-color: #1f518b;
+color: #fff;
+padding: 0px 10px;
+}
+
+#addon_price_notice > h2 {
+    color: #fff;
+    font-size: 18px !important;
+}
+section.notice.header {
+border: 1px solid #dfdfdd;
+background-color: #e8e8e8;
+}
+#addons-page-container {
+width: 100%;
+margin-left: auto;
+margin-right: auto;
+}
+#addons-page-container:after {
+content: ".";
+display: block;
+visibility: hidden;
+clear: both;
+height: 0;
+}
+#addons-page-container .addon:nth-child(2n+1) {
+clear: left;
+}
+#addons-page-container .addon {
+float: left;
+display: block;
+margin: 0px 5px;
+width: 48.82117%;
+position: relative;
+}
+#addons-page-container .addon .addon-inner-element {
+box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
+background-color: #eaeae9;
+border: 1px solid #dfdfdd;
+margin-bottom: 25px;
+min-height: 125px;
+overflow: hidden;
+}
+#addons-page-container .addon .addon-inner-element .addon-left {
+float: left;
+display: block;
+margin-right: 4.82916%;
+width: 65.05695%;
+margin-right: 0;
+padding: 10px 10px 0 10px;
+background-color: #eaeae9;
+}
+#addons-page-container .addon .addon-inner-element .addon-left img {
+  display: block !important;
+    float: left !important;
+    margin-right: 4.82916% !important;
+    margin-top: 5px !important;
+    width: auto;
+}
+#addons-page-container .addon .addon-inner-element .addon-right {
+float: left;
+display: block;
+margin-right: 0%;
+width: 28%;
+background-color: #f4f5f5;
+border-left: 1px solid #dfdfdd;
+min-height: 145px;
+padding:5px;
+}
+.addon-right p {
+margin: 10px auto 0 auto!important;
+}
+#addons-page-container .addon .addon-inner-element .addon-left .addon-description:last-child {
+margin-right: 0;
+}
+#addons-page-container .addon .addon-inner-element .addon-left .addon-description {
+float: left;
+display: block;
+margin-right: 4.82916%;
+width: 65.05695%;
+}
+#addons-page-container .addon .addon-inner-element .addon-left .addon-description h2 {
+color: #34495d;
+font-size: 18px;
+line-height: 1.4em;
+}
+#addons-page-container .addon .addon-inner-element .addon-left .addon-description p {
+color: #868686;
+font-size: 15px;
+font-weight: 300;
+margin-top: 10px;
+}
+.addon-description p {
+line-height: 1.4em;
+}
+ #addons-page-container .addon .addon-inner-element .addon-left .addon-description a {
+color: #efc319;
+padding: 0 3px;
+margin-left: -3px;
+white-space: nowrap;
+}
+#addons-page-container .addon .addon-inner-element .addon-right p.pricing {
+color: #535655;
+font-size: 24px;
+font-weight: bold;
+letter-spacing: 1px;
+margin: 10px auto 0 auto;
+text-align: center;
+}
+#addons-page-container .addon .addon-inner-element .addon-right label {
+cursor: pointer;
+width: 80% !important;
+margin: 10px auto 0 auto;
+}
+.android.toggle {
+border: 2px solid #b6b6b6;
+border-radius: 2px;
+}
+.android.toggle input[type="checkbox"]:checked ~ .slide-button {
+background-color: #B87333;
+ opacity: 0.8;
+}
+.radio, .checkbox {
+    min-height: 33px !important;
+    padding-left: 20px !important;
+}
+.toggle input:checked ~ .slide-button {
+right: 15.5%;
+}
+.toggle * {
+	box-sizing: border-box;
+}
+.toggle p{
+vertical-align: middle;
+}
+.toggle p {
+position: absolute;
+width: 22%;
+padding-right:0px;
+text-align: left;
+}
+.android.toggle .slide-button {
+background-color: #B87333;
+ opacity: 0.8;
+}
+.checkbox input[type="checkbox"] {
+float: left;
+margin-left: -20px;
+opacity: 0;;
+}
+.toggle .slide-button {
+display: block;
+-webkit-transition: all 0.3s ease-out;
+-moz-transition: all 0.3s ease-out;
+-ms-transition: all 0.3s ease-out;
+-o-transition: all 0.3s ease-out;
+transition: all 0.3s ease-out;
+}
+.toggle .slide-button {
+    display: block;
+    height: 18%;
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    width: 14%;
+    z-index: 4;
+}
+.toggle p span {
+top: 0px;
+left: 0px;
+z-index: 15;
+width: 35%;
+margin-left: 18px;
+text-align: center;
+}
+.toggle p {
+position: absolute;
+}
+.android span {
+text-transform: uppercase;
+}
+.android span {
+color: #000;
+}
+.addons p {
+margin: 0;
+padding: 0;
+}
+.android p {
+color: #333;
+}
+p {
+display: block;
+-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+}
+
+
+#addons-page-container .addon .addon-inner-element .addon-right p.pricing span.month {
+margin-left: 5px;
+font-size: 12px;
+letter-spacing: 1px;
+}
+
+
+/*Check box off and on Under Addons*/
+.checkbox.toggle.android > input {
+    height: 37px;
+    margin-top: -2px;
+    width: 137px;
+    position: absolute;
+    z-index: 999;
+}
+.ad_on {
+    margin-left: 3px !important;
+}
+.ad_off {
+    margin-left: 38px !important;
+}

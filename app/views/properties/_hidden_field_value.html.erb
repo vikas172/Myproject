@@ -1,0 +1,35 @@
+<%= hidden_field_tag "action_from", request.referer.split('/').last rescue "" %>
+<%= hidden_field_tag "client_id", params[:client_id] %>
+<% if params[:date].nil? && params[:job_prop]=="job" %>
+  <%= hidden_field_tag "job_create",params[:job_prop]%>
+<%end%>
+<%if !params[:date].nil? && params[:job_prop]=="job"%>
+  <%= hidden_field_tag "job_create",params[:job_prop]%>
+  <%= hidden_field_tag "date",params[:date]%>
+<% end %>
+
+<% if params[:value1]=="job_create_action" %>  
+  <%= hidden_field_tag "job_create",params[:value1]%> 
+<%end%>
+
+<% if params[:quote_create]=="quote_create_action" %>   
+ <%= hidden_field_tag "quote_create",params[:quote_create]%>
+<%end%>
+<% if params[:quote_create]=="quote" %>
+  <%= hidden_field_tag "quote_create",params[:quote_create]%>
+<% end %>
+<%if params[:value]=="client_show"%>
+  <%= hidden_field_tag "client_show","client_show"%>
+<% end %>
+<% if params[:work]=="work" %>
+  <%= hidden_field_tag "work","work"%>
+<%end%>
+<%if params[:client_view]=="view"%>
+  <%= hidden_field_tag "client_view","client_view"%>
+<%end%>
+<% if params[:action]=="edit" %>
+  <%= hidden_field_tag "client_id",params[:client_id] %>
+<% end %>
+<%if !params[:invoice_id].blank?%>
+  <%= hidden_field_tag "invoice_id",params[:invoice_id] %>
+<%end%>

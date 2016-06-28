@@ -1,0 +1,79 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header new-modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+      <h4 class="modal-title" id="myModalLabel">Contact Support</h4>
+    </div>
+    <div class="modal-body">
+    	<%= form_for @support do |f|%>
+      	<div class="row">
+      		<div class="span1">
+      			<label>Email</label>
+      		</div>
+					<div class="span4 text-width">
+      			<%= f.email_field :email%>
+      		</div>
+      	</div>
+      		
+    		<div class="row">
+    			<div class="span1">
+    				<label>Title</label>
+    			</div>
+    			<div class="span4 text-width">
+    				<%= f.text_field :title%>
+    			</div>
+    		</div>
+
+    		<div class="row">
+    			<div class="span1">
+    				<label>Description</label>
+    			</div>
+      		<div class="span4 text-width">
+            <%= f.text_area :description %>
+      		</div>
+    		</div>
+
+				</br>
+				
+				<div class="row">
+    			<div class="span1">
+    				<label>Phone/Skype</label>
+    			</div>
+    			<div class="span4 text-width">
+    				<%= f.text_field :phone_number%>
+    			</div>
+    		</div>
+
+        <div class="row">
+          <div class="span1">
+            <label>About</label>
+          </div>
+          <div class="span4 text-width">
+            <%= f.select(:about, ['Pre or Post Sales/Pricing', 'Technical Support','Business/Partnership'], { :class => 'my_style_class' }) %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span1">
+            <label>Attach file</label>
+          </div>
+          <div class="span4 text-width">
+            <%= f.file_field :file%>
+          </div>
+        </div>
+        </br>
+        <%= f.submit "Submit",:class=>"model_save_button save-new-btn1"%>
+         <button type="button" class="model_cancel_button pull-right" data-dismiss="modal">CANCEL</button>	
+    	<%end%>
+    </div>    
+  </div>
+</div>
+<style type="text/css">
+  .span4.text-width > input {
+    width: 96%;
+  }
+  .span4.text-width > textarea
+  {
+    width: 97%;
+  }
+</style>

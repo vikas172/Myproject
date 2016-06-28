@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vendor_type: MyString
+  vendor_miles: MyString
+  preference_vendor: MyText
+  user_id: 1
+
+two:
+  vendor_type: MyString
+  vendor_miles: MyString
+  preference_vendor: MyText
+  user_id: 1

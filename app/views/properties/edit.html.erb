@@ -1,0 +1,18 @@
+<div class="client_index">
+  <div class="main_container">
+    <%= render "clients/error_message_and_flash" %>
+    <h3 class="title1-font" style="color:#1f518b; margin-bottom:20px;">Edit Pool</h3>
+    <%= render 'edit' %>
+    <%if !request.referrer.nil?%>
+      <%if request.referrer.include?"show=client_property"%>
+       <%= link_to 'Cancel', clients_path ,:class=>"model_cancel_button",:style=>"margin-right: 230px; margin-top: -53px;"%>
+      <%elsif request.referrer.include?"view=show"%>
+      	<%= link_to 'Cancel', request.referrer,:class=>"model_cancel_button",:style=>"margin-right: 230px; margin-top: -53px;"%>
+      <%else%>
+        <%= link_to 'Cancel', properties_path ,:class=>"model_cancel_button pull-right",:style=>"margin-right: 230px; margin-top: -53px;"%>
+      <%end%>
+    <%else%>
+      <%= link_to 'Cancel', properties_path ,:class=>"model_cancel_button pull-right",:style=>"margin-right: 230px; margin-top: -53px;"%>
+    <%end%>
+  </div>
+</div>
